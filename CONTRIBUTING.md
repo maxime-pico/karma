@@ -73,7 +73,7 @@ Il est attendu que quiconque se voyant demandé de stopper un comportement inacc
 
 Si un membre de la communauté arbore un comportement inacceptable, les organisateurs de la communauté pourront prendre toute action qui semble appropriée dans ce contexte. Cela peut aller d'une expulsion temporaire de la communauté à un expulsion définitive sans avertissement.
 
-# Si tu es témoin ou victime d'un comportement enfreignant le Code de Conduite
+### Si tu es témoin ou victime d'un comportement enfreignant le Code de Conduite
 
 Nous te demandons d'envoyer un message à green_dirt_karma [at] protonmail.com avec comme premier mots dans le sujet "Violation Code de Conduite" et contenant toutes les informations qui peuvent nous aider à traiter le cas.
 
