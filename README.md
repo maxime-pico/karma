@@ -60,11 +60,20 @@ Give an example
 
 Add additional notes about how to deploy this on a live system
 
-## Built With - TODO
+## Built With
+* Create React App (includes many awesome things)
+* Prettier
+* Styled Components
+* React Router
+* Jest
+* Enzyme
+* Graph QL
+* Apollo GrapQL
+* Prisma
+* MySQL
+* Docker
 
-* Framework 1
-* Framework 2
-* ...
+For more info on the tech stack, the app/database architecture etc. please check the [wiki](https://github.com/Green-Dirt/karma/wiki)
 
 ## Contributing
 
