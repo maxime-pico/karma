@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "karma": {
+      "schemaPath": "./server/src/schema.graphql",
+      "extensions": {
+        "endpoints": {
+          "dev": "http://localhost:4466"
+        }
+      }
+    }
+  }
+}
