@@ -3,6 +3,6 @@
 	"plugins": ["prettier", "jsx-a11y"],
 	"rules": {
 		"prettier/prettier": "error",
-		"react-app/jsx-a11y/href-no-hash": "off"
+		"jsx-a11y/href-no-hash": "off"
 	}
 }
