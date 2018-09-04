@@ -1,20 +1,19 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "dev": "npm-run-all --parallel start playground",
-    "playground": "graphql playground",
-    "prisma": "prisma",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "graphql-yoga": "^1.16.1",
-    "prisma-binding": "^2.1.4"
-  }
+	"name": "server",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node src/index.js",
+		"dev": "npm-run-all --parallel start playground",
+		"playground": "graphql playground",
+		"prisma": "prisma"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"graphql-yoga": "^1.16.1",
+		"prisma-binding": "^2.1.4"
+	}
 }
