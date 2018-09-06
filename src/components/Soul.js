@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
-import { COMPANY_LIST } from '../constants.js'
+import { Link } from 'react-router-dom'
+import { COMPANY_LIST, CAUSE_AND_ACTS } from '../constants.js'
 
 class Soul extends React.Component {
 	findCompany = (
@@ -15,13 +16,41 @@ class Soul extends React.Component {
 			COMPANY_LIST,
 			parseInt(this.props.match.params.companyId, 10),
 		)
-		return (
-			<div>
-				{company
-					? `TODO Soul page of ${company.name}`
-					: `! Oups there was an error loading the company !`}
-			</div>
-		)
+		if (company)
+			return (
+				<div>
+					<div> TODO Soul page of {company.name} </div>
+					{CAUSE_AND_ACTS.map(item => {
+						return (
+							<div>
+								<div>
+									<Link
+										to={`/company/${company.id}/cause/${encodeURI(item.cause)}`}
+									>
+										{item.cause}
+									</Link>
+
+									 :
+								</div>
+								<ul>
+									{item.acts.map(act => (
+										<li key={act}>
+											<Link
+												to={`/company/${company.id}/cause/${encodeURI(
+													item.cause,
+												)}/act/${encodeURI(act)}`}
+											>
+												{act}
+											</Link>
+										</li>
+									))}
+								</ul>
+							</div>
+						)
+					})}
+				</div>
+			)
+		else return <div>! Oups there was an error loading the company !</div>
 	}
 }
 

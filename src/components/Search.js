@@ -6,7 +6,7 @@ const Search = () => (
 	<div>
 		{COMPANY_LIST.map(company => (
 			<div>
-				<Link to={`/companies/${company.id}`}>{company.name}</Link>
+				<Link to={`/company/${company.id}`}>{company.name}</Link>
 			</div>
 		))}
 	</div>

@@ -6,11 +6,8 @@ class Header extends React.Component {
 	render() {
 		return (
 			<div>
-				Header (todo) | <Link to="/">Home</Link> |
-				<Link to="/company">Soul</Link> |
-				<Link to="/company/cause">Cause</Link> |
-				<Link to="/company/cause/act">Act</Link> |
-				<Link to="/user">User Profile</Link> |
+				Header (todo) | <Link to="/">Search</Link> |
+				<Link to="/user"> User Profile</Link>
 			</div>
 		)
 	}
