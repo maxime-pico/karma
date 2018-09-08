@@ -1,4 +1,73 @@
-type User{
-  id: ID! @unique
-  name: String!
+type Company {
+	id: ID! @unique
+	createdAt: DateTime!
+	companyName: String!
+	actGrades: [ActGrade!]!
+	causeGrades: [CauseGrade!]!
+	opinions: [Opinion!]!
+}
+
+type Opinion {
+	id: ID! @unique
+	createdAt: DateTime!
+	regardingWho: Company!
+	regardingWhat: Act!
+	title: String!
+	text: String!
+	sources: [String!]!
+	tags: [String!]!
+	writtenBy: User
+	affiliations: [ActGrade!]!
+}
+
+type User {
+	id: ID! @unique
+	createdAt: DateTime!
+	name: String
+	email: String! @unique
+	password: String!
+	picture: String
+	status: Status
+	opinions: [Opinion!]!
+	causeGrades: [CauseGrade!]!
+	actGrades: [ActGrade!]!
+}
+
+type CauseGrade {
+	id: ID! @unique
+	createdAt: DateTime!
+	gradedTo: Company!
+	gradedBy: User!
+	cause: Cause!
+	grade: Int!
+}
+
+type ActGrade {
+	id: ID! @unique
+	createdAt: DateTime!
+	gradedTo: Company!
+	gradedBy: User!
+	act: Act!
+	grade: Int!
+	affiliatedTo: Opinion!
+}
+
+enum Act {
+	CLIMAT_CHNG
+	ECO_PRSV
+	ANIM_XP
+	PO_RESP
+}
+
+enum Cause {
+	ENV
+	ANI
+	ETH
+}
+
+enum Status {
+	ASLEEP
+	AWAKEN
+	SACRED
+	SAINT
 }

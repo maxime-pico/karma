@@ -1,15 +1,29 @@
-const { GraphQLServer } = require('graphql-yoga');
+const { GraphQLServer } = require('graphql-yoga')
+const { Prisma } = require('prisma-binding')
+const Query = require('./resolvers/Query')
+const Mutation = require('./resolvers/Mutation')
+const AuthPayload = require('./resolvers/AuthPayload')
 
-// 2
 const resolvers = {
-	Query: {
-		karma: () => 3,
-	},
-};
+	Query,
+	Mutation,
+	AuthPayload,
+}
 
-// 3
 const server = new GraphQLServer({
 	typeDefs: './src/schema.graphql',
 	resolvers,
-});
-server.start(() => console.log(`Server is running on http://localhost:4000`));
+	resolverValidationOptions: {
+		requireResolversForResolveType: false,
+	},
+	context: req => ({
+		...req,
+		db: new Prisma({
+			typeDefs: 'src/generated/prisma.graphql',
+			endpoint: 'http://localhost:4466/',
+			secret: 'my-secret-tobehidden',
+			debug: true,
+		}),
+	}),
+})
+server.start(() => console.log(`Server is running on http://localhost:4000`))

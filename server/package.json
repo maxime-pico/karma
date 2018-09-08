@@ -1,5 +1,5 @@
 {
-	"name": "server",
+	"name": "karma-server",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -13,7 +13,9 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"bcryptjs": "^2.4.3",
 		"graphql-yoga": "^1.16.1",
+		"jsonwebtoken": "^8.3.0",
 		"prisma-binding": "^2.1.4"
 	}
 }

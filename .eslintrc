@@ -1,6 +1,6 @@
 {
 	"extends": ["react-app", "plugin:jsx-a11y/recommended"],
-	"plugins": ["prettier", "jsx-a11y"],
+	"plugins": ["prettier", "jsx-a11y", "graphql"],
 	"rules": {
 		"prettier/prettier": "error",
 		"jsx-a11y/href-no-hash": "off"
