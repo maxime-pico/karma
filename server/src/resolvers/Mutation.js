@@ -47,6 +47,7 @@ async function gradeCause(parent, args, context, info) {
 	const causeGradeExists = await context.db.exists.CauseGrade({
 		gradedBy: { id: userId },
 		gradedTo: { id: companyId },
+		cause: cause,
 	})
 	if (causeGradeExists) {
 		throw new Error(`Already graded Cause for Company: ${companyId}`)
@@ -70,6 +71,7 @@ async function gradeAct(parent, args, context, info) {
 	const actGradeExists = await context.db.exists.ActGrade({
 		gradedBy: { id: userId },
 		gradedTo: { id: companyId },
+		act: act,
 	})
 	if (actGradeExists) {
 		throw new Error(`Already graded Act for Company: ${companyId}`)
