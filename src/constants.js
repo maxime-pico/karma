@@ -4,6 +4,7 @@ export const COMPANY_LIST = [
 	{ id: 3, name: 'Mc Donalds' },
 ]
 
+// Defines the table of cause and acts for reuse in the app
 export const CAUSE_AND_ACTS = [
 	{
 		cause: 'Cause Environnementale',

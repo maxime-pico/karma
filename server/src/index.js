@@ -10,6 +10,8 @@ const resolvers = {
 	AuthPayload,
 }
 
+// Starts the connection with the graphql server at specified endpoint with
+// the secret
 const server = new GraphQLServer({
 	typeDefs: './src/schema.graphql',
 	resolvers,

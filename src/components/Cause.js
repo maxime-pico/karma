@@ -3,6 +3,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { CAUSE_AND_ACTS } from '../constants.js'
 
+// Cause component: gets the current cause and company from path and displays
+// the list of corresponding acts and their grades
 class Cause extends React.Component {
 	findActs = (list: [{ cause: string, acts: [string] }], cause: string) => {
 		const causeAndActs = list.find(item => item.cause === cause)

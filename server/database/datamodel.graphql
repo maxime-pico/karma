@@ -39,7 +39,7 @@ type CauseGrade {
 	gradedTo: Company!
 	gradedBy: User!
 	cause: Cause!
-	grade: Int!
+	grade: Float!
 }
 
 type ActGrade {
@@ -48,7 +48,7 @@ type ActGrade {
 	gradedTo: Company!
 	gradedBy: User!
 	act: Act!
-	grade: Int!
+	grade: Float!
 	affiliatedTo: Opinion!
 }
 

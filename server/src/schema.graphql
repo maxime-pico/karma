@@ -1,21 +1,38 @@
 # import Company, Opinion, CauseGrade, ActGrade, Act, Cause, Status from "./generated/prisma.graphql"
 
+# prettier-ignore
 type Query {
+  # exposes the resolver that gets the list of all companies in the database
 	allCompanies: [Company!]!
+
+  # exposes the resolver that gets an object with the avg grades per cause for a specific company
+	companyCauseGrades(
+    companyId: ID!
+  ): AvgCauseGrades
+
+  # exposes the resolver that gets an object with the avg grades per act for a specific company
+	companyActGrades(
+    companyId: ID!
+  ): AvgActGrades
+
 }
 
 # prettier-ignore
 type Mutation {
-	signup(email: String!, password: String!, name: String): AuthPayload
+	# exposes the resolver that signs up a new user from email and password (optionally name) returns an authetification token
+  signup(email: String!, password: String!, name: String): AuthPayload
 
+  # exposes the resolver that logs in a new user from email and password returns an authetification token
 	login(email: String!, password: String!): AuthPayload
 
+  # exposes the resolver that allows a logged in user to grade the cause of a company
 	gradeCause(
     companyId: ID!,
     cause: Cause!,
     grade: Int!
   ): CauseGrade
 
+  # exposes the resolver that allows a logged in user to grade the act of a company and affiliation to an opinion
 	gradeAct(
     companyId: ID!,
     act: Act!,
@@ -23,6 +40,7 @@ type Mutation {
     opinionId: ID!
   ): ActGrade
 
+  # exposes the resolver that allows a logged in user to post a new opinion
 	postOpinion(
     companyId: ID!,
     act: Act!,
@@ -33,11 +51,13 @@ type Mutation {
   ): Opinion
 }
 
+# authentification token type
 type AuthPayload {
 	token: String
 	user: User
 }
 
+# exposes the fields of the user type that can be useful to query in the app
 type User {
 	id: ID!
 	name: String
@@ -47,4 +67,17 @@ type User {
 	opinions: [Opinion!]!
 	causeGrades: [CauseGrade!]!
 	actGrades: [ActGrade!]!
+}
+
+type AvgCauseGrades {
+	ENV: Float
+	ANI: Float
+	ETH: Float
+}
+
+type AvgActGrades {
+	CLIMAT_CHNG: Float
+	ECO_PRSV: Float
+	ANIM_XP: Float
+	PO_RESP: Float
 }

@@ -3,6 +3,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { COMPANY_LIST, CAUSE_AND_ACTS } from '../constants.js'
 
+// Soul component: gets the current company from path and displays the list of
+// corresponding causes and their grades
 class Soul extends React.Component {
 	findCompany = (
 		list: [{ id: number, name: string }],

@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sat Sep 08 2018 14:29:31 GMT+0200 (Central European Summer Time)
+# timestamp: Sun Sep 09 2018 15:36:30 GMT+0200 (Central European Summer Time)
 
 enum Act {
   CLIMAT_CHNG
@@ -14,7 +14,7 @@ type ActGrade implements Node {
   gradedTo(where: CompanyWhereInput): Company!
   gradedBy(where: UserWhereInput): User!
   act: Act!
-  grade: Int!
+  grade: Float!
   affiliatedTo(where: OpinionWhereInput): Opinion!
 }
 
@@ -30,7 +30,7 @@ type ActGradeConnection {
 
 input ActGradeCreateInput {
   act: Act!
-  grade: Int!
+  grade: Float!
   gradedTo: CompanyCreateOneWithoutActGradesInput!
   gradedBy: UserCreateOneWithoutActGradesInput!
   affiliatedTo: OpinionCreateOneWithoutAffiliationsInput!
@@ -53,21 +53,21 @@ input ActGradeCreateManyWithoutGradedToInput {
 
 input ActGradeCreateWithoutAffiliatedToInput {
   act: Act!
-  grade: Int!
+  grade: Float!
   gradedTo: CompanyCreateOneWithoutActGradesInput!
   gradedBy: UserCreateOneWithoutActGradesInput!
 }
 
 input ActGradeCreateWithoutGradedByInput {
   act: Act!
-  grade: Int!
+  grade: Float!
   gradedTo: CompanyCreateOneWithoutActGradesInput!
   affiliatedTo: OpinionCreateOneWithoutAffiliationsInput!
 }
 
 input ActGradeCreateWithoutGradedToInput {
   act: Act!
-  grade: Int!
+  grade: Float!
   gradedBy: UserCreateOneWithoutActGradesInput!
   affiliatedTo: OpinionCreateOneWithoutAffiliationsInput!
 }
@@ -98,7 +98,7 @@ type ActGradePreviousValues {
   id: ID!
   createdAt: DateTime!
   act: Act!
-  grade: Int!
+  grade: Float!
 }
 
 type ActGradeSubscriptionPayload {
@@ -142,7 +142,7 @@ input ActGradeSubscriptionWhereInput {
 
 input ActGradeUpdateInput {
   act: Act
-  grade: Int
+  grade: Float
   gradedTo: CompanyUpdateOneWithoutActGradesInput
   gradedBy: UserUpdateOneWithoutActGradesInput
   affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
@@ -177,21 +177,21 @@ input ActGradeUpdateManyWithoutGradedToInput {
 
 input ActGradeUpdateWithoutAffiliatedToDataInput {
   act: Act
-  grade: Int
+  grade: Float
   gradedTo: CompanyUpdateOneWithoutActGradesInput
   gradedBy: UserUpdateOneWithoutActGradesInput
 }
 
 input ActGradeUpdateWithoutGradedByDataInput {
   act: Act
-  grade: Int
+  grade: Float
   gradedTo: CompanyUpdateOneWithoutActGradesInput
   affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
 }
 
 input ActGradeUpdateWithoutGradedToDataInput {
   act: Act
-  grade: Int
+  grade: Float
   gradedBy: UserUpdateOneWithoutActGradesInput
   affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
 }
@@ -310,28 +310,28 @@ input ActGradeWhereInput {
 
   """All values that are not contained in given list."""
   act_not_in: [Act!]
-  grade: Int
+  grade: Float
 
   """All values that are not equal to given value."""
-  grade_not: Int
+  grade_not: Float
 
   """All values that are contained in given list."""
-  grade_in: [Int!]
+  grade_in: [Float!]
 
   """All values that are not contained in given list."""
-  grade_not_in: [Int!]
+  grade_not_in: [Float!]
 
   """All values less than the given value."""
-  grade_lt: Int
+  grade_lt: Float
 
   """All values less than or equal the given value."""
-  grade_lte: Int
+  grade_lte: Float
 
   """All values greater than the given value."""
-  grade_gt: Int
+  grade_gt: Float
 
   """All values greater than or equal the given value."""
-  grade_gte: Int
+  grade_gte: Float
   gradedTo: CompanyWhereInput
   gradedBy: UserWhereInput
   affiliatedTo: OpinionWhereInput
@@ -378,7 +378,7 @@ type CauseGrade implements Node {
   gradedTo(where: CompanyWhereInput): Company!
   gradedBy(where: UserWhereInput): User!
   cause: Cause!
-  grade: Int!
+  grade: Float!
 }
 
 """A connection to a list of items."""
@@ -393,7 +393,7 @@ type CauseGradeConnection {
 
 input CauseGradeCreateInput {
   cause: Cause!
-  grade: Int!
+  grade: Float!
   gradedTo: CompanyCreateOneWithoutCauseGradesInput!
   gradedBy: UserCreateOneWithoutCauseGradesInput!
 }
@@ -410,13 +410,13 @@ input CauseGradeCreateManyWithoutGradedToInput {
 
 input CauseGradeCreateWithoutGradedByInput {
   cause: Cause!
-  grade: Int!
+  grade: Float!
   gradedTo: CompanyCreateOneWithoutCauseGradesInput!
 }
 
 input CauseGradeCreateWithoutGradedToInput {
   cause: Cause!
-  grade: Int!
+  grade: Float!
   gradedBy: UserCreateOneWithoutCauseGradesInput!
 }
 
@@ -446,7 +446,7 @@ type CauseGradePreviousValues {
   id: ID!
   createdAt: DateTime!
   cause: Cause!
-  grade: Int!
+  grade: Float!
 }
 
 type CauseGradeSubscriptionPayload {
@@ -490,7 +490,7 @@ input CauseGradeSubscriptionWhereInput {
 
 input CauseGradeUpdateInput {
   cause: Cause
-  grade: Int
+  grade: Float
   gradedTo: CompanyUpdateOneWithoutCauseGradesInput
   gradedBy: UserUpdateOneWithoutCauseGradesInput
 }
@@ -515,13 +515,13 @@ input CauseGradeUpdateManyWithoutGradedToInput {
 
 input CauseGradeUpdateWithoutGradedByDataInput {
   cause: Cause
-  grade: Int
+  grade: Float
   gradedTo: CompanyUpdateOneWithoutCauseGradesInput
 }
 
 input CauseGradeUpdateWithoutGradedToDataInput {
   cause: Cause
-  grade: Int
+  grade: Float
   gradedBy: UserUpdateOneWithoutCauseGradesInput
 }
 
@@ -628,28 +628,28 @@ input CauseGradeWhereInput {
 
   """All values that are not contained in given list."""
   cause_not_in: [Cause!]
-  grade: Int
+  grade: Float
 
   """All values that are not equal to given value."""
-  grade_not: Int
+  grade_not: Float
 
   """All values that are contained in given list."""
-  grade_in: [Int!]
+  grade_in: [Float!]
 
   """All values that are not contained in given list."""
-  grade_not_in: [Int!]
+  grade_not_in: [Float!]
 
   """All values less than the given value."""
-  grade_lt: Int
+  grade_lt: Float
 
   """All values less than or equal the given value."""
-  grade_lte: Int
+  grade_lte: Float
 
   """All values greater than the given value."""
-  grade_gt: Int
+  grade_gt: Float
 
   """All values greater than or equal the given value."""
-  grade_gte: Int
+  grade_gte: Float
   gradedTo: CompanyWhereInput
   gradedBy: UserWhereInput
 }

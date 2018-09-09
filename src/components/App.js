@@ -9,6 +9,8 @@ import Cause from './Cause'
 import Deliberation from './Deliberation'
 import UserProfile from './UserProfile'
 
+// implements the routing thanks to react router dom. It loads the right
+// component by matching the path
 const App = () => (
 	<div className="App">
 		<Header />
