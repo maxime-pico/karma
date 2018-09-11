@@ -75,8 +75,75 @@ async function companyActGrades(parent, args, context, info) {
 	return avgActGrades
 }
 
+// resolver that gets the needed info for a specific user to display its bubble
+function userBubbleQuery(parent, args, context, info) {
+	const userBubbleInfo = context.db.query.user(
+		{
+			where: { id: args.userId },
+		},
+		` { name picture status } `,
+	)
+	if (!userBubbleInfo) {
+		throw new Error('User does not exist')
+	}
+	return userBubbleInfo
+}
+
+// resolver that gets the needed info for a specific Company to display its Overview
+async function companyOverview(parent, args, context, info) {
+	// get the info from a company query. Unfortunately at the moment of coding
+	// prisma doesn't allow to query the count on a return field right away
+	const companyOverviewInfo = await context.db.query.company(
+		{
+			where: { id: args.companyId },
+		},
+		` { name logo opinions{ id } actGrades{ id } causeGrades{ id } } `,
+	)
+
+	// test existence
+	if (!companyOverviewInfo) {
+		throw new Error('Company does not exist')
+	}
+
+	// add count fields to result from query
+	companyOverviewInfo.opinionsCount = companyOverviewInfo.opinions.length
+	companyOverviewInfo.actGradesCount = companyOverviewInfo.actGrades.length
+	companyOverviewInfo.causeGradesCount =
+		companyOverviewInfo.causeGrades.length / 5
+
+	return companyOverviewInfo
+}
+
+// resolver that gets a list of the first $first opinions starting from the $skip
+// for a specific company and adds an affiliation count field to the opinions
+// prettier-ignore
+async function opinionsFeed(parent, args, context, info){
+  const { companyId, first, skip } = args // destructure input arguments
+  
+  const opinionsPreview = await context.db.query.opinions({
+      first: first,
+      skip: skip,
+      where: { regardingWho: { id: companyId } }
+    },
+    ` { createdAt title text regardingWhat tags sources writtenBy{ name picture } affiliations{ id } } `
+  )
+
+	// if one or more opinions are returned then manipulate them to add the count
+	// field
+  if(opinionsPreview.length){
+		opinionsPreview.forEach(opinion => {
+			opinion.affiliationsCount =  opinion.affiliations.length
+		})
+  }
+
+  return opinionsPreview
+}
+
 module.exports = {
 	allCompanies,
 	companyCauseGrades,
 	companyActGrades,
+	userBubbleQuery,
+	companyOverview,
+	opinionsFeed,
 }

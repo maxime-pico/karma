@@ -5,24 +5,44 @@ type Query {
   # exposes the resolver that gets the list of all companies in the database
 	allCompanies: [Company!]!
 
-  # exposes the resolver that gets an object with the avg grades per cause for a specific company
+  # exposes the resolver that gets an object with the avg grades per cause for
+  # a specific company
 	companyCauseGrades(
     companyId: ID!
   ): AvgCauseGrades
 
-  # exposes the resolver that gets an object with the avg grades per act for a specific company
+  # exposes the resolver that gets an object with the avg grades per act for
+  # a specific company
 	companyActGrades(
     companyId: ID!
   ): AvgActGrades
 
+  # exposes the resolver that gets the information needed to display the User bubble
+  userBubbleQuery(
+    userId: ID!
+  ): User
+
+  # exposes the resolver that gets the basic information about a specific company
+  companyOverview(
+    companyId: ID!
+  ): CompanyOverview
+
+  # exposes the resolver that gets a specific set of opinions about a specific company
+  opinionsFeed(
+    companyId: ID!
+    skip: Int
+    first: Int
+  ): [OpinionPreview!]!
 }
 
 # prettier-ignore
 type Mutation {
-	# exposes the resolver that signs up a new user from email and password (optionally name) returns an authetification token
+	# exposes the resolver that signs up a new user from email and password
+  # (+ optionally name) returns an authetification token
   signup(email: String!, password: String!, name: String): AuthPayload
 
-  # exposes the resolver that logs in a new user from email and password returns an authetification token
+  # exposes the resolver that logs in a new user from email and password returns
+  # an authentification token
 	login(email: String!, password: String!): AuthPayload
 
   # exposes the resolver that allows a logged in user to grade the cause of a company
@@ -32,7 +52,8 @@ type Mutation {
     grade: Int!
   ): CauseGrade
 
-  # exposes the resolver that allows a logged in user to grade the act of a company and affiliation to an opinion
+  # exposes the resolver that allows a logged in user to grade the act of a
+  # company and affiliation to an opinion
 	gradeAct(
     companyId: ID!,
     act: Act!,
@@ -69,15 +90,38 @@ type User {
 	actGrades: [ActGrade!]!
 }
 
+# defines the return type of companyCauseGrades
 type AvgCauseGrades {
 	ENV: Float
 	ANI: Float
 	ETH: Float
 }
 
+# defines the return type of companyActrades
 type AvgActGrades {
 	CLIMAT_CHNG: Float
 	ECO_PRSV: Float
 	ANIM_XP: Float
 	PO_RESP: Float
+}
+
+# defines the return type of companyOverview
+type CompanyOverview {
+	name: String
+	logo: String
+	opinionsCount: Int
+	actGradesCount: Int
+	causeGradesCount: Int
+}
+
+# defines the return type of opinionsFeed
+type OpinionPreview {
+	createdAt: DateTime
+	title: String
+	text: String
+	regardingWhat: Act
+	tags: [String!]!
+	sources: [String!]!
+	writtenBy: User
+	affiliationsCount: Int
 }

@@ -1,11 +1,27 @@
 # source: http://localhost:4466
-# timestamp: Sun Sep 09 2018 15:36:30 GMT+0200 (Central European Summer Time)
+# timestamp: Tue Sep 11 2018 10:57:49 GMT+0200 (Central European Summer Time)
 
 enum Act {
-  CLIMAT_CHNG
-  ECO_PRSV
-  ANIM_XP
-  PO_RESP
+  CLIMAT_CHANGE
+  ECOSYSTEM_PRESERVATION
+  RESOURCE_PRESERVATION
+  ANIMAL_EXPERIMENTATION
+  ANIMAL_RESOURCES
+  ANIMAL_WELFARE
+  POLITICAL_RESPONSIBILITY
+  MARKET_INFLUENCE
+  POPULATION_RESPECT
+  CONSUMER_RESPECT
+  QUESTIONABLE_INDUSTRIES
+  SUPPLIER_REGULATION
+  SHAREHOLDER_REMUNERATION
+  TAXATION_LEVEL
+  EXECUTIVE_COMPENSATION
+  EMPLOYEE_EQUITY
+  EMPLOYMENT_CONDITIONS
+  EMPLOYEE_DISCRIMINATIONS
+  WORKING_CONDITIONS
+  MANAGING_CONDITIONS
 }
 
 type ActGrade implements Node {
@@ -367,9 +383,11 @@ type BatchPayload {
 }
 
 enum Cause {
-  ENV
-  ANI
-  ETH
+  ENVIRONMENT
+  ANIMALS
+  ETHICS
+  FISCALITY
+  SOCIAL
 }
 
 type CauseGrade implements Node {
@@ -661,7 +679,8 @@ input CauseGradeWhereUniqueInput {
 type Company implements Node {
   id: ID!
   createdAt: DateTime!
-  companyName: String!
+  name: String!
+  logo: String
   actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
   causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade!]
   opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion!]
@@ -678,7 +697,8 @@ type CompanyConnection {
 }
 
 input CompanyCreateInput {
-  companyName: String!
+  name: String!
+  logo: String
   actGrades: ActGradeCreateManyWithoutGradedToInput
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
@@ -700,19 +720,22 @@ input CompanyCreateOneWithoutOpinionsInput {
 }
 
 input CompanyCreateWithoutActGradesInput {
-  companyName: String!
+  name: String!
+  logo: String
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
 }
 
 input CompanyCreateWithoutCauseGradesInput {
-  companyName: String!
+  name: String!
+  logo: String
   actGrades: ActGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
 }
 
 input CompanyCreateWithoutOpinionsInput {
-  companyName: String!
+  name: String!
+  logo: String
   actGrades: ActGradeCreateManyWithoutGradedToInput
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
 }
@@ -731,8 +754,10 @@ enum CompanyOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  companyName_ASC
-  companyName_DESC
+  name_ASC
+  name_DESC
+  logo_ASC
+  logo_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -740,7 +765,8 @@ enum CompanyOrderByInput {
 type CompanyPreviousValues {
   id: ID!
   createdAt: DateTime!
-  companyName: String!
+  name: String!
+  logo: String
 }
 
 type CompanySubscriptionPayload {
@@ -783,7 +809,8 @@ input CompanySubscriptionWhereInput {
 }
 
 input CompanyUpdateInput {
-  companyName: String
+  name: String
+  logo: String
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
@@ -814,19 +841,22 @@ input CompanyUpdateOneWithoutOpinionsInput {
 }
 
 input CompanyUpdateWithoutActGradesDataInput {
-  companyName: String
+  name: String
+  logo: String
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
 }
 
 input CompanyUpdateWithoutCauseGradesDataInput {
-  companyName: String
+  name: String
+  logo: String
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
 }
 
 input CompanyUpdateWithoutOpinionsDataInput {
-  companyName: String
+  name: String
+  logo: String
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
 }
@@ -917,46 +947,86 @@ input CompanyWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
-  companyName: String
+  name: String
 
   """All values that are not equal to given value."""
-  companyName_not: String
+  name_not: String
 
   """All values that are contained in given list."""
-  companyName_in: [String!]
+  name_in: [String!]
 
   """All values that are not contained in given list."""
-  companyName_not_in: [String!]
+  name_not_in: [String!]
 
   """All values less than the given value."""
-  companyName_lt: String
+  name_lt: String
 
   """All values less than or equal the given value."""
-  companyName_lte: String
+  name_lte: String
 
   """All values greater than the given value."""
-  companyName_gt: String
+  name_gt: String
 
   """All values greater than or equal the given value."""
-  companyName_gte: String
+  name_gte: String
 
   """All values containing the given string."""
-  companyName_contains: String
+  name_contains: String
 
   """All values not containing the given string."""
-  companyName_not_contains: String
+  name_not_contains: String
 
   """All values starting with the given string."""
-  companyName_starts_with: String
+  name_starts_with: String
 
   """All values not starting with the given string."""
-  companyName_not_starts_with: String
+  name_not_starts_with: String
 
   """All values ending with the given string."""
-  companyName_ends_with: String
+  name_ends_with: String
 
   """All values not ending with the given string."""
-  companyName_not_ends_with: String
+  name_not_ends_with: String
+  logo: String
+
+  """All values that are not equal to given value."""
+  logo_not: String
+
+  """All values that are contained in given list."""
+  logo_in: [String!]
+
+  """All values that are not contained in given list."""
+  logo_not_in: [String!]
+
+  """All values less than the given value."""
+  logo_lt: String
+
+  """All values less than or equal the given value."""
+  logo_lte: String
+
+  """All values greater than the given value."""
+  logo_gt: String
+
+  """All values greater than or equal the given value."""
+  logo_gte: String
+
+  """All values containing the given string."""
+  logo_contains: String
+
+  """All values not containing the given string."""
+  logo_not_contains: String
+
+  """All values starting with the given string."""
+  logo_starts_with: String
+
+  """All values not starting with the given string."""
+  logo_not_starts_with: String
+
+  """All values ending with the given string."""
+  logo_ends_with: String
+
+  """All values not ending with the given string."""
+  logo_not_ends_with: String
   actGrades_every: ActGradeWhereInput
   actGrades_some: ActGradeWhereInput
   actGrades_none: ActGradeWhereInput
@@ -970,6 +1040,7 @@ input CompanyWhereInput {
 
 input CompanyWhereUniqueInput {
   id: ID
+  name: String
 }
 
 scalar DateTime
@@ -982,35 +1053,35 @@ scalar Long
 
 type Mutation {
   createCompany(data: CompanyCreateInput!): Company!
-  createOpinion(data: OpinionCreateInput!): Opinion!
   createUser(data: UserCreateInput!): User!
-  createCauseGrade(data: CauseGradeCreateInput!): CauseGrade!
+  createOpinion(data: OpinionCreateInput!): Opinion!
   createActGrade(data: ActGradeCreateInput!): ActGrade!
+  createCauseGrade(data: CauseGradeCreateInput!): CauseGrade!
   updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
-  updateOpinion(data: OpinionUpdateInput!, where: OpinionWhereUniqueInput!): Opinion
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateCauseGrade(data: CauseGradeUpdateInput!, where: CauseGradeWhereUniqueInput!): CauseGrade
+  updateOpinion(data: OpinionUpdateInput!, where: OpinionWhereUniqueInput!): Opinion
   updateActGrade(data: ActGradeUpdateInput!, where: ActGradeWhereUniqueInput!): ActGrade
+  updateCauseGrade(data: CauseGradeUpdateInput!, where: CauseGradeWhereUniqueInput!): CauseGrade
   deleteCompany(where: CompanyWhereUniqueInput!): Company
-  deleteOpinion(where: OpinionWhereUniqueInput!): Opinion
   deleteUser(where: UserWhereUniqueInput!): User
-  deleteCauseGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
+  deleteOpinion(where: OpinionWhereUniqueInput!): Opinion
   deleteActGrade(where: ActGradeWhereUniqueInput!): ActGrade
+  deleteCauseGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
   upsertCompany(where: CompanyWhereUniqueInput!, create: CompanyCreateInput!, update: CompanyUpdateInput!): Company!
-  upsertOpinion(where: OpinionWhereUniqueInput!, create: OpinionCreateInput!, update: OpinionUpdateInput!): Opinion!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertCauseGrade(where: CauseGradeWhereUniqueInput!, create: CauseGradeCreateInput!, update: CauseGradeUpdateInput!): CauseGrade!
+  upsertOpinion(where: OpinionWhereUniqueInput!, create: OpinionCreateInput!, update: OpinionUpdateInput!): Opinion!
   upsertActGrade(where: ActGradeWhereUniqueInput!, create: ActGradeCreateInput!, update: ActGradeUpdateInput!): ActGrade!
+  upsertCauseGrade(where: CauseGradeWhereUniqueInput!, create: CauseGradeCreateInput!, update: CauseGradeUpdateInput!): CauseGrade!
   updateManyCompanies(data: CompanyUpdateInput!, where: CompanyWhereInput): BatchPayload!
-  updateManyOpinions(data: OpinionUpdateInput!, where: OpinionWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyCauseGrades(data: CauseGradeUpdateInput!, where: CauseGradeWhereInput): BatchPayload!
+  updateManyOpinions(data: OpinionUpdateInput!, where: OpinionWhereInput): BatchPayload!
   updateManyActGrades(data: ActGradeUpdateInput!, where: ActGradeWhereInput): BatchPayload!
+  updateManyCauseGrades(data: CauseGradeUpdateInput!, where: CauseGradeWhereInput): BatchPayload!
   deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
-  deleteManyOpinions(where: OpinionWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyCauseGrades(where: CauseGradeWhereInput): BatchPayload!
+  deleteManyOpinions(where: OpinionWhereInput): BatchPayload!
   deleteManyActGrades(where: ActGradeWhereInput): BatchPayload!
+  deleteManyCauseGrades(where: CauseGradeWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1034,7 +1105,7 @@ type Opinion implements Node {
   text: String!
   sources: [String!]!
   tags: [String!]!
-  writtenBy(where: UserWhereInput): User
+  writtenBy(where: UserWhereInput): User!
   affiliations(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
 }
 
@@ -1055,7 +1126,7 @@ input OpinionCreateInput {
   sources: OpinionCreatesourcesInput
   tags: OpinionCreatetagsInput
   regardingWho: CompanyCreateOneWithoutOpinionsInput!
-  writtenBy: UserCreateOneWithoutOpinionsInput
+  writtenBy: UserCreateOneWithoutOpinionsInput!
   affiliations: ActGradeCreateManyWithoutAffiliatedToInput
 }
 
@@ -1089,7 +1160,7 @@ input OpinionCreateWithoutAffiliationsInput {
   sources: OpinionCreatesourcesInput
   tags: OpinionCreatetagsInput
   regardingWho: CompanyCreateOneWithoutOpinionsInput!
-  writtenBy: UserCreateOneWithoutOpinionsInput
+  writtenBy: UserCreateOneWithoutOpinionsInput!
 }
 
 input OpinionCreateWithoutRegardingWhoInput {
@@ -1098,7 +1169,7 @@ input OpinionCreateWithoutRegardingWhoInput {
   text: String!
   sources: OpinionCreatesourcesInput
   tags: OpinionCreatetagsInput
-  writtenBy: UserCreateOneWithoutOpinionsInput
+  writtenBy: UserCreateOneWithoutOpinionsInput!
   affiliations: ActGradeCreateManyWithoutAffiliatedToInput
 }
 
@@ -1476,20 +1547,20 @@ type PageInfo {
 
 type Query {
   companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
-  opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade]!
+  opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion]!
   actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade]!
+  causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade]!
   company(where: CompanyWhereUniqueInput!): Company
-  opinion(where: OpinionWhereUniqueInput!): Opinion
   user(where: UserWhereUniqueInput!): User
-  causeGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
+  opinion(where: OpinionWhereUniqueInput!): Opinion
   actGrade(where: ActGradeWhereUniqueInput!): ActGrade
+  causeGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
   companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
-  opinionsConnection(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OpinionConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  causeGradesConnection(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CauseGradeConnection!
+  opinionsConnection(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OpinionConnection!
   actGradesConnection(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActGradeConnection!
+  causeGradesConnection(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CauseGradeConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1507,10 +1578,10 @@ enum Status {
 
 type Subscription {
   company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
-  opinion(where: OpinionSubscriptionWhereInput): OpinionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  causeGrade(where: CauseGradeSubscriptionWhereInput): CauseGradeSubscriptionPayload
+  opinion(where: OpinionSubscriptionWhereInput): OpinionSubscriptionPayload
   actGrade(where: ActGradeSubscriptionWhereInput): ActGradeSubscriptionPayload
+  causeGrade(where: CauseGradeSubscriptionWhereInput): CauseGradeSubscriptionPayload
 }
 
 type User implements Node {
@@ -1699,7 +1770,6 @@ input UserUpdateOneWithoutCauseGradesInput {
 input UserUpdateOneWithoutOpinionsInput {
   create: UserCreateWithoutOpinionsInput
   connect: UserWhereUniqueInput
-  disconnect: Boolean
   delete: Boolean
   update: UserUpdateWithoutOpinionsDataInput
   upsert: UserUpsertWithoutOpinionsInput

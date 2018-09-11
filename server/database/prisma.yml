@@ -6,3 +6,9 @@ secret: 'my-secret-tobehidden'
 hooks:
   post-deploy:
     - graphql get-schema --project database
+
+# Points to a `.graphql` file containing GraphQL
+# operations that will be executed when initially
+# deploying a service.
+seed:
+  import: seed.graphql

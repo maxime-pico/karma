@@ -1,68 +1,89 @@
+# prettier-ignore
 type Company {
 	id: ID! @unique
 	createdAt: DateTime!
-	companyName: String!
-	actGrades: [ActGrade!]!
-	causeGrades: [CauseGrade!]!
-	opinions: [Opinion!]!
+	name: String! @unique
+  logo: String @default(value: "questionmark.png")
+	actGrades: [ActGrade!]! @relation(name: "ActGradesOfCompany" onDelete: CASCADE)
+	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesOfCompany" onDelete: CASCADE)
+	opinions: [Opinion!]! @relation(name: "OpinionsOfCompany" onDelete: CASCADE)
+}
+
+# prettier-ignore
+type User {
+	id: ID! @unique
+	createdAt: DateTime!
+	name: String @default(value: "Panda")
+	email: String! @unique
+	password: String!
+	picture: String @default(value: "pandahead.png")
+	status: Status @default(value: AWAKEN)
+	opinions: [Opinion!]! @relation(name: "OpinionsByUser" onDelete: CASCADE)
+	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesByUser" onDelete: CASCADE)
+	actGrades: [ActGrade!]! @relation(name: "ActGradesByUser" onDelete: CASCADE)
 }
 
 type Opinion {
 	id: ID! @unique
 	createdAt: DateTime!
-	regardingWho: Company!
+	regardingWho: Company! @relation(name: "OpinionsOfCompany")
 	regardingWhat: Act!
 	title: String!
 	text: String!
 	sources: [String!]!
 	tags: [String!]!
-	writtenBy: User
+	writtenBy: User! @relation(name: "OpinionsByUser")
 	affiliations: [ActGrade!]!
-}
-
-type User {
-	id: ID! @unique
-	createdAt: DateTime!
-	name: String
-	email: String! @unique
-	password: String!
-	picture: String
-	status: Status
-	opinions: [Opinion!]!
-	causeGrades: [CauseGrade!]!
-	actGrades: [ActGrade!]!
-}
-
-type CauseGrade {
-	id: ID! @unique
-	createdAt: DateTime!
-	gradedTo: Company!
-	gradedBy: User!
-	cause: Cause!
-	grade: Float!
 }
 
 type ActGrade {
 	id: ID! @unique
 	createdAt: DateTime!
-	gradedTo: Company!
-	gradedBy: User!
+	gradedTo: Company! @relation(name: "ActGradesOfCompany")
+	gradedBy: User! @relation(name: "ActGradesByUser")
 	act: Act!
 	grade: Float!
 	affiliatedTo: Opinion!
 }
 
+type CauseGrade {
+	id: ID! @unique
+	createdAt: DateTime!
+	gradedTo: Company! @relation(name: "CauseGradesOfCompany")
+	gradedBy: User! @relation(name: "CauseGradesByUser")
+	cause: Cause!
+	grade: Float!
+}
+
 enum Act {
-	CLIMAT_CHNG
-	ECO_PRSV
-	ANIM_XP
-	PO_RESP
+	CLIMAT_CHANGE
+	ECOSYSTEM_PRESERVATION
+	RESOURCE_PRESERVATION
+	ANIMAL_EXPERIMENTATION
+	ANIMAL_RESOURCES
+	ANIMAL_WELFARE
+	POLITICAL_RESPONSIBILITY
+	MARKET_INFLUENCE
+	POPULATION_RESPECT
+	CONSUMER_RESPECT
+	QUESTIONABLE_INDUSTRIES
+	SUPPLIER_REGULATION
+	SHAREHOLDER_REMUNERATION
+	TAXATION_LEVEL
+	EXECUTIVE_COMPENSATION
+	EMPLOYEE_EQUITY
+	EMPLOYMENT_CONDITIONS
+	EMPLOYEE_DISCRIMINATIONS
+	WORKING_CONDITIONS
+	MANAGING_CONDITIONS
 }
 
 enum Cause {
-	ENV
-	ANI
-	ETH
+	ENVIRONMENT
+	ANIMALS
+	ETHICS
+	FISCALITY
+	SOCIAL
 }
 
 enum Status {
