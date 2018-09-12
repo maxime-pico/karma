@@ -1,3 +1,26 @@
+const { getUserId } = require('../utils')
+
+// Resolver querying the user info from token
+function getUserInfoFromContext(parent, args, context, info) {
+	const userId = getUserId(context)
+	console.log('coucou')
+	console.log(userId)
+	return context.db.query.user(
+		{ where: { id: userId } },
+		`{ id name email picture status }`,
+	)
+}
+
+// Resolver querying all the companies in the database
+function company(parent, args, context, info) {
+	return context.db.query.company(
+		{
+			where: { id: args.companyId },
+		},
+		`{name}`,
+	)
+}
+
 // Resolver querying all the companies in the database
 function allCompanies(parent, args, context, info) {
 	return context.db.query.companies({}, info)
@@ -140,6 +163,8 @@ async function opinionsFeed(parent, args, context, info){
 }
 
 module.exports = {
+	getUserInfoFromContext,
+	company,
 	allCompanies,
 	companyCauseGrades,
 	companyActGrades,

@@ -1,7 +1,11 @@
 {
 	"name": "karma-server",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Server of the Karma Panda project",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/Green-Dirt/karma.git"
+	},
 	"main": "index.js",
 	"scripts": {
 		"start": "node src/index.js",
@@ -10,7 +14,7 @@
 		"prisma": "prisma"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Green-Dirt",
 	"license": "ISC",
 	"dependencies": {
 		"bcryptjs": "^2.4.3",

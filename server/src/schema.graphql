@@ -2,6 +2,14 @@
 
 # prettier-ignore
 type Query {
+  # exposes the resolver that gets the userId from a token
+  getUserInfoFromContext: User
+
+  # exposes the resolver that gets a company from its id
+  company(
+    companyId: ID!
+  ): Company
+
   # exposes the resolver that gets the list of all companies in the database
 	allCompanies: [Company!]!
 
@@ -92,17 +100,35 @@ type User {
 
 # defines the return type of companyCauseGrades
 type AvgCauseGrades {
-	ENV: Float
-	ANI: Float
-	ETH: Float
+	ENVIRONMENT: Float
+	ANIMALS: Float
+	ETHICS: Float
+	FISCALITY: Float
+	SOCIAL: Float
 }
 
 # defines the return type of companyActrades
 type AvgActGrades {
-	CLIMAT_CHNG: Float
-	ECO_PRSV: Float
-	ANIM_XP: Float
-	PO_RESP: Float
+	CLIMAT_CHANGE: Float
+	ECOSYSTEM_PRESERVATION: Float
+	RESOURCE_PRESERVATION: Float
+	ANIMAL_EXPERIMENTATION: Float
+	ANIMAL_RESOURCES: Float
+	ANIMAL_WELFARE: Float
+	POLITICAL_RESPONSIBILITY: Float
+	MARKET_INFLUENCE: Float
+	POPULATION_RESPECT: Float
+	CONSUMER_RESPECT: Float
+	QUESTIONABLE_INDUSTRIES: Float
+	SUPPLIER_REGULATION: Float
+	SHAREHOLDER_REMUNERATION: Float
+	TAXATION_LEVEL: Float
+	EXECUTIVE_COMPENSATION: Float
+	EMPLOYEE_EQUITY: Float
+	EMPLOYMENT_CONDITIONS: Float
+	EMPLOYEE_DISCRIMINATIONS: Float
+	WORKING_CONDITIONS: Float
+	MANAGING_CONDITIONS: Float
 }
 
 # defines the return type of companyOverview

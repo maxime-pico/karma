@@ -8,6 +8,7 @@ import Soul from './Soul'
 import Cause from './Cause'
 import Deliberation from './Deliberation'
 import UserProfile from './UserProfile'
+import Login from './Login'
 
 // implements the routing thanks to react router dom. It loads the right
 // component by matching the path
@@ -23,7 +24,9 @@ const App = () => (
 				path="/company/:companyId/cause/:cause/act/:actId"
 				component={Deliberation}
 			/>
-			<Route path="/users/:userId" component={UserProfile} />
+			<Route path="/user/" component={UserProfile} />
+			<Route path="/signup/" component={Login} />
+			<Route path="/login/" component={Login} />
 		</Switch>
 	</div>
 )
