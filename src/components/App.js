@@ -14,7 +14,7 @@ import Login from './Login'
 // component by matching the path
 const App = () => (
 	<div className="App">
-		<Header />
+		<Route path="/" component={Header} />
 		<Switch>
 			<Route exact path="/" component={Search} />
 			<Route exact path="/company/:companyId" component={Soul} />

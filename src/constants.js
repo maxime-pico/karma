@@ -103,4 +103,19 @@ export const CAUSE_AND_ACTS = {
 	},
 }
 
+export const STATUS = {
+	ASLEEP: {
+		name_fr: 'Panda Endormi',
+	},
+	AWAKEN: {
+		name_fr: 'Panda Eveillé',
+	},
+	SACRED: {
+		name_fr: 'Panda Sacré',
+	},
+	SAINT: {
+		name_fr: 'Saint Panda',
+	},
+}
+
 export const AUTH_TOKEN = 'auth-token_toBeHidden'
