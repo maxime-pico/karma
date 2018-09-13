@@ -4,14 +4,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import CompanyGrades from './CompanyGrades'
-
-const COMPANY_NAME_QUERY = gql`
-	query CompanyNameQuery($companyId: ID!) {
-		company(companyId: $companyId) {
-			name
-		}
-	}
-`
+import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
@@ -21,6 +14,7 @@ const CAUSE_GRADES_QUERY = gql`
 			SOCIAL
 			ETHICS
 			FISCALITY
+			overallKarma
 		}
 	}
 `
@@ -30,27 +24,20 @@ class Soul extends React.Component {
 	render() {
 		const companyId = this.props.match.params.companyId
 		return (
-			<Query query={COMPANY_NAME_QUERY} variables={{ companyId }}>
+			<Query query={CAUSE_GRADES_QUERY} variables={{ companyId }}>
 				{({ loading, error, data }) => {
 					if (loading) return <div> Fetching </div>
-					if (error) return <div> Error </div>
+					if (error) {
+						return <div> Error: {error.message} </div>
+					}
 
-					const companyName = data.company.name
+					const causeGrades = data.companyCauseGrades
+					const overallKarma = causeGrades.overallKarma
+
 					return (
 						<div>
-							<div> {companyName} </div>
-							<Query query={CAUSE_GRADES_QUERY} variables={{ companyId }}>
-								{({ loading, error, data }) => {
-									if (loading) return <div> Fetching </div>
-									if (error) {
-										return <div> Error: {error.message} </div>
-									}
-
-									const causeGrades = data.companyCauseGrades
-
-									return <CompanyGrades grades={causeGrades} />
-								}}
-							</Query>
+							<KarmaBubbleAndSlider karma={overallKarma} type="global" />
+							<CompanyGrades grades={causeGrades} />
 						</div>
 					)
 				}}

@@ -118,4 +118,62 @@ export const STATUS = {
 	},
 }
 
+export const GRADES_TO_WORDS = {
+	WORST: {
+		global: {
+			name_fr: 'Très Mauvais Karma',
+		},
+		cause: {
+			name_fr: 'Très Mauvais Karma',
+		},
+		act: {
+			name_fr: 'Très Maléfique',
+		},
+	},
+	BAD: {
+		global: {
+			name_fr: 'Plutôt Mauvais Karma',
+		},
+		cause: {
+			name_fr: 'Plutôt Mauvais Karma',
+		},
+		act: {
+			name_fr: 'Plutôt Maléfique',
+		},
+	},
+	NEUTRAL: {
+		global: {
+			name_fr: 'Karma Neutre',
+		},
+		cause: {
+			name_fr: 'Karma Neutre',
+		},
+		act: {
+			name_fr: 'Mouais...',
+		},
+	},
+	GOOD: {
+		global: {
+			name_fr: 'Plutôt Bon Karma',
+		},
+		cause: {
+			name_fr: 'Plutôt Bon Karma',
+		},
+		act: {
+			name_fr: 'Plutôt Bénéfique',
+		},
+	},
+	BEST: {
+		global: {
+			name_fr: 'Très Bon Karma',
+		},
+		cause: {
+			name_fr: 'Très Bon Karma',
+		},
+		act: {
+			name_fr: 'Très Bénéfique',
+		},
+	},
+}
+
 export const AUTH_TOKEN = 'auth-token_toBeHidden'

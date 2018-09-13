@@ -53,11 +53,15 @@ async function companyCauseGrades(parent, args, context, info) {
 	// compute the number of grades per cause
 	const numberOfCauses = Object.keys(avgCauseGrades).length
 	const divider = (causeGrades.length)/(numberOfCauses)
+  avgCauseGrades.overallKarma = 0
 
 	// average the grades
 	Object.keys(avgCauseGrades).map(function(key, index) {
 		avgCauseGrades[key] /= divider
+    avgCauseGrades.overallKarma += avgCauseGrades[key]
 	})
+
+  avgCauseGrades.overallKarma /= 5
 
 	return avgCauseGrades
 }

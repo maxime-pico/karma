@@ -105,6 +105,7 @@ type AvgCauseGrades {
 	ETHICS: Float
 	FISCALITY: Float
 	SOCIAL: Float
+	overallKarma: Float
 }
 
 # defines the return type of companyActrades
