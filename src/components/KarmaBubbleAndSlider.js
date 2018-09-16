@@ -5,7 +5,7 @@ import { convertGradesIntoWords } from '../utils'
 class KarmaBubbleAndSlider extends React.Component {
 	render() {
 		const { karma, type } = this.props
-		const karmaDescription = convertGradesIntoWords(karma, type).name_fr
+		const karmaDescription = convertGradesIntoWords(karma, type).fr
 		return (
 			<div>
 				<div>{karma}</div>

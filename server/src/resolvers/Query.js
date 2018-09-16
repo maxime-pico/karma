@@ -3,8 +3,6 @@ const { getUserId } = require('../utils')
 // Resolver querying the user info from token
 function getUserInfoFromContext(parent, args, context, info) {
 	const userId = getUserId(context)
-	console.log('coucou')
-	console.log(userId)
 	return context.db.query.user(
 		{ where: { id: userId } },
 		`{ id name email picture status }`,
@@ -85,9 +83,9 @@ async function companyActGrades(parent, args, context, info) {
 
 	// sum aggregate the grades by cause
 	actGrades.forEach(actGrade => {
-		avgActGrades[actGrade.cause] ?
-			avgActGrades[actGrade.cause] += actGrade.grade :
-			avgActGrades[actGrade.cause] = actGrade.grade
+		avgActGrades[actGrade.act] ?
+			avgActGrades[actGrade.act] += actGrade.grade :
+			avgActGrades[actGrade.act] = actGrade.grade
 	})
 
 	// compute the number of grades per cause
@@ -166,6 +164,21 @@ async function opinionsFeed(parent, args, context, info){
   return opinionsPreview
 }
 
+// resolver that counts the number of opinions of a specific company (args.companyId)
+// for a specific act (args.act)
+async function opinionsCount(parent, args, context, info) {
+	const { companyId, act } = args // destructure arguments
+
+	const opinions = await context.db.query.opinions(
+		{
+			where: { regardingWho: { id: companyId }, regardingWhat: act },
+		},
+		` { id } `,
+	)
+	if (opinions) return { act: act, count: opinions.length }
+	return { act: act, count: 0 }
+}
+
 module.exports = {
 	getUserInfoFromContext,
 	company,
@@ -175,4 +188,5 @@ module.exports = {
 	userBubbleQuery,
 	companyOverview,
 	opinionsFeed,
+	opinionsCount,
 }

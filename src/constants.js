@@ -1,177 +1,169 @@
 // Defines the table of cause and acts for reuse in the app
 export const CAUSE_AND_ACTS = {
 	ENVIRONMENT: {
-		name_fr: 'Cause Environnementale',
-		acts: [
-			{
-				act: 'CLIMAT_CHANGE',
-				name_fr: 'Implication dans le changement climatique',
-			},
-			{
-				act: 'ECOSYSTEM_PRESERVATION',
-				name_fr: 'Préservation des écosystèmes',
-			},
-			{
-				act: 'RESOURCE_PRESERVATION',
-				name_fr: 'Préservation des ressources',
-			},
-		],
+		fr: 'Cause Environnementale',
+		acts: ['CLIMAT_CHANGE', 'ECOSYSTEM_PRESERVATION', 'RESOURCE_PRESERVATION'],
+	},
+	CLIMAT_CHANGE: {
+		fr: 'Implication dans le changement climatique',
+	},
+	ECOSYSTEM_PRESERVATION: {
+		fr: 'Préservation des écosystèmes',
+	},
+	RESOURCE_PRESERVATION: {
+		fr: 'Préservation des ressources',
 	},
 	ANIMALS: {
-		name_fr: 'Cause animale',
-		acts: [
-			{
-				act: 'ANIMAL_EXPERIMENTATION',
-				name_fr: 'Expériences sur les animaux',
-			},
-			{
-				act: 'ANIMAL_RESOURCES',
-				name_fr: 'Utilisation de fourrures et autres',
-			},
-			{
-				act: 'ANIMAL_WELFARE',
-				name_fr: 'Bien être animal',
-			},
-		],
+		fr: 'Cause animale',
+		acts: ['ANIMAL_EXPERIMENTATION', 'ANIMAL_RESOURCES', 'ANIMAL_WELFARE'],
+	},
+	ANIMAL_EXPERIMENTATION: {
+		fr: 'Expériences sur les animaux',
+	},
+	ANIMAL_RESOURCES: {
+		fr: 'Utilisation de fourrures et autres',
+	},
+	ANIMAL_WELFARE: {
+		fr: 'Bien être animal',
 	},
 	ETHICS: {
-		name_fr: 'Cause éthique',
+		fr: 'Cause éthique',
 		acts: [
-			{
-				act: 'POLITICAL_RESPONSIBILITY',
-				name_fr: 'Responsabilité politique',
-			},
-			{
-				act: 'MARKET_INFLUENCE',
-				name_fr: 'Influence du marché',
-			},
-			{
-				act: 'POPULATION_RESPECT',
-				name_fr: 'Respect des populations',
-			},
-			{
-				act: 'CONSUMER_RESPECT',
-				name_fr: 'Respect du consommateur',
-			},
-			{
-				act: 'QUESTIONABLE_INDUSTRIES',
-				name_fr: 'Industries critiquables et/ou technologies critiquables',
-			},
+			'POLITICAL_RESPONSIBILITY',
+			'MARKET_INFLUENCE',
+			'POPULATION_RESPECT',
+			'CONSUMER_RESPECT',
+			'QUESTIONABLE_INDUSTRIES',
 		],
 	},
-	FISCALITY: {
-		name_fr: 'Fiscalité & Gouvernance',
+	POLITICAL_RESPONSIBILITY: {
+		fr: 'Responsabilité politique',
+	},
+	MARKET_INFLUENCE: {
+		fr: 'Influence du marché',
+	},
+	POPULATION_RESPECT: {
+		fr: 'Respect des populations',
+	},
+	CONSUMER_RESPECT: {
+		fr: 'Respect du consommateur',
+	},
+	QUESTIONABLE_INDUSTRIES: {
+		fr: 'Industries critiquables et/ou technologies critiquables',
+	},
+	FISCAL: {
+		fr: 'Fiscalité & Gouvernance',
 		acts: [
-			{
-				act: 'SHAREHOLDER_REMUNERATION',
-				name_fr: "Taux de rémunération de l'actionnariat",
-			},
-			{
-				act: 'TAXATION_LEVEL',
-				name_fr: "Taux d'imposition",
-			},
-			{
-				act: 'EXECUTIVE_COMPENSATION',
-				name_fr: 'Surémunération des dirigeants',
-			},
-			{
-				act: 'EMPLOYEE_EQUITY',
-				name_fr: 'Participation des salariés',
-			},
+			'SHAREHOLDER_REMUNERATION',
+			'TAXATION_LEVEL',
+			'EXECUTIVE_COMPENSATION',
+			'EMPLOYEE_EQUITY',
 		],
+	},
+	SHAREHOLDER_REMUNERATION: {
+		fr: "Taux de rémunération de l'actionnariat",
+	},
+	TAXATION_LEVEL: {
+		fr: "Taux d'imposition",
+	},
+	EXECUTIVE_COMPENSATION: {
+		fr: 'Surémunération des dirigeants',
+	},
+	EMPLOYEE_EQUITY: {
+		fr: 'Participation des salariés',
 	},
 	SOCIAL: {
-		name_fr: 'Cause Sociale',
+		fr: 'Cause Sociale',
 		acts: [
-			{
-				act: 'EMPLOYMENT_CONDITIONS',
-				name_fr: 'Conditions salariales',
-			},
-			{
-				act: 'EMPLOYEE_DISCRIMINATIONS',
-				name_fr: 'Discriminations',
-			},
-			{
-				act: 'WORKING_CONDITIONS',
-				name_fr: 'Conditions de travail',
-			},
-			{
-				act: 'MANAGING_CONDITIONS',
-				name_fr: 'Management et Epanouïssement salarial',
-			},
+			'EMPLOYMENT_CONDITIONS',
+			'EMPLOYEE_DISCRIMINATIONS',
+			'WORKING_CONDITIONS',
+			'MANAGING_CONDITIONS',
 		],
+	},
+	EMPLOYMENT_CONDITIONS: {
+		fr: 'Conditions salariales',
+	},
+	EMPLOYEE_DISCRIMINATIONS: {
+		fr: 'Discriminations',
+	},
+	WORKING_CONDITIONS: {
+		fr: 'Conditions de travail',
+	},
+	MANAGING_CONDITIONS: {
+		fr: 'Management et Epanouïssement salarial',
 	},
 }
 
 export const STATUS = {
 	ASLEEP: {
-		name_fr: 'Panda Endormi',
+		fr: 'Panda Endormi',
 	},
 	AWAKEN: {
-		name_fr: 'Panda Eveillé',
+		fr: 'Panda Eveillé',
 	},
 	SACRED: {
-		name_fr: 'Panda Sacré',
+		fr: 'Panda Sacré',
 	},
 	SAINT: {
-		name_fr: 'Saint Panda',
+		fr: 'Saint Panda',
 	},
 }
 
 export const GRADES_TO_WORDS = {
 	WORST: {
 		global: {
-			name_fr: 'Très Mauvais Karma',
+			fr: 'Très Mauvais Karma',
 		},
 		cause: {
-			name_fr: 'Très Mauvais Karma',
+			fr: 'Très Mauvais Karma',
 		},
 		act: {
-			name_fr: 'Très Maléfique',
+			fr: 'Très Maléfique',
 		},
 	},
 	BAD: {
 		global: {
-			name_fr: 'Plutôt Mauvais Karma',
+			fr: 'Plutôt Mauvais Karma',
 		},
 		cause: {
-			name_fr: 'Plutôt Mauvais Karma',
+			fr: 'Plutôt Mauvais Karma',
 		},
 		act: {
-			name_fr: 'Plutôt Maléfique',
+			fr: 'Plutôt Maléfique',
 		},
 	},
 	NEUTRAL: {
 		global: {
-			name_fr: 'Karma Neutre',
+			fr: 'Karma Neutre',
 		},
 		cause: {
-			name_fr: 'Karma Neutre',
+			fr: 'Karma Neutre',
 		},
 		act: {
-			name_fr: 'Mouais...',
+			fr: 'Mouais...',
 		},
 	},
 	GOOD: {
 		global: {
-			name_fr: 'Plutôt Bon Karma',
+			fr: 'Plutôt Bon Karma',
 		},
 		cause: {
-			name_fr: 'Plutôt Bon Karma',
+			fr: 'Plutôt Bon Karma',
 		},
 		act: {
-			name_fr: 'Plutôt Bénéfique',
+			fr: 'Plutôt Bénéfique',
 		},
 	},
 	BEST: {
 		global: {
-			name_fr: 'Très Bon Karma',
+			fr: 'Très Bon Karma',
 		},
 		cause: {
-			name_fr: 'Très Bon Karma',
+			fr: 'Très Bon Karma',
 		},
 		act: {
-			name_fr: 'Très Bénéfique',
+			fr: 'Très Bénéfique',
 		},
 	},
 }

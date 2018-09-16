@@ -1,10 +1,12 @@
 // @flow
 import React from 'react'
-// import { Link } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import CompanyGrades from './CompanyGrades'
+import OverviewList from './OverviewList'
 import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
+import SoulExplanation from './SoulExplanation'
+import CauseCard from './CauseCard'
+import { CAUSE_AND_ACTS } from '../constants.js'
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
@@ -13,7 +15,7 @@ const CAUSE_GRADES_QUERY = gql`
 			ANIMALS
 			SOCIAL
 			ETHICS
-			FISCALITY
+			FISCAL
 			overallKarma
 		}
 	}
@@ -36,8 +38,27 @@ class Soul extends React.Component {
 
 					return (
 						<div>
-							<KarmaBubbleAndSlider karma={overallKarma} type="global" />
-							<CompanyGrades grades={causeGrades} />
+							<div className="container-fluid">
+								<KarmaBubbleAndSlider karma={overallKarma} type="global" />
+								<OverviewList grades={causeGrades} type="cause" />
+							</div>
+							<div className="container">
+								<SoulExplanation />
+								<div className="row d-flex justify-content-center">
+									{Object.keys(causeGrades).map(
+										identifier =>
+											CAUSE_AND_ACTS[identifier] && (
+												<div key={identifier} className="col-4">
+													<CauseCard
+														companyId={companyId}
+														causeKarma={causeGrades[identifier]}
+														identifier={identifier}
+													/>
+												</div>
+											),
+									)}
+								</div>
+							</div>
 						</div>
 					)
 				}}
@@ -47,5 +68,3 @@ class Soul extends React.Component {
 }
 
 export default Soul
-
-//{CAUSE_AND_ACTS[cause].name_fr} : {causeGrades[cause]}

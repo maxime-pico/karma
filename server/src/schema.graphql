@@ -41,6 +41,13 @@ type Query {
     skip: Int
     first: Int
   ): [OpinionPreview!]!
+
+  # exposes the resolver that counts the number of opinions for a specific act
+  # of a specific company
+  opinionsCount(
+    companyId: ID!
+    act: Act!
+  ): Count!
 }
 
 # prettier-ignore
@@ -103,7 +110,7 @@ type AvgCauseGrades {
 	ENVIRONMENT: Float
 	ANIMALS: Float
 	ETHICS: Float
-	FISCALITY: Float
+	FISCAL: Float
 	SOCIAL: Float
 	overallKarma: Float
 }
@@ -151,4 +158,9 @@ type OpinionPreview {
 	sources: [String!]!
 	writtenBy: User
 	affiliationsCount: Int
+}
+
+type Count {
+	act: Act
+	count: Int
 }

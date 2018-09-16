@@ -2,7 +2,7 @@ import React from 'react'
 import 'rc-slider/assets/index.css'
 import Slider from 'rc-slider'
 
-const style = { width: 200, margin: 'auto', 'margin-bottom': '20px' }
+const style = { width: 200, margin: 'auto', marginBottom: '20px' }
 
 const marks = {
 	'-2': '-2',
@@ -12,7 +12,7 @@ const marks = {
 	2: '2',
 }
 
-const Deliberation = props => (
+const PandaSlider = props => (
 	<div style={style}>
 		<Slider
 			min={-2}
@@ -26,4 +26,4 @@ const Deliberation = props => (
 	</div>
 )
 
-export default Deliberation
+export default PandaSlider

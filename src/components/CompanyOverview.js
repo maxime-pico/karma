@@ -35,25 +35,21 @@ class CompanyOverview extends React.Component {
 
 					return (
 						<Link to={`/company/${companyId}`}>
-							<table>
-								<tbody>
-									<tr>
-										<td>
-											<img
-												src={process.env.PUBLIC_URL + '/images/' + logo}
-												width="60"
-												height="60"
-												alt="company"
-											/>
-										</td>
-										<td>
-											<div>{name}</div>
-											<div>{causeGradesCount + actGradesCount} notes</div>
-											<div>{opinionsCount} opinions</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							<div className="row">
+								<div className="col-4">
+									<img
+										src={process.env.PUBLIC_URL + '/images/' + logo}
+										width="60"
+										height="60"
+										alt="company"
+									/>
+								</div>
+								<div className="col">
+									<div>{name}</div>
+									<div>{causeGradesCount + actGradesCount} notes</div>
+									<div>{opinionsCount} opinions</div>
+								</div>
+							</div>
 						</Link>
 					)
 				}}

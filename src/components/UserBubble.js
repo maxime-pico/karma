@@ -36,7 +36,7 @@ class UserBubble extends React.Component {
 							</div>
 							<div>{name}</div>
 							{/* get readable status equivalent from STATUS table*/}
-							<div>{STATUS[status].name_fr}</div>{' '}
+							<div>{STATUS[status].fr}</div>{' '}
 						</Link>
 					)
 				}}

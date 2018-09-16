@@ -3,6 +3,7 @@ mutation {
   createHM: createCompany(
     data: {
       name: "H&M"
+      logo: "hm.png"
       actGrades: {
         create: {
           gradedBy: {
@@ -59,7 +60,7 @@ mutation {
     data: {
       gradedTo: { connect: { name: "H&M" } }
       gradedBy: { connect: { email: "test@test.com" } }
-      cause: FISCALITY
+      cause: FISCAL
       grade: -2
     }
   ){ id }
@@ -144,7 +145,7 @@ mutation {
     data: {
       gradedTo: { connect: { name: "H&M" } }
       gradedBy: { connect: { email: "test2@test.com" } }
-      cause: FISCALITY
+      cause: FISCAL
       grade: -1
     }
   ){ id }

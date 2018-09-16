@@ -14,31 +14,29 @@ class Header extends React.Component {
 		const match = this.props.location.pathname.match(/\/company\/(.*?)(\/|$)/)
 		const companyId = match ? match[1] : null
 		return (
-			<table>
-				<tbody>
-					<tr>
-						<td>
-							{companyId ? (
-								<CompanyOverview companyId={companyId} />
-							) : (
-								<img src={karmalogo} height="60" alt="karma panda" />
-							)}
-						</td>
-						<td>
-							<Link to="/">Search</Link>
-						</td>
-						<td>
-							{authToken ? (
-								<UserBubble />
-							) : (
-								<Link to="/login" className="ml1 no-underline black">
-									Signup or Login
-								</Link>
-							)}
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div className="container-fluid">
+				<div className="row">
+					<div className="col">
+						{companyId ? (
+							<CompanyOverview companyId={companyId} />
+						) : (
+							<img src={karmalogo} height="60" alt="karma panda" />
+						)}
+					</div>
+					<div className="col">
+						<Link to="/">Search</Link>
+					</div>
+					<div className="col d-flex justify-content-end">
+						{authToken ? (
+							<UserBubble />
+						) : (
+							<Link to="/login" className="ml1 no-underline black">
+								Signup or Login
+							</Link>
+						)}
+					</div>
+				</div>
+			</div>
 		)
 	}
 }
