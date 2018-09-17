@@ -143,14 +143,14 @@ async function companyOverview(parent, args, context, info) {
 // for a specific company and adds an affiliation count field to the opinions
 // prettier-ignore
 async function opinionsFeed(parent, args, context, info){
-  const { companyId, first, skip } = args // destructure input arguments
+  const { companyId, first, skip, act } = args // destructure input arguments
   
   const opinionsPreview = await context.db.query.opinions({
       first: first,
       skip: skip,
-      where: { regardingWho: { id: companyId } }
+      where: { regardingWho: { id: companyId }, regardingWhat: act }
     },
-    ` { createdAt title text regardingWhat tags sources writtenBy{ name picture } affiliations{ id } } `
+    ` { id createdAt title text regardingWhat tags sources writtenBy{ name picture } affiliations{ id } } `
   )
 
 	// if one or more opinions are returned then manipulate them to add the count

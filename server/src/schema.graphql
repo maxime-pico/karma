@@ -40,6 +40,7 @@ type Query {
     companyId: ID!
     skip: Int
     first: Int
+    act: Act
   ): [OpinionPreview!]!
 
   # exposes the resolver that counts the number of opinions for a specific act
@@ -150,6 +151,7 @@ type CompanyOverview {
 
 # defines the return type of opinionsFeed
 type OpinionPreview {
+	id: ID!
 	createdAt: DateTime
 	title: String
 	text: String

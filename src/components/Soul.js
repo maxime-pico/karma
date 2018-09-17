@@ -7,6 +7,7 @@ import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
 import SoulExplanation from './SoulExplanation'
 import CauseCard from './CauseCard'
 import { CAUSE_AND_ACTS } from '../constants.js'
+import { Link } from 'react-router-dom'
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
@@ -40,7 +41,11 @@ class Soul extends React.Component {
 						<div className="mb-5">
 							<div className="container-fluid">
 								<KarmaBubbleAndSlider karma={overallKarma} type="global" />
-								<OverviewList grades={causeGrades} type="cause" />
+								<OverviewList
+									grades={causeGrades}
+									type="cause"
+									companyId={companyId}
+								/>
 							</div>
 
 							<div className="container">
@@ -50,11 +55,15 @@ class Soul extends React.Component {
 										identifier =>
 											CAUSE_AND_ACTS[identifier] && (
 												<div key={identifier} className="col-4">
-													<CauseCard
-														companyId={companyId}
-														causeKarma={causeGrades[identifier]}
-														identifier={identifier}
-													/>
+													<Link
+														to={`/company/${companyId}/cause/${identifier}`}
+													>
+														<CauseCard
+															companyId={companyId}
+															causeKarma={causeGrades[identifier]}
+															identifier={identifier}
+														/>
+													</Link>
 												</div>
 											),
 									)}
