@@ -7,10 +7,16 @@ class KarmaBubbleAndSlider extends React.Component {
 		const { karma, type } = this.props
 		const karmaDescription = convertGradesIntoWords(karma, type).fr
 		return (
-			<div>
-				<div>{karma}</div>
-				<div>{karmaDescription}</div>
-				<PandaSlider karma={karma} />
+			<div className="row d-flex justify-content-center my-4">
+				<div className={type === 'global' ? 'col-3' : 'col'}>
+					<div className="row text-center">
+						<div className="col">{karma}</div>
+					</div>
+					<div className="row text-center">
+						<div className="col">{karmaDescription}</div>
+					</div>
+					<PandaSlider karma={karma} type={type} />
+				</div>
 			</div>
 		)
 	}

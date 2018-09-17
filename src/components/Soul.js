@@ -37,11 +37,12 @@ class Soul extends React.Component {
 					const overallKarma = causeGrades.overallKarma
 
 					return (
-						<div>
+						<div className="mb-5">
 							<div className="container-fluid">
 								<KarmaBubbleAndSlider karma={overallKarma} type="global" />
 								<OverviewList grades={causeGrades} type="cause" />
 							</div>
+
 							<div className="container">
 								<SoulExplanation />
 								<div className="row d-flex justify-content-center">
@@ -57,6 +58,13 @@ class Soul extends React.Component {
 												</div>
 											),
 									)}
+								</div>
+								<div className="row">
+									<div className="col">
+										<button type="button" className="btn btn-secondary">
+											Attribuer du Karma
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>

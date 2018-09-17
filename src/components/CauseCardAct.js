@@ -3,10 +3,6 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { CAUSE_AND_ACTS } from '../constants.js'
 
-const style = {
-	margin: 'auto',
-}
-
 const OPINIONS_COUNT_QUERY = gql`
 	query OpinionsCountQuery($companyId: ID!, $identifier: Act!) {
 		opinionsCount(companyId: $companyId, act: $identifier) {

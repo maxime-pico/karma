@@ -9,7 +9,7 @@ import CauseCardActList from './CauseCardActList'
 
 const style = {
 	border: '1pt solid black',
-	'border-radius': '25px',
+	borderRadius: '25px',
 }
 
 const ACT_GRADES_QUERIES = {
