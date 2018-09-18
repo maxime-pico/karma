@@ -13,7 +13,7 @@ import Login from './Login'
 // implements the routing thanks to react router dom. It loads the right
 // component by matching the path
 const App = () => (
-	<div className="App">
+	<div className="App" id="App">
 		<Route path="/" component={Header} />
 		<Switch>
 			<Route exact path="/" component={Search} />

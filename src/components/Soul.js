@@ -1,4 +1,3 @@
-// @flow
 import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -6,8 +5,11 @@ import OverviewList from './OverviewList'
 import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
 import SoulExplanation from './SoulExplanation'
 import CauseCard from './CauseCard'
+import LoginToGradeModal from './LoginToGradeModal'
 import { CAUSE_AND_ACTS } from '../constants.js'
 import { Link } from 'react-router-dom'
+import Cookies from 'universal-cookie'
+import { AUTH_TOKEN } from '../constants'
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
@@ -24,8 +26,38 @@ const CAUSE_GRADES_QUERY = gql`
 // Soul component: gets the current company from path and displays the list of
 // corresponding causes and their grades
 class Soul extends React.Component {
+	constructor(props) {
+		super(props)
+		const cookies = new Cookies() // get access to cookies
+		this.authToken = cookies.get(AUTH_TOKEN) // if user is logged in authToken contains the tok
+	}
+
+	state = {
+		grading: false,
+		modalIsOpen: false,
+	}
+
+	_startGrading = () => {
+		if (this.authToken) {
+			console.log('loggedIn')
+		} else {
+			this.setState(previousState => {
+				previousState.modalIsOpen = true
+				return previousState
+			})
+		}
+	}
+
+	_closeModal = () => {
+		this.setState(previousState => {
+			previousState.modalIsOpen = false
+			return previousState
+		})
+	}
+
 	render() {
 		const companyId = this.props.match.params.companyId
+
 		return (
 			<Query query={CAUSE_GRADES_QUERY} variables={{ companyId }}>
 				{({ loading, error, data }) => {
@@ -50,6 +82,17 @@ class Soul extends React.Component {
 
 							<div className="container">
 								<SoulExplanation />
+								<div className="row">
+									<div className="col">
+										<button
+											type="button"
+											className="btn btn-secondary"
+											onClick={() => this._startGrading()}
+										>
+											Attribuer du Karma
+										</button>
+									</div>
+								</div>
 								<div className="row d-flex justify-content-center">
 									{Object.keys(causeGrades).map(
 										identifier =>
@@ -68,14 +111,11 @@ class Soul extends React.Component {
 											),
 									)}
 								</div>
-								<div className="row">
-									<div className="col">
-										<button type="button" className="btn btn-secondary">
-											Attribuer du Karma
-										</button>
-									</div>
-								</div>
 							</div>
+							<LoginToGradeModal
+								isOpen={this.state.modalIsOpen}
+								_closeModal={this._closeModal}
+							/>
 						</div>
 					)
 				}}
