@@ -58,8 +58,9 @@ async function login(parent, args, context, info) {
 // resolver that gets user id from context and then checks if user did not
 // already grade the company on this cause if not, creates a new grade cause
 // from the arguments given by the user
-async function gradeCause(parent, args, context, info) {
-	const { companyId, cause, grade } = args
+async function gradeCauses(parent, args, context, info) {
+	const { companyId, userGrades } = args
+	const causes = ['ENVIRONMENT', 'ANIMALS', 'SOCIAL', 'ETHICS', 'FISCAL']
 
 	// get user id from context thantks to imported function
 	const userId = getUserId(context)
@@ -68,25 +69,57 @@ async function gradeCause(parent, args, context, info) {
 	const causeGradeExists = await context.db.exists.CauseGrade({
 		gradedBy: { id: userId },
 		gradedTo: { id: companyId },
-		cause: cause,
+		cause: 'ENVIRONMENT',
 	})
 
+	const causeGrades = []
+
 	if (causeGradeExists) {
-		throw new Error(`Already graded Cause for Company: ${companyId}`)
+		// if already graded then update the grades by first recovering the id of the
+		// current grade and then update for each cause
+		causes.forEach(async (cause, index) => {
+			const causeId = await context.db.query.causeGrades(
+				{
+					where: {
+						gradedBy: { id: userId },
+						gradedTo: { id: companyId },
+						cause: cause,
+					},
+				},
+				` { id } `,
+			)
+
+			const causeGrade = await context.db.mutation.updateCauseGrade(
+				{
+					where: causeId[0],
+					data: {
+						grade: userGrades[index],
+					},
+				},
+				` { id } `,
+			)
+			causeGrades.push(causeGrade) //doesn't work
+		})
+	} else {
+		// if not adds the grade in the database
+		userGrades.forEach((grade, index) => {
+			causeGrades.push(
+				context.db.mutation.createCauseGrade(
+					{
+						data: {
+							gradedTo: { connect: { id: companyId } },
+							gradedBy: { connect: { id: userId } },
+							cause: causes[index],
+							grade: grade,
+						},
+					},
+					info,
+				),
+			)
+		})
 	}
 
-	// if not adds the grade in the database
-	return context.db.mutation.createCauseGrade(
-		{
-			data: {
-				gradedTo: { connect: { id: companyId } },
-				gradedBy: { connect: { id: userId } },
-				cause: cause,
-				grade: grade,
-			},
-		},
-		info,
-	)
+	return causeGrades
 }
 
 // idem cause grade with opinion id added as an argument
@@ -142,7 +175,7 @@ async function postOpinion(parent, args, context, info) {
 module.exports = {
 	signup,
 	login,
-	gradeCause,
+	gradeCauses,
 	gradeAct,
 	postOpinion,
 }

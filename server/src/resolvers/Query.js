@@ -49,17 +49,19 @@ async function companyCauseGrades(parent, args, context, info) {
 	})
 
 	// compute the number of grades per cause
-	const numberOfCauses = Object.keys(avgCauseGrades).length
+	const causes = Object.keys(avgCauseGrades)
+	const numberOfCauses = causes.length
 	const divider = (causeGrades.length)/(numberOfCauses)
   avgCauseGrades.overallKarma = 0
 
 	// average the grades
-	Object.keys(avgCauseGrades).map(function(key, index) {
-		avgCauseGrades[key] /= divider
-    avgCauseGrades.overallKarma += avgCauseGrades[key]
+	causes.forEach( cause => {
+		const avgCauseGrade = avgCauseGrades[cause] / divider
+    avgCauseGrades.overallKarma += avgCauseGrade
+		avgCauseGrades[cause] = Math.round(avgCauseGrade * 10) / 10
 	})
 
-  avgCauseGrades.overallKarma /= 5
+  avgCauseGrades.overallKarma = Math.round((avgCauseGrades.overallKarma / 5) * 10) /10
 
 	return avgCauseGrades
 }
@@ -94,7 +96,7 @@ async function companyActGrades(parent, args, context, info) {
 
 	// average the grades
 	Object.keys(avgActGrades).map(function(key, index) {
-		avgActGrades[key] /= divider
+		avgActGrades[key] = Math.round((avgActGrades[key] / divider) * 10) / 10
 	})
 
 	return avgActGrades

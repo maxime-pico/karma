@@ -15,7 +15,7 @@ class KarmaBubbleAndSlider extends React.Component {
 					<div className="row text-center">
 						<div className="col">{karmaDescription}</div>
 					</div>
-					<PandaSlider karma={karma} type={type} />
+					<PandaSlider karma={karma} type={type} disabled={true} />
 				</div>
 			</div>
 		)

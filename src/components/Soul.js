@@ -39,7 +39,10 @@ class Soul extends React.Component {
 
 	_startGrading = () => {
 		if (this.authToken) {
-			console.log('loggedIn')
+			this.props.history.push({
+				pathname: this.props.match.url + `/cause/ENVIRONMENT/`,
+				state: { startGrading: true },
+			})
 		} else {
 			this.setState(previousState => {
 				previousState.modalIsOpen = true
@@ -86,7 +89,7 @@ class Soul extends React.Component {
 									<div className="col">
 										<button
 											type="button"
-											className="btn btn-secondary"
+											className="btn btn-primary"
 											onClick={() => this._startGrading()}
 										>
 											Attribuer du Karma

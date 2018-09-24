@@ -8,3 +8,10 @@ export function convertGradesIntoWords(grade, type) {
 	if (1.5 < grade) return GRADES_TO_WORDS.BEST[type]
 	return 'error'
 }
+
+export function adjacentCause(cause, direction) {
+	const causes = ['ENVIRONMENT', 'ANIMALS', 'SOCIAL', 'ETHICS', 'FISCAL']
+	const currentIndex = causes.indexOf(cause)
+	const newIndex = (currentIndex + direction) % 5
+	return causes[newIndex]
+}

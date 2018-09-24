@@ -62,11 +62,10 @@ type Mutation {
 	login(email: String!, password: String!): AuthPayload
 
   # exposes the resolver that allows a logged in user to grade the cause of a company
-	gradeCause(
+	gradeCauses(
     companyId: ID!,
-    cause: Cause!,
-    grade: Int!
-  ): CauseGrade
+    userGrades: [Int!]!,
+  ): [CauseGrade!]!
 
   # exposes the resolver that allows a logged in user to grade the act of a
   # company and affiliation to an opinion
