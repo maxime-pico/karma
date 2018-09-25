@@ -6,10 +6,9 @@ import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
 import SoulExplanation from './SoulExplanation'
 import CauseCard from './CauseCard'
 import LoginToGradeModal from './LoginToGradeModal'
-import { CAUSE_AND_ACTS } from '../constants.js'
+import { CAUSE_AND_ACTS, AUTH_TOKEN } from '../constants.js'
 import { Link } from 'react-router-dom'
 import Cookies from 'universal-cookie'
-import { AUTH_TOKEN } from '../constants'
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {

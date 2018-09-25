@@ -27,6 +27,16 @@ function allCompanies(parent, args, context, info) {
 // resolver that gets the cause grades of a specific companyand averages them per cause
 // prettier-ignore
 async function companyCauseGrades(parent, args, context, info) {
+
+  // test if company exists
+  const companyExists = await context.db.exists.Company({
+    id: args.companyId
+  })
+
+  if (!companyExists){
+    throw new Error('This company does not exist')
+  }
+
 	// get all the cause grades of a specific company
 	const causeGrades = await context.db.query.causeGrades(
 		{where:
@@ -76,11 +86,7 @@ async function companyActGrades(parent, args, context, info) {
 		},
 			` { act grade } `,
 	)
-	
-	// test if there are grades so far if not throw error
-	if (!actGrades.length) {
-		throw new Error('No grades so far')
-	}
+
 	const avgActGrades = {}
 
 	// sum aggregate the grades by cause

@@ -1,4 +1,4 @@
-import { GRADES_TO_WORDS } from './constants'
+import { GRADES_TO_WORDS, CAUSE_AND_ACTS } from './constants'
 
 export function convertGradesIntoWords(grade, type) {
 	if (grade <= -1.5) return GRADES_TO_WORDS.WORST[type]
@@ -12,6 +12,20 @@ export function convertGradesIntoWords(grade, type) {
 export function adjacentCause(cause, direction) {
 	const causes = ['ENVIRONMENT', 'ANIMALS', 'SOCIAL', 'ETHICS', 'FISCAL']
 	const currentIndex = causes.indexOf(cause)
-	const newIndex = (currentIndex + direction) % 5
+	var newIndex = (currentIndex + direction) % 5
+	if (newIndex < 0) {
+		newIndex += 5
+	}
 	return causes[newIndex]
+}
+
+export function adjacentAct(cause, act, direction) {
+	const acts = CAUSE_AND_ACTS[cause].acts
+	const currentIndex = acts.indexOf(act)
+	const mod = acts.length
+	var newIndex = (currentIndex + direction) % mod
+	if (newIndex < 0) {
+		newIndex += mod
+	}
+	return acts[newIndex]
 }

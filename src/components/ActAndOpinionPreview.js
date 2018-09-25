@@ -1,12 +1,16 @@
 import React from 'react'
 import ActPreview from './ActPreview'
 import OpinionPreviewBloc from './OpinionPreviewBloc'
+import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
 
-const ActAndOpinionPreview = ({ act, grade, companyId }) => (
+const ActAndOpinionPreview = ({ act, grade, companyId, location }) => (
 	<div className="my-4">
-		<ActPreview identifier={act} grade={grade} companyId={companyId} />
+		<Link to={`${location.pathname}act/${act}`}>
+			<ActPreview identifier={act} grade={grade} companyId={companyId} />
+		</Link>
 		<OpinionPreviewBloc act={act} companyId={companyId} />
 	</div>
 )
 
-export default ActAndOpinionPreview
+export default withRouter(ActAndOpinionPreview)
