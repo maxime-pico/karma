@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const borderBottom = {
 	borderBottom: '1pt dashed grey',
@@ -12,7 +13,7 @@ const relative = {
 	position: 'relative',
 }
 
-const OpinionPreview = ({ opinionsFeed }) => (
+const OpinionPreview = ({ opinionsFeed, location, act }) => (
 	<div>
 		{opinionsFeed.map((opinion, index) => (
 			<div
@@ -57,7 +58,13 @@ const OpinionPreview = ({ opinionsFeed }) => (
 				<div style={index < opinionsFeed.length - 1 ? borderBottom : null} />
 			</div>
 		))}
-		{opinionsFeed.length && 'Voir toutes les opinions et leurs sources'}
+		{opinionsFeed.length ? (
+			<Link to={`${location.pathname}act/${act}`}>
+				Voir toutes les opinions et leurs sources
+			</Link>
+		) : (
+			"Il n'y a pas encore d'opinion pour cet acte"
+		)}
 	</div>
 )
 

@@ -88,22 +88,26 @@ async function companyActGrades(parent, args, context, info) {
 	)
 
 	const avgActGrades = {}
+  const numberOfGradesPerAct = {}
 
 	// sum aggregate the grades by cause
 	actGrades.forEach(actGrade => {
-		avgActGrades[actGrade.act] ?
-			avgActGrades[actGrade.act] += actGrade.grade :
-			avgActGrades[actGrade.act] = actGrade.grade
+    if (avgActGrades[actGrade.act]){
+      avgActGrades[actGrade.act] += actGrade.grade
+      numberOfGradesPerAct[actGrade.act] += 1
+    } else{
+      avgActGrades[actGrade.act] = actGrade.grade
+      numberOfGradesPerAct[actGrade.act] = 1
+    }
 	})
-
-	// compute the number of grades per cause
-	const numberOfActs = Object.keys(avgActGrades).length
-	const divider = (actGrades.length)/(numberOfActs)
+  
+  const acts = Object.keys(avgActGrades)
 
 	// average the grades
-	Object.keys(avgActGrades).map(function(key, index) {
-		avgActGrades[key] = Math.round((avgActGrades[key] / divider) * 10) / 10
-	})
+  acts.forEach(act => {
+    const avgActGrade = avgActGrades[act] / numberOfGradesPerAct[act]
+    avgActGrades[act] = Math.round(avgActGrade * 10) / 10
+  })
 
 	return avgActGrades
 }

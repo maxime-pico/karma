@@ -27,7 +27,7 @@ const OPINION_FEED_QUERY = gql`
 	}
 `
 
-const OpinionFeedPreview = ({ act, companyId, first }) => (
+const OpinionFeedPreview = ({ act, companyId, first, location }) => (
 	<Query query={OPINION_FEED_QUERY} variables={{ companyId, act, first }}>
 		{({ loading, error, data }) => {
 			if (loading) return <div> Fetching </div>
@@ -36,7 +36,11 @@ const OpinionFeedPreview = ({ act, companyId, first }) => (
 
 			return (
 				<div style={opinionsFeed.length ? style : {}}>
-					<OpinionPreview opinionsFeed={opinionsFeed} />
+					<OpinionPreview
+						opinionsFeed={opinionsFeed}
+						location={location}
+						act={act}
+					/>
 				</div>
 			)
 		}}

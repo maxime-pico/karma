@@ -170,20 +170,55 @@ async function gradeAct(parent, args, context, info) {
 
 	if (actGradeExists) {
 		// if already graded then update the grades by first recovering the id of the
-		// current grade and then update for each cause
-		const actId = await context.db.query.actGrades(
+		// current grade
+		const previousActGrade = await context.db.query.actGrades(
 			{
 				where: {
 					gradedBy: { id: userId },
 					gradedTo: { id: companyId },
+					act: act,
 				},
 			},
-			` { id } `,
+			` {
+        id,
+      } `,
 		)
+
+		// // Do not forget to remove affilitation from linked opinion as well
+		// // for that get linked opinion affiliations list
+		// const linkedOpinionAffiliations = await context.db.query.opinions(
+		// 	{
+		// 		where: {
+		// 			id: previousActGrade[0].affiliatedTo.id,
+		// 		},
+		// 	},
+		// 	`{
+		//     affiliations { id }
+		//   }`,
+		// )
+		// // compute new affiliations list
+		// const newLinkedOpinionAffiliations = await linkedOpinionAffiliations[0].affiliations.filter(
+		// 	affiliationId => affiliationId.id !== previousActGrade[0].id,
+		// )
+
+		// // update affiliations list
+		// await context.db.mutation.updateOpinion(
+		// 	{
+		// 		where: {
+		// 			id: previousActGrade[0].affiliatedTo.id,
+		// 		},
+		// 		data: {
+		// 			affiliations: { newLinkedOpinionAffiliations },
+		// 		},
+		// 	},
+		// 	`{
+		//     id
+		//   }`,
+		// )
 
 		return await context.db.mutation.updateActGrade(
 			{
-				where: actId[0],
+				where: { id: previousActGrade[0].id },
 				data: {
 					grade: grade,
 					affiliatedTo: affiliatedTo,

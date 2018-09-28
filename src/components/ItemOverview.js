@@ -12,8 +12,12 @@ const ItemOverview = ({ type, identifier, grade, big }) => {
 				height={big ? '100' : '50'}
 			/>
 			<div>{CAUSE_AND_ACTS[identifier].fr}</div>
-			<div>{grade}</div>
-			<div>{convertGradesIntoWords(grade, type).fr}</div>
+			<div>{grade !== null ? grade : 'N/A'}</div>
+			<div>
+				{grade !== null
+					? convertGradesIntoWords(grade, type).fr
+					: 'Pas de notes pour le moment'}
+			</div>
 		</div>
 	)
 }

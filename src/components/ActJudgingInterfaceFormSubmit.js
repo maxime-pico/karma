@@ -43,29 +43,45 @@ const ActJudgingInterfaceFormSubmit = ({
 	act,
 }) => {
 	const _submit = async GradingMutation => {
-		const newOpinionIsValid = await _checkFields()
-		if (newOpinionIsValid) {
-			GradingMutation()
+		if (opinionId) {
+			await GradingMutation()
+			window.location.reload()
+		} else {
+			const newOpinionIsValid = await _checkFields()
+			if (newOpinionIsValid) {
+				await GradingMutation()
+				window.location.reload()
+			}
 		}
 	}
+
+	const variables = {
+		companyId: companyId,
+		grade: grade,
+		act: act,
+		opinionSources: null,
+		opinionTags: null,
+		opinionText: null,
+		opinionTitle: null,
+		opinionId: null,
+		newOpinion: false,
+	}
+
+	if (opinionId) {
+		variables.opinionId = opinionId
+	} else {
+		variables.opinionTitle = title
+		variables.opinionText = text
+		variables.opinionSources = sources
+		variables.opinionTags = tags
+		variables.newOpinion = true
+	}
+
 	return (
-		<Mutation
-			mutation={GRADING_MUTATION}
-			variables={{
-				companyId: companyId,
-				grade: grade,
-				act: act,
-				opinionSources: sources,
-				opinionTags: tags,
-				opinionText: text,
-				opinionTitle: title,
-				opinionId: opinionId,
-				newOpinion: newOpinion,
-			}}
-		>
+		<Mutation mutation={GRADING_MUTATION} variables={variables}>
 			{GradingMutation => (
-				<div className="row my-2 d-flex justify-content-center">
-					<div className="col-6 text-left">
+				<div className="row my-3 d-flex justify-content-center">
+					<div className="col-6 text-center">
 						<button
 							type="button"
 							className="btn btn-primary"

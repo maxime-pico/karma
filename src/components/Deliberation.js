@@ -8,6 +8,7 @@ import CauseAndActExplanation from './CauseAndActExplanation'
 import ActsNavButtons from './ActsNavButtons'
 import OpinionFeed from './OpinionFeed'
 import ActJudgingInterface from './ActJudgingInterface'
+import StartGradingActModal from './StartGradingActModal'
 import LoginToGradeModal from './LoginToGradeModal'
 
 // Deliberation component: gets the current act and company from path and
@@ -24,7 +25,7 @@ class Deliberation extends React.Component {
 		grading: false,
 		modalIsOpen: false,
 		loginToGradeModalIsOpen: false,
-		affilliation: false,
+		affiliation: false,
 	}
 
 	_adjacentCause = direction => {
@@ -41,6 +42,7 @@ class Deliberation extends React.Component {
 	_startGrading = () => {
 		if (this.authToken) {
 			this.setState(previousState => {
+				previousState.modalIsOpen = true
 				previousState.grading = !previousState.grading
 				return previousState
 			})
@@ -52,6 +54,13 @@ class Deliberation extends React.Component {
 		}
 	}
 
+	_closeModal = () => {
+		this.setState(previousState => {
+			previousState.modalIsOpen = false
+			return previousState
+		})
+	}
+
 	_closeLoginToGradeModal = () => {
 		this.setState(previousState => {
 			previousState.loginToGradeModalIsOpen = false
@@ -61,7 +70,7 @@ class Deliberation extends React.Component {
 
 	_selectOpinion = opinionId => {
 		this.setState(previousState => {
-			previousState.affilliation = opinionId
+			previousState.affiliation = opinionId
 			return previousState
 		})
 	}
@@ -102,7 +111,11 @@ class Deliberation extends React.Component {
 					{this.state.grading && (
 						<div className="row my-4">
 							<div className="col">
-								<ActJudgingInterface act={act} companyId={companyId} />
+								<ActJudgingInterface
+									act={act}
+									companyId={companyId}
+									affiliation={this.state.affiliation}
+								/>
 							</div>
 						</div>
 					)}
@@ -121,7 +134,7 @@ class Deliberation extends React.Component {
 					</div>
 					<div className="row my-4">
 						<div className="col my-3">
-							{/*Filtres – Pour commmencer Chronologique ou Top affilliation*/}
+							{/*Filtres – Pour commmencer Chronologique ou Top affiliation*/}
 						</div>
 					</div>
 					<div className="row my-5">
@@ -130,11 +143,15 @@ class Deliberation extends React.Component {
 								act={act}
 								companyId={companyId}
 								grading={this.state.grading}
-								affilliation={this.state.affilliation}
+								affiliation={this.state.affiliation}
 								_selectOpinion={this._selectOpinion}
 							/>
 						</div>
 					</div>
+					<StartGradingActModal
+						isOpen={this.state.modalIsOpen}
+						_closeModal={this._closeModal}
+					/>
 					<LoginToGradeModal
 						isOpen={this.state.loginToGradeModalIsOpen}
 						_closeModal={this._closeLoginToGradeModal}

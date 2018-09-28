@@ -17,7 +17,7 @@ class ActJudgingInterface extends React.Component {
 	}
 
 	render() {
-		const { act, companyId } = this.props
+		const { act, companyId, affiliation } = this.props
 
 		return (
 			<div className="row">
@@ -46,6 +46,7 @@ class ActJudgingInterface extends React.Component {
 						grade={this.state.grade}
 						companyId={companyId}
 						act={act}
+						affiliation={affiliation}
 					/>
 				</div>
 			</div>

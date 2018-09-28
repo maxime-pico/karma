@@ -37,15 +37,17 @@ const OpinionFeed = ({
 
 			return (
 				<div>
-					{opinionsFeed.map((opinion, index) => (
-						<Opinion
-							key={index}
-							opinion={opinion}
-							affiliation={affiliation}
-							grading={grading}
-							_selectOpinion={_selectOpinion}
-						/>
-					))}
+					{opinionsFeed.length
+						? opinionsFeed.map((opinion, index) => (
+								<Opinion
+									key={index}
+									opinion={opinion}
+									affiliation={affiliation}
+									grading={grading}
+									_selectOpinion={_selectOpinion}
+								/>
+						  ))
+						: "Il n'y a pas encore d'opinions pour cet Acte"}
 				</div>
 			)
 		}}

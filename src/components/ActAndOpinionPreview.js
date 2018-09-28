@@ -9,7 +9,7 @@ const ActAndOpinionPreview = ({ act, grade, companyId, location }) => (
 		<Link to={`${location.pathname}act/${act}`}>
 			<ActPreview identifier={act} grade={grade} companyId={companyId} />
 		</Link>
-		<OpinionPreviewBloc act={act} companyId={companyId} />
+		<OpinionPreviewBloc act={act} companyId={companyId} location={location} />
 	</div>
 )
 

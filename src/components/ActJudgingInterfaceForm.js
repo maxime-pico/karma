@@ -86,7 +86,7 @@ class ActJudgingInterfaceForm extends React.Component {
 	}
 
 	render() {
-		const { grade, companyId, act } = this.props
+		const { grade, companyId, act, affiliation } = this.props
 		const { title, text, sources, tags } = this.state
 		return (
 			<div className="row my-4">
@@ -115,8 +115,7 @@ class ActJudgingInterfaceForm extends React.Component {
 						grade={grade}
 						companyId={companyId}
 						act={act}
-						opinionId={null}
-						newOpinion={true}
+						opinionId={affiliation}
 					/>
 				</div>
 			</div>

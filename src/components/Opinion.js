@@ -4,36 +4,26 @@ class Opinion extends React.Component {
 	constructor(props) {
 		super(props)
 		this._selectOpinion = this.props._selectOpinion
-		this.affiliation = this.props.affiliation
-		this.opinionId = this.props.opinionId
 	}
 
 	state = {
 		selected: false,
-		selectable: !this.affiliation || this.affiliation === this.opinionId,
+		selectable:
+			!this.props.affiliation ||
+			this.props.affiliation === this.props.opinion.id,
 	}
 
-	// static getDerivedStateFromProps(props, state) {
-	// 	if (props.affiliation !== state.selectable) {
-	// 		return {
-	// 			selected: state.selected,
-	// 			selectable: !props.affiliation || props.affiliation === props.opinionId,
-	// 		}
-	// 	}
-	// 	return null
-	// }
-
-	// componentDidUpdate(prevProps) {
-	// 	// Typical usage (don't forget to compare props):
-	// 	if (this.props.affiliation !== prevProps.affiliation) {
-	// 		this._setGrade({
-	// 			selected: this.state.selected,
-	// 			selectable:
-	// 				!this.props.affiliation ||
-	// 				this.props.affiliation === this.props.opinionId,
-	// 		})
-	// 	}
-	// }
+	componentDidUpdate(prevProps) {
+		// Typical usage (don't forget to compare props):
+		if (this.props.affiliation !== prevProps.affiliation) {
+			this.setState({
+				selected: this.state.selected,
+				selectable:
+					!this.props.affiliation ||
+					this.props.affiliation === this.props.opinion.id,
+			})
+		}
+	}
 
 	_opinionSelected = (opinionId, allowed) => {
 		if (allowed) {
