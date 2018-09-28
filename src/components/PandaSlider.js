@@ -29,7 +29,13 @@ class PandaSlider extends React.Component {
 	}
 
 	onAfterChange = value => {
-		this._setGrade(this.props.cause, value)
+		const cause = this.props.cause
+		if (cause) {
+			this._setGrade(cause, value)
+			console.log(cause)
+		} else {
+			this._setGrade(value)
+		}
 	}
 	render() {
 		const { karma, type, disabled } = this.props

@@ -98,7 +98,7 @@ async function gradeCauses(parent, args, context, info) {
 				},
 				` { id } `,
 			)
-			causeGrades.push(causeGrade) //doesn't work
+			causeGrades.push(causeGrade) //Note, doesn't work but is not critical
 		})
 	} else {
 		// if not adds the grade in the database
@@ -122,26 +122,84 @@ async function gradeCauses(parent, args, context, info) {
 	return causeGrades
 }
 
-// idem cause grade with opinion id added as an argument
+// equivalent for act grade
 async function gradeAct(parent, args, context, info) {
-	const { companyId, act, grade, opinionId } = args
+	const {
+		companyId,
+		act,
+		grade,
+		opinionTitle,
+		opinionText,
+		opinionSources,
+		opinionTags,
+		opinionId,
+		newOpinion,
+	} = args
 	const userId = getUserId(context)
 	const actGradeExists = await context.db.exists.ActGrade({
 		gradedBy: { id: userId },
 		gradedTo: { id: companyId },
 		act: act,
 	})
-	if (actGradeExists) {
-		throw new Error(`Already graded Act for Company: ${companyId}`)
+
+	if (newOpinion) {
+		if (opinionTitle === '' || opinionText === '' || opinionSources === []) {
+			throw new Error('Some fields missing to create an opinion')
+		}
+	} else {
+		if (!opinionId) {
+			throw new Error('Opinion Id needed')
+		}
 	}
-	return context.db.mutation.createActGrade(
+
+	const affiliatedTo = newOpinion
+		? {
+				create: {
+					writtenBy: { connect: { id: userId } },
+					regardingWho: { connect: { id: companyId } },
+					regardingWhat: act,
+					title: opinionTitle,
+					text: opinionText,
+					sources: { set: opinionSources },
+					tags: { set: opinionTags },
+				},
+		  }
+		: {
+				connect: { id: opinionId },
+		  }
+
+	if (actGradeExists) {
+		// if already graded then update the grades by first recovering the id of the
+		// current grade and then update for each cause
+		const actId = await context.db.query.actGrades(
+			{
+				where: {
+					gradedBy: { id: userId },
+					gradedTo: { id: companyId },
+				},
+			},
+			` { id } `,
+		)
+
+		return await context.db.mutation.updateActGrade(
+			{
+				where: actId[0],
+				data: {
+					grade: grade,
+					affiliatedTo: affiliatedTo,
+				},
+			},
+			` { id } `,
+		)
+	}
+	return await context.db.mutation.createActGrade(
 		{
 			data: {
 				gradedTo: { connect: { id: companyId } },
 				gradedBy: { connect: { id: userId } },
 				act: act,
 				grade: grade,
-				affiliatedTo: { connect: { id: opinionId } },
+				affiliatedTo: affiliatedTo,
 			},
 		},
 		info,

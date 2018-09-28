@@ -73,7 +73,12 @@ type Mutation {
     companyId: ID!,
     act: Act!,
     grade: Int!,
-    opinionId: ID!
+    opinionId: ID,
+    opinionSources: [String],
+    opinionTags: [String],
+    opinionText: String,
+    opinionTitle: String,
+    newOpinion: Boolean!,
   ): ActGrade
 
   # exposes the resolver that allows a logged in user to post a new opinion

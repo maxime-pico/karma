@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CausesJugingInterfaceButtons = ({
+const CausesJudgingInterfaceButtons = ({
 	_adjacentCause,
 	_stopGrading,
 	cause,
@@ -50,4 +50,4 @@ const CausesJugingInterfaceButtons = ({
 	)
 }
 
-export default CausesJugingInterfaceButtons
+export default CausesJudgingInterfaceButtons

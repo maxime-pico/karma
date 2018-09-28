@@ -6,7 +6,9 @@ import { adjacentAct } from '../utils'
 import ItemOverviewQuery from './ItemOverviewQuery'
 import CauseAndActExplanation from './CauseAndActExplanation'
 import ActsNavButtons from './ActsNavButtons'
-import OpinionFeedPreview from './OpinionFeedPreview'
+import OpinionFeed from './OpinionFeed'
+import ActJudgingInterface from './ActJudgingInterface'
+import LoginToGradeModal from './LoginToGradeModal'
 
 // Deliberation component: gets the current act and company from path and
 // displays the list of corresponding opinions
@@ -22,8 +24,7 @@ class Deliberation extends React.Component {
 		grading: false,
 		modalIsOpen: false,
 		loginToGradeModalIsOpen: false,
-		userGrade: null,
-		affilliation: null,
+		affilliation: false,
 	}
 
 	_adjacentCause = direction => {
@@ -34,6 +35,34 @@ class Deliberation extends React.Component {
 				act,
 				direction,
 			)}/`,
+		})
+	}
+
+	_startGrading = () => {
+		if (this.authToken) {
+			this.setState(previousState => {
+				previousState.grading = !previousState.grading
+				return previousState
+			})
+		} else {
+			this.setState(previousState => {
+				previousState.loginToGradeModalIsOpen = true
+				return previousState
+			})
+		}
+	}
+
+	_closeLoginToGradeModal = () => {
+		this.setState(previousState => {
+			previousState.loginToGradeModalIsOpen = false
+			return previousState
+		})
+	}
+
+	_selectOpinion = opinionId => {
+		this.setState(previousState => {
+			previousState.affilliation = opinionId
+			return previousState
 		})
 	}
 
@@ -70,23 +99,46 @@ class Deliberation extends React.Component {
 
 				<div className="container my-5">
 					<CauseAndActExplanation identifier={act} />
-					<div className="row">
+					{this.state.grading && (
+						<div className="row my-4">
+							<div className="col">
+								<ActJudgingInterface act={act} companyId={companyId} />
+							</div>
+						</div>
+					)}
+					<div className="row my-4">
 						<div className="col">
-							<button type="button" className="btn btn-primary">
-								Juger l'acte
+							<button
+								type="button"
+								className={`btn btn-${
+									this.state.grading ? 'danger' : 'primary'
+								}`}
+								onClick={() => this._startGrading()}
+							>
+								{this.state.grading ? 'Annuler' : "Juger l'acte"}
 							</button>
 						</div>
 					</div>
 					<div className="row my-4">
 						<div className="col my-3">
-							Filtres – Pour commmencer Chronologique ou Top affilliation
+							{/*Filtres – Pour commmencer Chronologique ou Top affilliation*/}
 						</div>
 					</div>
 					<div className="row my-5">
 						<div className="col">
-							<OpinionFeedPreview act={act} companyId={companyId} />
+							<OpinionFeed
+								act={act}
+								companyId={companyId}
+								grading={this.state.grading}
+								affilliation={this.state.affilliation}
+								_selectOpinion={this._selectOpinion}
+							/>
 						</div>
 					</div>
+					<LoginToGradeModal
+						isOpen={this.state.loginToGradeModalIsOpen}
+						_closeModal={this._closeLoginToGradeModal}
+					/>
 				</div>
 			</div>
 		)

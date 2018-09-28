@@ -39,7 +39,9 @@ class Soul extends React.Component {
 	_startGrading = () => {
 		if (this.authToken) {
 			this.props.history.push({
-				pathname: this.props.match.url + `/cause/ENVIRONMENT/`,
+				pathname: `/company/${
+					this.props.match.params.companyId
+				}/cause/ENVIRONMENT/`,
 				state: { startGrading: true },
 			})
 		} else {

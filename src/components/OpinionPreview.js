@@ -1,9 +1,25 @@
 import React from 'react'
 
+const borderBottom = {
+	borderBottom: '1pt dashed grey',
+	position: 'absolute',
+	bottom: '0',
+	left: '10%',
+	right: '10%',
+}
+
+const relative = {
+	position: 'relative',
+}
+
 const OpinionPreview = ({ opinionsFeed }) => (
 	<div>
-		{opinionsFeed.map(opinion => (
-			<div key={opinion.id} className="row d-flex justify-content-left p-4">
+		{opinionsFeed.map((opinion, index) => (
+			<div
+				key={opinion.id}
+				className="row d-flex justify-content-left p-4"
+				style={relative}
+			>
 				<div className="col-2 text-center">
 					<div className="row">
 						<div className="col">
@@ -38,8 +54,10 @@ const OpinionPreview = ({ opinionsFeed }) => (
 					</div>
 					<div className="row">{opinion.text}</div>
 				</div>
+				<div style={index < opinionsFeed.length - 1 ? borderBottom : null} />
 			</div>
 		))}
+		{opinionsFeed.length && 'Voir toutes les opinions et leurs sources'}
 	</div>
 )
 

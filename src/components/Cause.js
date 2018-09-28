@@ -9,7 +9,7 @@ import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
 import ActAndOpinionPreviewList from './ActAndOpinionPreviewList'
 import StartGradingCausesModal from './StartGradingCausesModal'
 import LoginToGradeModal from './LoginToGradeModal'
-import CausesJugingInterface from './CausesJugingInterface'
+import CausesJudgingInterface from './CausesJudgingInterface'
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
@@ -49,8 +49,11 @@ class Cause extends React.Component {
 
 	_startGrading = () => {
 		if (this.authToken) {
-			const rootUrl = this.props.match.url.match(/(.*)\/cause\//)[0]
-			this.props.history.push({ pathname: rootUrl + `ENVIRONMENT/` })
+			this.props.history.push({
+				pathname: `/company/${
+					this.props.match.params.companyId
+				}/cause/ENVIRONMENT/`,
+			})
 			this.setState(previousState => {
 				previousState.grading = true
 				previousState.startGrading = true
@@ -147,7 +150,7 @@ class Cause extends React.Component {
 								/>
 							</div>
 							{this.state.grading && (
-								<CausesJugingInterface
+								<CausesJudgingInterface
 									companyId={companyId}
 									cause={cause}
 									grading={this.state.grading}

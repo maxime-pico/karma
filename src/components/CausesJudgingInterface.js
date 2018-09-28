@@ -1,7 +1,7 @@
 import React from 'react'
 import { convertGradesIntoWords } from '../utils'
 import PandaSlider from './PandaSlider'
-import CausesJugingInterfaceButtons from './CausesJugingInterfaceButtons'
+import CausesJudgingInterfaceButtons from './CausesJudgingInterfaceButtons'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
@@ -13,7 +13,7 @@ const GRADING_MUTATION = gql`
 	}
 `
 
-class CausesJugingInterface extends React.Component {
+class CausesJudgingInterface extends React.Component {
 	constructor(props) {
 		super(props)
 		this._setGrade = this.props._setGrade
@@ -97,7 +97,7 @@ class CausesJugingInterface extends React.Component {
 						}}
 					>
 						{GradingMutation => (
-							<CausesJugingInterfaceButtons
+							<CausesJudgingInterfaceButtons
 								cause={cause}
 								gradingMutation={GradingMutation}
 								_adjacentCause={this._adjacentCause}
@@ -111,4 +111,4 @@ class CausesJugingInterface extends React.Component {
 	}
 }
 
-export default CausesJugingInterface
+export default CausesJudgingInterface

@@ -79,7 +79,6 @@ const ItemOverviewQuery = ({ big, type, identifier, companyId, cause }) => {
 					type === 'cause'
 						? data.companyCauseGrades[identifier]
 						: data.companyActGrades[identifier]
-				console.log(data)
 
 				return (
 					<ItemOverview
