@@ -50,14 +50,7 @@ const ActPreview = ({ identifier, grade, companyId }) => {
 						)
 					}}
 				</Query>
-				<div className="row">
-					Description de l'act : Lorem ipsum dolor sit amet, consectetur
-					adipiscing elit. Vestibulum tristique lacus metus, id iaculis ex
-					fermentum sed. Nulla venenatis enim ac viverra auctor. Suspendisse
-					dictum, nunc id vestibulum ullamcorper, risus felis dapibus lacus, a
-					interdum dolor ex dictum ipsum. Sed et pellentesque arcu, porta
-					elementum dui.
-				</div>
+				<div className="row">{CAUSE_AND_ACTS[identifier].description.fr}</div>
 			</div>
 		</div>
 	)

@@ -5,28 +5,28 @@ export const CAUSE_AND_ACTS = {
 		acts: ['CLIMAT_CHANGE', 'ECOSYSTEM_PRESERVATION', 'RESOURCE_PRESERVATION'],
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				'Déscription la Cause : explication de ce que la Cause prend en compte',
 		},
 	},
 	CLIMAT_CHANGE: {
 		fr: 'Implication dans le changement climatique',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte.",
 		},
 	},
 	ECOSYSTEM_PRESERVATION: {
 		fr: 'Préservation des écosystèmes',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte.",
 		},
 	},
 	RESOURCE_PRESERVATION: {
 		fr: 'Préservation des ressources',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte.",
 		},
 	},
 	ANIMALS: {
@@ -34,28 +34,28 @@ export const CAUSE_AND_ACTS = {
 		acts: ['ANIMAL_EXPERIMENTATION', 'ANIMAL_RESOURCES', 'ANIMAL_WELFARE'],
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				'Déscription la Cause : explication de ce que la Cause prend en compte',
 		},
 	},
 	ANIMAL_EXPERIMENTATION: {
 		fr: 'Expériences sur les animaux',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte.",
 		},
 	},
 	ANIMAL_RESOURCES: {
 		fr: 'Utilisation de fourrures et autres',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte.",
 		},
 	},
 	ANIMAL_WELFARE: {
 		fr: 'Bien être animal',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte.",
 		},
 	},
 	ETHICS: {
@@ -69,42 +69,42 @@ export const CAUSE_AND_ACTS = {
 		],
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				'Déscription la Cause : explication de ce que la Cause prend en compte',
 		},
 	},
 	POLITICAL_RESPONSIBILITY: {
 		fr: 'Responsabilité politique',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	MARKET_INFLUENCE: {
 		fr: 'Influence du marché',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	POPULATION_RESPECT: {
 		fr: 'Respect des populations',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	CONSUMER_RESPECT: {
 		fr: 'Respect du consommateur',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	QUESTIONABLE_INDUSTRIES: {
 		fr: 'Industries critiquables et/ou technologies critiquables',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	FISCAL: {
@@ -117,35 +117,35 @@ export const CAUSE_AND_ACTS = {
 		],
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				'Déscription la Cause : explication de ce que la Cause prend en compte',
 		},
 	},
 	SHAREHOLDER_REMUNERATION: {
 		fr: "Taux de rémunération de l'actionnariat",
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	TAXATION_LEVEL: {
 		fr: "Taux d'imposition",
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	EXECUTIVE_COMPENSATION: {
 		fr: 'Surémunération des dirigeants',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	EMPLOYEE_EQUITY: {
 		fr: 'Participation des salariés',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	SOCIAL: {
@@ -158,35 +158,35 @@ export const CAUSE_AND_ACTS = {
 		],
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				'Déscription la Cause : explication de ce que la Cause prend en compte',
 		},
 	},
 	EMPLOYMENT_CONDITIONS: {
 		fr: 'Conditions salariales',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	EMPLOYEE_DISCRIMINATIONS: {
 		fr: 'Discriminations',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	WORKING_CONDITIONS: {
 		fr: 'Conditions de travail',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 	MANAGING_CONDITIONS: {
 		fr: 'Management et Epanouïssement salarial',
 		description: {
 			fr:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque congue nisl. Sed pretium porta ornare. Nullam nibh orci, tincidunt a dolor nec, viverra condimentum diam. Ut et auctor lectus. Vestibulum ac sollicitudin erat. Donec vulputate, felis vitae viverra tristique, purus leo lacinia arcu, in posuere sem purus non velit. Proin eget elementum mauris, vel sollicitudin tortor. Donec ullamcorper quis nisi non placerat. Nulla lectus metus, dignissim sodales efficitur id, ultricies id dui.',
+				"Déscription le l'Acte : explication de ce que l'acte prend en compte",
 		},
 	},
 }

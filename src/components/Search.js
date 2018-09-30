@@ -10,6 +10,7 @@ const COMPANY_LIST = gql`
 		allCompanies {
 			id
 			name
+			logo
 		}
 	}
 `
@@ -26,12 +27,38 @@ class Search extends React.Component {
 					const companyList = data.allCompanies
 
 					return (
-						<div>
-							{companyList.map(company => (
-								<div key={company.name}>
-									<Link to={`/company/${company.id}`}>{company.name}</Link>
+						<div className="container">
+							<div className="row d-flex justify-content-center">
+								<div className="col-6">
+									<div className="row d-flex justify-content-center my-4">
+										{companyList.map(company => (
+											<div className="col-4" key={company.name}>
+												<Link to={`/company/${company.id}`}>
+													<div className="row">
+														<div className="col text-center">
+															<img
+																src={
+																	process.env.PUBLIC_URL +
+																	'/images/' +
+																	company.logo
+																}
+																width="60"
+																height="60"
+																alt="company"
+															/>
+														</div>
+													</div>
+													<div className="row">
+														<div className="col text-center">
+															{company.name}
+														</div>
+													</div>
+												</Link>
+											</div>
+										))}
+									</div>
 								</div>
-							))}
+							</div>
 						</div>
 					)
 				}}
