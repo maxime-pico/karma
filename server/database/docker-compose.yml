@@ -8,20 +8,20 @@ services:
     environment:
       PRISMA_CONFIG: |
         port: 4466
-        PRISMA_MANAGEMENT_API_SECRET: my-secret-tobehidden
+        PRISMA_MANAGEMENT_API_SECRET: ${REACT_APP_PRISMA_MANAGEMENT_API_SECRET}
         databases:
           default:
             connector: mysql
             host: mysql
             port: 3306
             user: root
-            password: prisma
+            password: ${REACT_APP_MYSQL_ROOT_PASSWORD}
             migrations: true
   mysql:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: prisma
+      MYSQL_ROOT_PASSWORD: ${REACT_APP_MYSQL_ROOT_PASSWORD}
     volumes:
       - mysql:/var/lib/mysql
 volumes:

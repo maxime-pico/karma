@@ -3,6 +3,7 @@ const { Prisma } = require('prisma-binding')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const AuthPayload = require('./resolvers/AuthPayload')
+require('dotenv').config()
 
 const resolvers = {
 	Query,
@@ -21,9 +22,9 @@ const server = new GraphQLServer({
 	context: req => ({
 		...req,
 		db: new Prisma({
-			typeDefs: 'src/generated/prisma.graphql',
+			typeDefs: `src/generated/${process.env.PRISMA_SCHEMA_FILENAME}.graphql`,
 			endpoint: 'http://localhost:4466/',
-			secret: 'my-secret-tobehidden',
+			secret: process.env.REACT_APP_PRISMA_MANAGEMENT_API_SECRET,
 			debug: true,
 		}),
 	}),
