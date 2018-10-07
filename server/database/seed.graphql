@@ -97,12 +97,14 @@ mutation {
   createTotal: createCompany(
     data: {
       name: "Total"
+      logo: "total.png"
     }
   ){ id }
   
   createMcdo: createCompany(
     data: {
       name: "Mc Donalds"
+      logo: "mcdonalds.png"
     }
   ){ id }
 
