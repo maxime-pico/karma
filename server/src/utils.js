@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const jwt = require('jsonwebtoken')
 
 // defines the app secret for jwt token creation
