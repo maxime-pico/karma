@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 You should have some things already installed on your machine:
 
 - [`docker-compose`](https://docs.docker.com/compose/install/) — This will help you automatically setup the needed containers on your machine. Please note that a prerequisite for docker compose is having [Docker CE](https://docs.docker.com/install/) already installed
-- [Node](https://nodejs.org/en/) — This will allow you to run the servers on your machine. The recommended install of node is through [`nvm`](https://github.com/creationix/nvm#installation)
+- [Node](https://nodejs.org/en/) v10.10.0 or above — This will allow you to run the servers on your machine. The recommended install of node is through [`nvm`](https://github.com/creationix/nvm#installation)
 - [`npm`](https://www.npmjs.com/get-npm) or [`yarn`](https://yarnpkg.com/en/) — To install all the dependencies of the project
 - [`git`](https://git-scm.com/) — as the code version system
 
@@ -116,9 +116,12 @@ Open a new terminal window and go back to the server directory (if needed):
 
 `cd path-to/my-folder-containing-many-projects/karma/server`
 
-From there deploy the prisma service taking into acount the environment variables:
+From there globally install the prisma cli and deploy the prisma service taking into acount the environment variables:
 
-`prisma deploy -e .env`
+```
+npm intall -g prisma
+prisma deploy -e .env
+```
 
 #### Start the frontend server and celebrate
 
