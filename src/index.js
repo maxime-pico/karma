@@ -15,7 +15,7 @@ import { AUTH_TOKEN } from './constants'
 
 // gives link to server to initiate the apollo client
 const httpLink = createHttpLink({
-	uri: 'http://localhost:4000',
+	uri: 'https://karma-server-eecrmmtbom.now.sh',
 	credentials: 'same-origin', // modify to same origin when backend on same domain
 })
 

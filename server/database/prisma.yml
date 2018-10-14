@@ -1,6 +1,6 @@
-endpoint: http://localhost:4466
+endpoint: ${env:DATABASE_ENDPOINT}
 datamodel: datamodel.graphql
-secret: ${env:REACT_APP_PRISMA_MANAGEMENT_API_SECRET}
+secret: ${env:PRISMA_MANAGEMENT_API_SECRET}
 
 #deploy hook
 hooks:
