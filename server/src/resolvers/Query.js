@@ -51,7 +51,6 @@ async function companyCauseGrades(parent, args, context, info) {
 	if (!causeGrades.length) {
 		// throw new Error('No grades so far')
     avgCauseGrades.ENVIRONMENT = 0
-    avgCauseGrades.ANIMALS = 0
     avgCauseGrades.ETHICS = 0
     avgCauseGrades.FISCAL = 0
     avgCauseGrades.SOCIAL = 0
@@ -78,7 +77,7 @@ async function companyCauseGrades(parent, args, context, info) {
       avgCauseGrades[cause] = Math.round(avgCauseGrade * 10) / 10
     })
 
-    avgCauseGrades.overallKarma = Math.round((avgCauseGrades.overallKarma / 5) * 10) /10
+    avgCauseGrades.overallKarma = Math.round((avgCauseGrades.overallKarma / 4) * 10) /10
   }
 
 	return avgCauseGrades
@@ -154,7 +153,7 @@ async function companyOverview(parent, args, context, info) {
 	companyOverviewInfo.opinionsCount = companyOverviewInfo.opinions.length
 	companyOverviewInfo.actGradesCount = companyOverviewInfo.actGrades.length
 	companyOverviewInfo.causeGradesCount =
-		companyOverviewInfo.causeGrades.length / 5
+		companyOverviewInfo.causeGrades.length / 4
 
 	return companyOverviewInfo
 }

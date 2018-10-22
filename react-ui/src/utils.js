@@ -10,7 +10,7 @@ export function convertGradesIntoWords(grade, type) {
 }
 
 export function adjacentCause(cause, direction) {
-	const causes = ['ENVIRONMENT', 'ANIMALS', 'SOCIAL', 'ETHICS', 'FISCAL']
+	const causes = ['ENVIRONMENT', 'SOCIAL', 'ETHICS', 'FISCAL']
 	const currentIndex = causes.indexOf(cause)
 	var newIndex = (currentIndex + direction) % 5
 	if (newIndex < 0) {

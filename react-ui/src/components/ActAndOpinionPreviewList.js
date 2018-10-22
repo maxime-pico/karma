@@ -10,15 +10,7 @@ const ACT_GRADES_QUERIES = {
 				CLIMAT_CHANGE
 				ECOSYSTEM_PRESERVATION
 				RESOURCE_PRESERVATION
-			}
-		}
-	`,
-	ANIMALS: gql`
-		query AnimalsGradesQuery($companyId: ID!) {
-			companyActGrades(companyId: $companyId) {
-				ANIMAL_EXPERIMENTATION
-				ANIMAL_RESOURCES
-				ANIMAL_WELFARE
+				ANIMAL_CONDITION
 			}
 		}
 	`,

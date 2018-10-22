@@ -7,7 +7,6 @@ const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
 		companyCauseGrades(companyId: $companyId) {
 			ENVIRONMENT
-			ANIMALS
 			SOCIAL
 			ETHICS
 			FISCAL
@@ -22,15 +21,7 @@ const ACT_GRADES_QUERIES = {
 				CLIMAT_CHANGE
 				ECOSYSTEM_PRESERVATION
 				RESOURCE_PRESERVATION
-			}
-		}
-	`,
-	ANIMALS: gql`
-		query AnimalsGradesQuery($companyId: ID!) {
-			companyActGrades(companyId: $companyId) {
-				ANIMAL_EXPERIMENTATION
-				ANIMAL_RESOURCES
-				ANIMAL_WELFARE
+				ANIMAL_CONDITION
 			}
 		}
 	`,

@@ -14,7 +14,6 @@ const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
 		companyCauseGrades(companyId: $companyId) {
 			ENVIRONMENT
-			ANIMALS
 			SOCIAL
 			ETHICS
 			FISCAL
