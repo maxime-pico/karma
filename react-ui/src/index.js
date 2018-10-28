@@ -15,7 +15,10 @@ import { AUTH_TOKEN } from './constants'
 
 // gives link to server to initiate the apollo client
 const httpLink = createHttpLink({
-	uri: 'https://karma-server-ezipgnajrl.now.sh',
+	uri:
+		process.env.NODE_ENV === 'production'
+			? process.env.REACT_APP_DISTANT_ENDPOINT
+			: process.env.REACT_APP_LOCAL_ENDPOINT,
 	credentials: 'same-origin', // modify to same origin when backend on same domain
 })
 

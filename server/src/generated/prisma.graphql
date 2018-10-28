@@ -1,5 +1,5 @@
-# source: https://karma-panda.herokuapp.com/karma-panda-server/dev
-# timestamp: Mon Oct 22 2018 18:32:26 GMT+0200 (Central European Summer Time)
+# source: http://localhost:4466
+# timestamp: Fri Oct 26 2018 11:44:42 GMT+0200 (Central European Summer Time)
 
 enum Act {
   CLIMAT_CHANGE
@@ -25,11 +25,11 @@ enum Act {
 type ActGrade implements Node {
   id: ID!
   createdAt: DateTime!
-  gradedTo(where: CompanyWhereInput): Company!
-  gradedBy(where: UserWhereInput): User!
+  gradedTo: Company!
+  gradedBy: User!
   act: Act!
   grade: Float!
-  affiliatedTo(where: OpinionWhereInput): Opinion!
+  affiliatedTo: Opinion!
 }
 
 """A connection to a list of items."""
@@ -157,9 +157,9 @@ input ActGradeSubscriptionWhereInput {
 input ActGradeUpdateInput {
   act: Act
   grade: Float
-  gradedTo: CompanyUpdateOneWithoutActGradesInput
-  gradedBy: UserUpdateOneWithoutActGradesInput
-  affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
+  gradedTo: CompanyUpdateOneRequiredWithoutActGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutActGradesInput
+  affiliatedTo: OpinionUpdateOneRequiredWithoutAffiliationsInput
 }
 
 input ActGradeUpdateManyWithoutAffiliatedToInput {
@@ -192,22 +192,22 @@ input ActGradeUpdateManyWithoutGradedToInput {
 input ActGradeUpdateWithoutAffiliatedToDataInput {
   act: Act
   grade: Float
-  gradedTo: CompanyUpdateOneWithoutActGradesInput
-  gradedBy: UserUpdateOneWithoutActGradesInput
+  gradedTo: CompanyUpdateOneRequiredWithoutActGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutActGradesInput
 }
 
 input ActGradeUpdateWithoutGradedByDataInput {
   act: Act
   grade: Float
-  gradedTo: CompanyUpdateOneWithoutActGradesInput
-  affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
+  gradedTo: CompanyUpdateOneRequiredWithoutActGradesInput
+  affiliatedTo: OpinionUpdateOneRequiredWithoutAffiliationsInput
 }
 
 input ActGradeUpdateWithoutGradedToDataInput {
   act: Act
   grade: Float
-  gradedBy: UserUpdateOneWithoutActGradesInput
-  affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
+  gradedBy: UserUpdateOneRequiredWithoutActGradesInput
+  affiliatedTo: OpinionUpdateOneRequiredWithoutAffiliationsInput
 }
 
 input ActGradeUpdateWithWhereUniqueWithoutAffiliatedToInput {
@@ -390,8 +390,8 @@ enum Cause {
 type CauseGrade implements Node {
   id: ID!
   createdAt: DateTime!
-  gradedTo(where: CompanyWhereInput): Company!
-  gradedBy(where: UserWhereInput): User!
+  gradedTo: Company!
+  gradedBy: User!
   cause: Cause!
   grade: Float!
 }
@@ -506,8 +506,8 @@ input CauseGradeSubscriptionWhereInput {
 input CauseGradeUpdateInput {
   cause: Cause
   grade: Float
-  gradedTo: CompanyUpdateOneWithoutCauseGradesInput
-  gradedBy: UserUpdateOneWithoutCauseGradesInput
+  gradedTo: CompanyUpdateOneRequiredWithoutCauseGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutCauseGradesInput
 }
 
 input CauseGradeUpdateManyWithoutGradedByInput {
@@ -531,13 +531,13 @@ input CauseGradeUpdateManyWithoutGradedToInput {
 input CauseGradeUpdateWithoutGradedByDataInput {
   cause: Cause
   grade: Float
-  gradedTo: CompanyUpdateOneWithoutCauseGradesInput
+  gradedTo: CompanyUpdateOneRequiredWithoutCauseGradesInput
 }
 
 input CauseGradeUpdateWithoutGradedToDataInput {
   cause: Cause
   grade: Float
-  gradedBy: UserUpdateOneWithoutCauseGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutCauseGradesInput
 }
 
 input CauseGradeUpdateWithWhereUniqueWithoutGradedByInput {
@@ -813,26 +813,23 @@ input CompanyUpdateInput {
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
 }
 
-input CompanyUpdateOneWithoutActGradesInput {
+input CompanyUpdateOneRequiredWithoutActGradesInput {
   create: CompanyCreateWithoutActGradesInput
   connect: CompanyWhereUniqueInput
-  delete: Boolean
   update: CompanyUpdateWithoutActGradesDataInput
   upsert: CompanyUpsertWithoutActGradesInput
 }
 
-input CompanyUpdateOneWithoutCauseGradesInput {
+input CompanyUpdateOneRequiredWithoutCauseGradesInput {
   create: CompanyCreateWithoutCauseGradesInput
   connect: CompanyWhereUniqueInput
-  delete: Boolean
   update: CompanyUpdateWithoutCauseGradesDataInput
   upsert: CompanyUpsertWithoutCauseGradesInput
 }
 
-input CompanyUpdateOneWithoutOpinionsInput {
+input CompanyUpdateOneRequiredWithoutOpinionsInput {
   create: CompanyCreateWithoutOpinionsInput
   connect: CompanyWhereUniqueInput
-  delete: Boolean
   update: CompanyUpdateWithoutOpinionsDataInput
   upsert: CompanyUpsertWithoutOpinionsInput
 }
@@ -1096,13 +1093,13 @@ interface Node {
 type Opinion implements Node {
   id: ID!
   createdAt: DateTime!
-  regardingWho(where: CompanyWhereInput): Company!
+  regardingWho: Company!
   regardingWhat: Act!
   title: String!
   text: String!
   sources: [String!]!
   tags: [String!]!
-  writtenBy(where: UserWhereInput): User!
+  writtenBy: User!
   affiliations(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
 }
 
@@ -1259,8 +1256,8 @@ input OpinionUpdateInput {
   text: String
   sources: OpinionUpdatesourcesInput
   tags: OpinionUpdatetagsInput
-  regardingWho: CompanyUpdateOneWithoutOpinionsInput
-  writtenBy: UserUpdateOneWithoutOpinionsInput
+  regardingWho: CompanyUpdateOneRequiredWithoutOpinionsInput
+  writtenBy: UserUpdateOneRequiredWithoutOpinionsInput
   affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
 }
 
@@ -1282,10 +1279,9 @@ input OpinionUpdateManyWithoutWrittenByInput {
   upsert: [OpinionUpsertWithWhereUniqueWithoutWrittenByInput!]
 }
 
-input OpinionUpdateOneWithoutAffiliationsInput {
+input OpinionUpdateOneRequiredWithoutAffiliationsInput {
   create: OpinionCreateWithoutAffiliationsInput
   connect: OpinionWhereUniqueInput
-  delete: Boolean
   update: OpinionUpdateWithoutAffiliationsDataInput
   upsert: OpinionUpsertWithoutAffiliationsInput
 }
@@ -1304,8 +1300,8 @@ input OpinionUpdateWithoutAffiliationsDataInput {
   text: String
   sources: OpinionUpdatesourcesInput
   tags: OpinionUpdatetagsInput
-  regardingWho: CompanyUpdateOneWithoutOpinionsInput
-  writtenBy: UserUpdateOneWithoutOpinionsInput
+  regardingWho: CompanyUpdateOneRequiredWithoutOpinionsInput
+  writtenBy: UserUpdateOneRequiredWithoutOpinionsInput
 }
 
 input OpinionUpdateWithoutRegardingWhoDataInput {
@@ -1314,7 +1310,7 @@ input OpinionUpdateWithoutRegardingWhoDataInput {
   text: String
   sources: OpinionUpdatesourcesInput
   tags: OpinionUpdatetagsInput
-  writtenBy: UserUpdateOneWithoutOpinionsInput
+  writtenBy: UserUpdateOneRequiredWithoutOpinionsInput
   affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
 }
 
@@ -1324,7 +1320,7 @@ input OpinionUpdateWithoutWrittenByDataInput {
   text: String
   sources: OpinionUpdatesourcesInput
   tags: OpinionUpdatetagsInput
-  regardingWho: CompanyUpdateOneWithoutOpinionsInput
+  regardingWho: CompanyUpdateOneRequiredWithoutOpinionsInput
   affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
 }
 
@@ -1748,26 +1744,23 @@ input UserUpdateInput {
   actGrades: ActGradeUpdateManyWithoutGradedByInput
 }
 
-input UserUpdateOneWithoutActGradesInput {
+input UserUpdateOneRequiredWithoutActGradesInput {
   create: UserCreateWithoutActGradesInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutActGradesDataInput
   upsert: UserUpsertWithoutActGradesInput
 }
 
-input UserUpdateOneWithoutCauseGradesInput {
+input UserUpdateOneRequiredWithoutCauseGradesInput {
   create: UserCreateWithoutCauseGradesInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutCauseGradesDataInput
   upsert: UserUpsertWithoutCauseGradesInput
 }
 
-input UserUpdateOneWithoutOpinionsInput {
+input UserUpdateOneRequiredWithoutOpinionsInput {
   create: UserCreateWithoutOpinionsInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutOpinionsDataInput
   upsert: UserUpsertWithoutOpinionsInput
 }

@@ -39,7 +39,7 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build",
+		"build": "react-scripts build && cp now.json build/now.json",
 		"eject": "react-scripts eject",
 		"test": "jest",
 		"flow": "flow",

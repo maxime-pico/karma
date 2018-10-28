@@ -1,3 +1,8 @@
 .vscode/*
 server/.env
+server/.env.prod
+server/now.json
 server/database/.env
+react-ui/.env
+react-ui/now.json
+react-ui/build/
