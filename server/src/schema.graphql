@@ -113,7 +113,6 @@ type User {
 # defines the return type of companyCauseGrades
 type AvgCauseGrades {
 	ENVIRONMENT: Float
-	ANIMALS: Float
 	ETHICS: Float
 	FISCAL: Float
 	SOCIAL: Float
@@ -125,9 +124,7 @@ type AvgActGrades {
 	CLIMAT_CHANGE: Float
 	ECOSYSTEM_PRESERVATION: Float
 	RESOURCE_PRESERVATION: Float
-	ANIMAL_EXPERIMENTATION: Float
-	ANIMAL_RESOURCES: Float
-	ANIMAL_WELFARE: Float
+	ANIMAL_CONDITION: Float
 	POLITICAL_RESPONSIBILITY: Float
 	MARKET_INFLUENCE: Float
 	POPULATION_RESPECT: Float

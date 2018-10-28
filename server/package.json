@@ -7,6 +7,16 @@
 		"url": "git://github.com/Green-Dirt/karma.git"
 	},
 	"main": "index.js",
+	"now": {
+		"dotenv": ".env.prod",
+		"alias": "karma-server.now.sh",
+		"scale": {
+			"bru1": {
+				"min": 1,
+				"max": "auto"
+			}
+		}
+	},
 	"scripts": {
 		"start": "node src/index.js",
 		"dev": "npm-run-all --parallel start playground",
@@ -21,7 +31,7 @@
 		"dotenv": "^6.0.0",
 		"graphql-yoga": "^1.16.1",
 		"jsonwebtoken": "^8.3.0",
-		"prisma": "^1.17.1",
+		"prisma": "^1.18.1",
 		"prisma-binding": "^2.1.4"
 	}
 }

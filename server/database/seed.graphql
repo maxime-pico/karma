@@ -41,22 +41,12 @@ mutation {
     data: {
       gradedTo: { connect: { name: "H&M" } }
       gradedBy: { connect: { email: "test@test.com" } }
-      cause: ANIMALS
-      grade: -2
-    }
-  ){ id }
-
-  
-  addCauseGrade3: createCauseGrade(
-    data: {
-      gradedTo: { connect: { name: "H&M" } }
-      gradedBy: { connect: { email: "test@test.com" } }
       cause: ETHICS
       grade: -2
     }
   ){ id }
 
-  addCauseGrade4: createCauseGrade(
+  addCauseGrade3: createCauseGrade(
     data: {
       gradedTo: { connect: { name: "H&M" } }
       gradedBy: { connect: { email: "test@test.com" } }
@@ -65,7 +55,7 @@ mutation {
     }
   ){ id }
 
-  addCauseGrade5: createCauseGrade(
+  addCauseGrade4: createCauseGrade(
     data: {
       gradedTo: { connect: { name: "H&M" } }
       gradedBy: { connect: { email: "test@test.com" } }
@@ -107,6 +97,90 @@ mutation {
       logo: "mcdonalds.png"
     }
   ){ id }
+  
+  createBNP: createCompany(
+    data: {
+      name: "BNP"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createGoogle: createCompany(
+    data: {
+      name: "Google"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createNike: createCompany(
+    data: {
+      name: "Nike"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createTesla: createCompany(
+    data: {
+      name: "Tesla"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createBic: createCompany(
+    data: {
+      name: "Bic"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createBiocoop: createCompany(
+    data: {
+      name: "Biocoop"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createND: createCompany(
+    data: {
+      name: "Nature & Découverte"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createQuechua: createCompany(
+    data: {
+      name: "Quechua"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createBouygues: createCompany(
+    data: {
+      name: "Bouygues Telecom"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createENGIE: createCompany(
+    data: {
+      name: "ENGIE"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createZalando: createCompany(
+    data: {
+      name: "Zalando"
+      logo: "questionmark.png"
+    }
+  ){ id }
+
+  createAmazon: createCompany(
+    data: {
+      name: "Amazon"
+      logo: "questionmark.png"
+    }
+  ){ id }
 
   createSecondUser: createUser(
     data: {
@@ -115,7 +189,7 @@ mutation {
     }
   ){ id }
 
-  addCauseGrade6: createCauseGrade(
+  addCauseGrade5: createCauseGrade(
     data: {
       gradedTo: { connect: { name: "H&M" } }
       gradedBy: { connect: { email: "test2@test.com" } }
@@ -124,17 +198,8 @@ mutation {
     }
   ){ id }
 
-  addCauseGrade7: createCauseGrade(
-    data: {
-      gradedTo: { connect: { name: "H&M" } }
-      gradedBy: { connect: { email: "test2@test.com" } }
-      cause: ANIMALS
-      grade: -1
-    }
-  ){ id }
-
   
-  addCauseGrade8: createCauseGrade(
+  addCauseGrade6: createCauseGrade(
     data: {
       gradedTo: { connect: { name: "H&M" } }
       gradedBy: { connect: { email: "test2@test.com" } }
@@ -143,7 +208,7 @@ mutation {
     }
   ){ id }
 
-  addCauseGrade9: createCauseGrade(
+  addCauseGrade7: createCauseGrade(
     data: {
       gradedTo: { connect: { name: "H&M" } }
       gradedBy: { connect: { email: "test2@test.com" } }
@@ -152,7 +217,7 @@ mutation {
     }
   ){ id }
 
-  addCauseGrade10: createCauseGrade(
+  addCauseGrade8: createCauseGrade(
     data: {
       gradedTo: { connect: { name: "H&M" } }
       gradedBy: { connect: { email: "test2@test.com" } }

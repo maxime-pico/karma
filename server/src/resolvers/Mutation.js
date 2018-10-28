@@ -60,7 +60,7 @@ async function login(parent, args, context, info) {
 // from the arguments given by the user
 async function gradeCauses(parent, args, context, info) {
 	const { companyId, userGrades } = args
-	const causes = ['ENVIRONMENT', 'ANIMALS', 'SOCIAL', 'ETHICS', 'FISCAL']
+	const causes = ['ENVIRONMENT', 'SOCIAL', 'ETHICS', 'FISCAL']
 
 	// get user id from context thantks to imported function
 	const userId = getUserId(context)

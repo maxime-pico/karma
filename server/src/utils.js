@@ -3,7 +3,7 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 // defines the app secret for jwt token creation
-const APP_SECRET = process.env.REACT_APP_JWT_APP_SECRET
+const APP_SECRET = process.env.JWT_APP_SECRET
 
 // gets user id from token in the Authorisation context in the http header
 function getUserId(context) {

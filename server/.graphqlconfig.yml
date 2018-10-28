@@ -3,8 +3,8 @@ projects:
     schemaPath: src/schema.graphql
     extensions:
       endpoints:
-        default: ${env:API_ENDPOINT}
+        default: https://karma-panda.herokuapp.com/karma-panda-server/dev
   database:
-    schemaPath: src/generated/${env:PRISMA_SCHEMA_FILENAME}.graphql
+    schemaPath: src/generated/prisma.graphql
     extensions:
-      prisma: database/prisma.yml
+      prisma: prisma.yml

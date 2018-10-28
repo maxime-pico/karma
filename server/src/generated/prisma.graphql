@@ -1,1356 +1,1040 @@
 # source: http://localhost:4466
-# timestamp: Tue Sep 11 2018 10:57:49 GMT+0200 (Central European Summer Time)
+# timestamp: Fri Oct 26 2018 11:44:42 GMT+0200 (Central European Summer Time)
 
 enum Act {
-	CLIMAT_CHANGE
-	ECOSYSTEM_PRESERVATION
-	RESOURCE_PRESERVATION
-	ANIMAL_EXPERIMENTATION
-	ANIMAL_RESOURCES
-	ANIMAL_WELFARE
-	POLITICAL_RESPONSIBILITY
-	MARKET_INFLUENCE
-	POPULATION_RESPECT
-	CONSUMER_RESPECT
-	QUESTIONABLE_INDUSTRIES
-	SUPPLIER_REGULATION
-	SHAREHOLDER_REMUNERATION
-	TAXATION_LEVEL
-	EXECUTIVE_COMPENSATION
-	EMPLOYEE_EQUITY
-	EMPLOYMENT_CONDITIONS
-	EMPLOYEE_DISCRIMINATIONS
-	WORKING_CONDITIONS
-	MANAGING_CONDITIONS
+  CLIMAT_CHANGE
+  ECOSYSTEM_PRESERVATION
+  RESOURCE_PRESERVATION
+  ANIMAL_CONDITION
+  POLITICAL_RESPONSIBILITY
+  MARKET_INFLUENCE
+  POPULATION_RESPECT
+  CONSUMER_RESPECT
+  QUESTIONABLE_INDUSTRIES
+  SUPPLIER_REGULATION
+  SHAREHOLDER_REMUNERATION
+  TAXATION_LEVEL
+  EXECUTIVE_COMPENSATION
+  EMPLOYEE_EQUITY
+  EMPLOYMENT_CONDITIONS
+  EMPLOYEE_DISCRIMINATIONS
+  WORKING_CONDITIONS
+  MANAGING_CONDITIONS
 }
 
 type ActGrade implements Node {
-	id: ID!
-	createdAt: DateTime!
-	gradedTo(where: CompanyWhereInput): Company!
-	gradedBy(where: UserWhereInput): User!
-	act: Act!
-	grade: Float!
-	affiliatedTo(where: OpinionWhereInput): Opinion!
+  id: ID!
+  createdAt: DateTime!
+  gradedTo: Company!
+  gradedBy: User!
+  act: Act!
+  grade: Float!
+  affiliatedTo: Opinion!
 }
 
-"""
-A connection to a list of items.
-"""
+"""A connection to a list of items."""
 type ActGradeConnection {
-	"""
-	Information to aid in pagination.
-	"""
-	pageInfo: PageInfo!
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
-	"""
-	A list of edges.
-	"""
-	edges: [ActGradeEdge]!
-	aggregate: AggregateActGrade!
+  """A list of edges."""
+  edges: [ActGradeEdge]!
+  aggregate: AggregateActGrade!
 }
 
 input ActGradeCreateInput {
-	act: Act!
-	grade: Float!
-	gradedTo: CompanyCreateOneWithoutActGradesInput!
-	gradedBy: UserCreateOneWithoutActGradesInput!
-	affiliatedTo: OpinionCreateOneWithoutAffiliationsInput!
+  act: Act!
+  grade: Float!
+  gradedTo: CompanyCreateOneWithoutActGradesInput!
+  gradedBy: UserCreateOneWithoutActGradesInput!
+  affiliatedTo: OpinionCreateOneWithoutAffiliationsInput!
 }
 
 input ActGradeCreateManyWithoutAffiliatedToInput {
-	create: [ActGradeCreateWithoutAffiliatedToInput!]
-	connect: [ActGradeWhereUniqueInput!]
+  create: [ActGradeCreateWithoutAffiliatedToInput!]
+  connect: [ActGradeWhereUniqueInput!]
 }
 
 input ActGradeCreateManyWithoutGradedByInput {
-	create: [ActGradeCreateWithoutGradedByInput!]
-	connect: [ActGradeWhereUniqueInput!]
+  create: [ActGradeCreateWithoutGradedByInput!]
+  connect: [ActGradeWhereUniqueInput!]
 }
 
 input ActGradeCreateManyWithoutGradedToInput {
-	create: [ActGradeCreateWithoutGradedToInput!]
-	connect: [ActGradeWhereUniqueInput!]
+  create: [ActGradeCreateWithoutGradedToInput!]
+  connect: [ActGradeWhereUniqueInput!]
 }
 
 input ActGradeCreateWithoutAffiliatedToInput {
-	act: Act!
-	grade: Float!
-	gradedTo: CompanyCreateOneWithoutActGradesInput!
-	gradedBy: UserCreateOneWithoutActGradesInput!
+  act: Act!
+  grade: Float!
+  gradedTo: CompanyCreateOneWithoutActGradesInput!
+  gradedBy: UserCreateOneWithoutActGradesInput!
 }
 
 input ActGradeCreateWithoutGradedByInput {
-	act: Act!
-	grade: Float!
-	gradedTo: CompanyCreateOneWithoutActGradesInput!
-	affiliatedTo: OpinionCreateOneWithoutAffiliationsInput!
+  act: Act!
+  grade: Float!
+  gradedTo: CompanyCreateOneWithoutActGradesInput!
+  affiliatedTo: OpinionCreateOneWithoutAffiliationsInput!
 }
 
 input ActGradeCreateWithoutGradedToInput {
-	act: Act!
-	grade: Float!
-	gradedBy: UserCreateOneWithoutActGradesInput!
-	affiliatedTo: OpinionCreateOneWithoutAffiliationsInput!
+  act: Act!
+  grade: Float!
+  gradedBy: UserCreateOneWithoutActGradesInput!
+  affiliatedTo: OpinionCreateOneWithoutAffiliationsInput!
 }
 
-"""
-An edge in a connection.
-"""
+"""An edge in a connection."""
 type ActGradeEdge {
-	"""
-	The item at the end of the edge.
-	"""
-	node: ActGrade!
+  """The item at the end of the edge."""
+  node: ActGrade!
 
-	"""
-	A cursor for use in pagination.
-	"""
-	cursor: String!
+  """A cursor for use in pagination."""
+  cursor: String!
 }
 
 enum ActGradeOrderByInput {
-	id_ASC
-	id_DESC
-	createdAt_ASC
-	createdAt_DESC
-	act_ASC
-	act_DESC
-	grade_ASC
-	grade_DESC
-	updatedAt_ASC
-	updatedAt_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  act_ASC
+  act_DESC
+  grade_ASC
+  grade_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ActGradePreviousValues {
-	id: ID!
-	createdAt: DateTime!
-	act: Act!
-	grade: Float!
+  id: ID!
+  createdAt: DateTime!
+  act: Act!
+  grade: Float!
 }
 
 type ActGradeSubscriptionPayload {
-	mutation: MutationType!
-	node: ActGrade
-	updatedFields: [String!]
-	previousValues: ActGradePreviousValues
+  mutation: MutationType!
+  node: ActGrade
+  updatedFields: [String!]
+  previousValues: ActGradePreviousValues
 }
 
 input ActGradeSubscriptionWhereInput {
-	"""
-	Logical AND on all given filters.
-	"""
-	AND: [ActGradeSubscriptionWhereInput!]
+  """Logical AND on all given filters."""
+  AND: [ActGradeSubscriptionWhereInput!]
 
-	"""
-	Logical OR on all given filters.
-	"""
-	OR: [ActGradeSubscriptionWhereInput!]
+  """Logical OR on all given filters."""
+  OR: [ActGradeSubscriptionWhereInput!]
 
-	"""
-	Logical NOT on all given filters combined by AND.
-	"""
-	NOT: [ActGradeSubscriptionWhereInput!]
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ActGradeSubscriptionWhereInput!]
 
-	"""
-	The subscription event gets dispatched when it's listed in mutation_in
-	"""
-	mutation_in: [MutationType!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
 
-	"""
-	The subscription event gets only dispatched when one of the updated fields names is included in this list
-	"""
-	updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
 
-	"""
-	The subscription event gets only dispatched when all of the field names included in this list have been updated
-	"""
-	updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
 
-	"""
-	The subscription event gets only dispatched when some of the field names included in this list have been updated
-	"""
-	updatedFields_contains_some: [String!]
-	node: ActGradeWhereInput
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ActGradeWhereInput
 }
 
 input ActGradeUpdateInput {
-	act: Act
-	grade: Float
-	gradedTo: CompanyUpdateOneWithoutActGradesInput
-	gradedBy: UserUpdateOneWithoutActGradesInput
-	affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
+  act: Act
+  grade: Float
+  gradedTo: CompanyUpdateOneRequiredWithoutActGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutActGradesInput
+  affiliatedTo: OpinionUpdateOneRequiredWithoutAffiliationsInput
 }
 
 input ActGradeUpdateManyWithoutAffiliatedToInput {
-	create: [ActGradeCreateWithoutAffiliatedToInput!]
-	connect: [ActGradeWhereUniqueInput!]
-	disconnect: [ActGradeWhereUniqueInput!]
-	delete: [ActGradeWhereUniqueInput!]
-	update: [ActGradeUpdateWithWhereUniqueWithoutAffiliatedToInput!]
-	upsert: [ActGradeUpsertWithWhereUniqueWithoutAffiliatedToInput!]
+  create: [ActGradeCreateWithoutAffiliatedToInput!]
+  connect: [ActGradeWhereUniqueInput!]
+  disconnect: [ActGradeWhereUniqueInput!]
+  delete: [ActGradeWhereUniqueInput!]
+  update: [ActGradeUpdateWithWhereUniqueWithoutAffiliatedToInput!]
+  upsert: [ActGradeUpsertWithWhereUniqueWithoutAffiliatedToInput!]
 }
 
 input ActGradeUpdateManyWithoutGradedByInput {
-	create: [ActGradeCreateWithoutGradedByInput!]
-	connect: [ActGradeWhereUniqueInput!]
-	disconnect: [ActGradeWhereUniqueInput!]
-	delete: [ActGradeWhereUniqueInput!]
-	update: [ActGradeUpdateWithWhereUniqueWithoutGradedByInput!]
-	upsert: [ActGradeUpsertWithWhereUniqueWithoutGradedByInput!]
+  create: [ActGradeCreateWithoutGradedByInput!]
+  connect: [ActGradeWhereUniqueInput!]
+  disconnect: [ActGradeWhereUniqueInput!]
+  delete: [ActGradeWhereUniqueInput!]
+  update: [ActGradeUpdateWithWhereUniqueWithoutGradedByInput!]
+  upsert: [ActGradeUpsertWithWhereUniqueWithoutGradedByInput!]
 }
 
 input ActGradeUpdateManyWithoutGradedToInput {
-	create: [ActGradeCreateWithoutGradedToInput!]
-	connect: [ActGradeWhereUniqueInput!]
-	disconnect: [ActGradeWhereUniqueInput!]
-	delete: [ActGradeWhereUniqueInput!]
-	update: [ActGradeUpdateWithWhereUniqueWithoutGradedToInput!]
-	upsert: [ActGradeUpsertWithWhereUniqueWithoutGradedToInput!]
+  create: [ActGradeCreateWithoutGradedToInput!]
+  connect: [ActGradeWhereUniqueInput!]
+  disconnect: [ActGradeWhereUniqueInput!]
+  delete: [ActGradeWhereUniqueInput!]
+  update: [ActGradeUpdateWithWhereUniqueWithoutGradedToInput!]
+  upsert: [ActGradeUpsertWithWhereUniqueWithoutGradedToInput!]
 }
 
 input ActGradeUpdateWithoutAffiliatedToDataInput {
-	act: Act
-	grade: Float
-	gradedTo: CompanyUpdateOneWithoutActGradesInput
-	gradedBy: UserUpdateOneWithoutActGradesInput
+  act: Act
+  grade: Float
+  gradedTo: CompanyUpdateOneRequiredWithoutActGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutActGradesInput
 }
 
 input ActGradeUpdateWithoutGradedByDataInput {
-	act: Act
-	grade: Float
-	gradedTo: CompanyUpdateOneWithoutActGradesInput
-	affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
+  act: Act
+  grade: Float
+  gradedTo: CompanyUpdateOneRequiredWithoutActGradesInput
+  affiliatedTo: OpinionUpdateOneRequiredWithoutAffiliationsInput
 }
 
 input ActGradeUpdateWithoutGradedToDataInput {
-	act: Act
-	grade: Float
-	gradedBy: UserUpdateOneWithoutActGradesInput
-	affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
+  act: Act
+  grade: Float
+  gradedBy: UserUpdateOneRequiredWithoutActGradesInput
+  affiliatedTo: OpinionUpdateOneRequiredWithoutAffiliationsInput
 }
 
 input ActGradeUpdateWithWhereUniqueWithoutAffiliatedToInput {
-	where: ActGradeWhereUniqueInput!
-	data: ActGradeUpdateWithoutAffiliatedToDataInput!
+  where: ActGradeWhereUniqueInput!
+  data: ActGradeUpdateWithoutAffiliatedToDataInput!
 }
 
 input ActGradeUpdateWithWhereUniqueWithoutGradedByInput {
-	where: ActGradeWhereUniqueInput!
-	data: ActGradeUpdateWithoutGradedByDataInput!
+  where: ActGradeWhereUniqueInput!
+  data: ActGradeUpdateWithoutGradedByDataInput!
 }
 
 input ActGradeUpdateWithWhereUniqueWithoutGradedToInput {
-	where: ActGradeWhereUniqueInput!
-	data: ActGradeUpdateWithoutGradedToDataInput!
+  where: ActGradeWhereUniqueInput!
+  data: ActGradeUpdateWithoutGradedToDataInput!
 }
 
 input ActGradeUpsertWithWhereUniqueWithoutAffiliatedToInput {
-	where: ActGradeWhereUniqueInput!
-	update: ActGradeUpdateWithoutAffiliatedToDataInput!
-	create: ActGradeCreateWithoutAffiliatedToInput!
+  where: ActGradeWhereUniqueInput!
+  update: ActGradeUpdateWithoutAffiliatedToDataInput!
+  create: ActGradeCreateWithoutAffiliatedToInput!
 }
 
 input ActGradeUpsertWithWhereUniqueWithoutGradedByInput {
-	where: ActGradeWhereUniqueInput!
-	update: ActGradeUpdateWithoutGradedByDataInput!
-	create: ActGradeCreateWithoutGradedByInput!
+  where: ActGradeWhereUniqueInput!
+  update: ActGradeUpdateWithoutGradedByDataInput!
+  create: ActGradeCreateWithoutGradedByInput!
 }
 
 input ActGradeUpsertWithWhereUniqueWithoutGradedToInput {
-	where: ActGradeWhereUniqueInput!
-	update: ActGradeUpdateWithoutGradedToDataInput!
-	create: ActGradeCreateWithoutGradedToInput!
+  where: ActGradeWhereUniqueInput!
+  update: ActGradeUpdateWithoutGradedToDataInput!
+  create: ActGradeCreateWithoutGradedToInput!
 }
 
 input ActGradeWhereInput {
-	"""
-	Logical AND on all given filters.
-	"""
-	AND: [ActGradeWhereInput!]
+  """Logical AND on all given filters."""
+  AND: [ActGradeWhereInput!]
 
-	"""
-	Logical OR on all given filters.
-	"""
-	OR: [ActGradeWhereInput!]
+  """Logical OR on all given filters."""
+  OR: [ActGradeWhereInput!]
 
-	"""
-	Logical NOT on all given filters combined by AND.
-	"""
-	NOT: [ActGradeWhereInput!]
-	id: ID
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ActGradeWhereInput!]
+  id: ID
 
-	"""
-	All values that are not equal to given value.
-	"""
-	id_not: ID
+  """All values that are not equal to given value."""
+  id_not: ID
 
-	"""
-	All values that are contained in given list.
-	"""
-	id_in: [ID!]
+  """All values that are contained in given list."""
+  id_in: [ID!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	id_not_in: [ID!]
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
 
-	"""
-	All values less than the given value.
-	"""
-	id_lt: ID
+  """All values less than the given value."""
+  id_lt: ID
 
-	"""
-	All values less than or equal the given value.
-	"""
-	id_lte: ID
+  """All values less than or equal the given value."""
+  id_lte: ID
 
-	"""
-	All values greater than the given value.
-	"""
-	id_gt: ID
+  """All values greater than the given value."""
+  id_gt: ID
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	id_gte: ID
+  """All values greater than or equal the given value."""
+  id_gte: ID
 
-	"""
-	All values containing the given string.
-	"""
-	id_contains: ID
+  """All values containing the given string."""
+  id_contains: ID
 
-	"""
-	All values not containing the given string.
-	"""
-	id_not_contains: ID
+  """All values not containing the given string."""
+  id_not_contains: ID
 
-	"""
-	All values starting with the given string.
-	"""
-	id_starts_with: ID
+  """All values starting with the given string."""
+  id_starts_with: ID
 
-	"""
-	All values not starting with the given string.
-	"""
-	id_not_starts_with: ID
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
 
-	"""
-	All values ending with the given string.
-	"""
-	id_ends_with: ID
+  """All values ending with the given string."""
+  id_ends_with: ID
 
-	"""
-	All values not ending with the given string.
-	"""
-	id_not_ends_with: ID
-	createdAt: DateTime
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
 
-	"""
-	All values that are not equal to given value.
-	"""
-	createdAt_not: DateTime
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
 
-	"""
-	All values that are contained in given list.
-	"""
-	createdAt_in: [DateTime!]
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	createdAt_not_in: [DateTime!]
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
 
-	"""
-	All values less than the given value.
-	"""
-	createdAt_lt: DateTime
+  """All values less than the given value."""
+  createdAt_lt: DateTime
 
-	"""
-	All values less than or equal the given value.
-	"""
-	createdAt_lte: DateTime
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
 
-	"""
-	All values greater than the given value.
-	"""
-	createdAt_gt: DateTime
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	createdAt_gte: DateTime
-	act: Act
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  act: Act
 
-	"""
-	All values that are not equal to given value.
-	"""
-	act_not: Act
+  """All values that are not equal to given value."""
+  act_not: Act
 
-	"""
-	All values that are contained in given list.
-	"""
-	act_in: [Act!]
+  """All values that are contained in given list."""
+  act_in: [Act!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	act_not_in: [Act!]
-	grade: Float
+  """All values that are not contained in given list."""
+  act_not_in: [Act!]
+  grade: Float
 
-	"""
-	All values that are not equal to given value.
-	"""
-	grade_not: Float
+  """All values that are not equal to given value."""
+  grade_not: Float
 
-	"""
-	All values that are contained in given list.
-	"""
-	grade_in: [Float!]
+  """All values that are contained in given list."""
+  grade_in: [Float!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	grade_not_in: [Float!]
+  """All values that are not contained in given list."""
+  grade_not_in: [Float!]
 
-	"""
-	All values less than the given value.
-	"""
-	grade_lt: Float
+  """All values less than the given value."""
+  grade_lt: Float
 
-	"""
-	All values less than or equal the given value.
-	"""
-	grade_lte: Float
+  """All values less than or equal the given value."""
+  grade_lte: Float
 
-	"""
-	All values greater than the given value.
-	"""
-	grade_gt: Float
+  """All values greater than the given value."""
+  grade_gt: Float
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	grade_gte: Float
-	gradedTo: CompanyWhereInput
-	gradedBy: UserWhereInput
-	affiliatedTo: OpinionWhereInput
+  """All values greater than or equal the given value."""
+  grade_gte: Float
+  gradedTo: CompanyWhereInput
+  gradedBy: UserWhereInput
+  affiliatedTo: OpinionWhereInput
 }
 
 input ActGradeWhereUniqueInput {
-	id: ID
+  id: ID
 }
 
 type AggregateActGrade {
-	count: Int!
+  count: Int!
 }
 
 type AggregateCauseGrade {
-	count: Int!
+  count: Int!
 }
 
 type AggregateCompany {
-	count: Int!
+  count: Int!
 }
 
 type AggregateOpinion {
-	count: Int!
+  count: Int!
 }
 
 type AggregateUser {
-	count: Int!
+  count: Int!
 }
 
 type BatchPayload {
-	"""
-	The number of nodes that have been affected by the Batch operation.
-	"""
-	count: Long!
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
 }
 
 enum Cause {
-	ENVIRONMENT
-	ANIMALS
-	ETHICS
-	FISCAL
-	SOCIAL
+  ENVIRONMENT
+  ETHICS
+  FISCAL
+  SOCIAL
 }
 
 type CauseGrade implements Node {
-	id: ID!
-	createdAt: DateTime!
-	gradedTo(where: CompanyWhereInput): Company!
-	gradedBy(where: UserWhereInput): User!
-	cause: Cause!
-	grade: Float!
+  id: ID!
+  createdAt: DateTime!
+  gradedTo: Company!
+  gradedBy: User!
+  cause: Cause!
+  grade: Float!
 }
 
-"""
-A connection to a list of items.
-"""
+"""A connection to a list of items."""
 type CauseGradeConnection {
-	"""
-	Information to aid in pagination.
-	"""
-	pageInfo: PageInfo!
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
-	"""
-	A list of edges.
-	"""
-	edges: [CauseGradeEdge]!
-	aggregate: AggregateCauseGrade!
+  """A list of edges."""
+  edges: [CauseGradeEdge]!
+  aggregate: AggregateCauseGrade!
 }
 
 input CauseGradeCreateInput {
-	cause: Cause!
-	grade: Float!
-	gradedTo: CompanyCreateOneWithoutCauseGradesInput!
-	gradedBy: UserCreateOneWithoutCauseGradesInput!
+  cause: Cause!
+  grade: Float!
+  gradedTo: CompanyCreateOneWithoutCauseGradesInput!
+  gradedBy: UserCreateOneWithoutCauseGradesInput!
 }
 
 input CauseGradeCreateManyWithoutGradedByInput {
-	create: [CauseGradeCreateWithoutGradedByInput!]
-	connect: [CauseGradeWhereUniqueInput!]
+  create: [CauseGradeCreateWithoutGradedByInput!]
+  connect: [CauseGradeWhereUniqueInput!]
 }
 
 input CauseGradeCreateManyWithoutGradedToInput {
-	create: [CauseGradeCreateWithoutGradedToInput!]
-	connect: [CauseGradeWhereUniqueInput!]
+  create: [CauseGradeCreateWithoutGradedToInput!]
+  connect: [CauseGradeWhereUniqueInput!]
 }
 
 input CauseGradeCreateWithoutGradedByInput {
-	cause: Cause!
-	grade: Float!
-	gradedTo: CompanyCreateOneWithoutCauseGradesInput!
+  cause: Cause!
+  grade: Float!
+  gradedTo: CompanyCreateOneWithoutCauseGradesInput!
 }
 
 input CauseGradeCreateWithoutGradedToInput {
-	cause: Cause!
-	grade: Float!
-	gradedBy: UserCreateOneWithoutCauseGradesInput!
+  cause: Cause!
+  grade: Float!
+  gradedBy: UserCreateOneWithoutCauseGradesInput!
 }
 
-"""
-An edge in a connection.
-"""
+"""An edge in a connection."""
 type CauseGradeEdge {
-	"""
-	The item at the end of the edge.
-	"""
-	node: CauseGrade!
+  """The item at the end of the edge."""
+  node: CauseGrade!
 
-	"""
-	A cursor for use in pagination.
-	"""
-	cursor: String!
+  """A cursor for use in pagination."""
+  cursor: String!
 }
 
 enum CauseGradeOrderByInput {
-	id_ASC
-	id_DESC
-	createdAt_ASC
-	createdAt_DESC
-	cause_ASC
-	cause_DESC
-	grade_ASC
-	grade_DESC
-	updatedAt_ASC
-	updatedAt_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  cause_ASC
+  cause_DESC
+  grade_ASC
+  grade_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type CauseGradePreviousValues {
-	id: ID!
-	createdAt: DateTime!
-	cause: Cause!
-	grade: Float!
+  id: ID!
+  createdAt: DateTime!
+  cause: Cause!
+  grade: Float!
 }
 
 type CauseGradeSubscriptionPayload {
-	mutation: MutationType!
-	node: CauseGrade
-	updatedFields: [String!]
-	previousValues: CauseGradePreviousValues
+  mutation: MutationType!
+  node: CauseGrade
+  updatedFields: [String!]
+  previousValues: CauseGradePreviousValues
 }
 
 input CauseGradeSubscriptionWhereInput {
-	"""
-	Logical AND on all given filters.
-	"""
-	AND: [CauseGradeSubscriptionWhereInput!]
+  """Logical AND on all given filters."""
+  AND: [CauseGradeSubscriptionWhereInput!]
 
-	"""
-	Logical OR on all given filters.
-	"""
-	OR: [CauseGradeSubscriptionWhereInput!]
+  """Logical OR on all given filters."""
+  OR: [CauseGradeSubscriptionWhereInput!]
 
-	"""
-	Logical NOT on all given filters combined by AND.
-	"""
-	NOT: [CauseGradeSubscriptionWhereInput!]
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CauseGradeSubscriptionWhereInput!]
 
-	"""
-	The subscription event gets dispatched when it's listed in mutation_in
-	"""
-	mutation_in: [MutationType!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
 
-	"""
-	The subscription event gets only dispatched when one of the updated fields names is included in this list
-	"""
-	updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
 
-	"""
-	The subscription event gets only dispatched when all of the field names included in this list have been updated
-	"""
-	updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
 
-	"""
-	The subscription event gets only dispatched when some of the field names included in this list have been updated
-	"""
-	updatedFields_contains_some: [String!]
-	node: CauseGradeWhereInput
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CauseGradeWhereInput
 }
 
 input CauseGradeUpdateInput {
-	cause: Cause
-	grade: Float
-	gradedTo: CompanyUpdateOneWithoutCauseGradesInput
-	gradedBy: UserUpdateOneWithoutCauseGradesInput
+  cause: Cause
+  grade: Float
+  gradedTo: CompanyUpdateOneRequiredWithoutCauseGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutCauseGradesInput
 }
 
 input CauseGradeUpdateManyWithoutGradedByInput {
-	create: [CauseGradeCreateWithoutGradedByInput!]
-	connect: [CauseGradeWhereUniqueInput!]
-	disconnect: [CauseGradeWhereUniqueInput!]
-	delete: [CauseGradeWhereUniqueInput!]
-	update: [CauseGradeUpdateWithWhereUniqueWithoutGradedByInput!]
-	upsert: [CauseGradeUpsertWithWhereUniqueWithoutGradedByInput!]
+  create: [CauseGradeCreateWithoutGradedByInput!]
+  connect: [CauseGradeWhereUniqueInput!]
+  disconnect: [CauseGradeWhereUniqueInput!]
+  delete: [CauseGradeWhereUniqueInput!]
+  update: [CauseGradeUpdateWithWhereUniqueWithoutGradedByInput!]
+  upsert: [CauseGradeUpsertWithWhereUniqueWithoutGradedByInput!]
 }
 
 input CauseGradeUpdateManyWithoutGradedToInput {
-	create: [CauseGradeCreateWithoutGradedToInput!]
-	connect: [CauseGradeWhereUniqueInput!]
-	disconnect: [CauseGradeWhereUniqueInput!]
-	delete: [CauseGradeWhereUniqueInput!]
-	update: [CauseGradeUpdateWithWhereUniqueWithoutGradedToInput!]
-	upsert: [CauseGradeUpsertWithWhereUniqueWithoutGradedToInput!]
+  create: [CauseGradeCreateWithoutGradedToInput!]
+  connect: [CauseGradeWhereUniqueInput!]
+  disconnect: [CauseGradeWhereUniqueInput!]
+  delete: [CauseGradeWhereUniqueInput!]
+  update: [CauseGradeUpdateWithWhereUniqueWithoutGradedToInput!]
+  upsert: [CauseGradeUpsertWithWhereUniqueWithoutGradedToInput!]
 }
 
 input CauseGradeUpdateWithoutGradedByDataInput {
-	cause: Cause
-	grade: Float
-	gradedTo: CompanyUpdateOneWithoutCauseGradesInput
+  cause: Cause
+  grade: Float
+  gradedTo: CompanyUpdateOneRequiredWithoutCauseGradesInput
 }
 
 input CauseGradeUpdateWithoutGradedToDataInput {
-	cause: Cause
-	grade: Float
-	gradedBy: UserUpdateOneWithoutCauseGradesInput
+  cause: Cause
+  grade: Float
+  gradedBy: UserUpdateOneRequiredWithoutCauseGradesInput
 }
 
 input CauseGradeUpdateWithWhereUniqueWithoutGradedByInput {
-	where: CauseGradeWhereUniqueInput!
-	data: CauseGradeUpdateWithoutGradedByDataInput!
+  where: CauseGradeWhereUniqueInput!
+  data: CauseGradeUpdateWithoutGradedByDataInput!
 }
 
 input CauseGradeUpdateWithWhereUniqueWithoutGradedToInput {
-	where: CauseGradeWhereUniqueInput!
-	data: CauseGradeUpdateWithoutGradedToDataInput!
+  where: CauseGradeWhereUniqueInput!
+  data: CauseGradeUpdateWithoutGradedToDataInput!
 }
 
 input CauseGradeUpsertWithWhereUniqueWithoutGradedByInput {
-	where: CauseGradeWhereUniqueInput!
-	update: CauseGradeUpdateWithoutGradedByDataInput!
-	create: CauseGradeCreateWithoutGradedByInput!
+  where: CauseGradeWhereUniqueInput!
+  update: CauseGradeUpdateWithoutGradedByDataInput!
+  create: CauseGradeCreateWithoutGradedByInput!
 }
 
 input CauseGradeUpsertWithWhereUniqueWithoutGradedToInput {
-	where: CauseGradeWhereUniqueInput!
-	update: CauseGradeUpdateWithoutGradedToDataInput!
-	create: CauseGradeCreateWithoutGradedToInput!
+  where: CauseGradeWhereUniqueInput!
+  update: CauseGradeUpdateWithoutGradedToDataInput!
+  create: CauseGradeCreateWithoutGradedToInput!
 }
 
 input CauseGradeWhereInput {
-	"""
-	Logical AND on all given filters.
-	"""
-	AND: [CauseGradeWhereInput!]
+  """Logical AND on all given filters."""
+  AND: [CauseGradeWhereInput!]
 
-	"""
-	Logical OR on all given filters.
-	"""
-	OR: [CauseGradeWhereInput!]
+  """Logical OR on all given filters."""
+  OR: [CauseGradeWhereInput!]
 
-	"""
-	Logical NOT on all given filters combined by AND.
-	"""
-	NOT: [CauseGradeWhereInput!]
-	id: ID
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CauseGradeWhereInput!]
+  id: ID
 
-	"""
-	All values that are not equal to given value.
-	"""
-	id_not: ID
+  """All values that are not equal to given value."""
+  id_not: ID
 
-	"""
-	All values that are contained in given list.
-	"""
-	id_in: [ID!]
+  """All values that are contained in given list."""
+  id_in: [ID!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	id_not_in: [ID!]
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
 
-	"""
-	All values less than the given value.
-	"""
-	id_lt: ID
+  """All values less than the given value."""
+  id_lt: ID
 
-	"""
-	All values less than or equal the given value.
-	"""
-	id_lte: ID
+  """All values less than or equal the given value."""
+  id_lte: ID
 
-	"""
-	All values greater than the given value.
-	"""
-	id_gt: ID
+  """All values greater than the given value."""
+  id_gt: ID
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	id_gte: ID
+  """All values greater than or equal the given value."""
+  id_gte: ID
 
-	"""
-	All values containing the given string.
-	"""
-	id_contains: ID
+  """All values containing the given string."""
+  id_contains: ID
 
-	"""
-	All values not containing the given string.
-	"""
-	id_not_contains: ID
+  """All values not containing the given string."""
+  id_not_contains: ID
 
-	"""
-	All values starting with the given string.
-	"""
-	id_starts_with: ID
+  """All values starting with the given string."""
+  id_starts_with: ID
 
-	"""
-	All values not starting with the given string.
-	"""
-	id_not_starts_with: ID
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
 
-	"""
-	All values ending with the given string.
-	"""
-	id_ends_with: ID
+  """All values ending with the given string."""
+  id_ends_with: ID
 
-	"""
-	All values not ending with the given string.
-	"""
-	id_not_ends_with: ID
-	createdAt: DateTime
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
 
-	"""
-	All values that are not equal to given value.
-	"""
-	createdAt_not: DateTime
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
 
-	"""
-	All values that are contained in given list.
-	"""
-	createdAt_in: [DateTime!]
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	createdAt_not_in: [DateTime!]
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
 
-	"""
-	All values less than the given value.
-	"""
-	createdAt_lt: DateTime
+  """All values less than the given value."""
+  createdAt_lt: DateTime
 
-	"""
-	All values less than or equal the given value.
-	"""
-	createdAt_lte: DateTime
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
 
-	"""
-	All values greater than the given value.
-	"""
-	createdAt_gt: DateTime
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	createdAt_gte: DateTime
-	cause: Cause
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  cause: Cause
 
-	"""
-	All values that are not equal to given value.
-	"""
-	cause_not: Cause
+  """All values that are not equal to given value."""
+  cause_not: Cause
 
-	"""
-	All values that are contained in given list.
-	"""
-	cause_in: [Cause!]
+  """All values that are contained in given list."""
+  cause_in: [Cause!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	cause_not_in: [Cause!]
-	grade: Float
+  """All values that are not contained in given list."""
+  cause_not_in: [Cause!]
+  grade: Float
 
-	"""
-	All values that are not equal to given value.
-	"""
-	grade_not: Float
+  """All values that are not equal to given value."""
+  grade_not: Float
 
-	"""
-	All values that are contained in given list.
-	"""
-	grade_in: [Float!]
+  """All values that are contained in given list."""
+  grade_in: [Float!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	grade_not_in: [Float!]
+  """All values that are not contained in given list."""
+  grade_not_in: [Float!]
 
-	"""
-	All values less than the given value.
-	"""
-	grade_lt: Float
+  """All values less than the given value."""
+  grade_lt: Float
 
-	"""
-	All values less than or equal the given value.
-	"""
-	grade_lte: Float
+  """All values less than or equal the given value."""
+  grade_lte: Float
 
-	"""
-	All values greater than the given value.
-	"""
-	grade_gt: Float
+  """All values greater than the given value."""
+  grade_gt: Float
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	grade_gte: Float
-	gradedTo: CompanyWhereInput
-	gradedBy: UserWhereInput
+  """All values greater than or equal the given value."""
+  grade_gte: Float
+  gradedTo: CompanyWhereInput
+  gradedBy: UserWhereInput
 }
 
 input CauseGradeWhereUniqueInput {
-	id: ID
+  id: ID
 }
 
 type Company implements Node {
-	id: ID!
-	createdAt: DateTime!
-	name: String!
-	logo: String
-	actGrades(
-		where: ActGradeWhereInput
-		orderBy: ActGradeOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [ActGrade!]
-	causeGrades(
-		where: CauseGradeWhereInput
-		orderBy: CauseGradeOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [CauseGrade!]
-	opinions(
-		where: OpinionWhereInput
-		orderBy: OpinionOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [Opinion!]
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+  logo: String
+  actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
+  causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade!]
+  opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion!]
 }
 
-"""
-A connection to a list of items.
-"""
+"""A connection to a list of items."""
 type CompanyConnection {
-	"""
-	Information to aid in pagination.
-	"""
-	pageInfo: PageInfo!
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
-	"""
-	A list of edges.
-	"""
-	edges: [CompanyEdge]!
-	aggregate: AggregateCompany!
+  """A list of edges."""
+  edges: [CompanyEdge]!
+  aggregate: AggregateCompany!
 }
 
 input CompanyCreateInput {
-	name: String!
-	logo: String
-	actGrades: ActGradeCreateManyWithoutGradedToInput
-	causeGrades: CauseGradeCreateManyWithoutGradedToInput
-	opinions: OpinionCreateManyWithoutRegardingWhoInput
+  name: String!
+  logo: String
+  actGrades: ActGradeCreateManyWithoutGradedToInput
+  causeGrades: CauseGradeCreateManyWithoutGradedToInput
+  opinions: OpinionCreateManyWithoutRegardingWhoInput
 }
 
 input CompanyCreateOneWithoutActGradesInput {
-	create: CompanyCreateWithoutActGradesInput
-	connect: CompanyWhereUniqueInput
+  create: CompanyCreateWithoutActGradesInput
+  connect: CompanyWhereUniqueInput
 }
 
 input CompanyCreateOneWithoutCauseGradesInput {
-	create: CompanyCreateWithoutCauseGradesInput
-	connect: CompanyWhereUniqueInput
+  create: CompanyCreateWithoutCauseGradesInput
+  connect: CompanyWhereUniqueInput
 }
 
 input CompanyCreateOneWithoutOpinionsInput {
-	create: CompanyCreateWithoutOpinionsInput
-	connect: CompanyWhereUniqueInput
+  create: CompanyCreateWithoutOpinionsInput
+  connect: CompanyWhereUniqueInput
 }
 
 input CompanyCreateWithoutActGradesInput {
-	name: String!
-	logo: String
-	causeGrades: CauseGradeCreateManyWithoutGradedToInput
-	opinions: OpinionCreateManyWithoutRegardingWhoInput
+  name: String!
+  logo: String
+  causeGrades: CauseGradeCreateManyWithoutGradedToInput
+  opinions: OpinionCreateManyWithoutRegardingWhoInput
 }
 
 input CompanyCreateWithoutCauseGradesInput {
-	name: String!
-	logo: String
-	actGrades: ActGradeCreateManyWithoutGradedToInput
-	opinions: OpinionCreateManyWithoutRegardingWhoInput
+  name: String!
+  logo: String
+  actGrades: ActGradeCreateManyWithoutGradedToInput
+  opinions: OpinionCreateManyWithoutRegardingWhoInput
 }
 
 input CompanyCreateWithoutOpinionsInput {
-	name: String!
-	logo: String
-	actGrades: ActGradeCreateManyWithoutGradedToInput
-	causeGrades: CauseGradeCreateManyWithoutGradedToInput
+  name: String!
+  logo: String
+  actGrades: ActGradeCreateManyWithoutGradedToInput
+  causeGrades: CauseGradeCreateManyWithoutGradedToInput
 }
 
-"""
-An edge in a connection.
-"""
+"""An edge in a connection."""
 type CompanyEdge {
-	"""
-	The item at the end of the edge.
-	"""
-	node: Company!
+  """The item at the end of the edge."""
+  node: Company!
 
-	"""
-	A cursor for use in pagination.
-	"""
-	cursor: String!
+  """A cursor for use in pagination."""
+  cursor: String!
 }
 
 enum CompanyOrderByInput {
-	id_ASC
-	id_DESC
-	createdAt_ASC
-	createdAt_DESC
-	name_ASC
-	name_DESC
-	logo_ASC
-	logo_DESC
-	updatedAt_ASC
-	updatedAt_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+  logo_ASC
+  logo_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type CompanyPreviousValues {
-	id: ID!
-	createdAt: DateTime!
-	name: String!
-	logo: String
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+  logo: String
 }
 
 type CompanySubscriptionPayload {
-	mutation: MutationType!
-	node: Company
-	updatedFields: [String!]
-	previousValues: CompanyPreviousValues
+  mutation: MutationType!
+  node: Company
+  updatedFields: [String!]
+  previousValues: CompanyPreviousValues
 }
 
 input CompanySubscriptionWhereInput {
-	"""
-	Logical AND on all given filters.
-	"""
-	AND: [CompanySubscriptionWhereInput!]
+  """Logical AND on all given filters."""
+  AND: [CompanySubscriptionWhereInput!]
 
-	"""
-	Logical OR on all given filters.
-	"""
-	OR: [CompanySubscriptionWhereInput!]
+  """Logical OR on all given filters."""
+  OR: [CompanySubscriptionWhereInput!]
 
-	"""
-	Logical NOT on all given filters combined by AND.
-	"""
-	NOT: [CompanySubscriptionWhereInput!]
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompanySubscriptionWhereInput!]
 
-	"""
-	The subscription event gets dispatched when it's listed in mutation_in
-	"""
-	mutation_in: [MutationType!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
 
-	"""
-	The subscription event gets only dispatched when one of the updated fields names is included in this list
-	"""
-	updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
 
-	"""
-	The subscription event gets only dispatched when all of the field names included in this list have been updated
-	"""
-	updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
 
-	"""
-	The subscription event gets only dispatched when some of the field names included in this list have been updated
-	"""
-	updatedFields_contains_some: [String!]
-	node: CompanyWhereInput
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CompanyWhereInput
 }
 
 input CompanyUpdateInput {
-	name: String
-	logo: String
-	actGrades: ActGradeUpdateManyWithoutGradedToInput
-	causeGrades: CauseGradeUpdateManyWithoutGradedToInput
-	opinions: OpinionUpdateManyWithoutRegardingWhoInput
+  name: String
+  logo: String
+  actGrades: ActGradeUpdateManyWithoutGradedToInput
+  causeGrades: CauseGradeUpdateManyWithoutGradedToInput
+  opinions: OpinionUpdateManyWithoutRegardingWhoInput
 }
 
-input CompanyUpdateOneWithoutActGradesInput {
-	create: CompanyCreateWithoutActGradesInput
-	connect: CompanyWhereUniqueInput
-	delete: Boolean
-	update: CompanyUpdateWithoutActGradesDataInput
-	upsert: CompanyUpsertWithoutActGradesInput
+input CompanyUpdateOneRequiredWithoutActGradesInput {
+  create: CompanyCreateWithoutActGradesInput
+  connect: CompanyWhereUniqueInput
+  update: CompanyUpdateWithoutActGradesDataInput
+  upsert: CompanyUpsertWithoutActGradesInput
 }
 
-input CompanyUpdateOneWithoutCauseGradesInput {
-	create: CompanyCreateWithoutCauseGradesInput
-	connect: CompanyWhereUniqueInput
-	delete: Boolean
-	update: CompanyUpdateWithoutCauseGradesDataInput
-	upsert: CompanyUpsertWithoutCauseGradesInput
+input CompanyUpdateOneRequiredWithoutCauseGradesInput {
+  create: CompanyCreateWithoutCauseGradesInput
+  connect: CompanyWhereUniqueInput
+  update: CompanyUpdateWithoutCauseGradesDataInput
+  upsert: CompanyUpsertWithoutCauseGradesInput
 }
 
-input CompanyUpdateOneWithoutOpinionsInput {
-	create: CompanyCreateWithoutOpinionsInput
-	connect: CompanyWhereUniqueInput
-	delete: Boolean
-	update: CompanyUpdateWithoutOpinionsDataInput
-	upsert: CompanyUpsertWithoutOpinionsInput
+input CompanyUpdateOneRequiredWithoutOpinionsInput {
+  create: CompanyCreateWithoutOpinionsInput
+  connect: CompanyWhereUniqueInput
+  update: CompanyUpdateWithoutOpinionsDataInput
+  upsert: CompanyUpsertWithoutOpinionsInput
 }
 
 input CompanyUpdateWithoutActGradesDataInput {
-	name: String
-	logo: String
-	causeGrades: CauseGradeUpdateManyWithoutGradedToInput
-	opinions: OpinionUpdateManyWithoutRegardingWhoInput
+  name: String
+  logo: String
+  causeGrades: CauseGradeUpdateManyWithoutGradedToInput
+  opinions: OpinionUpdateManyWithoutRegardingWhoInput
 }
 
 input CompanyUpdateWithoutCauseGradesDataInput {
-	name: String
-	logo: String
-	actGrades: ActGradeUpdateManyWithoutGradedToInput
-	opinions: OpinionUpdateManyWithoutRegardingWhoInput
+  name: String
+  logo: String
+  actGrades: ActGradeUpdateManyWithoutGradedToInput
+  opinions: OpinionUpdateManyWithoutRegardingWhoInput
 }
 
 input CompanyUpdateWithoutOpinionsDataInput {
-	name: String
-	logo: String
-	actGrades: ActGradeUpdateManyWithoutGradedToInput
-	causeGrades: CauseGradeUpdateManyWithoutGradedToInput
+  name: String
+  logo: String
+  actGrades: ActGradeUpdateManyWithoutGradedToInput
+  causeGrades: CauseGradeUpdateManyWithoutGradedToInput
 }
 
 input CompanyUpsertWithoutActGradesInput {
-	update: CompanyUpdateWithoutActGradesDataInput!
-	create: CompanyCreateWithoutActGradesInput!
+  update: CompanyUpdateWithoutActGradesDataInput!
+  create: CompanyCreateWithoutActGradesInput!
 }
 
 input CompanyUpsertWithoutCauseGradesInput {
-	update: CompanyUpdateWithoutCauseGradesDataInput!
-	create: CompanyCreateWithoutCauseGradesInput!
+  update: CompanyUpdateWithoutCauseGradesDataInput!
+  create: CompanyCreateWithoutCauseGradesInput!
 }
 
 input CompanyUpsertWithoutOpinionsInput {
-	update: CompanyUpdateWithoutOpinionsDataInput!
-	create: CompanyCreateWithoutOpinionsInput!
+  update: CompanyUpdateWithoutOpinionsDataInput!
+  create: CompanyCreateWithoutOpinionsInput!
 }
 
 input CompanyWhereInput {
-	"""
-	Logical AND on all given filters.
-	"""
-	AND: [CompanyWhereInput!]
+  """Logical AND on all given filters."""
+  AND: [CompanyWhereInput!]
 
-	"""
-	Logical OR on all given filters.
-	"""
-	OR: [CompanyWhereInput!]
+  """Logical OR on all given filters."""
+  OR: [CompanyWhereInput!]
 
-	"""
-	Logical NOT on all given filters combined by AND.
-	"""
-	NOT: [CompanyWhereInput!]
-	id: ID
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompanyWhereInput!]
+  id: ID
 
-	"""
-	All values that are not equal to given value.
-	"""
-	id_not: ID
+  """All values that are not equal to given value."""
+  id_not: ID
 
-	"""
-	All values that are contained in given list.
-	"""
-	id_in: [ID!]
+  """All values that are contained in given list."""
+  id_in: [ID!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	id_not_in: [ID!]
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
 
-	"""
-	All values less than the given value.
-	"""
-	id_lt: ID
+  """All values less than the given value."""
+  id_lt: ID
 
-	"""
-	All values less than or equal the given value.
-	"""
-	id_lte: ID
+  """All values less than or equal the given value."""
+  id_lte: ID
 
-	"""
-	All values greater than the given value.
-	"""
-	id_gt: ID
+  """All values greater than the given value."""
+  id_gt: ID
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	id_gte: ID
+  """All values greater than or equal the given value."""
+  id_gte: ID
 
-	"""
-	All values containing the given string.
-	"""
-	id_contains: ID
+  """All values containing the given string."""
+  id_contains: ID
 
-	"""
-	All values not containing the given string.
-	"""
-	id_not_contains: ID
+  """All values not containing the given string."""
+  id_not_contains: ID
 
-	"""
-	All values starting with the given string.
-	"""
-	id_starts_with: ID
+  """All values starting with the given string."""
+  id_starts_with: ID
 
-	"""
-	All values not starting with the given string.
-	"""
-	id_not_starts_with: ID
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
 
-	"""
-	All values ending with the given string.
-	"""
-	id_ends_with: ID
+  """All values ending with the given string."""
+  id_ends_with: ID
 
-	"""
-	All values not ending with the given string.
-	"""
-	id_not_ends_with: ID
-	createdAt: DateTime
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
 
-	"""
-	All values that are not equal to given value.
-	"""
-	createdAt_not: DateTime
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
 
-	"""
-	All values that are contained in given list.
-	"""
-	createdAt_in: [DateTime!]
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	createdAt_not_in: [DateTime!]
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
 
-	"""
-	All values less than the given value.
-	"""
-	createdAt_lt: DateTime
+  """All values less than the given value."""
+  createdAt_lt: DateTime
 
-	"""
-	All values less than or equal the given value.
-	"""
-	createdAt_lte: DateTime
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
 
-	"""
-	All values greater than the given value.
-	"""
-	createdAt_gt: DateTime
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	createdAt_gte: DateTime
-	name: String
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  name: String
 
-	"""
-	All values that are not equal to given value.
-	"""
-	name_not: String
+  """All values that are not equal to given value."""
+  name_not: String
 
-	"""
-	All values that are contained in given list.
-	"""
-	name_in: [String!]
+  """All values that are contained in given list."""
+  name_in: [String!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	name_not_in: [String!]
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
 
-	"""
-	All values less than the given value.
-	"""
-	name_lt: String
+  """All values less than the given value."""
+  name_lt: String
 
-	"""
-	All values less than or equal the given value.
-	"""
-	name_lte: String
+  """All values less than or equal the given value."""
+  name_lte: String
 
-	"""
-	All values greater than the given value.
-	"""
-	name_gt: String
+  """All values greater than the given value."""
+  name_gt: String
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	name_gte: String
+  """All values greater than or equal the given value."""
+  name_gte: String
 
-	"""
-	All values containing the given string.
-	"""
-	name_contains: String
+  """All values containing the given string."""
+  name_contains: String
 
-	"""
-	All values not containing the given string.
-	"""
-	name_not_contains: String
+  """All values not containing the given string."""
+  name_not_contains: String
 
-	"""
-	All values starting with the given string.
-	"""
-	name_starts_with: String
+  """All values starting with the given string."""
+  name_starts_with: String
 
-	"""
-	All values not starting with the given string.
-	"""
-	name_not_starts_with: String
+  """All values not starting with the given string."""
+  name_not_starts_with: String
 
-	"""
-	All values ending with the given string.
-	"""
-	name_ends_with: String
+  """All values ending with the given string."""
+  name_ends_with: String
 
-	"""
-	All values not ending with the given string.
-	"""
-	name_not_ends_with: String
-	logo: String
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  logo: String
 
-	"""
-	All values that are not equal to given value.
-	"""
-	logo_not: String
+  """All values that are not equal to given value."""
+  logo_not: String
 
-	"""
-	All values that are contained in given list.
-	"""
-	logo_in: [String!]
+  """All values that are contained in given list."""
+  logo_in: [String!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	logo_not_in: [String!]
+  """All values that are not contained in given list."""
+  logo_not_in: [String!]
 
-	"""
-	All values less than the given value.
-	"""
-	logo_lt: String
+  """All values less than the given value."""
+  logo_lt: String
 
-	"""
-	All values less than or equal the given value.
-	"""
-	logo_lte: String
+  """All values less than or equal the given value."""
+  logo_lte: String
 
-	"""
-	All values greater than the given value.
-	"""
-	logo_gt: String
+  """All values greater than the given value."""
+  logo_gt: String
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	logo_gte: String
+  """All values greater than or equal the given value."""
+  logo_gte: String
 
-	"""
-	All values containing the given string.
-	"""
-	logo_contains: String
+  """All values containing the given string."""
+  logo_contains: String
 
-	"""
-	All values not containing the given string.
-	"""
-	logo_not_contains: String
+  """All values not containing the given string."""
+  logo_not_contains: String
 
-	"""
-	All values starting with the given string.
-	"""
-	logo_starts_with: String
+  """All values starting with the given string."""
+  logo_starts_with: String
 
-	"""
-	All values not starting with the given string.
-	"""
-	logo_not_starts_with: String
+  """All values not starting with the given string."""
+  logo_not_starts_with: String
 
-	"""
-	All values ending with the given string.
-	"""
-	logo_ends_with: String
+  """All values ending with the given string."""
+  logo_ends_with: String
 
-	"""
-	All values not ending with the given string.
-	"""
-	logo_not_ends_with: String
-	actGrades_every: ActGradeWhereInput
-	actGrades_some: ActGradeWhereInput
-	actGrades_none: ActGradeWhereInput
-	causeGrades_every: CauseGradeWhereInput
-	causeGrades_some: CauseGradeWhereInput
-	causeGrades_none: CauseGradeWhereInput
-	opinions_every: OpinionWhereInput
-	opinions_some: OpinionWhereInput
-	opinions_none: OpinionWhereInput
+  """All values not ending with the given string."""
+  logo_not_ends_with: String
+  actGrades_every: ActGradeWhereInput
+  actGrades_some: ActGradeWhereInput
+  actGrades_none: ActGradeWhereInput
+  causeGrades_every: CauseGradeWhereInput
+  causeGrades_some: CauseGradeWhereInput
+  causeGrades_none: CauseGradeWhereInput
+  opinions_every: OpinionWhereInput
+  opinions_some: OpinionWhereInput
+  opinions_none: OpinionWhereInput
 }
 
 input CompanyWhereUniqueInput {
-	id: ID
-	name: String
+  id: ID
+  name: String
 }
 
 scalar DateTime
@@ -1362,1499 +1046,1023 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-	createCompany(data: CompanyCreateInput!): Company!
-	createUser(data: UserCreateInput!): User!
-	createOpinion(data: OpinionCreateInput!): Opinion!
-	createActGrade(data: ActGradeCreateInput!): ActGrade!
-	createCauseGrade(data: CauseGradeCreateInput!): CauseGrade!
-	updateCompany(
-		data: CompanyUpdateInput!
-		where: CompanyWhereUniqueInput!
-	): Company
-	updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-	updateOpinion(
-		data: OpinionUpdateInput!
-		where: OpinionWhereUniqueInput!
-	): Opinion
-	updateActGrade(
-		data: ActGradeUpdateInput!
-		where: ActGradeWhereUniqueInput!
-	): ActGrade
-	updateCauseGrade(
-		data: CauseGradeUpdateInput!
-		where: CauseGradeWhereUniqueInput!
-	): CauseGrade
-	deleteCompany(where: CompanyWhereUniqueInput!): Company
-	deleteUser(where: UserWhereUniqueInput!): User
-	deleteOpinion(where: OpinionWhereUniqueInput!): Opinion
-	deleteActGrade(where: ActGradeWhereUniqueInput!): ActGrade
-	deleteCauseGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
-	upsertCompany(
-		where: CompanyWhereUniqueInput!
-		create: CompanyCreateInput!
-		update: CompanyUpdateInput!
-	): Company!
-	upsertUser(
-		where: UserWhereUniqueInput!
-		create: UserCreateInput!
-		update: UserUpdateInput!
-	): User!
-	upsertOpinion(
-		where: OpinionWhereUniqueInput!
-		create: OpinionCreateInput!
-		update: OpinionUpdateInput!
-	): Opinion!
-	upsertActGrade(
-		where: ActGradeWhereUniqueInput!
-		create: ActGradeCreateInput!
-		update: ActGradeUpdateInput!
-	): ActGrade!
-	upsertCauseGrade(
-		where: CauseGradeWhereUniqueInput!
-		create: CauseGradeCreateInput!
-		update: CauseGradeUpdateInput!
-	): CauseGrade!
-	updateManyCompanies(
-		data: CompanyUpdateInput!
-		where: CompanyWhereInput
-	): BatchPayload!
-	updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-	updateManyOpinions(
-		data: OpinionUpdateInput!
-		where: OpinionWhereInput
-	): BatchPayload!
-	updateManyActGrades(
-		data: ActGradeUpdateInput!
-		where: ActGradeWhereInput
-	): BatchPayload!
-	updateManyCauseGrades(
-		data: CauseGradeUpdateInput!
-		where: CauseGradeWhereInput
-	): BatchPayload!
-	deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
-	deleteManyUsers(where: UserWhereInput): BatchPayload!
-	deleteManyOpinions(where: OpinionWhereInput): BatchPayload!
-	deleteManyActGrades(where: ActGradeWhereInput): BatchPayload!
-	deleteManyCauseGrades(where: CauseGradeWhereInput): BatchPayload!
+  createCompany(data: CompanyCreateInput!): Company!
+  createUser(data: UserCreateInput!): User!
+  createOpinion(data: OpinionCreateInput!): Opinion!
+  createActGrade(data: ActGradeCreateInput!): ActGrade!
+  createCauseGrade(data: CauseGradeCreateInput!): CauseGrade!
+  updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateOpinion(data: OpinionUpdateInput!, where: OpinionWhereUniqueInput!): Opinion
+  updateActGrade(data: ActGradeUpdateInput!, where: ActGradeWhereUniqueInput!): ActGrade
+  updateCauseGrade(data: CauseGradeUpdateInput!, where: CauseGradeWhereUniqueInput!): CauseGrade
+  deleteCompany(where: CompanyWhereUniqueInput!): Company
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteOpinion(where: OpinionWhereUniqueInput!): Opinion
+  deleteActGrade(where: ActGradeWhereUniqueInput!): ActGrade
+  deleteCauseGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
+  upsertCompany(where: CompanyWhereUniqueInput!, create: CompanyCreateInput!, update: CompanyUpdateInput!): Company!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertOpinion(where: OpinionWhereUniqueInput!, create: OpinionCreateInput!, update: OpinionUpdateInput!): Opinion!
+  upsertActGrade(where: ActGradeWhereUniqueInput!, create: ActGradeCreateInput!, update: ActGradeUpdateInput!): ActGrade!
+  upsertCauseGrade(where: CauseGradeWhereUniqueInput!, create: CauseGradeCreateInput!, update: CauseGradeUpdateInput!): CauseGrade!
+  updateManyCompanies(data: CompanyUpdateInput!, where: CompanyWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyOpinions(data: OpinionUpdateInput!, where: OpinionWhereInput): BatchPayload!
+  updateManyActGrades(data: ActGradeUpdateInput!, where: ActGradeWhereInput): BatchPayload!
+  updateManyCauseGrades(data: CauseGradeUpdateInput!, where: CauseGradeWhereInput): BatchPayload!
+  deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyOpinions(where: OpinionWhereInput): BatchPayload!
+  deleteManyActGrades(where: ActGradeWhereInput): BatchPayload!
+  deleteManyCauseGrades(where: CauseGradeWhereInput): BatchPayload!
 }
 
 enum MutationType {
-	CREATED
-	UPDATED
-	DELETED
+  CREATED
+  UPDATED
+  DELETED
 }
 
-"""
-An object with an ID
-"""
+"""An object with an ID"""
 interface Node {
-	"""
-	The id of the object.
-	"""
-	id: ID!
+  """The id of the object."""
+  id: ID!
 }
 
 type Opinion implements Node {
-	id: ID!
-	createdAt: DateTime!
-	regardingWho(where: CompanyWhereInput): Company!
-	regardingWhat: Act!
-	title: String!
-	text: String!
-	sources: [String!]!
-	tags: [String!]!
-	writtenBy(where: UserWhereInput): User!
-	affiliations(
-		where: ActGradeWhereInput
-		orderBy: ActGradeOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [ActGrade!]
+  id: ID!
+  createdAt: DateTime!
+  regardingWho: Company!
+  regardingWhat: Act!
+  title: String!
+  text: String!
+  sources: [String!]!
+  tags: [String!]!
+  writtenBy: User!
+  affiliations(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
 }
 
-"""
-A connection to a list of items.
-"""
+"""A connection to a list of items."""
 type OpinionConnection {
-	"""
-	Information to aid in pagination.
-	"""
-	pageInfo: PageInfo!
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
-	"""
-	A list of edges.
-	"""
-	edges: [OpinionEdge]!
-	aggregate: AggregateOpinion!
+  """A list of edges."""
+  edges: [OpinionEdge]!
+  aggregate: AggregateOpinion!
 }
 
 input OpinionCreateInput {
-	regardingWhat: Act!
-	title: String!
-	text: String!
-	sources: OpinionCreatesourcesInput
-	tags: OpinionCreatetagsInput
-	regardingWho: CompanyCreateOneWithoutOpinionsInput!
-	writtenBy: UserCreateOneWithoutOpinionsInput!
-	affiliations: ActGradeCreateManyWithoutAffiliatedToInput
+  regardingWhat: Act!
+  title: String!
+  text: String!
+  sources: OpinionCreatesourcesInput
+  tags: OpinionCreatetagsInput
+  regardingWho: CompanyCreateOneWithoutOpinionsInput!
+  writtenBy: UserCreateOneWithoutOpinionsInput!
+  affiliations: ActGradeCreateManyWithoutAffiliatedToInput
 }
 
 input OpinionCreateManyWithoutRegardingWhoInput {
-	create: [OpinionCreateWithoutRegardingWhoInput!]
-	connect: [OpinionWhereUniqueInput!]
+  create: [OpinionCreateWithoutRegardingWhoInput!]
+  connect: [OpinionWhereUniqueInput!]
 }
 
 input OpinionCreateManyWithoutWrittenByInput {
-	create: [OpinionCreateWithoutWrittenByInput!]
-	connect: [OpinionWhereUniqueInput!]
+  create: [OpinionCreateWithoutWrittenByInput!]
+  connect: [OpinionWhereUniqueInput!]
 }
 
 input OpinionCreateOneWithoutAffiliationsInput {
-	create: OpinionCreateWithoutAffiliationsInput
-	connect: OpinionWhereUniqueInput
+  create: OpinionCreateWithoutAffiliationsInput
+  connect: OpinionWhereUniqueInput
 }
 
 input OpinionCreatesourcesInput {
-	set: [String!]
+  set: [String!]
 }
 
 input OpinionCreatetagsInput {
-	set: [String!]
+  set: [String!]
 }
 
 input OpinionCreateWithoutAffiliationsInput {
-	regardingWhat: Act!
-	title: String!
-	text: String!
-	sources: OpinionCreatesourcesInput
-	tags: OpinionCreatetagsInput
-	regardingWho: CompanyCreateOneWithoutOpinionsInput!
-	writtenBy: UserCreateOneWithoutOpinionsInput!
+  regardingWhat: Act!
+  title: String!
+  text: String!
+  sources: OpinionCreatesourcesInput
+  tags: OpinionCreatetagsInput
+  regardingWho: CompanyCreateOneWithoutOpinionsInput!
+  writtenBy: UserCreateOneWithoutOpinionsInput!
 }
 
 input OpinionCreateWithoutRegardingWhoInput {
-	regardingWhat: Act!
-	title: String!
-	text: String!
-	sources: OpinionCreatesourcesInput
-	tags: OpinionCreatetagsInput
-	writtenBy: UserCreateOneWithoutOpinionsInput!
-	affiliations: ActGradeCreateManyWithoutAffiliatedToInput
+  regardingWhat: Act!
+  title: String!
+  text: String!
+  sources: OpinionCreatesourcesInput
+  tags: OpinionCreatetagsInput
+  writtenBy: UserCreateOneWithoutOpinionsInput!
+  affiliations: ActGradeCreateManyWithoutAffiliatedToInput
 }
 
 input OpinionCreateWithoutWrittenByInput {
-	regardingWhat: Act!
-	title: String!
-	text: String!
-	sources: OpinionCreatesourcesInput
-	tags: OpinionCreatetagsInput
-	regardingWho: CompanyCreateOneWithoutOpinionsInput!
-	affiliations: ActGradeCreateManyWithoutAffiliatedToInput
+  regardingWhat: Act!
+  title: String!
+  text: String!
+  sources: OpinionCreatesourcesInput
+  tags: OpinionCreatetagsInput
+  regardingWho: CompanyCreateOneWithoutOpinionsInput!
+  affiliations: ActGradeCreateManyWithoutAffiliatedToInput
 }
 
-"""
-An edge in a connection.
-"""
+"""An edge in a connection."""
 type OpinionEdge {
-	"""
-	The item at the end of the edge.
-	"""
-	node: Opinion!
+  """The item at the end of the edge."""
+  node: Opinion!
 
-	"""
-	A cursor for use in pagination.
-	"""
-	cursor: String!
+  """A cursor for use in pagination."""
+  cursor: String!
 }
 
 enum OpinionOrderByInput {
-	id_ASC
-	id_DESC
-	createdAt_ASC
-	createdAt_DESC
-	regardingWhat_ASC
-	regardingWhat_DESC
-	title_ASC
-	title_DESC
-	text_ASC
-	text_DESC
-	updatedAt_ASC
-	updatedAt_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  regardingWhat_ASC
+  regardingWhat_DESC
+  title_ASC
+  title_DESC
+  text_ASC
+  text_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type OpinionPreviousValues {
-	id: ID!
-	createdAt: DateTime!
-	regardingWhat: Act!
-	title: String!
-	text: String!
-	sources: [String!]!
-	tags: [String!]!
+  id: ID!
+  createdAt: DateTime!
+  regardingWhat: Act!
+  title: String!
+  text: String!
+  sources: [String!]!
+  tags: [String!]!
 }
 
 type OpinionSubscriptionPayload {
-	mutation: MutationType!
-	node: Opinion
-	updatedFields: [String!]
-	previousValues: OpinionPreviousValues
+  mutation: MutationType!
+  node: Opinion
+  updatedFields: [String!]
+  previousValues: OpinionPreviousValues
 }
 
 input OpinionSubscriptionWhereInput {
-	"""
-	Logical AND on all given filters.
-	"""
-	AND: [OpinionSubscriptionWhereInput!]
+  """Logical AND on all given filters."""
+  AND: [OpinionSubscriptionWhereInput!]
 
-	"""
-	Logical OR on all given filters.
-	"""
-	OR: [OpinionSubscriptionWhereInput!]
+  """Logical OR on all given filters."""
+  OR: [OpinionSubscriptionWhereInput!]
 
-	"""
-	Logical NOT on all given filters combined by AND.
-	"""
-	NOT: [OpinionSubscriptionWhereInput!]
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OpinionSubscriptionWhereInput!]
 
-	"""
-	The subscription event gets dispatched when it's listed in mutation_in
-	"""
-	mutation_in: [MutationType!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
 
-	"""
-	The subscription event gets only dispatched when one of the updated fields names is included in this list
-	"""
-	updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
 
-	"""
-	The subscription event gets only dispatched when all of the field names included in this list have been updated
-	"""
-	updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
 
-	"""
-	The subscription event gets only dispatched when some of the field names included in this list have been updated
-	"""
-	updatedFields_contains_some: [String!]
-	node: OpinionWhereInput
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: OpinionWhereInput
 }
 
 input OpinionUpdateInput {
-	regardingWhat: Act
-	title: String
-	text: String
-	sources: OpinionUpdatesourcesInput
-	tags: OpinionUpdatetagsInput
-	regardingWho: CompanyUpdateOneWithoutOpinionsInput
-	writtenBy: UserUpdateOneWithoutOpinionsInput
-	affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
+  regardingWhat: Act
+  title: String
+  text: String
+  sources: OpinionUpdatesourcesInput
+  tags: OpinionUpdatetagsInput
+  regardingWho: CompanyUpdateOneRequiredWithoutOpinionsInput
+  writtenBy: UserUpdateOneRequiredWithoutOpinionsInput
+  affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
 }
 
 input OpinionUpdateManyWithoutRegardingWhoInput {
-	create: [OpinionCreateWithoutRegardingWhoInput!]
-	connect: [OpinionWhereUniqueInput!]
-	disconnect: [OpinionWhereUniqueInput!]
-	delete: [OpinionWhereUniqueInput!]
-	update: [OpinionUpdateWithWhereUniqueWithoutRegardingWhoInput!]
-	upsert: [OpinionUpsertWithWhereUniqueWithoutRegardingWhoInput!]
+  create: [OpinionCreateWithoutRegardingWhoInput!]
+  connect: [OpinionWhereUniqueInput!]
+  disconnect: [OpinionWhereUniqueInput!]
+  delete: [OpinionWhereUniqueInput!]
+  update: [OpinionUpdateWithWhereUniqueWithoutRegardingWhoInput!]
+  upsert: [OpinionUpsertWithWhereUniqueWithoutRegardingWhoInput!]
 }
 
 input OpinionUpdateManyWithoutWrittenByInput {
-	create: [OpinionCreateWithoutWrittenByInput!]
-	connect: [OpinionWhereUniqueInput!]
-	disconnect: [OpinionWhereUniqueInput!]
-	delete: [OpinionWhereUniqueInput!]
-	update: [OpinionUpdateWithWhereUniqueWithoutWrittenByInput!]
-	upsert: [OpinionUpsertWithWhereUniqueWithoutWrittenByInput!]
+  create: [OpinionCreateWithoutWrittenByInput!]
+  connect: [OpinionWhereUniqueInput!]
+  disconnect: [OpinionWhereUniqueInput!]
+  delete: [OpinionWhereUniqueInput!]
+  update: [OpinionUpdateWithWhereUniqueWithoutWrittenByInput!]
+  upsert: [OpinionUpsertWithWhereUniqueWithoutWrittenByInput!]
 }
 
-input OpinionUpdateOneWithoutAffiliationsInput {
-	create: OpinionCreateWithoutAffiliationsInput
-	connect: OpinionWhereUniqueInput
-	delete: Boolean
-	update: OpinionUpdateWithoutAffiliationsDataInput
-	upsert: OpinionUpsertWithoutAffiliationsInput
+input OpinionUpdateOneRequiredWithoutAffiliationsInput {
+  create: OpinionCreateWithoutAffiliationsInput
+  connect: OpinionWhereUniqueInput
+  update: OpinionUpdateWithoutAffiliationsDataInput
+  upsert: OpinionUpsertWithoutAffiliationsInput
 }
 
 input OpinionUpdatesourcesInput {
-	set: [String!]
+  set: [String!]
 }
 
 input OpinionUpdatetagsInput {
-	set: [String!]
+  set: [String!]
 }
 
 input OpinionUpdateWithoutAffiliationsDataInput {
-	regardingWhat: Act
-	title: String
-	text: String
-	sources: OpinionUpdatesourcesInput
-	tags: OpinionUpdatetagsInput
-	regardingWho: CompanyUpdateOneWithoutOpinionsInput
-	writtenBy: UserUpdateOneWithoutOpinionsInput
+  regardingWhat: Act
+  title: String
+  text: String
+  sources: OpinionUpdatesourcesInput
+  tags: OpinionUpdatetagsInput
+  regardingWho: CompanyUpdateOneRequiredWithoutOpinionsInput
+  writtenBy: UserUpdateOneRequiredWithoutOpinionsInput
 }
 
 input OpinionUpdateWithoutRegardingWhoDataInput {
-	regardingWhat: Act
-	title: String
-	text: String
-	sources: OpinionUpdatesourcesInput
-	tags: OpinionUpdatetagsInput
-	writtenBy: UserUpdateOneWithoutOpinionsInput
-	affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
+  regardingWhat: Act
+  title: String
+  text: String
+  sources: OpinionUpdatesourcesInput
+  tags: OpinionUpdatetagsInput
+  writtenBy: UserUpdateOneRequiredWithoutOpinionsInput
+  affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
 }
 
 input OpinionUpdateWithoutWrittenByDataInput {
-	regardingWhat: Act
-	title: String
-	text: String
-	sources: OpinionUpdatesourcesInput
-	tags: OpinionUpdatetagsInput
-	regardingWho: CompanyUpdateOneWithoutOpinionsInput
-	affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
+  regardingWhat: Act
+  title: String
+  text: String
+  sources: OpinionUpdatesourcesInput
+  tags: OpinionUpdatetagsInput
+  regardingWho: CompanyUpdateOneRequiredWithoutOpinionsInput
+  affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
 }
 
 input OpinionUpdateWithWhereUniqueWithoutRegardingWhoInput {
-	where: OpinionWhereUniqueInput!
-	data: OpinionUpdateWithoutRegardingWhoDataInput!
+  where: OpinionWhereUniqueInput!
+  data: OpinionUpdateWithoutRegardingWhoDataInput!
 }
 
 input OpinionUpdateWithWhereUniqueWithoutWrittenByInput {
-	where: OpinionWhereUniqueInput!
-	data: OpinionUpdateWithoutWrittenByDataInput!
+  where: OpinionWhereUniqueInput!
+  data: OpinionUpdateWithoutWrittenByDataInput!
 }
 
 input OpinionUpsertWithoutAffiliationsInput {
-	update: OpinionUpdateWithoutAffiliationsDataInput!
-	create: OpinionCreateWithoutAffiliationsInput!
+  update: OpinionUpdateWithoutAffiliationsDataInput!
+  create: OpinionCreateWithoutAffiliationsInput!
 }
 
 input OpinionUpsertWithWhereUniqueWithoutRegardingWhoInput {
-	where: OpinionWhereUniqueInput!
-	update: OpinionUpdateWithoutRegardingWhoDataInput!
-	create: OpinionCreateWithoutRegardingWhoInput!
+  where: OpinionWhereUniqueInput!
+  update: OpinionUpdateWithoutRegardingWhoDataInput!
+  create: OpinionCreateWithoutRegardingWhoInput!
 }
 
 input OpinionUpsertWithWhereUniqueWithoutWrittenByInput {
-	where: OpinionWhereUniqueInput!
-	update: OpinionUpdateWithoutWrittenByDataInput!
-	create: OpinionCreateWithoutWrittenByInput!
+  where: OpinionWhereUniqueInput!
+  update: OpinionUpdateWithoutWrittenByDataInput!
+  create: OpinionCreateWithoutWrittenByInput!
 }
 
 input OpinionWhereInput {
-	"""
-	Logical AND on all given filters.
-	"""
-	AND: [OpinionWhereInput!]
+  """Logical AND on all given filters."""
+  AND: [OpinionWhereInput!]
 
-	"""
-	Logical OR on all given filters.
-	"""
-	OR: [OpinionWhereInput!]
+  """Logical OR on all given filters."""
+  OR: [OpinionWhereInput!]
 
-	"""
-	Logical NOT on all given filters combined by AND.
-	"""
-	NOT: [OpinionWhereInput!]
-	id: ID
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OpinionWhereInput!]
+  id: ID
 
-	"""
-	All values that are not equal to given value.
-	"""
-	id_not: ID
+  """All values that are not equal to given value."""
+  id_not: ID
 
-	"""
-	All values that are contained in given list.
-	"""
-	id_in: [ID!]
+  """All values that are contained in given list."""
+  id_in: [ID!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	id_not_in: [ID!]
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
 
-	"""
-	All values less than the given value.
-	"""
-	id_lt: ID
+  """All values less than the given value."""
+  id_lt: ID
 
-	"""
-	All values less than or equal the given value.
-	"""
-	id_lte: ID
+  """All values less than or equal the given value."""
+  id_lte: ID
 
-	"""
-	All values greater than the given value.
-	"""
-	id_gt: ID
+  """All values greater than the given value."""
+  id_gt: ID
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	id_gte: ID
+  """All values greater than or equal the given value."""
+  id_gte: ID
 
-	"""
-	All values containing the given string.
-	"""
-	id_contains: ID
+  """All values containing the given string."""
+  id_contains: ID
 
-	"""
-	All values not containing the given string.
-	"""
-	id_not_contains: ID
+  """All values not containing the given string."""
+  id_not_contains: ID
 
-	"""
-	All values starting with the given string.
-	"""
-	id_starts_with: ID
+  """All values starting with the given string."""
+  id_starts_with: ID
 
-	"""
-	All values not starting with the given string.
-	"""
-	id_not_starts_with: ID
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
 
-	"""
-	All values ending with the given string.
-	"""
-	id_ends_with: ID
+  """All values ending with the given string."""
+  id_ends_with: ID
 
-	"""
-	All values not ending with the given string.
-	"""
-	id_not_ends_with: ID
-	createdAt: DateTime
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
 
-	"""
-	All values that are not equal to given value.
-	"""
-	createdAt_not: DateTime
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
 
-	"""
-	All values that are contained in given list.
-	"""
-	createdAt_in: [DateTime!]
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	createdAt_not_in: [DateTime!]
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
 
-	"""
-	All values less than the given value.
-	"""
-	createdAt_lt: DateTime
+  """All values less than the given value."""
+  createdAt_lt: DateTime
 
-	"""
-	All values less than or equal the given value.
-	"""
-	createdAt_lte: DateTime
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
 
-	"""
-	All values greater than the given value.
-	"""
-	createdAt_gt: DateTime
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	createdAt_gte: DateTime
-	regardingWhat: Act
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  regardingWhat: Act
 
-	"""
-	All values that are not equal to given value.
-	"""
-	regardingWhat_not: Act
+  """All values that are not equal to given value."""
+  regardingWhat_not: Act
 
-	"""
-	All values that are contained in given list.
-	"""
-	regardingWhat_in: [Act!]
+  """All values that are contained in given list."""
+  regardingWhat_in: [Act!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	regardingWhat_not_in: [Act!]
-	title: String
+  """All values that are not contained in given list."""
+  regardingWhat_not_in: [Act!]
+  title: String
 
-	"""
-	All values that are not equal to given value.
-	"""
-	title_not: String
+  """All values that are not equal to given value."""
+  title_not: String
 
-	"""
-	All values that are contained in given list.
-	"""
-	title_in: [String!]
+  """All values that are contained in given list."""
+  title_in: [String!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	title_not_in: [String!]
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
 
-	"""
-	All values less than the given value.
-	"""
-	title_lt: String
+  """All values less than the given value."""
+  title_lt: String
 
-	"""
-	All values less than or equal the given value.
-	"""
-	title_lte: String
+  """All values less than or equal the given value."""
+  title_lte: String
 
-	"""
-	All values greater than the given value.
-	"""
-	title_gt: String
+  """All values greater than the given value."""
+  title_gt: String
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	title_gte: String
+  """All values greater than or equal the given value."""
+  title_gte: String
 
-	"""
-	All values containing the given string.
-	"""
-	title_contains: String
+  """All values containing the given string."""
+  title_contains: String
 
-	"""
-	All values not containing the given string.
-	"""
-	title_not_contains: String
+  """All values not containing the given string."""
+  title_not_contains: String
 
-	"""
-	All values starting with the given string.
-	"""
-	title_starts_with: String
+  """All values starting with the given string."""
+  title_starts_with: String
 
-	"""
-	All values not starting with the given string.
-	"""
-	title_not_starts_with: String
+  """All values not starting with the given string."""
+  title_not_starts_with: String
 
-	"""
-	All values ending with the given string.
-	"""
-	title_ends_with: String
+  """All values ending with the given string."""
+  title_ends_with: String
 
-	"""
-	All values not ending with the given string.
-	"""
-	title_not_ends_with: String
-	text: String
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  text: String
 
-	"""
-	All values that are not equal to given value.
-	"""
-	text_not: String
+  """All values that are not equal to given value."""
+  text_not: String
 
-	"""
-	All values that are contained in given list.
-	"""
-	text_in: [String!]
+  """All values that are contained in given list."""
+  text_in: [String!]
 
-	"""
-	All values that are not contained in given list.
-	"""
-	text_not_in: [String!]
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
 
-	"""
-	All values less than the given value.
-	"""
-	text_lt: String
+  """All values less than the given value."""
+  text_lt: String
 
-	"""
-	All values less than or equal the given value.
-	"""
-	text_lte: String
+  """All values less than or equal the given value."""
+  text_lte: String
 
-	"""
-	All values greater than the given value.
-	"""
-	text_gt: String
+  """All values greater than the given value."""
+  text_gt: String
 
-	"""
-	All values greater than or equal the given value.
-	"""
-	text_gte: String
+  """All values greater than or equal the given value."""
+  text_gte: String
 
-	"""
-	All values containing the given string.
-	"""
-	text_contains: String
+  """All values containing the given string."""
+  text_contains: String
 
-	"""
-	All values not containing the given string.
-	"""
-	text_not_contains: String
+  """All values not containing the given string."""
+  text_not_contains: String
 
-	"""
-	All values starting with the given string.
-	"""
-	text_starts_with: String
+  """All values starting with the given string."""
+  text_starts_with: String
 
-	"""
-	All values not starting with the given string.
-	"""
-	text_not_starts_with: String
+  """All values not starting with the given string."""
+  text_not_starts_with: String
 
-	"""
-	All values ending with the given string.
-	"""
-	text_ends_with: String
+  """All values ending with the given string."""
+  text_ends_with: String
 
-	"""
-	All values not ending with the given string.
-	"""
-	text_not_ends_with: String
-	regardingWho: CompanyWhereInput
-	writtenBy: UserWhereInput
-	affiliations_every: ActGradeWhereInput
-	affiliations_some: ActGradeWhereInput
-	affiliations_none: ActGradeWhereInput
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+  regardingWho: CompanyWhereInput
+  writtenBy: UserWhereInput
+  affiliations_every: ActGradeWhereInput
+  affiliations_some: ActGradeWhereInput
+  affiliations_none: ActGradeWhereInput
 }
 
 input OpinionWhereUniqueInput {
-	id: ID
+  id: ID
 }
 
-"""
-Information about pagination in a connection.
-"""
+"""Information about pagination in a connection."""
 type PageInfo {
-	"""
-	When paginating forwards, are there more items?
-	"""
-	hasNextPage: Boolean!
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
 
-	"""
-	When paginating backwards, are there more items?
-	"""
-	hasPreviousPage: Boolean!
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
 
-	"""
-	When paginating backwards, the cursor to continue.
-	"""
-	startCursor: String
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
 
-	"""
-	When paginating forwards, the cursor to continue.
-	"""
-	endCursor: String
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
 }
 
 type Query {
-	companies(
-		where: CompanyWhereInput
-		orderBy: CompanyOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [Company]!
-	users(
-		where: UserWhereInput
-		orderBy: UserOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [User]!
-	opinions(
-		where: OpinionWhereInput
-		orderBy: OpinionOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [Opinion]!
-	actGrades(
-		where: ActGradeWhereInput
-		orderBy: ActGradeOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [ActGrade]!
-	causeGrades(
-		where: CauseGradeWhereInput
-		orderBy: CauseGradeOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [CauseGrade]!
-	company(where: CompanyWhereUniqueInput!): Company
-	user(where: UserWhereUniqueInput!): User
-	opinion(where: OpinionWhereUniqueInput!): Opinion
-	actGrade(where: ActGradeWhereUniqueInput!): ActGrade
-	causeGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
-	companiesConnection(
-		where: CompanyWhereInput
-		orderBy: CompanyOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): CompanyConnection!
-	usersConnection(
-		where: UserWhereInput
-		orderBy: UserOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): UserConnection!
-	opinionsConnection(
-		where: OpinionWhereInput
-		orderBy: OpinionOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): OpinionConnection!
-	actGradesConnection(
-		where: ActGradeWhereInput
-		orderBy: ActGradeOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): ActGradeConnection!
-	causeGradesConnection(
-		where: CauseGradeWhereInput
-		orderBy: CauseGradeOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): CauseGradeConnection!
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion]!
+  actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade]!
+  causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade]!
+  company(where: CompanyWhereUniqueInput!): Company
+  user(where: UserWhereUniqueInput!): User
+  opinion(where: OpinionWhereUniqueInput!): Opinion
+  actGrade(where: ActGradeWhereUniqueInput!): ActGrade
+  causeGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
+  companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  opinionsConnection(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OpinionConnection!
+  actGradesConnection(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActGradeConnection!
+  causeGradesConnection(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CauseGradeConnection!
 
-	"""
-	Fetches an object given its ID
-	"""
-	node(
-		"""
-		The ID of an object
-		"""
-		id: ID!
-	): Node
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
 }
 
 enum Status {
-	ASLEEP
-	AWAKEN
-	SACRED
-	SAINT
+  ASLEEP
+  AWAKEN
+  SACRED
+  SAINT
 }
 
 type Subscription {
-	company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
-	user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-	opinion(where: OpinionSubscriptionWhereInput): OpinionSubscriptionPayload
-	actGrade(where: ActGradeSubscriptionWhereInput): ActGradeSubscriptionPayload
-	causeGrade(
-		where: CauseGradeSubscriptionWhereInput
-	): CauseGradeSubscriptionPayload
+  company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  opinion(where: OpinionSubscriptionWhereInput): OpinionSubscriptionPayload
+  actGrade(where: ActGradeSubscriptionWhereInput): ActGradeSubscriptionPayload
+  causeGrade(where: CauseGradeSubscriptionWhereInput): CauseGradeSubscriptionPayload
 }
 
 type User implements Node {
-	id: ID!
-	createdAt: DateTime!
-	name: String
-	email: String!
-	password: String!
-	picture: String
-	status: Status
-	opinions(
-		where: OpinionWhereInput
-		orderBy: OpinionOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [Opinion!]
-	causeGrades(
-		where: CauseGradeWhereInput
-		orderBy: CauseGradeOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [CauseGrade!]
-	actGrades(
-		where: ActGradeWhereInput
-		orderBy: ActGradeOrderByInput
-		skip: Int
-		after: String
-		before: String
-		first: Int
-		last: Int
-	): [ActGrade!]
+  id: ID!
+  createdAt: DateTime!
+  name: String
+  email: String!
+  password: String!
+  picture: String
+  status: Status
+  opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion!]
+  causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade!]
+  actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
 }
 
-"""
-A connection to a list of items.
-"""
+"""A connection to a list of items."""
 type UserConnection {
-	"""
-	Information to aid in pagination.
-	"""
-	pageInfo: PageInfo!
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
-	"""
-	A list of edges.
-	"""
-	edges: [UserEdge]!
-	aggregate: AggregateUser!
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
 }
 
 input UserCreateInput {
-	name: String
-	email: String!
-	password: String!
-	picture: String
-	status: Status
-	opinions: OpinionCreateManyWithoutWrittenByInput
-	causeGrades: CauseGradeCreateManyWithoutGradedByInput
-	actGrades: ActGradeCreateManyWithoutGradedByInput
+  name: String
+  email: String!
+  password: String!
+  picture: String
+  status: Status
+  opinions: OpinionCreateManyWithoutWrittenByInput
+  causeGrades: CauseGradeCreateManyWithoutGradedByInput
+  actGrades: ActGradeCreateManyWithoutGradedByInput
 }
 
 input UserCreateOneWithoutActGradesInput {
-	create: UserCreateWithoutActGradesInput
-	connect: UserWhereUniqueInput
+  create: UserCreateWithoutActGradesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutCauseGradesInput {
-	create: UserCreateWithoutCauseGradesInput
-	connect: UserWhereUniqueInput
+  create: UserCreateWithoutCauseGradesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutOpinionsInput {
-	create: UserCreateWithoutOpinionsInput
-	connect: UserWhereUniqueInput
+  create: UserCreateWithoutOpinionsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateWithoutActGradesInput {
-	name: String
-	email: String!
-	password: String!
-	picture: String
-	status: Status
-	opinions: OpinionCreateManyWithoutWrittenByInput
-	causeGrades: CauseGradeCreateManyWithoutGradedByInput
+  name: String
+  email: String!
+  password: String!
+  picture: String
+  status: Status
+  opinions: OpinionCreateManyWithoutWrittenByInput
+  causeGrades: CauseGradeCreateManyWithoutGradedByInput
 }
 
 input UserCreateWithoutCauseGradesInput {
-	name: String
-	email: String!
-	password: String!
-	picture: String
-	status: Status
-	opinions: OpinionCreateManyWithoutWrittenByInput
-	actGrades: ActGradeCreateManyWithoutGradedByInput
+  name: String
+  email: String!
+  password: String!
+  picture: String
+  status: Status
+  opinions: OpinionCreateManyWithoutWrittenByInput
+  actGrades: ActGradeCreateManyWithoutGradedByInput
 }
 
 input UserCreateWithoutOpinionsInput {
-	name: String
-	email: String!
-	password: String!
-	picture: String
-	status: Status
-	causeGrades: CauseGradeCreateManyWithoutGradedByInput
-	actGrades: ActGradeCreateManyWithoutGradedByInput
+  name: String
+  email: String!
+  password: String!
+  picture: String
+  status: Status
+  causeGrades: CauseGradeCreateManyWithoutGradedByInput
+  actGrades: ActGradeCreateManyWithoutGradedByInput
 }
 
-"""
-An edge in a connection.
-"""
+"""An edge in a connection."""
 type UserEdge {
-	"""
-	The item at the end of the edge.
-	"""
-	node: User!
+  """The item at the end of the edge."""
+  node: User!
 
-	"""
-	A cursor for use in pagination.
-	"""
-	cursor: String!
+  """A cursor for use in pagination."""
+  cursor: String!
 }
 
 enum UserOrderByInput {
-	id_ASC
-	id_DESC
-	createdAt_ASC
-	createdAt_DESC
-	name_ASC
-	name_DESC
-	email_ASC
-	email_DESC
-	password_ASC
-	password_DESC
-	picture_ASC
-	picture_DESC
-	status_ASC
-	status_DESC
-	updatedAt_ASC
-	updatedAt_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  picture_ASC
+  picture_DESC
+  status_ASC
+  status_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
-	id: ID!
-	createdAt: DateTime!
-	name: String
-	email: String!
-	password: String!
-	picture: String
-	status: Status
+  id: ID!
+  createdAt: DateTime!
+  name: String
+  email: String!
+  password: String!
+  picture: String
+  status: Status
 }
 
 type UserSubscriptionPayload {
-	mutation: MutationType!
-	node: User
-	updatedFields: [String!]
-	previousValues: UserPreviousValues
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
 }
 
 input UserSubscriptionWhereInput {
-	"""
-	Logical AND on all given filters.
-	"""
-	AND: [UserSubscriptionWhereInput!]
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
 
-	"""
-	Logical OR on all given filters.
-	"""
-	OR: [UserSubscriptionWhereInput!]
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
 
-	"""
-	Logical NOT on all given filters combined by AND.
-	"""
-	NOT: [UserSubscriptionWhereInput!]
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
 
-	"""
-	The subscription event gets dispatched when it's listed in mutation_in
-	"""
-	mutation_in: [MutationType!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
 
-	"""
-	The subscription event gets only dispatched when one of the updated fields names is included in this list
-	"""
-	updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
 
-	"""
-	The subscription event gets only dispatched when all of the field names included in this list have been updated
-	"""
-	updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
 
-	"""
-	The subscription event gets only dispatched when some of the field names included in this list have been updated
-	"""
-	updatedFields_contains_some: [String!]
-	node: UserWhereInput
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
 }
 
 input UserUpdateInput {
-	name: String
-	email: String
-	password: String
-	picture: String
-	status: Status
-	opinions: OpinionUpdateManyWithoutWrittenByInput
-	causeGrades: CauseGradeUpdateManyWithoutGradedByInput
-	actGrades: ActGradeUpdateManyWithoutGradedByInput
+  name: String
+  email: String
+  password: String
+  picture: String
+  status: Status
+  opinions: OpinionUpdateManyWithoutWrittenByInput
+  causeGrades: CauseGradeUpdateManyWithoutGradedByInput
+  actGrades: ActGradeUpdateManyWithoutGradedByInput
 }
 
-input UserUpdateOneWithoutActGradesInput {
-	create: UserCreateWithoutActGradesInput
-	connect: UserWhereUniqueInput
-	delete: Boolean
-	update: UserUpdateWithoutActGradesDataInput
-	upsert: UserUpsertWithoutActGradesInput
+input UserUpdateOneRequiredWithoutActGradesInput {
+  create: UserCreateWithoutActGradesInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutActGradesDataInput
+  upsert: UserUpsertWithoutActGradesInput
 }
 
-input UserUpdateOneWithoutCauseGradesInput {
-	create: UserCreateWithoutCauseGradesInput
-	connect: UserWhereUniqueInput
-	delete: Boolean
-	update: UserUpdateWithoutCauseGradesDataInput
-	upsert: UserUpsertWithoutCauseGradesInput
+input UserUpdateOneRequiredWithoutCauseGradesInput {
+  create: UserCreateWithoutCauseGradesInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutCauseGradesDataInput
+  upsert: UserUpsertWithoutCauseGradesInput
 }
 
-input UserUpdateOneWithoutOpinionsInput {
-	create: UserCreateWithoutOpinionsInput
-	connect: UserWhereUniqueInput
-	delete: Boolean
-	update: UserUpdateWithoutOpinionsDataInput
-	upsert: UserUpsertWithoutOpinionsInput
+input UserUpdateOneRequiredWithoutOpinionsInput {
+  create: UserCreateWithoutOpinionsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutOpinionsDataInput
+  upsert: UserUpsertWithoutOpinionsInput
 }
 
 input UserUpdateWithoutActGradesDataInput {
-	name: String
-	email: String
-	password: String
-	picture: String
-	status: Status
-	opinions: OpinionUpdateManyWithoutWrittenByInput
-	causeGrades: CauseGradeUpdateManyWithoutGradedByInput
+  name: String
+  email: String
+  password: String
+  picture: String
+  status: Status
+  opinions: OpinionUpdateManyWithoutWrittenByInput
+  causeGrades: CauseGradeUpdateManyWithoutGradedByInput
 }
 
 input UserUpdateWithoutCauseGradesDataInput {
-	name: String
-	email: String
-	password: String
-	picture: String
-	status: Status
-	opinions: OpinionUpdateManyWithoutWrittenByInput
-	actGrades: ActGradeUpdateManyWithoutGradedByInput
+  name: String
+  email: String
+  password: String
+  picture: String
+  status: Status
+  opinions: OpinionUpdateManyWithoutWrittenByInput
+  actGrades: ActGradeUpdateManyWithoutGradedByInput
 }
 
 input UserUpdateWithoutOpinionsDataInput {
-	name: String
-	email: String
-	password: String
-	picture: String
-	status: Status
-	causeGrades: CauseGradeUpdateManyWithoutGradedByInput
-	actGrades: ActGradeUpdateManyWithoutGradedByInput
+  name: String
+  email: String
+  password: String
+  picture: String
+  status: Status
+  causeGrades: CauseGradeUpdateManyWithoutGradedByInput
+  actGrades: ActGradeUpdateManyWithoutGradedByInput
 }
 
 input UserUpsertWithoutActGradesInput {
-	update: UserUpdateWithoutActGradesDataInput!
-	create: UserCreateWithoutActGradesInput!
+  update: UserUpdateWithoutActGradesDataInput!
+  create: UserCreateWithoutActGradesInput!
 }
 
 input UserUpsertWithoutCauseGradesInput {
-	update: UserUpdateWithoutCauseGradesDataInput!
-	create: UserCreateWithoutCauseGradesInput!
+  update: UserUpdateWithoutCauseGradesDataInput!
+  create: UserCreateWithoutCauseGradesInput!
 }
 
 input UserUpsertWithoutOpinionsInput {
-	update: UserUpdateWithoutOpinionsDataInput!
-	create: UserCreateWithoutOpinionsInput!
+  update: UserUpdateWithoutOpinionsDataInput!
+  create: UserCreateWithoutOpinionsInput!
 }
 
 input UserWhereInput {
-	"""
-	Logical AND on all given filters.
-	"""
-	AND: [UserWhereInput!]
-
-	"""
-	Logical OR on all given filters.
-	"""
-	OR: [UserWhereInput!]
-
-	"""
-	Logical NOT on all given filters combined by AND.
-	"""
-	NOT: [UserWhereInput!]
-	id: ID
-
-	"""
-	All values that are not equal to given value.
-	"""
-	id_not: ID
-
-	"""
-	All values that are contained in given list.
-	"""
-	id_in: [ID!]
-
-	"""
-	All values that are not contained in given list.
-	"""
-	id_not_in: [ID!]
-
-	"""
-	All values less than the given value.
-	"""
-	id_lt: ID
-
-	"""
-	All values less than or equal the given value.
-	"""
-	id_lte: ID
-
-	"""
-	All values greater than the given value.
-	"""
-	id_gt: ID
-
-	"""
-	All values greater than or equal the given value.
-	"""
-	id_gte: ID
-
-	"""
-	All values containing the given string.
-	"""
-	id_contains: ID
-
-	"""
-	All values not containing the given string.
-	"""
-	id_not_contains: ID
-
-	"""
-	All values starting with the given string.
-	"""
-	id_starts_with: ID
-
-	"""
-	All values not starting with the given string.
-	"""
-	id_not_starts_with: ID
-
-	"""
-	All values ending with the given string.
-	"""
-	id_ends_with: ID
-
-	"""
-	All values not ending with the given string.
-	"""
-	id_not_ends_with: ID
-	createdAt: DateTime
-
-	"""
-	All values that are not equal to given value.
-	"""
-	createdAt_not: DateTime
-
-	"""
-	All values that are contained in given list.
-	"""
-	createdAt_in: [DateTime!]
-
-	"""
-	All values that are not contained in given list.
-	"""
-	createdAt_not_in: [DateTime!]
-
-	"""
-	All values less than the given value.
-	"""
-	createdAt_lt: DateTime
-
-	"""
-	All values less than or equal the given value.
-	"""
-	createdAt_lte: DateTime
-
-	"""
-	All values greater than the given value.
-	"""
-	createdAt_gt: DateTime
-
-	"""
-	All values greater than or equal the given value.
-	"""
-	createdAt_gte: DateTime
-	name: String
-
-	"""
-	All values that are not equal to given value.
-	"""
-	name_not: String
-
-	"""
-	All values that are contained in given list.
-	"""
-	name_in: [String!]
-
-	"""
-	All values that are not contained in given list.
-	"""
-	name_not_in: [String!]
-
-	"""
-	All values less than the given value.
-	"""
-	name_lt: String
-
-	"""
-	All values less than or equal the given value.
-	"""
-	name_lte: String
-
-	"""
-	All values greater than the given value.
-	"""
-	name_gt: String
-
-	"""
-	All values greater than or equal the given value.
-	"""
-	name_gte: String
-
-	"""
-	All values containing the given string.
-	"""
-	name_contains: String
-
-	"""
-	All values not containing the given string.
-	"""
-	name_not_contains: String
-
-	"""
-	All values starting with the given string.
-	"""
-	name_starts_with: String
-
-	"""
-	All values not starting with the given string.
-	"""
-	name_not_starts_with: String
-
-	"""
-	All values ending with the given string.
-	"""
-	name_ends_with: String
-
-	"""
-	All values not ending with the given string.
-	"""
-	name_not_ends_with: String
-	email: String
-
-	"""
-	All values that are not equal to given value.
-	"""
-	email_not: String
-
-	"""
-	All values that are contained in given list.
-	"""
-	email_in: [String!]
-
-	"""
-	All values that are not contained in given list.
-	"""
-	email_not_in: [String!]
-
-	"""
-	All values less than the given value.
-	"""
-	email_lt: String
-
-	"""
-	All values less than or equal the given value.
-	"""
-	email_lte: String
-
-	"""
-	All values greater than the given value.
-	"""
-	email_gt: String
-
-	"""
-	All values greater than or equal the given value.
-	"""
-	email_gte: String
-
-	"""
-	All values containing the given string.
-	"""
-	email_contains: String
-
-	"""
-	All values not containing the given string.
-	"""
-	email_not_contains: String
-
-	"""
-	All values starting with the given string.
-	"""
-	email_starts_with: String
-
-	"""
-	All values not starting with the given string.
-	"""
-	email_not_starts_with: String
-
-	"""
-	All values ending with the given string.
-	"""
-	email_ends_with: String
-
-	"""
-	All values not ending with the given string.
-	"""
-	email_not_ends_with: String
-	password: String
-
-	"""
-	All values that are not equal to given value.
-	"""
-	password_not: String
-
-	"""
-	All values that are contained in given list.
-	"""
-	password_in: [String!]
-
-	"""
-	All values that are not contained in given list.
-	"""
-	password_not_in: [String!]
-
-	"""
-	All values less than the given value.
-	"""
-	password_lt: String
-
-	"""
-	All values less than or equal the given value.
-	"""
-	password_lte: String
-
-	"""
-	All values greater than the given value.
-	"""
-	password_gt: String
-
-	"""
-	All values greater than or equal the given value.
-	"""
-	password_gte: String
-
-	"""
-	All values containing the given string.
-	"""
-	password_contains: String
-
-	"""
-	All values not containing the given string.
-	"""
-	password_not_contains: String
-
-	"""
-	All values starting with the given string.
-	"""
-	password_starts_with: String
-
-	"""
-	All values not starting with the given string.
-	"""
-	password_not_starts_with: String
-
-	"""
-	All values ending with the given string.
-	"""
-	password_ends_with: String
-
-	"""
-	All values not ending with the given string.
-	"""
-	password_not_ends_with: String
-	picture: String
-
-	"""
-	All values that are not equal to given value.
-	"""
-	picture_not: String
-
-	"""
-	All values that are contained in given list.
-	"""
-	picture_in: [String!]
-
-	"""
-	All values that are not contained in given list.
-	"""
-	picture_not_in: [String!]
-
-	"""
-	All values less than the given value.
-	"""
-	picture_lt: String
-
-	"""
-	All values less than or equal the given value.
-	"""
-	picture_lte: String
-
-	"""
-	All values greater than the given value.
-	"""
-	picture_gt: String
-
-	"""
-	All values greater than or equal the given value.
-	"""
-	picture_gte: String
-
-	"""
-	All values containing the given string.
-	"""
-	picture_contains: String
-
-	"""
-	All values not containing the given string.
-	"""
-	picture_not_contains: String
-
-	"""
-	All values starting with the given string.
-	"""
-	picture_starts_with: String
-
-	"""
-	All values not starting with the given string.
-	"""
-	picture_not_starts_with: String
-
-	"""
-	All values ending with the given string.
-	"""
-	picture_ends_with: String
-
-	"""
-	All values not ending with the given string.
-	"""
-	picture_not_ends_with: String
-	status: Status
-
-	"""
-	All values that are not equal to given value.
-	"""
-	status_not: Status
-
-	"""
-	All values that are contained in given list.
-	"""
-	status_in: [Status!]
-
-	"""
-	All values that are not contained in given list.
-	"""
-	status_not_in: [Status!]
-	opinions_every: OpinionWhereInput
-	opinions_some: OpinionWhereInput
-	opinions_none: OpinionWhereInput
-	causeGrades_every: CauseGradeWhereInput
-	causeGrades_some: CauseGradeWhereInput
-	causeGrades_none: CauseGradeWhereInput
-	actGrades_every: ActGradeWhereInput
-	actGrades_some: ActGradeWhereInput
-	actGrades_none: ActGradeWhereInput
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  picture: String
+
+  """All values that are not equal to given value."""
+  picture_not: String
+
+  """All values that are contained in given list."""
+  picture_in: [String!]
+
+  """All values that are not contained in given list."""
+  picture_not_in: [String!]
+
+  """All values less than the given value."""
+  picture_lt: String
+
+  """All values less than or equal the given value."""
+  picture_lte: String
+
+  """All values greater than the given value."""
+  picture_gt: String
+
+  """All values greater than or equal the given value."""
+  picture_gte: String
+
+  """All values containing the given string."""
+  picture_contains: String
+
+  """All values not containing the given string."""
+  picture_not_contains: String
+
+  """All values starting with the given string."""
+  picture_starts_with: String
+
+  """All values not starting with the given string."""
+  picture_not_starts_with: String
+
+  """All values ending with the given string."""
+  picture_ends_with: String
+
+  """All values not ending with the given string."""
+  picture_not_ends_with: String
+  status: Status
+
+  """All values that are not equal to given value."""
+  status_not: Status
+
+  """All values that are contained in given list."""
+  status_in: [Status!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [Status!]
+  opinions_every: OpinionWhereInput
+  opinions_some: OpinionWhereInput
+  opinions_none: OpinionWhereInput
+  causeGrades_every: CauseGradeWhereInput
+  causeGrades_some: CauseGradeWhereInput
+  causeGrades_none: CauseGradeWhereInput
+  actGrades_every: ActGradeWhereInput
+  actGrades_some: ActGradeWhereInput
+  actGrades_none: ActGradeWhereInput
 }
 
 input UserWhereUniqueInput {
-	id: ID
-	email: String
+  id: ID
+  email: String
 }

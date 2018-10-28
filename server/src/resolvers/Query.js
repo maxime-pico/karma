@@ -45,33 +45,40 @@ async function companyCauseGrades(parent, args, context, info) {
 			` { cause grade } `,
 	)
 	
+  const avgCauseGrades = {}
+
 	// test if there are grades so far if not throw error
 	if (!causeGrades.length) {
-		throw new Error('No grades so far')
+		// throw new Error('No grades so far')
+    avgCauseGrades.ENVIRONMENT = 0
+    avgCauseGrades.ETHICS = 0
+    avgCauseGrades.FISCAL = 0
+    avgCauseGrades.SOCIAL = 0
+    avgCauseGrades.overallKarma = 0
 	}
-	const avgCauseGrades = {}
+  else{
+    // sum aggregate the grades by cause
+    causeGrades.forEach(causeGrade => {
+      avgCauseGrades[causeGrade.cause] ?
+        avgCauseGrades[causeGrade.cause] += causeGrade.grade :
+        avgCauseGrades[causeGrade.cause] = causeGrade.grade
+    })
 
-	// sum aggregate the grades by cause
-	causeGrades.forEach(causeGrade => {
-		avgCauseGrades[causeGrade.cause] ?
-			avgCauseGrades[causeGrade.cause] += causeGrade.grade :
-			avgCauseGrades[causeGrade.cause] = causeGrade.grade
-	})
+    // compute the number of grades per cause
+    const causes = Object.keys(avgCauseGrades)
+    const numberOfCauses = causes.length
+    const divider = (causeGrades.length)/(numberOfCauses)
+    avgCauseGrades.overallKarma = 0
 
-	// compute the number of grades per cause
-	const causes = Object.keys(avgCauseGrades)
-	const numberOfCauses = causes.length
-	const divider = (causeGrades.length)/(numberOfCauses)
-  avgCauseGrades.overallKarma = 0
+    // average the grades
+    causes.forEach( cause => {
+      const avgCauseGrade = avgCauseGrades[cause] / divider
+      avgCauseGrades.overallKarma += avgCauseGrade
+      avgCauseGrades[cause] = Math.round(avgCauseGrade * 10) / 10
+    })
 
-	// average the grades
-	causes.forEach( cause => {
-		const avgCauseGrade = avgCauseGrades[cause] / divider
-    avgCauseGrades.overallKarma += avgCauseGrade
-		avgCauseGrades[cause] = Math.round(avgCauseGrade * 10) / 10
-	})
-
-  avgCauseGrades.overallKarma = Math.round((avgCauseGrades.overallKarma / 5) * 10) /10
+    avgCauseGrades.overallKarma = Math.round((avgCauseGrades.overallKarma / 4) * 10) /10
+  }
 
 	return avgCauseGrades
 }
@@ -146,7 +153,7 @@ async function companyOverview(parent, args, context, info) {
 	companyOverviewInfo.opinionsCount = companyOverviewInfo.opinions.length
 	companyOverviewInfo.actGradesCount = companyOverviewInfo.actGrades.length
 	companyOverviewInfo.causeGradesCount =
-		companyOverviewInfo.causeGrades.length / 5
+		companyOverviewInfo.causeGrades.length / 4
 
 	return companyOverviewInfo
 }
