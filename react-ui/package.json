@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"@smooth-ui/core-sc": "^7.0.3",
 		"ajv": "^6.5.3",
 		"apollo-boost": "^0.1.14",
 		"apollo-link-context": "^1.0.8",

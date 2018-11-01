@@ -36,27 +36,27 @@ class Login extends React.Component {
 		const { login, email, password, name } = this.state
 		return (
 			<div>
-				<h4 className="mv3">{login ? 'Login' : 'Sign Up'}</h4>
+				<h4 className="mv3">{login ? 'Se Connecter' : "S'inscrire"}</h4>
 				<div className="flex flex-column">
 					{!login && ( // if signup form then display name field
 						<input
 							value={name}
 							onChange={e => this.setState({ name: e.target.value })}
 							type="text"
-							placeholder="Your name"
+							placeholder="Votre Pseudo"
 						/>
 					)}
 					<input
 						value={email}
 						onChange={e => this.setState({ email: e.target.value })} // store value of input field in state as the user types
 						type="text"
-						placeholder="Your email address"
+						placeholder="Votre adresse mail"
 					/>
 					<input
 						value={password}
 						onChange={e => this.setState({ password: e.target.value })}
 						type="password"
-						placeholder="Choose a safe password"
+						placeholder="Votre mot de passe"
 					/>
 				</div>
 				<div className="flex mt3">
@@ -67,7 +67,7 @@ class Login extends React.Component {
 					>
 						{mutation => (
 							<button className="pointer mr2 button" onClick={mutation}>
-								{login ? 'login' : 'create account'}
+								{login ? 'Se connecter' : 'Créer un compte'}
 							</button>
 						)}
 					</Mutation>
@@ -75,7 +75,9 @@ class Login extends React.Component {
 						className="pointer button"
 						onClick={() => this.setState({ login: !login })} // switch between signup and login forms
 					>
-						{login ? 'need to create an account?' : 'already have an account?'}
+						{login
+							? 'Besoin de vous créer un compte ?'
+							: 'Vous avez déjà un compte ?'}
 					</button>
 				</div>
 			</div>

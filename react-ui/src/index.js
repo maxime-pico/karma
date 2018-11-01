@@ -18,7 +18,7 @@ const httpLink = createHttpLink({
 	uri:
 		process.env.NODE_ENV === 'production'
 			? process.env.REACT_APP_DISTANT_ENDPOINT
-			: process.env.REACT_APP_LOCAL_ENDPOINT,
+			: 'http://localhost:4000',
 	credentials: 'same-origin', // modify to same origin when backend on same domain
 })
 

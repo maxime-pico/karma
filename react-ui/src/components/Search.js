@@ -1,8 +1,9 @@
 // @flow
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import SearchResult from './SearchResult'
+import { Grid, Row, Col } from '@smooth-ui/core-sc'
 
 // query that retireves the list of all companies
 const COMPANY_LIST = gql`
@@ -27,39 +28,21 @@ class Search extends React.Component {
 					const companyList = data.allCompanies
 
 					return (
-						<div className="container">
-							<div className="row d-flex justify-content-center">
-								<div className="col-6">
-									<div className="row d-flex justify-content-center my-4">
+						<Grid>
+							<Row justifyContent={{ md: 'center' }}>
+								<Col md={6}>
+									<Row my={4} justifyContent={{ md: 'center' }}>
 										{companyList.map(company => (
-											<div className="col-4" key={company.name}>
-												<Link to={`/company/${company.id}`}>
-													<div className="row">
-														<div className="col text-center">
-															<img
-																src={
-																	process.env.PUBLIC_URL +
-																	'/images/' +
-																	company.logo
-																}
-																width="60"
-																height="60"
-																alt="company"
-															/>
-														</div>
-													</div>
-													<div className="row">
-														<div className="col text-center">
-															{company.name}
-														</div>
-													</div>
-												</Link>
-											</div>
+											<SearchResult
+												name={company.name}
+												id={company.id}
+												logo={company.logo}
+											/>
 										))}
-									</div>
-								</div>
-							</div>
-						</div>
+									</Row>
+								</Col>
+							</Row>
+						</Grid>
 					)
 				}}
 			</Query>

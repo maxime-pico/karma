@@ -74,7 +74,10 @@ class Soul extends React.Component {
 
 					return (
 						<div className="mb-5">
-							<div className="container-fluid">
+							<div
+								className="container-fluid"
+								style={{ backgroundColor: 'white' }}
+							>
 								<KarmaBubbleAndSlider karma={overallKarma} type="global" />
 								<OverviewList
 									grades={causeGrades}
@@ -83,7 +86,7 @@ class Soul extends React.Component {
 								/>
 							</div>
 
-							<div className="container">
+							<div className="container" style={{ backgroundColor: 'white' }}>
 								<SoulExplanation />
 								<div className="row">
 									<div className="col">

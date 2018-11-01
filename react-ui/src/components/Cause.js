@@ -138,7 +138,10 @@ class Cause extends React.Component {
 
 					return (
 						<div className="mb-5">
-							<div className="container-fluid">
+							<div
+								className="container-fluid"
+								style={{ backgroundColor: 'white' }}
+							>
 								<KarmaBubbleAndSlider karma={overallKarma} type="global" />
 								<OverviewList
 									grades={causeGrades}
