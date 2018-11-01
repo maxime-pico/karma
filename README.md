@@ -57,12 +57,15 @@ Wait until the cloning is over (this might take some time) and `cd` to the clone
 
 From the karma directory, install the dependencies needed for the frontend part of the project (this might take some time as well):
 
-`npm i`
+```
+cd react-ui/
+npm i
+```
 
 Then move to the server directory and install the dependencies needed for the backend part of the project (...aaaaand you guessed it, it might also take some time!):
 
 ```
-cd server/
+cd ../server/
 npm i
 ```
 
@@ -77,11 +80,11 @@ From the server directory, create a file named .env:
 Then paste inside the following content:
 
 ```
-REACT_APP_JWT_APP_SECRET="development-secret"
-API_ENDPOINT="http://localhost:4000"
+JWT_APP_SECRET="development-secret"
+DATABASE_ENDPOINT="http://localhost:4466"
 PRISMA_SCHEMA_FILENAME="prisma"
-REACT_APP_PRISMA_MANAGEMENT_API_SECRET="development-secret"
-REACT_APP_MYSQL_ROOT_PASSWORD="prisma"
+PRISMA_MANAGEMENT_API_SECRET="development-secret"
+MYSQL_ROOT_PASSWORD="prisma"
 ```
 
 We have to do the same with the database environment file. `cd` to the database directory inside the server directory:
@@ -95,8 +98,8 @@ From there, create a file named .env:
 Paste inside the following content:
 
 ```
-REACT_APP_PRISMA_MANAGEMENT_API_SECRET=development-secret
-REACT_APP_MYSQL_ROOT_PASSWORD=prisma
+PRISMA_MANAGEMENT_API_SECRET=development-secret
+MYSQL_ROOT_PASSWORD=prisma
 ```
 
 #### Starting the containers, the backend server and deploying the Prisma service
@@ -122,10 +125,10 @@ From there deploy the prisma service taking into acount the environment variable
 
 #### Start the frontend server and celebrate
 
-Go to the root directory and start the frontend server:
+Go to the root directory of the frontend directory and start the frontend server:
 
 ```
-cd ..
+cd ../react-ui/
 npm start
 ```
 

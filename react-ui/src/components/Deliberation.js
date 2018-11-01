@@ -79,7 +79,7 @@ class Deliberation extends React.Component {
 		const { companyId, cause, act } = this.props.match.params
 		return (
 			<div className="m-5">
-				<div className="container-fluid">
+				<div className="container-fluid" style={{ backgroundColor: 'white' }}>
 					<div className="row">
 						<div className="col">
 							<Link to={`/company/${companyId}/cause/${cause}/`}>
@@ -138,7 +138,7 @@ class Deliberation extends React.Component {
 						</div>
 					</div>
 					<div className="row my-5">
-						<div className="col">
+						<div className="col" style={{ backgroundColor: 'white' }}>
 							<OpinionFeed
 								act={act}
 								companyId={companyId}

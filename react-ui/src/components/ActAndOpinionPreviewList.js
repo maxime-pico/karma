@@ -56,7 +56,7 @@ const ActAndOpinionPreviewList = ({ cause, companyId }) => (
 
 				const companyActGrades = data.companyActGrades
 				return (
-					<div>
+					<div style={{ backgroundColor: 'white' }}>
 						{Object.keys(companyActGrades)
 							.filter(identifier => identifier !== '__typename')
 							.map(act => (
