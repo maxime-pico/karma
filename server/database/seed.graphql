@@ -101,84 +101,84 @@ mutation {
   createBNP: createCompany(
     data: {
       name: "BNP"
-      logo: "questionmark.png"
+      logo: "bnp.png"
     }
   ){ id }
 
   createGoogle: createCompany(
     data: {
       name: "Google"
-      logo: "questionmark.png"
+      logo: "google.png"
     }
   ){ id }
 
   createNike: createCompany(
     data: {
       name: "Nike"
-      logo: "questionmark.png"
+      logo: "nike.png"
     }
   ){ id }
 
   createTesla: createCompany(
     data: {
       name: "Tesla"
-      logo: "questionmark.png"
+      logo: "tesla.png"
     }
   ){ id }
 
   createBic: createCompany(
     data: {
       name: "Bic"
-      logo: "questionmark.png"
+      logo: "bic.png"
     }
   ){ id }
 
   createBiocoop: createCompany(
     data: {
       name: "Biocoop"
-      logo: "questionmark.png"
+      logo: "biocoop.png"
     }
   ){ id }
 
   createND: createCompany(
     data: {
-      name: "Nature & Découverte"
-      logo: "questionmark.png"
+      name: "Nature & Découvertes"
+      logo: "natureetdecouvertes.png"
     }
   ){ id }
 
   createQuechua: createCompany(
     data: {
       name: "Quechua"
-      logo: "questionmark.png"
+      logo: "quechua.png"
     }
   ){ id }
 
   createBouygues: createCompany(
     data: {
       name: "Bouygues Telecom"
-      logo: "questionmark.png"
+      logo: "bouyguestelecom.png"
     }
   ){ id }
 
   createENGIE: createCompany(
     data: {
       name: "ENGIE"
-      logo: "questionmark.png"
+      logo: "engie.png"
     }
   ){ id }
 
   createZalando: createCompany(
     data: {
       name: "Zalando"
-      logo: "questionmark.png"
+      logo: "zalando.png"
     }
   ){ id }
 
   createAmazon: createCompany(
     data: {
       name: "Amazon"
-      logo: "questionmark.png"
+      logo: "amazon.png"
     }
   ){ id }
 

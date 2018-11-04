@@ -30,6 +30,12 @@ const HeaderBubble = styled.div`
 		if (props.middle) return '0 0 100px 100px'
 		else return '0'
 	}};
+	box-shadow: ${props => {
+		if (props.left) return 'inset -8px -3px 20px #80808040'
+		if (props.right) return 'inset 8px -3px 20px #80808040'
+		if (props.middle) return 'inset 0 -8px 20px #80808040'
+		else return '0'
+	}};
 `
 
 class Header extends React.Component {

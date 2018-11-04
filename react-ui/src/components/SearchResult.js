@@ -10,6 +10,7 @@ const ResultCard = styled.div`
 	border-radius: 25px;
 	min-height: 140px;
 	font-weight: 500;
+	box-shadow: 5px 5px 32px #989898a3;
 
 	&:hover {
 		box-shadow: 0 0 27px white;
@@ -19,6 +20,7 @@ const ResultCard = styled.div`
 
 const CompanyName = styled.div`
 	color: black;
+	font-size: 0.95rem;
 `
 
 const SearchResult = ({ name, id, logo }) => (
@@ -26,11 +28,17 @@ const SearchResult = ({ name, id, logo }) => (
 		<Link to={`/company/${id}`} style={{ textDecoration: 'none' }}>
 			<ResultCard>
 				<Row>
-					<Col>
+					<Col style={{ height: '60px', width: '60px' }}>
+						<span
+							style={{
+								display: 'inline-block',
+								height: '100%',
+								verticalAlign: 'middle',
+							}}
+						/>
 						<img
 							src={process.env.PUBLIC_URL + '/images/' + logo}
 							width="60"
-							height="60"
 							alt="company"
 						/>
 					</Col>
