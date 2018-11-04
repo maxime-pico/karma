@@ -12,12 +12,11 @@ import { Grid, Row, Col } from '@smooth-ui/core-sc'
 const HeaderBubble = styled.div`
 	background-color: white;
 	padding: ${props => {
-		if (props.left) return '0 30px 30px 0'
-		if (props.right) return '0 30px 30px 40px'
-		if (props.middle) return '0 30px 30px 30px'
+		if (props.left) return '30px 30px 30px 0'
+		if (props.right) return '30px 30px 30px 40px'
+		if (props.middle) return '10px 30px 30px 30px'
 		else return '0'
 	}};
-	padding-top: 10px;
 	margin: ${props => {
 		if (props.left) return '0 40px 0 0'
 		if (props.right) return '0 0 20px 30px'
@@ -47,30 +46,39 @@ class Header extends React.Component {
 		return (
 			<Grid fluid>
 				<Row>
-					<Col p={0}>
-						<HeaderBubble left>
-							{companyId ? (
-								<CompanyOverview companyId={companyId} />
-							) : (
-								<img src={karmalogo} height="60" alt="karma panda" />
-							)}
-						</HeaderBubble>
+					<Col p={0} style={{ marginRight: 'auto' }}>
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'flex-start',
+							}}
+						>
+							<HeaderBubble left style={{ minWidth: '50%' }}>
+								{companyId ? (
+									<CompanyOverview companyId={companyId} />
+								) : (
+									<img src={karmalogo} height="60" alt="karma panda" />
+								)}
+							</HeaderBubble>
+						</div>
 					</Col>
 					<Col p={0}>
 						<HeaderBubble middle>
 							<Link to="/">Toutes les entreprises</Link>
 						</HeaderBubble>
 					</Col>
-					<Col p={0} className="col d-flex justify-content-end">
-						<HeaderBubble right>
-							{authToken ? (
-								<UserBubble />
-							) : (
-								<Link to="/login" className="ml1 no-underline black">
-									Se connecter ou S'incrire
-								</Link>
-							)}
-						</HeaderBubble>
+					<Col p={0} style={{ marginLeft: 'auto' }}>
+						<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+							<HeaderBubble right>
+								{authToken ? (
+									<UserBubble />
+								) : (
+									<Link to="/login" className="ml1 no-underline black">
+										Se connecter ou S'incrire
+									</Link>
+								)}
+							</HeaderBubble>
+						</div>
 					</Col>
 				</Row>
 			</Grid>

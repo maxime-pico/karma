@@ -2,6 +2,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
+import { Row, Col } from '@smooth-ui/core-sc'
 
 // query that retrieves the company overview from its id
 const COMPANY_OVERVIEW_QUERY = gql`
@@ -35,21 +36,56 @@ class CompanyOverview extends React.Component {
 
 					return (
 						<Link to={`/company/${companyId}`}>
-							<div className="row">
-								<div className="col-4">
-									<img
-										src={process.env.PUBLIC_URL + '/images/' + logo}
-										width="60"
-										height="60"
-										alt="company"
-									/>
+							<Row>
+								<div>
+									<div
+										style={{
+											height: '60px',
+											width: '60px',
+											borderRadius: '60px',
+											overflow: 'hidden',
+											marginLeft: '40px',
+										}}
+									>
+										<span
+											style={{
+												display: 'inline-block',
+												height: '100%',
+												verticalAlign: 'middle',
+											}}
+										/>
+										<img
+											src={process.env.PUBLIC_URL + '/images/' + logo}
+											width="60"
+											alt="company"
+										/>
+									</div>
 								</div>
-								<div className="col">
+								<div
+									style={{
+										textAlign: 'left',
+										paddingLeft: '10px',
+										color: 'black',
+										fontWeight: '600',
+										fontSize: '1.3em',
+										lineHeight: '1.1em',
+									}}
+								>
 									<div>{name}</div>
-									<div>{causeGradesCount + actGradesCount} notes</div>
-									<div>{opinionsCount} opinions</div>
+									<div>
+										{causeGradesCount + actGradesCount}{' '}
+										<span style={{ fontSize: '0.7em', fontWeight: '400' }}>
+											notes
+										</span>
+									</div>
+									<div>
+										{opinionsCount}{' '}
+										<span style={{ fontSize: '0.7em', fontWeight: '400' }}>
+											opinions
+										</span>
+									</div>
 								</div>
-							</div>
+							</Row>
 						</Link>
 					)
 				}}

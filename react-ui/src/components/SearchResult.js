@@ -11,6 +11,7 @@ const ResultCard = styled.div`
 	min-height: 140px;
 	font-weight: 500;
 	box-shadow: 5px 5px 32px #989898a3;
+	width: 144px;
 
 	&:hover {
 		box-shadow: 0 0 27px white;
