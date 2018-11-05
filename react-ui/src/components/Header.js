@@ -11,30 +11,21 @@ import { Grid, Row, Col } from '@smooth-ui/core-sc'
 
 const HeaderBubble = styled.div`
 	background-color: white;
-	padding: ${props => {
-		if (props.left) return '30px 30px 30px 0'
-		if (props.right) return '30px 30px 30px 40px'
-		if (props.middle) return '10px 30px 30px 30px'
-		else return '0'
-	}};
-	margin: ${props => {
-		if (props.left) return '0 40px 0 0'
-		if (props.right) return '0 0 20px 30px'
-		if (props.middle) return '0 30px 30px 30px'
-		else return '0'
-	}};
-	border-radius: ${props => {
-		if (props.left) return '0 0 100px 0'
-		if (props.right) return '0 0 0 100px'
-		if (props.middle) return '0 0 100px 100px'
-		else return '0'
-	}};
-	box-shadow: ${props => {
-		if (props.left) return 'inset -8px -3px 20px #80808040'
-		if (props.right) return 'inset 8px -3px 20px #80808040'
-		if (props.middle) return 'inset 0 -8px 20px #80808040'
-		else return '0'
-	}};
+	padding: 30px 50px 30px 40px;
+	margin: 0 40px 0 0;
+	border-radius: 0 0 100px 0;
+	box-shadow: inset -8px -3px 20px #80808040;
+`
+const HomeButton = styled.div`
+	padding-top: 3px;
+	font-weight: 600;
+	font-size: 1.1em;
+`
+const TopRightCorner = styled.div`
+	color: white;
+	padding: 30px 30px 0 0;
+	font-weight: 600;
+	font-size: 1.1em;
 `
 
 class Header extends React.Component {
@@ -53,7 +44,7 @@ class Header extends React.Component {
 								justifyContent: 'flex-start',
 							}}
 						>
-							<HeaderBubble left style={{ minWidth: '50%' }}>
+							<HeaderBubble>
 								{companyId ? (
 									<CompanyOverview companyId={companyId} />
 								) : (
@@ -63,13 +54,15 @@ class Header extends React.Component {
 						</div>
 					</Col>
 					<Col p={0}>
-						<HeaderBubble middle>
-							<Link to="/">Toutes les entreprises</Link>
-						</HeaderBubble>
+						<HomeButton>
+							<Link to="/" style={{ color: 'white' }}>
+								Toutes les entreprises
+							</Link>
+						</HomeButton>
 					</Col>
 					<Col p={0} style={{ marginLeft: 'auto' }}>
 						<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-							<HeaderBubble right>
+							<TopRightCorner>
 								{authToken ? (
 									<UserBubble />
 								) : (
@@ -77,7 +70,7 @@ class Header extends React.Component {
 										Se connecter ou S'incrire
 									</Link>
 								)}
-							</HeaderBubble>
+							</TopRightCorner>
 						</div>
 					</Col>
 				</Row>
