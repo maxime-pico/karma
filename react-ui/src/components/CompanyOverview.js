@@ -2,7 +2,37 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
-import { Row, Col } from '@smooth-ui/core-sc'
+import { Row } from '@smooth-ui/core-sc'
+import styled from 'styled-components'
+
+const RoundWindow = styled.div`
+	height: ${props => props.size}px;
+	width: ${props => props.size}px;
+	border-radius: ${props => props.size}px;
+	overflow: hidden;
+	background-color: white;
+
+	img {
+		width: ${props => props.size}px;
+	}
+`
+const Push = styled.span`
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+`
+const Figures = styled.div`
+	text-align: left;
+	padding-left: 10px;
+	color: black;
+	font-weight: 600;
+	font-size: 1.5em;
+	line-height: 1.2em;
+`
+const Unit = styled.span`
+	font-size: 0.7em;
+	font-weight: 400;
+`
 
 // query that retrieves the company overview from its id
 const COMPANY_OVERVIEW_QUERY = gql`
@@ -36,55 +66,23 @@ class CompanyOverview extends React.Component {
 
 					return (
 						<Link to={`/company/${companyId}`}>
-							<Row>
-								<div>
-									<div
-										style={{
-											height: '60px',
-											width: '60px',
-											borderRadius: '60px',
-											overflow: 'hidden',
-											marginLeft: '40px',
-										}}
-									>
-										<span
-											style={{
-												display: 'inline-block',
-												height: '100%',
-												verticalAlign: 'middle',
-											}}
-										/>
-										<img
-											src={process.env.PUBLIC_URL + '/images/' + logo}
-											width="60"
-											alt="company"
-										/>
-									</div>
-								</div>
-								<div
-									style={{
-										textAlign: 'left',
-										paddingLeft: '10px',
-										color: 'black',
-										fontWeight: '600',
-										fontSize: '1.3em',
-										lineHeight: '1.1em',
-									}}
-								>
+							<Row alignItems="center">
+								<RoundWindow size={80}>
+									<Push />
+									<img
+										src={process.env.PUBLIC_URL + '/images/' + logo}
+										alt="company"
+									/>
+								</RoundWindow>
+								<Figures>
 									<div>{name}</div>
 									<div>
-										{causeGradesCount + actGradesCount}{' '}
-										<span style={{ fontSize: '0.7em', fontWeight: '400' }}>
-											notes
-										</span>
+										{causeGradesCount + actGradesCount} <Unit>notes</Unit>
 									</div>
 									<div>
-										{opinionsCount}{' '}
-										<span style={{ fontSize: '0.7em', fontWeight: '400' }}>
-											opinions
-										</span>
+										{opinionsCount} <Unit>opinions</Unit>
 									</div>
-								</div>
+								</Figures>
 							</Row>
 						</Link>
 					)

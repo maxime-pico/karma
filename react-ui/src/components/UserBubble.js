@@ -3,6 +3,34 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
 import { STATUS } from '../constants'
+import styled from 'styled-components'
+
+const RoundWindow = styled.div`
+	height: ${props => props.size}px;
+	width: ${props => props.size}px;
+	border-radius: ${props => props.size}px;
+	overflow: hidden;
+	background-color: white;
+	margin: auto;
+
+	img {
+		width: ${props => props.size}px;
+	}
+`
+const Status = styled.div`
+	font-size: 0.9em;
+	font-weight: 400;
+`
+
+const Name = styled.div`
+	font-size: 1.1em;
+`
+
+const Push = styled.span`
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+`
 
 // query that retireves the id of the user from context
 const USER_ID_QUERY = gql`
@@ -26,17 +54,16 @@ class UserBubble extends React.Component {
 					const { id, name, picture, status } = data.getUserInfoFromContext
 					return (
 						<Link to={`/user/${id}`} className="ml1 no-underline black">
-							<div>
+							<RoundWindow size={80}>
+								<Push />
 								<img
 									src={process.env.PUBLIC_URL + '/images/' + picture}
 									alt="user profile"
-									height="50"
-									width="60"
 								/>
-							</div>
-							<div>{name}</div>
+							</RoundWindow>
+							<Name>{name}</Name>
 							{/* get readable status equivalent from STATUS table*/}
-							<div>{STATUS[status].fr}</div>{' '}
+							<Status>{STATUS[status].fr}</Status>
 						</Link>
 					)
 				}}
