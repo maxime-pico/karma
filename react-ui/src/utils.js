@@ -9,6 +9,15 @@ export function convertGradesIntoWords(grade, type) {
 	return 'error'
 }
 
+export function convertGradesIntoColors(grade) {
+	if (grade <= -1.5) return '#baadd5'
+	if (-1.5 < grade && grade <= -0.5) return '#b7c2e4'
+	if (-0.5 < grade && grade <= 0.5) return '#b6cfed'
+	if (0.5 < grade && grade <= 1.5) return '#a5d7ed'
+	if (1.5 < grade) return '#88d8e6'
+	return 'white'
+}
+
 export function adjacentCause(cause, direction) {
 	const causes = ['ENVIRONMENT', 'SOCIAL', 'ETHICS', 'FISCAL']
 	const currentIndex = causes.indexOf(cause)
