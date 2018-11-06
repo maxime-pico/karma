@@ -12,10 +12,10 @@ export function convertGradesIntoWords(grade, type) {
 export function convertGradesIntoColors(grade) {
 	if (grade <= -1.5) return '#cd2316'
 	if (-1.5 < grade && grade <= -0.5) return '#fe8a8a'
-	if (-0.5 < grade && grade <= 0.5) return '#dbd8ea'
+	if (-0.5 < grade && grade <= 0.5 && grade !== null) return '#d9ccff'
 	if (0.5 < grade && grade <= 1.5) return '#b2d6f2'
 	if (1.5 < grade) return '#88d8e6'
-	return 'white'
+	return '#b7b7b7'
 }
 
 export function adjacentCause(cause, direction) {

@@ -4,13 +4,12 @@ import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import CauseCardActList from './CauseCardActList'
-// import { CAUSE_AND_ACTS } from '../constants.js'
-// import { convertGradesIntoWords } from '../utils'
+import { Row, Col, styled } from '@smooth-ui/core-sc'
 
-const style = {
-	border: '1pt solid black',
-	borderRadius: '25px',
-}
+const CauseCardBorder = styled(Col)`
+	box-shadow: 7px 16px 32px #d4d4d48c
+	border-radius: 70px;
+`
 
 const ACT_GRADES_QUERIES = {
 	ENVIRONMENT: gql`
@@ -58,8 +57,8 @@ const ACT_GRADES_QUERIES = {
 
 const CauseCard = ({ companyId, causeKarma, identifier }) => {
 	return (
-		<div className="row m-4">
-			<div className="col p-3" style={style}>
+		<Row m={4} justifyContent="center">
+			<CauseCardBorder md={12} p={3}>
 				<CauseCardTitle identifier={identifier} />
 				<div className="row">
 					<div className="col">
@@ -78,8 +77,8 @@ const CauseCard = ({ companyId, causeKarma, identifier }) => {
 						)
 					}}
 				</Query>
-			</div>
-		</div>
+			</CauseCardBorder>
+		</Row>
 	)
 }
 

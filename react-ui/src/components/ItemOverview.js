@@ -20,6 +20,7 @@ const ItemIcon = styled.div`
 	border: 10px solid white;
 	overflow: hidden;
 	background-color: ${props => convertGradesIntoColors(props.grade)};
+	box-shadow: 2px 2px 29px #909090b8;
 
 	.icon {
 		display: inline-block;

@@ -2,6 +2,36 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { CAUSE_AND_ACTS } from '../constants.js'
+import { convertGradesIntoColors } from '../utils'
+import { Row, Col, styled } from '@smooth-ui/core-sc'
+
+const ItemIcon = styled.div`
+	border-radius: 50%;
+	overflow: hidden;
+	width: ${props => props.size}px;
+	height: ${props => props.size}px;
+	background: url(${props => props.src}) no-repeat 15px 15px;
+	background-color: ${props => convertGradesIntoColors(props.grade)};
+	background-size: 38px, contain;
+`
+
+const Text = styled(Col)`
+	font-weight: 600;
+	color: #5d5d5c;
+	line-height: 1.3em;
+`
+
+const Grade = styled.div`
+	font-size: 1.4em;
+`
+
+const Identifier = styled.div`
+	font-size: 1em;
+`
+
+const Opinion = styled.div`
+	font-weight: 400;
+`
 
 const OPINIONS_COUNT_QUERY = gql`
 	query OpinionsCountQuery($companyId: ID!, $identifier: Act!) {
@@ -13,18 +43,18 @@ const OPINIONS_COUNT_QUERY = gql`
 
 const CauseCardAct = ({ identifier, grade, companyId }) => {
 	return (
-		<div className="row">
-			<div className="col-4">
-				<img
+		<Row alignItems="center" my={2}>
+			<Col md={3}>
+				<ItemIcon
 					src={process.env.PUBLIC_URL + `/icons/act/${identifier}.png`}
-					width="50"
-					height="50"
 					alt={identifier}
+					size={65}
+					grade={grade}
 				/>
-			</div>
-			<div className="col">
-				<div>{grade ? grade : 'N/A'}</div>
-				<div>{CAUSE_AND_ACTS[identifier].fr}</div>
+			</Col>
+			<Text>
+				<Grade>{grade !== null ? grade : 'N/A'}</Grade>
+				<Identifier>{CAUSE_AND_ACTS[identifier].fr}</Identifier>
 				<Query
 					query={OPINIONS_COUNT_QUERY}
 					variables={{ companyId, identifier }}
@@ -34,15 +64,15 @@ const CauseCardAct = ({ identifier, grade, companyId }) => {
 						if (error) return <div> Error </div>
 						const opinionsCountInt = data.opinionsCount.count
 						return (
-							<div>
+							<Opinion>
 								{opinionsCountInt} opinion
 								{opinionsCountInt > 1 && 's'}
-							</div>
+							</Opinion>
 						)
 					}}
 				</Query>
-			</div>
-		</div>
+			</Text>
+		</Row>
 	)
 }
 

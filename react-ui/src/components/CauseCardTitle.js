@@ -1,19 +1,27 @@
 import React from 'react'
 import { CAUSE_AND_ACTS } from '../constants.js'
+import { Row, Col, styled } from '@smooth-ui/core-sc'
+
+const Title = styled.span`
+	font-size: 1.45em;
+	font-weight: 600;
+	line-height: 1em;
+`
 
 const CauseCardTitle = ({ identifier }) => {
 	return (
-		<div className="row">
-			<div className="col">
+		<Row alignItems="center">
+			<Col md={3} omd={1}>
 				<img
 					src={process.env.PUBLIC_URL + `/icons/cause/${identifier}.png`}
 					alt={identifier}
-					width="50"
 					height="50"
 				/>
-				{CAUSE_AND_ACTS[identifier].fr}
-			</div>
-		</div>
+			</Col>
+			<Col textAlign="left">
+				<Title>{CAUSE_AND_ACTS[identifier].fr}</Title>
+			</Col>
+		</Row>
 	)
 }
 

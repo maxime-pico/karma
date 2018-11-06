@@ -10,6 +10,24 @@ import ActAndOpinionPreviewList from './ActAndOpinionPreviewList'
 import StartGradingCausesModal from './StartGradingCausesModal'
 import LoginToGradeModal from './LoginToGradeModal'
 import CausesJudgingInterface from './CausesJudgingInterface'
+import GradeKarmaButton from './GradeKarmaButton'
+import { Grid, Row, Col, styled } from '@smooth-ui/core-sc'
+
+const CancelButton = styled.button`
+	font-size: 1.5em;
+	color: white;
+	background-color: #c20e13;
+	box-shadow: 3px 5px 18px #9c9c9c;
+	border-radius: 30px;
+	border: none;
+
+	:hover,
+	:focus:hover {
+		box-shadow: 0px 0px 32px white;
+		background-color: #fa7377;
+		color: white;
+	}
+`
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
@@ -78,6 +96,7 @@ class Cause extends React.Component {
 		if (this.props.location.state) {
 			if (this.props.location.state.startGrading && !this.state.startGrading) {
 				this._startGrading()
+				window.scrollTo(0, 0)
 			}
 			if (this.props.location.state.grading) {
 				this.setState(previousState => {
@@ -138,7 +157,7 @@ class Cause extends React.Component {
 
 					return (
 						<div className="mb-5">
-							<div className="container-fluid">
+							<Grid fluid>
 								<KarmaBubbleAndSlider karma={overallKarma} type="global" />
 								<OverviewList
 									grades={causeGrades}
@@ -146,7 +165,7 @@ class Cause extends React.Component {
 									companyId={companyId}
 									mode={cause}
 								/>
-							</div>
+							</Grid>
 							{this.state.grading && (
 								<CausesJudgingInterface
 									companyId={companyId}
@@ -158,27 +177,24 @@ class Cause extends React.Component {
 									_stopGrading={this._stopGrading}
 								/>
 							)}
-							<div className="row mb-4">
-								<div className="col">
+							<Row mb={4}>
+								<Col>
 									{this.state.grading ? (
-										<button
+										<CancelButton
 											type="button"
 											className="btn btn-danger"
 											onClick={() => this._stopGrading()}
 										>
 											Annuler
-										</button>
+										</CancelButton>
 									) : (
-										<button
-											type="button"
-											className="btn btn-primary"
-											onClick={() => this._startGrading()}
-										>
-											Attribuer du Karma
-										</button>
+										<GradeKarmaButton
+											label="Attribuer du Karma"
+											_startGrading={this._startGrading}
+										/>
 									)}
-								</div>
-							</div>
+								</Col>
+							</Row>
 							<ActAndOpinionPreviewList cause={cause} companyId={companyId} />
 							<StartGradingCausesModal
 								isOpen={this.state.modalIsOpen}

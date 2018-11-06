@@ -50,11 +50,11 @@ async function companyCauseGrades(parent, args, context, info) {
 	// test if there are grades so far if not throw error
 	if (!causeGrades.length) {
 		// throw new Error('No grades so far')
-    avgCauseGrades.ENVIRONMENT = 0
-    avgCauseGrades.ETHICS = 0
-    avgCauseGrades.FISCAL = 0
-    avgCauseGrades.SOCIAL = 0
-    avgCauseGrades.overallKarma = 0
+    avgCauseGrades.ENVIRONMENT = null
+    avgCauseGrades.ETHICS = null
+    avgCauseGrades.FISCAL = null
+    avgCauseGrades.SOCIAL = null
+    avgCauseGrades.overallKarma = null
 	}
   else{
     // sum aggregate the grades by cause
