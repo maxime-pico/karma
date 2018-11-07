@@ -36,7 +36,7 @@ const CausesJudgingInterfaceButtons = ({
 	return (
 		<Row mt={4} justifyContent="center">
 			{cause !== 'ENVIRONMENT' && (
-				<Col md={2} p={3}>
+				<Col md={3} p={3}>
 					<NavButtons
 						type="button"
 						className="btn btn-secondary"
@@ -47,7 +47,7 @@ const CausesJudgingInterfaceButtons = ({
 				</Col>
 			)}
 			{cause === 'FISCAL' ? (
-				<Col md={2} p={3}>
+				<Col md={3} p={3}>
 					<NavButtons
 						type="button"
 						className="btn confirm"
@@ -57,7 +57,7 @@ const CausesJudgingInterfaceButtons = ({
 					</NavButtons>
 				</Col>
 			) : (
-				<Col md={2} p={3}>
+				<Col md={3} p={3}>
 					<NavButtons
 						type="button"
 						className="btn btn-secondary"

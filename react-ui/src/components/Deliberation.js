@@ -10,6 +10,44 @@ import OpinionFeed from './OpinionFeed'
 import ActJudgingInterface from './ActJudgingInterface'
 import StartGradingActModal from './StartGradingActModal'
 import LoginToGradeModal from './LoginToGradeModal'
+import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
+
+const GradeButton = styled.button`
+	font-size: 2em;
+	color: #989898;
+	background-color: white;
+	box-shadow: 0px 0px 32px #ada9a98c;
+	border-radius: 30px;
+	border: none;
+
+	:hover {
+		background: linear-gradient(
+			to right,
+			#85d8e6,
+			#b3d7f2 22.14%,
+			#baacd4 41.51%,
+			#af8cc0 56.2%,
+			#d02417 98.46%,
+			#d02417
+		);
+	}
+
+	&.btn-danger {
+		font-size: 1.5em;
+		color: white;
+		background-color: #c20e13;
+		box-shadow: 3px 5px 18px #9c9c9c;
+		border-radius: 30px;
+		border: none;
+
+		:hover,
+		:focus:hover {
+			box-shadow: 0px 0px 32px white;
+			background: #fa7377;
+			color: white;
+		}
+	}
+`
 
 // Deliberation component: gets the current act and company from path and
 // displays the list of corresponding opinions
@@ -42,13 +80,19 @@ class Deliberation extends React.Component {
 	_startGrading = () => {
 		if (this.authToken) {
 			this.setState(previousState => {
-				previousState.modalIsOpen = true
-				previousState.grading = !previousState.grading
+				if (!previousState.grading) {
+					previousState.modalIsOpen = true
+					previousState.grading = true
+					window.scrollTo(0, 0)
+				} else {
+					previousState.grading = false
+				}
 				return previousState
 			})
 		} else {
 			this.setState(previousState => {
 				previousState.loginToGradeModalIsOpen = true
+				window.scrollTo(0, 0)
 				return previousState
 			})
 		}
@@ -78,10 +122,10 @@ class Deliberation extends React.Component {
 	render() {
 		const { companyId, cause, act } = this.props.match.params
 		return (
-			<div className="m-5">
-				<div className="container-fluid">
-					<div className="row">
-						<div className="col">
+			<Box mx={5}>
+				<Grid fluid>
+					<Row>
+						<Col mb={1}>
 							<Link to={`/company/${companyId}/cause/${cause}/`}>
 								<ItemOverviewQuery
 									big={false}
@@ -90,10 +134,10 @@ class Deliberation extends React.Component {
 									companyId={companyId}
 								/>
 							</Link>
-						</div>
-					</div>
-					<div className="row my-4">
-						<div className="col">
+						</Col>
+					</Row>
+					<Row md={4}>
+						<Col>
 							<ItemOverviewQuery
 								big={true}
 								type={'act'}
@@ -101,27 +145,27 @@ class Deliberation extends React.Component {
 								cause={cause}
 								companyId={companyId}
 							/>
-						</div>
-					</div>
+						</Col>
+					</Row>
 					<ActsNavButtons _adjacentCause={this._adjacentCause} />
-				</div>
+				</Grid>
 
-				<div className="container my-5">
-					<CauseAndActExplanation identifier={act} />
+				<Grid my={5}>
+					<CauseAndActExplanation identifier={act} color="white" />
 					{this.state.grading && (
-						<div className="row my-4">
-							<div className="col">
+						<Row mt={4}>
+							<Col>
 								<ActJudgingInterface
 									act={act}
 									companyId={companyId}
 									affiliation={this.state.affiliation}
 								/>
-							</div>
-						</div>
+							</Col>
+						</Row>
 					)}
-					<div className="row my-4">
-						<div className="col">
-							<button
+					<Row mb={4}>
+						<Col className="col">
+							<GradeButton
 								type="button"
 								className={`btn btn-${
 									this.state.grading ? 'danger' : 'primary'
@@ -129,16 +173,16 @@ class Deliberation extends React.Component {
 								onClick={() => this._startGrading()}
 							>
 								{this.state.grading ? 'Annuler' : "Juger l'acte"}
-							</button>
-						</div>
-					</div>
-					<div className="row my-4">
-						<div className="col my-3">
+							</GradeButton>
+						</Col>
+					</Row>
+					<Row my={4}>
+						<Col my={3}>
 							{/*Filtres – Pour commmencer Chronologique ou Top affiliation*/}
-						</div>
-					</div>
-					<div className="row my-5">
-						<div className="col" style={{ backgroundColor: 'white' }}>
+						</Col>
+					</Row>
+					<Row my={5}>
+						<Col>
 							<OpinionFeed
 								act={act}
 								companyId={companyId}
@@ -146,8 +190,8 @@ class Deliberation extends React.Component {
 								affiliation={this.state.affiliation}
 								_selectOpinion={this._selectOpinion}
 							/>
-						</div>
-					</div>
+						</Col>
+					</Row>
 					<StartGradingActModal
 						isOpen={this.state.modalIsOpen}
 						_closeModal={this._closeModal}
@@ -156,8 +200,8 @@ class Deliberation extends React.Component {
 						isOpen={this.state.loginToGradeModalIsOpen}
 						_closeModal={this._closeLoginToGradeModal}
 					/>
-				</div>
-			</div>
+				</Grid>
+			</Box>
 		)
 	}
 }

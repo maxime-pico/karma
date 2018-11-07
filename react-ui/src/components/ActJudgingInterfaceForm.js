@@ -2,6 +2,7 @@ import React from 'react'
 import { isUrlValid } from '../utils'
 import ActJudgingInterfaceFormFields from './ActJudgingInterfaceFormFields'
 import ActJudgingInterfaceFormSubmit from './ActJudgingInterfaceFormSubmit'
+import { Row, Col, Box } from '@smooth-ui/core-sc'
 
 class ActJudgingInterfaceForm extends React.Component {
 	state = {
@@ -89,36 +90,34 @@ class ActJudgingInterfaceForm extends React.Component {
 		const { grade, companyId, act, affiliation } = this.props
 		const { title, text, sources, tags } = this.state
 		return (
-			<div className="row my-4">
-				<div className="col">
-					<div className="row my-2 d-flex justify-content-center">
-						<div className="col-6 text-left">
-							Pour Juger un acte vous êtes obligés de vous affilier à une
-							opinion ou en créer une. Pour vous affilier à une opinion, cliquez
-							sur l'une des opinions dans la liste ci-dessous. Pour créer une
-							opinion, veuillez remplir les champs suivants :
-						</div>
-					</div>
-					<ActJudgingInterfaceFormFields
-						_recordValueInState={this._recordValueInState}
-						title={title}
-						text={text}
-						sources={sources}
-						tags={tags}
-					/>
-					<ActJudgingInterfaceFormSubmit
-						_checkFields={this._checkFields}
-						title={title.value}
-						text={text.value}
-						sources={sources.array}
-						tags={tags.array}
-						grade={grade}
-						companyId={companyId}
-						act={act}
-						opinionId={affiliation}
-					/>
-				</div>
-			</div>
+			<Box py={20}>
+				<Row my={2} justifyContent="center">
+					<Col md={6} textAlign="justify">
+						Pour Juger un acte vous êtes obligés de vous affilier à une opinion
+						ou en créer une. Pour vous affilier à une opinion, cliquez sur l'une
+						des opinions dans la liste ci-dessous. Pour créer une opinion,
+						veuillez remplir les champs suivants :
+					</Col>
+				</Row>
+				<ActJudgingInterfaceFormFields
+					_recordValueInState={this._recordValueInState}
+					title={title}
+					text={text}
+					sources={sources}
+					tags={tags}
+				/>
+				<ActJudgingInterfaceFormSubmit
+					_checkFields={this._checkFields}
+					title={title.value}
+					text={text.value}
+					sources={sources.array}
+					tags={tags.array}
+					grade={grade}
+					companyId={companyId}
+					act={act}
+					opinionId={affiliation}
+				/>
+			</Box>
 		)
 	}
 }

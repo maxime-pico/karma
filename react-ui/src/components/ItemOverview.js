@@ -5,8 +5,8 @@ import styled from 'styled-components'
 
 const ItemText = styled.div`
 	color: white;
-	font-size: 1.1em;
-	line-height: 1.7em;
+	font-size: ${props => props.size};
+	line-height: ${props => props.size}emm;
 	margin: 10px 0;
 `
 const ItemKarma = styled.div`
@@ -44,7 +44,7 @@ const ItemOverview = ({ type, identifier, grade, big }) => {
 			>
 				<div className="icon" />
 			</ItemIcon>
-			<ItemText>
+			<ItemText size={big ? '1.5em' : '1.1em'}>
 				<div>{CAUSE_AND_ACTS[identifier].fr}</div>
 				<ItemKarma style={{ fontWeight: '600' }}>
 					{grade !== null ? grade : 'N/A'}

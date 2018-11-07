@@ -1,6 +1,6 @@
 import React from 'react'
 import { Portal } from 'react-portal'
-import styled from 'styled-components'
+import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 const Backdrop = styled.div`
 	position: absolute;
@@ -15,12 +15,36 @@ const Backdrop = styled.div`
 `
 
 const Modal = styled.div`
-	font-size: 20px;
+	font-size: 1.2em;
 	width: 500px;
 	background-color: #fff;
 	padding: 10px;
 	border-radius: 25px;
-	border: 1pt solid black;
+	box-shadow: 0px 0px 30px grey;
+`
+const GradeButton = styled.button`
+	background: linear-gradient(
+		to right,
+		#85d8e6,
+		#b3d7f2 22.14%,
+		#baacd4 41.51%,
+		#af8cc0 56.2%,
+		#d02417 98.46%,
+		#d02417
+	);
+	box-shadow: 0px 0px 32px #ada9a98c;
+	border-radius: 30px;
+	border: none;
+	padding: 10px 20px;
+	font-size: 1.1em;
+
+	:hover {
+		color: #989898;
+		background: white;
+	}
+	:active {
+		background: #545b62;
+	}
 `
 
 class StartGradingCausesModal extends React.Component {
@@ -36,8 +60,8 @@ class StartGradingCausesModal extends React.Component {
 				<Portal node={document && document.getElementById('App')}>
 					<Backdrop onClick={_closeModal}>
 						<Modal className="p-5">
-							<div className="row d-flex justify-content-center mb-5">
-								<div className="col">
+							<Row justifyContent="center" mb={5}>
+								<Col className="col">
 									<p>
 										Vous êtes sur le point d'attribuer du Karma à une
 										entreprise.
@@ -57,15 +81,15 @@ class StartGradingCausesModal extends React.Component {
 									<p>
 										Cliquez sur le bouton ci-dessous pour commencer à noter :
 									</p>
-								</div>
-							</div>
-							<div className="row justify-content-center text-center m-4">
-								<div className="col">
-									<button type="button" className="btn btn-primary">
-										C'est parti !
-									</button>
-								</div>
-							</div>
+								</Col>
+							</Row>
+							<Row justifyContent="center" textAlign="center" m={4}>
+								<Col>
+									<GradeButton type="button" className="btn btn-primary">
+										Appliquer la loi du Karma
+									</GradeButton>
+								</Col>
+							</Row>
 						</Modal>
 					</Backdrop>
 				</Portal>

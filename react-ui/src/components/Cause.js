@@ -74,11 +74,13 @@ class Cause extends React.Component {
 				previousState.grading = true
 				previousState.startGrading = true
 				previousState.modalIsOpen = true
+				window.scrollTo(0, 0)
 				return previousState
 			})
 		} else {
 			this.setState(previousState => {
 				previousState.loginToGradeModalIsOpen = true
+				window.scrollTo(0, 0)
 				return previousState
 			})
 		}

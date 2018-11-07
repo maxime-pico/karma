@@ -53,18 +53,20 @@ class UserBubble extends React.Component {
 					if (error) return <div> Error </div>
 					const { id, name, picture, status } = data.getUserInfoFromContext
 					return (
-						<Link to={`/user/${id}`} className="ml1 no-underline black">
-							<RoundWindow size={80}>
-								<Push />
-								<img
-									src={process.env.PUBLIC_URL + '/images/' + picture}
-									alt="user profile"
-								/>
-							</RoundWindow>
-							<Name>{name}</Name>
-							{/* get readable status equivalent from STATUS table*/}
-							<Status>{STATUS[status].fr}</Status>
-						</Link>
+						<div style={{ paddingTop: '27px' }}>
+							<Link to={`/user/${id}`} className="ml1 no-underline black">
+								<RoundWindow size={80}>
+									<Push />
+									<img
+										src={process.env.PUBLIC_URL + '/images/' + picture}
+										alt="user profile"
+									/>
+								</RoundWindow>
+								<Name>{name}</Name>
+								{/* get readable status equivalent from STATUS table*/}
+								<Status>{STATUS[status].fr}</Status>
+							</Link>
+						</div>
 					)
 				}}
 			</Query>

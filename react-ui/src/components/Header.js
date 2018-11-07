@@ -23,7 +23,7 @@ const HomeButton = styled.div`
 `
 const TopRightCorner = styled.div`
 	color: white;
-	padding: 30px 30px 0 0;
+	padding: 3px 30px 0 0;
 	font-weight: 600;
 	font-size: 1.1em;
 `

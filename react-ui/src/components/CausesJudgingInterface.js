@@ -4,6 +4,13 @@ import PandaSlider from './PandaSlider'
 import CausesJudgingInterfaceButtons from './CausesJudgingInterfaceButtons'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
+import { Row, Col, styled } from '@smooth-ui/core-sc'
+
+const JudgingInterface = styled.div`
+	color: white;
+	font-size: 1.3em;
+	font-weight: 600;
+`
 
 const GRADING_MUTATION = gql`
 	mutation GradingMutation($companyId: ID!, $userGrades: [Int!]!) {
@@ -67,46 +74,42 @@ class CausesJudgingInterface extends React.Component {
 		const { cause, companyId, userGrades } = this.props
 
 		return (
-			<div className="row">
-				<div className="col">
-					<div className="row">
-						<div className="col">{this.state.grade}</div>
-					</div>
-					<div className="row">
-						<div className="col">
-							{convertGradesIntoWords(this.state.grade, 'cause').fr}
-						</div>
-					</div>
-					<div className="row d-flex justify-content-center m-2">
-						<div className="col-3">
-							<PandaSlider
-								cause={cause}
-								karma={this.state.grade}
-								type={'global'}
-								disabled={false}
-								_updateGrade={this._updateGrade}
-								_setGrade={this._setGrade}
-							/>
-						</div>
-					</div>
-					<Mutation
-						mutation={GRADING_MUTATION}
-						variables={{
-							companyId: companyId,
-							userGrades: this._intoArray(userGrades),
-						}}
-					>
-						{GradingMutation => (
-							<CausesJudgingInterfaceButtons
-								cause={cause}
-								gradingMutation={GradingMutation}
-								_adjacentCause={this._adjacentCause}
-								_stopGrading={this._stopGrading}
-							/>
-						)}
-					</Mutation>
-				</div>
-			</div>
+			<JudgingInterface>
+				<Row>
+					<Col>{this.state.grade}</Col>
+				</Row>
+				<Row>
+					<Col>{convertGradesIntoWords(this.state.grade, 'cause').fr}</Col>
+				</Row>
+				<Row justifyContent="center" m={2}>
+					<Col md={3}>
+						<PandaSlider
+							cause={cause}
+							karma={this.state.grade}
+							type={'global'}
+							disabled={false}
+							_updateGrade={this._updateGrade}
+							_setGrade={this._setGrade}
+						/>
+					</Col>
+				</Row>
+				<Mutation
+					mutation={GRADING_MUTATION}
+					variables={{
+						companyId: companyId,
+						userGrades: this._intoArray(userGrades),
+					}}
+				>
+					{GradingMutation => (
+						<CausesJudgingInterfaceButtons
+							cause={cause}
+							gradingMutation={GradingMutation}
+							_adjacentCause={this._adjacentCause}
+							_stopGrading={this._stopGrading}
+						/>
+					)}
+				</Mutation>
+			</JudgingInterface>
 		)
 	}
 }

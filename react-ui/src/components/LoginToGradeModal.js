@@ -1,7 +1,7 @@
 import React from 'react'
 import { Portal } from 'react-portal'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 const Backdrop = styled.div`
 	position: absolute;
@@ -21,7 +21,28 @@ const Modal = styled.div`
 	background-color: #fff;
 	padding: 10px;
 	border-radius: 25px;
-	border: 1pt solid black;
+	box-shadow: 0px 0px 30px grey;
+`
+const LoginButton = styled.button`
+	background: linear-gradient(
+		to right,
+		#85d8e6,
+		#b3d7f2 22.14%,
+		#baacd4 41.51%,
+		#af8cc0 56.2%,
+		#d02417 98.46%,
+		#d02417
+	);
+	box-shadow: 0px 0px 32px #ada9a98c;
+	border-radius: 30px;
+	border: none;
+	padding: 10px 20px;
+	font-size: 1.1em;
+
+	:hover {
+		color: #989898;
+		background: white;
+	}
 `
 
 class LoginToGradeModal extends React.Component {
@@ -37,21 +58,21 @@ class LoginToGradeModal extends React.Component {
 				<Portal node={document && document.getElementById('App')}>
 					<Backdrop onClick={_closeModal}>
 						<Modal className="p-5">
-							<div className="row d-flex justify-content-center mb-5">
-								<div className="col">
+							<Row justifyContent="center" mb={5}>
+								<Col>
 									Vous devez être connecté pour noter ! Cliquez sur le bouton
 									ci-dessous pour vous connecter et/ou vous inscrire :
-								</div>
-							</div>
-							<div className="row justify-content-center text-center m-4">
-								<div className="col">
+								</Col>
+							</Row>
+							<Row justifyContent="center" textAlign="center" m={4}>
+								<Col className="col">
 									<Link to="/login/">
-										<button type="button" className="btn btn-primary">
+										<LoginButton type="button" className="btn btn-primary">
 											Je deviens un Panda Eveillé !
-										</button>
+										</LoginButton>
 									</Link>
-								</div>
-							</div>
+								</Col>
+							</Row>
 						</Modal>
 					</Backdrop>
 				</Portal>

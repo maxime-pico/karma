@@ -48,6 +48,7 @@ class Soul extends React.Component {
 		} else {
 			this.setState(previousState => {
 				previousState.modalIsOpen = true
+				window.scrollTo(0, 0)
 				return previousState
 			})
 		}

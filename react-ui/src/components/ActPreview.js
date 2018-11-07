@@ -2,6 +2,37 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { CAUSE_AND_ACTS } from '../constants.js'
+import { convertGradesIntoColors } from '../utils'
+import { Row, Col, styled } from '@smooth-ui/core-sc'
+
+const ItemIcon = styled.div`
+	border-radius: 50%;
+	overflow: hidden;
+	width: ${props => props.size}px;
+	height: ${props => props.size}px;
+	background: url(${props => props.src}) no-repeat 15px 15px;
+	background-color: ${props => convertGradesIntoColors(props.grade)};
+	background-size: 38px, contain;
+	margin: auto;
+`
+const ItemKarma = styled.div`
+	font-size: 1.5em;
+	font-weight: 600;
+	color: #5d5c5c;
+`
+const ItemTitle = styled.div`
+	font-size: 1.5em;
+	font-weight: 600;
+	color: #5d5c5c;
+`
+const ItemOpinions = styled.div`
+	font-size: 1.5em;
+	color: #5d5c5c;
+`
+const ItemDescription = styled.div`
+	font-size: 1.2em;
+	color: #5d5c5c;
+`
 
 const OPINIONS_COUNT_QUERY = gql`
 	query OpinionsCountQuery($companyId: ID!, $identifier: Act!) {
@@ -13,24 +44,18 @@ const OPINIONS_COUNT_QUERY = gql`
 
 const ActPreview = ({ identifier, grade, companyId }) => {
 	return (
-		<div className="row d-flex justify-content-left text-left">
-			<div className="col-2 text-center">
-				<div className="row">
-					<div className="col">
-						<img
-							src={process.env.PUBLIC_URL + `/icons/act/${identifier}.png`}
-							width="50"
-							height="50"
-							alt={identifier}
-						/>
-					</div>
-				</div>
-				<div className="row">
-					<div className="col">{grade ? grade : 'N/A'}</div>
-				</div>
-			</div>
-			<div className="col">
-				<div className="row">{CAUSE_AND_ACTS[identifier].fr}</div>
+		<Row justifyContent="center" textAlign="left" pl={4}>
+			<Col md={1} textAlign="center">
+				<ItemIcon
+					src={process.env.PUBLIC_URL + `/icons/act/${identifier}.png`}
+					size={65}
+					alt={identifier}
+					grade={grade}
+				/>
+				<ItemKarma>{grade ? grade : 'N/A'}</ItemKarma>
+			</Col>
+			<Col pt={1}>
+				<ItemTitle>{CAUSE_AND_ACTS[identifier].fr}</ItemTitle>
 				<Query
 					query={OPINIONS_COUNT_QUERY}
 					variables={{ companyId, identifier }}
@@ -40,19 +65,19 @@ const ActPreview = ({ identifier, grade, companyId }) => {
 						if (error) return <div> Error </div>
 						const opinionsCountInt = data.opinionsCount.count
 						return (
-							<div className="row d-flex justify-content-left">
-								<div className="col-4 p-0">
-									{opinionsCountInt} opinion
-									{opinionsCountInt > 1 && 's'}
-								</div>
-								{/* <div className="col"> tags </div> */}
-							</div>
+							<ItemOpinions>
+								{opinionsCountInt} opinion
+								{opinionsCountInt > 1 && 's'}
+							</ItemOpinions>
+							/* <div className="col"> tags </div> */
 						)
 					}}
 				</Query>
-				<div className="row">{CAUSE_AND_ACTS[identifier].description.fr}</div>
-			</div>
-		</div>
+				<ItemDescription>
+					{CAUSE_AND_ACTS[identifier].description.fr}
+				</ItemDescription>
+			</Col>
+		</Row>
 	)
 }
 

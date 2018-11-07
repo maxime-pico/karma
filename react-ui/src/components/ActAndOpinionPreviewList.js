@@ -2,6 +2,7 @@ import React from 'react'
 import ActAndOpinionPreview from './ActAndOpinionPreview'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import { Grid, Row, Col } from '@smooth-ui/core-sc'
 
 const ACT_GRADES_QUERIES = {
 	ENVIRONMENT: gql`
@@ -48,7 +49,7 @@ const ACT_GRADES_QUERIES = {
 }
 
 const ActAndOpinionPreviewList = ({ cause, companyId }) => (
-	<div className="container">
+	<Grid fluid backgroundColor="white" px={{ md: '80px' }} pt={40}>
 		<Query query={ACT_GRADES_QUERIES[cause]} variables={{ companyId }}>
 			{({ loading, error, data }) => {
 				if (loading) return <div> Fetching </div>
@@ -56,25 +57,25 @@ const ActAndOpinionPreviewList = ({ cause, companyId }) => (
 
 				const companyActGrades = data.companyActGrades
 				return (
-					<div style={{ backgroundColor: 'white' }}>
+					<div>
 						{Object.keys(companyActGrades)
 							.filter(identifier => identifier !== '__typename')
 							.map(act => (
-								<div className="row ml-4" key={act}>
-									<div className="col">
+								<Row ml={3} key={act}>
+									<Col>
 										<ActAndOpinionPreview
 											act={act}
 											companyId={companyId}
 											grade={companyActGrades[act]}
 										/>
-									</div>
-								</div>
+									</Col>
+								</Row>
 							))}
 					</div>
 				)
 			}}
 		</Query>
-	</div>
+	</Grid>
 )
 
 export default ActAndOpinionPreviewList

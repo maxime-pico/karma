@@ -2,11 +2,12 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import OpinionPreview from './OpinionPreview'
+import { styled } from '@smooth-ui/core-sc'
 
-const style = {
-	border: '1pt solid black',
-	borderRadius: '25px',
-}
+const OpinionPreviewBox = styled.div`
+	box-shadow: inset 0 0 20px #d4d4d4;
+	border-radius: 55px;
+`
 
 const OPINION_FEED_QUERY = gql`
 	query OpinionFeedQuery($companyId: ID!, $act: Act!, $first: Int) {
@@ -35,13 +36,13 @@ const OpinionFeedPreview = ({ act, companyId, first, location }) => (
 			const opinionsFeed = data.opinionsFeed
 
 			return (
-				<div style={opinionsFeed.length ? style : {}}>
+				<OpinionPreviewBox>
 					<OpinionPreview
 						opinionsFeed={opinionsFeed}
 						location={location}
 						act={act}
 					/>
-				</div>
+				</OpinionPreviewBox>
 			)
 		}}
 	</Query>

@@ -1,6 +1,28 @@
 import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
+import styled from 'styled-components'
+
+const GradeButton = styled.button`
+	font-size: 2em;
+	color: #989898;
+	background-color: white;
+	box-shadow: 0px 0px 32px #ada9a98c;
+	border-radius: 30px;
+	border: none;
+
+	:hover {
+		background: linear-gradient(
+			to right,
+			#85d8e6,
+			#b3d7f2 22.14%,
+			#baacd4 41.51%,
+			#af8cc0 56.2%,
+			#d02417 98.46%,
+			#d02417
+		);
+	}
+`
 
 const GRADING_MUTATION = gql`
 	mutation GradingMutation(
@@ -82,13 +104,13 @@ const ActJudgingInterfaceFormSubmit = ({
 			{GradingMutation => (
 				<div className="row my-3 d-flex justify-content-center">
 					<div className="col-6 text-center">
-						<button
+						<GradeButton
 							type="button"
 							className="btn btn-primary"
 							onClick={async () => _submit(GradingMutation)}
 						>
 							Juger l'Acte
-						</button>
+						</GradeButton>
 					</div>
 				</div>
 			)}

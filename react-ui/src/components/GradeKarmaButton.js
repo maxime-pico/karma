@@ -11,14 +11,12 @@ const GradeButton = styled.button`
 
 	:hover {
 		background: linear-gradient(
-			to left,
+			to right,
 			#85d8e6,
-			#85d8e6 16.36%,
-			#b3d7f2 30.36%,
-			#add5f3 39.8%,
-			#c1bddf 50%,
-			#c34c58 71.69%,
-			#d02417 92%,
+			#b3d7f2 22.14%,
+			#baacd4 41.51%,
+			#af8cc0 56.2%,
+			#d02417 98.46%,
 			#d02417
 		);
 	}
