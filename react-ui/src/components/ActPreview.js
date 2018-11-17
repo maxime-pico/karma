@@ -52,7 +52,7 @@ const ActPreview = ({ identifier, grade, companyId }) => {
 					alt={identifier}
 					grade={grade}
 				/>
-				<ItemKarma>{grade ? grade : 'N/A'}</ItemKarma>
+				<ItemKarma>{grade !== null ? grade : 'N/A'}</ItemKarma>
 			</Col>
 			<Col pt={1}>
 				<ItemTitle>{CAUSE_AND_ACTS[identifier].fr}</ItemTitle>

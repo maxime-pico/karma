@@ -5,7 +5,7 @@ import ActJudgingInterfaceForm from './ActJudgingInterfaceForm'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 const JudgingInterface = styled.div`
-	color: white;
+	color: black;
 	font-size: 1.2em;
 	.important {
 		font-size: 1.3em;

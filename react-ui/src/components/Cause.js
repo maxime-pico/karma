@@ -11,6 +11,7 @@ import StartGradingCausesModal from './StartGradingCausesModal'
 import LoginToGradeModal from './LoginToGradeModal'
 import CausesJudgingInterface from './CausesJudgingInterface'
 import GradeKarmaButton from './GradeKarmaButton'
+import CauseDescription from './CauseDescription'
 import { Grid, Row, Col, styled } from '@smooth-ui/core-sc'
 
 const CancelButton = styled.button`
@@ -167,6 +168,7 @@ class Cause extends React.Component {
 									companyId={companyId}
 									mode={cause}
 								/>
+								<CauseDescription cause={cause} />
 							</Grid>
 							{this.state.grading && (
 								<CausesJudgingInterface

@@ -14,28 +14,28 @@ import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
 
 const GradeButton = styled.button`
 	font-size: 2em;
-	color: #989898;
-	background-color: white;
+	color: white;
+	background: linear-gradient(
+		to right,
+		#85d8e6,
+		#b3d7f2 22.14%,
+		#baacd4 41.51%,
+		#af8cc0 56.2%,
+		#d02417 98.46%,
+		#d02417
+	);
 	box-shadow: 0px 0px 32px #ada9a98c;
 	border-radius: 30px;
 	border: none;
 
 	:hover {
-		background: linear-gradient(
-			to right,
-			#85d8e6,
-			#b3d7f2 22.14%,
-			#baacd4 41.51%,
-			#af8cc0 56.2%,
-			#d02417 98.46%,
-			#d02417
-		);
+		background: white;
+		color: #989898;
 	}
 
 	&.btn-danger {
 		font-size: 1.5em;
-		color: white;
-		background-color: #c20e13;
+		background: #c20e13;
 		box-shadow: 3px 5px 18px #9c9c9c;
 		border-radius: 30px;
 		border: none;
@@ -44,7 +44,6 @@ const GradeButton = styled.button`
 		:focus:hover {
 			box-shadow: 0px 0px 32px white;
 			background: #fa7377;
-			color: white;
 		}
 	}
 `
@@ -122,8 +121,8 @@ class Deliberation extends React.Component {
 	render() {
 		const { companyId, cause, act } = this.props.match.params
 		return (
-			<Box mx={5}>
-				<Grid fluid>
+			<Box>
+				<Grid fluid px={5}>
 					<Row>
 						<Col mb={1}>
 							<Link to={`/company/${companyId}/cause/${cause}/`}>
@@ -150,8 +149,8 @@ class Deliberation extends React.Component {
 					<ActsNavButtons _adjacentCause={this._adjacentCause} />
 				</Grid>
 
-				<Grid my={5}>
-					<CauseAndActExplanation identifier={act} color="white" />
+				<Grid fluid mt={5} px={5} py={3} backgroundColor="white">
+					<CauseAndActExplanation identifier={act} />
 					{this.state.grading && (
 						<Row mt={4}>
 							<Col>
