@@ -6,6 +6,8 @@ We are a community of Pandas who want to change the world by helping people judg
 
 To learn more about Karma Panda please contact one of the contributors.
 
+If you wish to see the current production state of this project, please head to [`beta.karma-panda.org`](https://beta.karma-panda.org/)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
