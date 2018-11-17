@@ -76,6 +76,7 @@ const Tags = styled.div`
 `
 const OpinionText = styled.span`
 	color: #5d5c5c;
+	white-space: pre-line;
 `
 
 const BorderBottom = styled.div`

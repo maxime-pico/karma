@@ -70,6 +70,7 @@ const Tags = styled.div`
 const OpinionText = styled.span`
 	color: #5d5c5c;
 	font-size: 1.2em;
+	white-space: pre-line;
 `
 const OpinionButtons = styled.button`
 	font-size: 1.2em;
