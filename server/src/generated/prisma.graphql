@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Fri Oct 26 2018 11:44:42 GMT+0200 (Central European Summer Time)
+# timestamp: Wed Nov 21 2018 14:13:16 GMT+0100 (Central European Standard Time)
 
 enum Act {
   CLIMAT_CHANGE
@@ -160,6 +160,11 @@ input ActGradeUpdateInput {
   gradedTo: CompanyUpdateOneRequiredWithoutActGradesInput
   gradedBy: UserUpdateOneRequiredWithoutActGradesInput
   affiliatedTo: OpinionUpdateOneRequiredWithoutAffiliationsInput
+}
+
+input ActGradeUpdateManyMutationInput {
+  act: Act
+  grade: Float
 }
 
 input ActGradeUpdateManyWithoutAffiliatedToInput {
@@ -510,6 +515,11 @@ input CauseGradeUpdateInput {
   gradedBy: UserUpdateOneRequiredWithoutCauseGradesInput
 }
 
+input CauseGradeUpdateManyMutationInput {
+  cause: Cause
+  grade: Float
+}
+
 input CauseGradeUpdateManyWithoutGradedByInput {
   create: [CauseGradeCreateWithoutGradedByInput!]
   connect: [CauseGradeWhereUniqueInput!]
@@ -813,6 +823,11 @@ input CompanyUpdateInput {
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
 }
 
+input CompanyUpdateManyMutationInput {
+  name: String
+  logo: String
+}
+
 input CompanyUpdateOneRequiredWithoutActGradesInput {
   create: CompanyCreateWithoutActGradesInput
   connect: CompanyWhereUniqueInput
@@ -1066,11 +1081,11 @@ type Mutation {
   upsertOpinion(where: OpinionWhereUniqueInput!, create: OpinionCreateInput!, update: OpinionUpdateInput!): Opinion!
   upsertActGrade(where: ActGradeWhereUniqueInput!, create: ActGradeCreateInput!, update: ActGradeUpdateInput!): ActGrade!
   upsertCauseGrade(where: CauseGradeWhereUniqueInput!, create: CauseGradeCreateInput!, update: CauseGradeUpdateInput!): CauseGrade!
-  updateManyCompanies(data: CompanyUpdateInput!, where: CompanyWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyOpinions(data: OpinionUpdateInput!, where: OpinionWhereInput): BatchPayload!
-  updateManyActGrades(data: ActGradeUpdateInput!, where: ActGradeWhereInput): BatchPayload!
-  updateManyCauseGrades(data: CauseGradeUpdateInput!, where: CauseGradeWhereInput): BatchPayload!
+  updateManyCompanies(data: CompanyUpdateManyMutationInput!, where: CompanyWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyOpinions(data: OpinionUpdateManyMutationInput!, where: OpinionWhereInput): BatchPayload!
+  updateManyActGrades(data: ActGradeUpdateManyMutationInput!, where: ActGradeWhereInput): BatchPayload!
+  updateManyCauseGrades(data: CauseGradeUpdateManyMutationInput!, where: CauseGradeWhereInput): BatchPayload!
   deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyOpinions(where: OpinionWhereInput): BatchPayload!
@@ -1259,6 +1274,14 @@ input OpinionUpdateInput {
   regardingWho: CompanyUpdateOneRequiredWithoutOpinionsInput
   writtenBy: UserUpdateOneRequiredWithoutOpinionsInput
   affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
+}
+
+input OpinionUpdateManyMutationInput {
+  regardingWhat: Act
+  title: String
+  text: String
+  sources: OpinionUpdatesourcesInput
+  tags: OpinionUpdatetagsInput
 }
 
 input OpinionUpdateManyWithoutRegardingWhoInput {
@@ -1742,6 +1765,14 @@ input UserUpdateInput {
   opinions: OpinionUpdateManyWithoutWrittenByInput
   causeGrades: CauseGradeUpdateManyWithoutGradedByInput
   actGrades: ActGradeUpdateManyWithoutGradedByInput
+}
+
+input UserUpdateManyMutationInput {
+  name: String
+  email: String
+  password: String
+  picture: String
+  status: Status
 }
 
 input UserUpdateOneRequiredWithoutActGradesInput {
