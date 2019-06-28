@@ -34,14 +34,7 @@
 }
 
 body {
-	background: linear-gradient(
-		to right,
-		#85d8e6,
-		#85d8e6 11.3%,
-		#b3d7f2 36.24%,
-		#b7bde0 81.33%,
-		#baacd4
-	);
+	background: #f7f7f7;
 	font-family: 'Poppins', sans-serif;
 	font-size: 0.8rem;
 }
