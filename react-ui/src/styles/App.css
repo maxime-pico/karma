@@ -35,7 +35,7 @@
 
 body {
 	background: #f7f7f7;
-	font-family: 'Poppins', sans-serif;
+	font-family: Avenir, sans-serif;
 	font-size: 0.8rem;
 }
 
@@ -44,7 +44,6 @@ a {
 }
 
 a:hover {
-	text-decoration: none;
 	color: inherit;
-	text-shadow: 0 0 4px #ffffff91;
+	text-decoration: none;
 }

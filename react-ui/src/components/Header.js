@@ -14,7 +14,6 @@ const Navbar = styled(Row)`
 	font-size: 14px;
 	background-color: white;
 	text-align: left;
-	margin-bottom: 96px;
 `
 
 const NavbarLink = styled(Link)`

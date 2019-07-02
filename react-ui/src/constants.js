@@ -245,6 +245,9 @@ export const GRADES_TO_WORDS = {
 			fr: 'Très Bénéfique',
 		},
 	},
+	NULL: {
+		fr: 'Pas de notes pour le moment...',
+	},
 }
 
 export const AUTH_TOKEN = 'auth-token_toBeHidden'

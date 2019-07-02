@@ -47,7 +47,7 @@ const Home = () => {
 	return (
 		<div>
 			<Grid>
-				<Row justifyContent={{ md: 'center' }}>
+				<Row justifyContent={{ md: 'center' }} mt={'96px'}>
 					<Col md={4}>
 						<img src={karmalogo} height="140" alt="karma panda" />
 					</Col>

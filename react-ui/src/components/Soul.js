@@ -1,9 +1,8 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import OverviewList from './OverviewList'
-import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
-import SoulExplanation from './SoulExplanation'
+import SoulHeader from './SoulHeader'
+/* import SoulExplanation from './SoulExplanation' */
 import CauseCard from './CauseCard'
 import LoginToGradeModal from './LoginToGradeModal'
 import GradeKarmaButton from './GradeKarmaButton'
@@ -77,17 +76,16 @@ class Soul extends React.Component {
 
 					return (
 						<div>
-							<Grid fluid>
-								<KarmaBubbleAndSlider karma={overallKarma} type="global" />
-								<OverviewList
-									grades={causeGrades}
-									type="cause"
-									companyId={companyId}
-								/>
-							</Grid>
-							<Box pb={120} backgroundColor="white">
+							<SoulHeader
+								companyId={companyId}
+								karma={overallKarma}
+								type={'global'}
+								causeGrades={causeGrades}
+								pb={0}
+							/>
+							<Box pb={120}>
 								<Grid>
-									<SoulExplanation />
+									{/*<SoulExplanation />*/}
 									<Row justifyContent="center">
 										{Object.keys(causeGrades).map(
 											identifier =>

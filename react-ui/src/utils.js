@@ -1,6 +1,7 @@
 import { GRADES_TO_WORDS, CAUSE_AND_ACTS } from './constants'
 
 export function convertGradesIntoWords(grade, type) {
+	if (grade === null) return GRADES_TO_WORDS.NULL
 	if (grade <= -1.5) return GRADES_TO_WORDS.WORST[type]
 	if (-1.5 < grade && grade <= -0.5) return GRADES_TO_WORDS.BAD[type]
 	if (-0.5 < grade && grade <= 0.5) return GRADES_TO_WORDS.NEUTRAL[type]
@@ -10,12 +11,12 @@ export function convertGradesIntoWords(grade, type) {
 }
 
 export function convertGradesIntoColors(grade) {
-	if (grade <= -1.5) return '#cd2316'
-	if (-1.5 < grade && grade <= -0.5) return '#fe8a8a'
-	if (-0.5 < grade && grade <= 0.5 && grade !== null) return '#d9ccff'
-	if (0.5 < grade && grade <= 1.5) return '#b2d6f2'
-	if (1.5 < grade) return '#88d8e6'
-	return '#b7b7b7'
+	if (grade <= -1.5) return '#AD454D'
+	if (-1.5 < grade && grade <= -0.5) return '#AE687B'
+	if (-0.5 < grade && grade <= 0.5 && grade !== null) return '#D7D0C8'
+	if (0.5 < grade && grade <= 1.5) return '#98E0DD'
+	if (1.5 < grade) return '#7BCDCB'
+	return '#B6B6B6'
 }
 
 export function adjacentCause(cause, direction) {

@@ -5,11 +5,11 @@ import ItemOverview from './ItemOverview'
 import { Link } from 'react-router-dom'
 
 const OverviewList = ({ grades, type, mode, companyId }) => (
-	<div className="row m-5">
+	<div>
 		{Object.keys(grades).map(
 			identifier =>
 				CAUSE_AND_ACTS[identifier] && (
-					<div className="col" key={identifier}>
+					<div key={identifier}>
 						<Link to={`/company/${companyId}/cause/${identifier}`}>
 							<ItemOverview
 								big={identifier === mode}

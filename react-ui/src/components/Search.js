@@ -45,7 +45,7 @@ class Search extends React.Component {
 
 					return (
 						<Grid>
-							<Row justifyContent={{ md: 'center' }}>
+							<Row justifyContent={{ md: 'center' }} mt={'96px'}>
 								<Col md={8}>
 									<Title>Les marques déjà sur Karma Panda :</Title>
 									{/*<SubTitle>
