@@ -28,6 +28,7 @@ const WaveHeader = styled(Grid)`
 		border: solid ${props => props.color};
 		border-width: 31px 0 0 31px;
 		border-top-left-radius: 100px;
+		z-index: -2;
 	}
 `
 
@@ -63,7 +64,7 @@ class SoulHeader extends React.Component {
 						/>
 					</Col>
 				</Row>
-				<Row justifyContent="center">
+				<Row mt={'48px'} justifyContent="center">
 					<Col md={3}>
 						<CompanyGradesCount companyId={companyId} />
 					</Col>

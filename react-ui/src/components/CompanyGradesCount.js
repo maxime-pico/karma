@@ -7,7 +7,6 @@ const Figures = styled.div`
 	color: white;
 	font-size: 12px;
 	line-height: 1.2em;
-	margin-top: 42px;
 `
 
 // query that retrieves the company overview from its id

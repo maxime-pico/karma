@@ -1,6 +1,6 @@
 import React from 'react'
 import { CAUSE_AND_ACTS } from '../constants.js'
-import { convertGradesIntoWords, convertGradesIntoColors } from '../utils'
+//import { convertGradesIntoWords, convertGradesIntoColors } from '../utils'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 const ItemLine = styled(Row)`
@@ -55,9 +55,7 @@ const ItemOverview = ({ type, identifier, grade, big }) => {
 				</ItemText>
 			</Col>
 			<Col>
-				<ItemKarma style={{ fontWeight: '600' }}>
-					{grade !== null ? grade : 'N/A'}
-				</ItemKarma>
+				<ItemKarma>{grade !== null ? grade : 'N/A'}</ItemKarma>
 			</Col>
 		</ItemLine>
 	)

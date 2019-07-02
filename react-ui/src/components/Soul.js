@@ -7,7 +7,6 @@ import CauseCard from './CauseCard'
 import LoginToGradeModal from './LoginToGradeModal'
 import GradeKarmaButton from './GradeKarmaButton'
 import { CAUSE_AND_ACTS, AUTH_TOKEN } from '../constants.js'
-import { Link } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import { Grid, Row, Col, Box } from '@smooth-ui/core-sc'
 
@@ -90,28 +89,24 @@ class Soul extends React.Component {
 										{Object.keys(causeGrades).map(
 											identifier =>
 												CAUSE_AND_ACTS[identifier] && (
-													<Col key={identifier} md={5}>
-														<Link
-															to={`/company/${companyId}/cause/${identifier}`}
-														>
-															<CauseCard
-																companyId={companyId}
-																causeKarma={causeGrades[identifier]}
-																identifier={identifier}
-															/>
-														</Link>
+													<Col key={identifier} md={10}>
+														<CauseCard
+															companyId={companyId}
+															causeKarma={causeGrades[identifier]}
+															identifier={identifier}
+														/>
 													</Col>
 												),
 										)}
 									</Row>
-									<Row>
+									{/*<Row>
 										<Col my={60}>
 											<GradeKarmaButton
 												label="Attribuer du Karma"
 												_startGrading={this._startGrading}
 											/>
 										</Col>
-									</Row>
+									</Row>*/}
 								</Grid>
 							</Box>
 							<LoginToGradeModal
