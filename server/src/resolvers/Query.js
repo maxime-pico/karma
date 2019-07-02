@@ -21,7 +21,22 @@ function company(parent, args, context, info) {
 
 // Resolver querying all the companies in the database
 function allCompanies(parent, args, context, info) {
-	return context.db.query.companies({}, info)
+	const where = args.filter
+		? {
+				OR: [{ name_contains: args.filter }],
+		  }
+		: {}
+
+	const companies = context.db.query.companies(
+		{
+			where,
+			skip: args.skip,
+			first: args.first,
+			orderBy: args.orderBy,
+		},
+		info,
+	)
+	return companies
 }
 
 // resolver that gets the cause grades of a specific companyand averages them per cause

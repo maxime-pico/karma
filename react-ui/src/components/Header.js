@@ -36,9 +36,9 @@ class Header extends React.Component {
 					</Col>
 					<Col p={0} style={{ alignSelf: 'center' }}>
 						<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+							<NavbarLink to="/brands">marques</NavbarLink>
 							<NavbarLink to="/help">aide</NavbarLink>
 							<NavbarLink to="/about">à propos</NavbarLink>
-							<NavbarLink to="/brands">marques</NavbarLink>
 							{authToken ? (
 								<UserBubble />
 							) : (

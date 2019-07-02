@@ -11,7 +11,7 @@ type Query {
   ): Company
 
   # exposes the resolver that gets the list of all companies in the database
-	allCompanies: [Company!]!
+	allCompanies(filter: String, skip: Int, first: Int, orderBy: CompanyOrderByInput): [Company!]!
 
   # exposes the resolver that gets an object with the avg grades per cause for
   # a specific company
@@ -166,4 +166,11 @@ type OpinionPreview {
 type Count {
 	act: Act
 	count: Int
+}
+
+enum CompanyOrderByInput {
+	name_ASC
+	name_DESC
+	createdAt_ASC
+	createdAt_DESC
 }
