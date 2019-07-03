@@ -2,108 +2,100 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
-const OpinionPreviewBoxInside = styled.div`
-	margin: 20px 10px;
-	max-height: 500px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	::-webkit-scrollbar {
-		border: none;
-		width: 7px;
-	}
-	::-webkit-scrollbar-thumb {
-		border-radius: 6px;
-		background-color: #e8e9e8;
+const OpinionCard = styled(Col)`
+	background-color: #f2f2f2;
+	border-radius: 26px;
+	height: 306px;
+	padding: 30px;
+	font-size: 14px;
+	color: #2b2e34;
+	:hover + .OpinionCardBack {
+		display: block;
 	}
 `
-const Push = styled.span`
-	display: inline-block;
-	height: 100%;
-	vertical-align: middle;
-`
-const RoundWindow = styled.div`
-	height: ${props => props.size}px;
-	width: ${props => props.size}px;
-	border-radius: ${props => props.size}px;
-	overflow: hidden;
-	background-color: white;
-	margin: auto;
 
-	img {
-		width: ${props => props.size}px;
-	}
+const OpinionCardBack = styled.div`
+	display: none;
+	background-color: #f2f2f2;
+	border-radius: 26px;
+	height: 306px;
+	width: 33%;
+	padding: 30px;
+	font-size: 14px;
+	color: #2b2e34;
+	position: relative;
+	top: -306px;
+	z-index: 3;
 `
+
 const UserName = styled.div`
-	font-size: 0.8em;
-	font-weight: 600;
-	padding-top: 5px;
-`
-const OpinionTitle = styled.div`
-	font-size: 1.5em;
-	font-weight: 600;
-`
-const Tick = styled.div`
-	color: white;
-	background: linear-gradient(
-		to right,
-		#85d8e6,
-		#b3d7f2 22.14%,
-		#baacd4 41.51%,
-		#af8cc0 56.2%,
-		#d02417 98.46%,
-		#d02417
-	);
-	height: 25px;
-	width: 25px;
-	line-height: 1.3em;
-	padding-left: 6px;
-	padding-top: 2px;
-	margin-right: 5px;
-	margin-bottom: 2px;
-	border-radius: 50%;
-	font-weight: 600;
-	font-size: 1.3em;
-	display: inline-block;
-`
-const AffiliationsCount = styled.span`
-	font-size: 1.5em;
-	font-weight: 600;
+	text-align: right;
+	margin-top: 10px;
 `
 
-const Tags = styled.div`
-	font-size: 1.2em;
-	font-weight: 600;
-`
-const OpinionText = styled.span`
-	color: #5d5c5c;
-`
+// const Push = styled.span`
+// 	display: inline-block;
+// 	height: 100%;
+// 	vertical-align: middle;
+// `
+// const RoundWindow = styled.div`
+// 	height: ${props => props.size}px;
+// 	width: ${props => props.size}px;
+// 	border-radius: ${props => props.size}px;
+// 	overflow: hidden;
+// 	background-color: white;
 
-const BorderBottom = styled.div`
-	border-bottom: 1pt solid #d5d5d5;
-	position: absolute;
-	bottom: 0;
-	left: 40%;
-	right: 5%;
-`
-const ReadMore = styled.div`
-	font-size: 1.2em;
-	font-weight: 600;
-	padding-bottom 5px;
-`
-const NoOpinions = styled.div`
-	font-size: 1.1em;
-	margin: 10px 0px;
-`
+// 	img {
+// 		width: ${props => props.size}px;
+// 	}
+// `
 
-const relative = {
-	position: 'relative',
-}
+// const Tick = styled.div`
+// 	color: grey;
+// 	height: 25px;
+// 	width: 25px;
+// 	line-height: 1.3em;
+// 	padding-left: 6px;
+// 	padding-top: 2px;
+// 	margin-right: 5px;
+// 	margin-bottom: 2px;
+// 	border-radius: 50%;
+// 	font-weight: 600;
+// 	font-size: 1.3em;
+// 	display: inline-block;
+// `
 
-const OpinionPreview = ({ opinionsFeed, location, act }) => (
-	<OpinionPreviewBoxInside>
-		{opinionsFeed.map((opinion, index) => (
-			<Row key={opinion.id} justifyContent="left" p={4} style={relative}>
-				<Col md={1} textAlign="center">
+// const AffiliationsCount = styled.span`
+// 	font-size: 1.5em;
+// 	font-weight: 600;
+// `
+
+// const Tags = styled.div`
+// 	font-size: 1.2em;
+// 	font-weight: 600;
+// `
+
+const OpinionPreview = ({ opinionsFeed, location, act }) => {
+	return (
+		<Row justifyContent="center" mt={2}>
+			<Col md={9} textAlign="left" color="#a9b4cc">
+				<Row justifyContent="left">
+					{opinionsFeed.map((opinion, index) => (
+						<div key={index}>
+							<OpinionCard md={4}>
+								<div>
+									<b>{opinion.title}</b>
+								</div>
+								<div>
+									{opinion.text.length > 200
+										? opinion.text.slice(0, 197) + '...'
+										: opinion.text}
+								</div>
+								<UserName>by @{opinion.writtenBy.name}</UserName>
+							</OpinionCard>
+							{/*<OpinionCardBack key={index} md={4} className="OpinionCardBack">
+					<Tick>✔</Tick>
+					<AffiliationsCount>{opinion.affiliationsCount}</AffiliationsCount>
 					<RoundWindow size={60}>
 						<Push />
 						<img
@@ -113,18 +105,7 @@ const OpinionPreview = ({ opinionsFeed, location, act }) => (
 							alt={opinion.writtenBy.name}
 						/>
 					</RoundWindow>
-					<UserName>@{opinion.writtenBy.name}</UserName>
-				</Col>
-				<Col textAlign="left" pl={2}>
-					<Row>
-						<Col md={8}>
-							<OpinionTitle>Titre : {opinion.title}</OpinionTitle>
-						</Col>
-						<Col>
-							<Tick>✔</Tick>
-							<AffiliationsCount>{opinion.affiliationsCount}</AffiliationsCount>
-						</Col>
-					</Row>
+					<UserName textAlign="left">@{opinion.writtenBy.name}</UserName>
 					<Tags mb={2}>
 						{opinion.tags.map(tag => (
 							<span className="px-1" key={opinion.id + tag}>
@@ -132,21 +113,13 @@ const OpinionPreview = ({ opinionsFeed, location, act }) => (
 							</span>
 						))}
 					</Tags>
-					<Row p={1}>
-						<OpinionText>{opinion.text}</OpinionText>
-					</Row>
-				</Col>
-				{index < opinionsFeed.length - 1 && <BorderBottom />}
-			</Row>
-		))}
-		{opinionsFeed.length ? (
-			<Link to={`${location.pathname}act/${act}`}>
-				<ReadMore>Voir toutes les opinions et leurs sources</ReadMore>
-			</Link>
-		) : (
-			<NoOpinions>Il n'y a pas encore d'opinion pour cet acte</NoOpinions>
-		)}
-	</OpinionPreviewBoxInside>
-)
+				</OpinionCardBack>*/}
+						</div>
+					))}
+				</Row>
+			</Col>
+		</Row>
+	)
+}
 
 export default OpinionPreview

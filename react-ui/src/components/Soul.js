@@ -5,7 +5,7 @@ import SoulHeader from './SoulHeader'
 /* import SoulExplanation from './SoulExplanation' */
 import CauseCard from './CauseCard'
 import LoginToGradeModal from './LoginToGradeModal'
-import GradeKarmaButton from './GradeKarmaButton'
+//import GradeKarmaButton from './GradeKarmaButton'
 import { CAUSE_AND_ACTS, AUTH_TOKEN } from '../constants.js'
 import Cookies from 'universal-cookie'
 import { Grid, Row, Col, Box } from '@smooth-ui/core-sc'

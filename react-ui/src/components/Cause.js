@@ -4,40 +4,37 @@ import gql from 'graphql-tag'
 import Cookies from 'universal-cookie'
 import { AUTH_TOKEN } from '../constants'
 import { adjacentCause } from '../utils'
+import CauseHeader from './CauseHeader'
 import OverviewList from './OverviewList'
-import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
+// import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
 import ActAndOpinionPreviewList from './ActAndOpinionPreviewList'
 import StartGradingCausesModal from './StartGradingCausesModal'
 import LoginToGradeModal from './LoginToGradeModal'
-import CausesJudgingInterface from './CausesJudgingInterface'
-import GradeKarmaButton from './GradeKarmaButton'
-import CauseDescription from './CauseDescription'
+// import CausesJudgingInterface from './CausesJudgingInterface'
+// import GradeKarmaButton from './GradeKarmaButton'
+// import CauseDescription from './CauseDescription'
 import { Grid, Row, Col, styled } from '@smooth-ui/core-sc'
 
-const CancelButton = styled.button`
-	font-size: 1.5em;
-	color: white;
-	background-color: #c20e13;
-	box-shadow: 3px 5px 18px #9c9c9c;
-	border-radius: 30px;
-	border: none;
+// const CancelButton = styled.button`
+// 	font-size: 1.5em;
+// 	color: white;
+// 	background-color: #c20e13;
+// 	box-shadow: 3px 5px 18px #9c9c9c;
+// 	border-radius: 30px;
+// 	border: none;
 
-	:hover,
-	:focus:hover {
-		box-shadow: 0px 0px 32px white;
-		background-color: #fa7377;
-		color: white;
-	}
-`
+// 	:hover,
+// 	:focus:hover {
+// 		box-shadow: 0px 0px 32px white;
+// 		background-color: #fa7377;
+// 		color: white;
+// 	}
+// `
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
 		companyCauseGrades(companyId: $companyId) {
 			ENVIRONMENT
-			SOCIAL
-			ETHICS
-			FISCAL
-			overallKarma
 		}
 	}
 `
@@ -156,21 +153,28 @@ class Cause extends React.Component {
 					}
 
 					const causeGrades = data.companyCauseGrades
-					const overallKarma = causeGrades.overallKarma
+					const overallKarma = causeGrades.ENVIRONMENT
 
 					return (
-						<div className="mb-5">
-							<Grid fluid>
+						<div>
+							<CauseHeader
+								companyId={companyId}
+								karma={overallKarma}
+								type={'cause'}
+								cause={cause}
+								pb={0}
+							/>
+							{/*<Grid fluid>
 								<KarmaBubbleAndSlider karma={overallKarma} type="global" />
-								<OverviewList
-									grades={causeGrades}
-									type="cause"
-									companyId={companyId}
-									mode={cause}
-								/>
-								<CauseDescription cause={cause} />
-							</Grid>
-							{this.state.grading && (
+							<OverviewList
+								grades={causeGrades}
+								type="cause"
+								companyId={companyId}
+								mode={cause}
+							/>
+							<CauseDescription cause={cause} />
+							</Grid> */}
+							{/*this.state.grading && (
 								<CausesJudgingInterface
 									companyId={companyId}
 									cause={cause}
@@ -180,8 +184,8 @@ class Cause extends React.Component {
 									_adjacentCause={this._adjacentCause}
 									_stopGrading={this._stopGrading}
 								/>
-							)}
-							<Row mb={4}>
+							)*/}
+							{/*<Row mb={4}>
 								<Col>
 									{this.state.grading ? (
 										<CancelButton
@@ -198,7 +202,7 @@ class Cause extends React.Component {
 										/>
 									)}
 								</Col>
-							</Row>
+							</Row>*/}
 							<ActAndOpinionPreviewList cause={cause} companyId={companyId} />
 							<StartGradingCausesModal
 								isOpen={this.state.modalIsOpen}
