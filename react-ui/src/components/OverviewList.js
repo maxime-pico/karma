@@ -10,7 +10,7 @@ const OverviewList = ({ grades, type, mode, companyId }) => (
 			identifier =>
 				CAUSE_AND_ACTS[identifier] && (
 					<div key={identifier}>
-						<Link to={`/company/${companyId}/cause/${identifier}`}>
+						<Link to={`act/${identifier}`}>
 							<ItemOverview
 								big={identifier === mode}
 								type={type}

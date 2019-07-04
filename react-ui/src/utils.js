@@ -22,9 +22,9 @@ export function convertGradesIntoColors(grade) {
 export function adjacentCause(cause, direction) {
 	const causes = ['ENVIRONMENT', 'SOCIAL', 'ETHICS', 'FISCAL']
 	const currentIndex = causes.indexOf(cause)
-	var newIndex = (currentIndex + direction) % 5
+	var newIndex = (currentIndex + direction) % 4
 	if (newIndex < 0) {
-		newIndex += 5
+		newIndex += 4
 	}
 	return causes[newIndex]
 }

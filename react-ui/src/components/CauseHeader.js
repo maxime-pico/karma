@@ -2,6 +2,7 @@ import React from 'react'
 import { convertGradesIntoColors } from '../utils'
 import { CAUSE_AND_ACTS } from '../constants'
 /* import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'*/
+import BreadCrumb from './BreadCrumb'
 import CompanyOverview from './CompanyOverview'
 import OverviewList from './OverviewList'
 import CauseGradesCount from './CauseGradesCount'
@@ -17,7 +18,7 @@ const KarmaDescription = styled.div`
 `
 
 const WaveHeader = styled(Grid)`
-	padding-top: 72px;
+	padding-top: 12px;
 	background-color: ${props => props.color};
 	border-bottom-right-radius: 96px;
 	::after {
@@ -84,6 +85,7 @@ class CauseHeader extends React.Component {
 		const karmaColor = convertGradesIntoColors(karma)
 		return (
 			<WaveHeader fluid color={karmaColor}>
+				<BreadCrumb companyId={companyId} cause={cause} />
 				<Row justifyContent="center">
 					<Col md={2}>
 						<CompanyOverview companyId={companyId} />

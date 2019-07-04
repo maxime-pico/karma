@@ -5,7 +5,6 @@ import Cookies from 'universal-cookie'
 import { AUTH_TOKEN } from '../constants'
 import { adjacentCause } from '../utils'
 import CauseHeader from './CauseHeader'
-import OverviewList from './OverviewList'
 // import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
 import ActAndOpinionPreviewList from './ActAndOpinionPreviewList'
 import StartGradingCausesModal from './StartGradingCausesModal'
@@ -13,7 +12,6 @@ import LoginToGradeModal from './LoginToGradeModal'
 // import CausesJudgingInterface from './CausesJudgingInterface'
 // import GradeKarmaButton from './GradeKarmaButton'
 // import CauseDescription from './CauseDescription'
-import { Grid, Row, Col, styled } from '@smooth-ui/core-sc'
 
 // const CancelButton = styled.button`
 // 	font-size: 1.5em;
