@@ -12,10 +12,10 @@ const ItemDescription = styled.div`
 	line-height: 20px;
 `
 
-const ActCardDescription = ({ act }) => {
+const ActDescription = ({ act, color, justifyContent }) => {
 	return (
-		<Row justifyContent="center" mt={2}>
-			<Col md={10} textAlign="left" color="#a9b4cc">
+		<Row justifyContent={justifyContent} mt={2}>
+			<Col md={10} textAlign="left" color={color}>
 				<ItemHeaderDescription>
 					Ce sur quoi la marque a été jugée :
 				</ItemHeaderDescription>
@@ -31,4 +31,4 @@ const ActCardDescription = ({ act }) => {
 	)
 }
 
-export default ActCardDescription
+export default ActDescription

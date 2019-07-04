@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import OpinionPreview from './OpinionPreview'
 import ActCardHeader from './ActCardHeader'
-import ActCardDescription from './ActCardDescription'
+import ActDescription from './ActDescription'
 import OpinionsAndGradesCount from './OpinionsAndGradesCount'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -73,7 +73,11 @@ const ActAndOpinionPreview = ({ act, grade, companyId, location }) => {
 					return (
 						<div>
 							<ActCardHeader act={act} grade={grade} location={location} />
-							<ActCardDescription act={act} />
+							<ActDescription
+								act={act}
+								color="#a9b4cc"
+								justifyContent="center"
+							/>
 							{opinionsFeed.length ? (
 								<div>
 									<Row justifyContent="center" mt={'12px'} mb={'42px'}>
@@ -90,7 +94,10 @@ const ActAndOpinionPreview = ({ act, grade, companyId, location }) => {
 										location={location}
 										opinionsFeed={opinionsFeed}
 									/>
-									<OpinionsAndGradesCount opinionsFeed={opinionsFeed} />
+									<OpinionsAndGradesCount
+										opinionsFeed={opinionsFeed}
+										color="#a9b4cc"
+									/>
 									<Link to={`${location.pathname}act/${act}`}>
 										<ReadMore>Voir les sources</ReadMore>
 									</Link>

@@ -113,7 +113,7 @@ class CauseHeader extends React.Component {
 								return (
 									<OverviewList
 										grades={companyActGrades}
-										type="cause"
+										cause={cause}
 										companyId={companyId}
 									/>
 								)

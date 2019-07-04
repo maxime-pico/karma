@@ -1,6 +1,6 @@
 import React from 'react'
 import { CAUSE_AND_ACTS } from '../constants'
-import { adjacentCause } from '../utils'
+import { adjacentCause, adjacentAct } from '../utils'
 import Cookies from 'universal-cookie'
 import { withRouter } from 'react-router'
 import { AUTH_TOKEN } from '../constants'
@@ -21,6 +21,7 @@ const BreadButton = styled.button`
 	line-height: 13px;
 	margin-left: 6px;
 	padding: 0 1px;
+	border: none;
 `
 
 class BreadCrumb extends React.Component {
@@ -37,6 +38,14 @@ class BreadCrumb extends React.Component {
 			})
 		}
 	}
+	_adjacentAct = (cause, act, direction) => {
+		if (direction && act) {
+			const rootUrl = this.props.location.pathname.match(/(.*)\/act\//)[0]
+			this.props.history.push({
+				pathname: rootUrl + `${adjacentAct(cause, act, direction)}/`,
+			})
+		}
+	}
 	render() {
 		const { companyId, cause, act } = this.props
 		return (
@@ -48,17 +57,25 @@ class BreadCrumb extends React.Component {
 							{CAUSE_AND_ACTS[cause].fr}
 						</Link>{' '}
 						<Link to={`/company/${companyId}/cause/${cause}/act/${act}`}>
-							{act ? ' > ' + CAUSE_AND_ACTS[act] : null}
+							{act ? ' > ' + CAUSE_AND_ACTS[act].fr : null}
 						</Link>
 						<BreadButton
 							type="button"
-							onClick={() => this._adjacentCause(cause, -1)}
+							onClick={() =>
+								act
+									? this._adjacentAct(cause, act, -1)
+									: this._adjacentCause(cause, -1)
+							}
 						>
 							{'<'}
 						</BreadButton>
 						<BreadButton
 							type="button"
-							onClick={() => this._adjacentCause(cause, 1)}
+							onClick={() =>
+								act
+									? this._adjacentAct(cause, act, 1)
+									: this._adjacentCause(cause, 1)
+							}
 						>
 							{'>'}
 						</BreadButton>
