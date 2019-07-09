@@ -107,7 +107,9 @@ const ActAndOpinionPreview = ({ act, grade, companyId, location }) => {
 									<NoOpinions>
 										Il n'y a pas encore d'opinion pour cet acte... :'(
 									</NoOpinions>
-									<ReadMore>Ajouter une opinion</ReadMore>
+									<Link to={`${location.pathname}act/${act}`}>
+										<ReadMore>Ajouter une opinion</ReadMore>
+									</Link>
 								</NoOpinions>
 							)}
 						</div>

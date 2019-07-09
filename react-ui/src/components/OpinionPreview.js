@@ -81,10 +81,14 @@ const OpinionPreview = ({ opinionsFeed, location, act }) => {
 			<Col md={9} textAlign="left" color="#a9b4cc">
 				<Row justifyContent="left">
 					{opinionsFeed.map((opinion, index) => (
-						<div key={index}>
-							<OpinionCard md={4}>
+						<Col key={index} md={4} p="6px">
+							<OpinionCard>
 								<div>
-									<b>{opinion.title}</b>
+									<b>
+										{opinion.title.length > 50
+											? opinion.title.slice(0, 47) + '...'
+											: opinion.title}
+									</b>
 								</div>
 								<div>
 									{opinion.text.length > 200
@@ -92,8 +96,7 @@ const OpinionPreview = ({ opinionsFeed, location, act }) => {
 										: opinion.text}
 								</div>
 								<UserName>by @{opinion.writtenBy.name}</UserName>
-							</OpinionCard>
-							{/*<OpinionCardBack key={index} md={4} className="OpinionCardBack">
+								{/*<OpinionCardBack key={index} md={4} className="OpinionCardBack">
 					<Tick>✔</Tick>
 					<AffiliationsCount>{opinion.affiliationsCount}</AffiliationsCount>
 					<RoundWindow size={60}>
@@ -114,7 +117,8 @@ const OpinionPreview = ({ opinionsFeed, location, act }) => {
 						))}
 					</Tags>
 				</OpinionCardBack>*/}
-						</div>
+							</OpinionCard>
+						</Col>
 					))}
 				</Row>
 			</Col>
