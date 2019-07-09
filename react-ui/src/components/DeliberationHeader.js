@@ -36,11 +36,16 @@ const WaveHeader = styled(Grid)`
 
 class DeliberationHeader extends React.Component {
 	render() {
-		const { companyId, karma, opinionsFeed, cause, act } = this.props
+		const { companyId, karma, opinionsFeed, cause, act, grading } = this.props
 		const karmaColor = convertGradesIntoColors(karma)
 		return (
 			<WaveHeader fluid color={karmaColor}>
-				<BreadCrumb companyId={companyId} cause={cause} act={act} />
+				<BreadCrumb
+					companyId={companyId}
+					cause={cause}
+					act={act}
+					grading={grading}
+				/>
 				<Row justifyContent="center">
 					<Col md={2}>
 						<CompanyOverview companyId={companyId} />

@@ -62,7 +62,7 @@ const ActAndOpinionPreviewList = ({ cause, companyId }) => (
 							.filter(identifier => identifier !== '__typename')
 							.map(act => (
 								<Row mt={'96px'} key={act} justifyContent="center">
-									<Col md={10}>
+									<Col md={10} mb="42px">
 										<ActAndOpinionPreview
 											act={act}
 											companyId={companyId}

@@ -1,18 +1,19 @@
 import React from 'react'
+import PandaSlider from './PandaSlider'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 const CancelButton = styled.button`
-	background-color: white;
 	border-radius: 35px;
+	background-color: transparent;
 	border: 1px solid #d8d8d8;
 	padding: 10px 40px;
-	font-size: 20px;
-	color: #7f8799;
+	font-size: 16px;
+	color: white;
 
 	:hover {
-		color: white;
+		color: #d8d8d8;
 		background: #a9b4cc;
 		border-color: transparent;
 	}
@@ -23,7 +24,7 @@ const GradeButton = styled.button`
 	border-radius: 35px;
 	border: none;
 	padding: 10px 40px;
-	font-size: 20px;
+	font-size: 16px;
 	color: white;
 	white-space: normal;
 	max-width: 100%;
@@ -65,30 +66,18 @@ const GRADING_MUTATION = gql`
 	}
 `
 
-const ActJudgingInterfaceFormSubmit = ({
-	_checkFields,
+const ActJudgingAffiliationInterfaceSubmit = ({
 	_closeModal,
-	title,
-	text,
-	sources,
-	tags,
+	_updateGrade,
 	opinionId,
-	newOpinion,
 	grade,
 	companyId,
 	act,
 }) => {
 	const _submit = async GradingMutation => {
-		console.log(GradingMutation)
 		if (opinionId) {
 			await GradingMutation()
 			window.location.reload()
-		} else {
-			const newOpinionIsValid = await _checkFields()
-			if (newOpinionIsValid) {
-				await GradingMutation()
-				window.location.reload()
-			}
 		}
 	}
 
@@ -100,28 +89,28 @@ const ActJudgingInterfaceFormSubmit = ({
 		opinionTags: null,
 		opinionText: null,
 		opinionTitle: null,
-		opinionId: null,
+		opinionId: opinionId,
 		newOpinion: false,
-	}
-
-	if (opinionId) {
-		variables.opinionId = opinionId
-	} else {
-		variables.opinionTitle = title
-		variables.opinionText = text
-		variables.opinionSources = sources
-		variables.opinionTags = tags
-		variables.newOpinion = true
 	}
 
 	return (
 		<Mutation mutation={GRADING_MUTATION} variables={variables}>
 			{GradingMutation => (
 				<Row justifyContent="center">
-					<Col md={6} textAlign="right">
+					<Col textAlign="right" pr="42px">
 						<CancelButton onClick={_closeModal}> Annuler </CancelButton>
 					</Col>
-					<Col md={6} textAlign="left">
+					<Col md={3} mt="6px">
+						<PandaSlider
+							identfier={act}
+							karma={grade}
+							type={'global'}
+							disabled={false}
+							_updateGrade={_updateGrade}
+							_setGrade={_updateGrade}
+						/>
+					</Col>
+					<Col textAlign="left" pl="42px">
 						<GradeButton
 							type="button"
 							className="btn btn-primary"
@@ -136,4 +125,4 @@ const ActJudgingInterfaceFormSubmit = ({
 	)
 }
 
-export default ActJudgingInterfaceFormSubmit
+export default ActJudgingAffiliationInterfaceSubmit

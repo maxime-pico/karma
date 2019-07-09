@@ -81,11 +81,11 @@ const ACT_GRADES_QUERIES = {
 
 class CauseHeader extends React.Component {
 	render() {
-		const { companyId, karma, type, cause } = this.props
+		const { companyId, karma, cause, grading } = this.props
 		const karmaColor = convertGradesIntoColors(karma)
 		return (
 			<WaveHeader fluid color={karmaColor}>
-				<BreadCrumb companyId={companyId} cause={cause} />
+				<BreadCrumb companyId={companyId} cause={cause} grading={grading} />
 				<Row justifyContent="center">
 					<Col md={2}>
 						<CompanyOverview companyId={companyId} />

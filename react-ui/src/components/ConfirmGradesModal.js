@@ -1,4 +1,5 @@
 import React from 'react'
+import { CAUSE_AND_ACTS } from '../constants.js'
 import { Portal } from 'react-portal'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
@@ -12,6 +13,7 @@ const Backdrop = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	z-index: 3000;
 `
 
 const Modal = styled.div`
@@ -21,6 +23,7 @@ const Modal = styled.div`
 	background-color: #fff;
 	padding: 60px;
 	border-radius: 50px;
+	z-index: 4000;
 `
 const Title = styled.div`
   font-size: 24px
@@ -39,7 +42,7 @@ const Content = styled.div`
   font-size: 20px
   color: #7F8799;
   text-align: left;
-  margin-bottom:24px
+  margin-bottom:42px
 `
 
 const CancelButton = styled.button`
@@ -71,27 +74,55 @@ const GradeButton = styled.button`
 	}
 `
 
-class StartGradingCausesModal extends React.Component {
+class ConfirmGradesModal extends React.Component {
 	constructor(props) {
 		super(props)
-		this._closeModalAndContinue = this.props._closeModalAndContinue
+		this.userGrades = this.props.userGrades
+		this.brandName = this.props.brandName
+		this._closeGradesModal = this.props._closeGradesModal
+		this.gradingMutation = this.props.gradingMutation
+		this._stopGrading = this.props._stopGrading
+	}
+
+	_validateGrading = async () => {
+		const reload = true
+		await this.gradingMutation()
+		this._stopGrading(reload)
+		return null
 	}
 
 	render() {
-		const _closeModalAndContinue = this._closeModalAndContinue
+		const grades = this.userGrades
 		if (this.props.isOpen)
 			return (
 				<Portal node={document && document.getElementById('App')}>
-					<Backdrop onclick={() => _closeModalAndContinue(false)}>
+					<Backdrop onClick={() => this._closeGradesModal()}>
 						<Modal>
 							<Row justifyContent="center" mb={5}>
 								<Col className="col">
-									<Title>Vous entrez en mode notation</Title>
+									<Title>Petit récapitulatif...</Title>
 									<Content>
-										Certaines fonctionnalités et navigations seront restreintes
-										tant que vous n’aurez pas fini votre notation.
+										Vous êtes sur le point d'attribuer les notes suivantes à{' '}
+										{this.brandName} :
+										{grades
+											? Object.keys(grades).map((category, i) => (
+													<Row
+														key={i}
+														pl="12px"
+														pr="24px"
+														justifyContent="space-between"
+														fontSize="17px"
+														mt="6px"
+													>
+														<Col>{CAUSE_AND_ACTS[category].fr}</Col>{' '}
+														<Col md={1} textAlign="right">
+															{grades[category]}
+														</Col>
+													</Row>
+											  ))
+											: null}
 									</Content>
-									<SubTitle>Êtes-vous sûr de vouloir continuer ?</SubTitle>
+									<SubTitle>Ceci est bien votre jugement final ?</SubTitle>
 								</Col>
 							</Row>
 							<Row justifyContent="center" textAlign="center" m={4}>
@@ -99,7 +130,7 @@ class StartGradingCausesModal extends React.Component {
 									<CancelButton
 										type="button"
 										className="btn btn-primary"
-										onClick={() => _closeModalAndContinue(false)}
+										onClick={() => this._closeGradesModal()}
 									>
 										Non
 									</CancelButton>
@@ -108,7 +139,7 @@ class StartGradingCausesModal extends React.Component {
 									<GradeButton
 										type="button"
 										className="btn btn-primary"
-										onClick={() => _closeModalAndContinue(true)}
+										onClick={() => this._validateGrading()}
 									>
 										Oui
 									</GradeButton>
@@ -122,4 +153,4 @@ class StartGradingCausesModal extends React.Component {
 	}
 }
 
-export default StartGradingCausesModal
+export default ConfirmGradesModal

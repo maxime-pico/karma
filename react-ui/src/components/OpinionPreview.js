@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 const OpinionCard = styled(Col)`
@@ -14,19 +14,19 @@ const OpinionCard = styled(Col)`
 	}
 `
 
-const OpinionCardBack = styled.div`
-	display: none;
-	background-color: #f2f2f2;
-	border-radius: 26px;
-	height: 306px;
-	width: 33%;
-	padding: 30px;
-	font-size: 14px;
-	color: #2b2e34;
-	position: relative;
-	top: -306px;
-	z-index: 3;
-`
+// const OpinionCardBack = styled.div`
+// 	display: none;
+// 	background-color: #f2f2f2;
+// 	border-radius: 26px;
+// 	height: 306px;
+// 	width: 33%;
+// 	padding: 30px;
+// 	font-size: 14px;
+// 	color: #2b2e34;
+// 	position: relative;
+// 	top: -306px;
+// 	z-index: 3;
+// `
 
 const UserName = styled.div`
 	text-align: right;

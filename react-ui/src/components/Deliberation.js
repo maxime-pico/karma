@@ -1,19 +1,22 @@
 import React from 'react'
 import Cookies from 'universal-cookie'
-import { Link } from 'react-router-dom'
 import { AUTH_TOKEN } from '../constants'
 import { adjacentAct } from '../utils'
 import DeliberationHeader from './DeliberationHeader'
-import ItemOverviewQuery from './ItemOverviewQuery'
-import CauseAndActExplanation from './CauseAndActExplanation'
-import ActsNavButtons from './ActsNavButtons'
 import OpinionFeed from './OpinionFeed'
-import ActJudgingInterface from './ActJudgingInterface'
+import ActJudgingInterfaceForm from './ActJudgingInterfaceForm'
+import ActJudgingAffiliationInterface from './ActJudgingAffiliationInterface'
 import StartGradingActModal from './StartGradingActModal'
 import LoginToGradeModal from './LoginToGradeModal'
+import GradeKarmaButton from './GradeKarmaButton'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
+
+const BlurOnModal = styled(Box)`
+	filter: ${props => props.blur};
+	margin-bottom: ${props => props.marginbottom};
+`
 
 const ACT_GRADES_QUERIES = {
 	ENVIRONMENT: gql`
@@ -90,9 +93,12 @@ class Deliberation extends React.Component {
 	state = {
 		startGrading: false,
 		grading: false,
+		step: 0,
+		error: 0,
 		modalIsOpen: false,
 		loginToGradeModalIsOpen: false,
 		affiliation: false,
+		gradingType: null,
 	}
 
 	_adjacentCause = direction => {
@@ -112,6 +118,7 @@ class Deliberation extends React.Component {
 				if (!previousState.grading) {
 					previousState.modalIsOpen = true
 					previousState.grading = true
+					previousState.clickedOutside = false
 					window.scrollTo(0, 0)
 				} else {
 					previousState.grading = false
@@ -127,9 +134,36 @@ class Deliberation extends React.Component {
 		}
 	}
 
-	_closeModal = () => {
+	_stopGrading = () => {
+		this.setState(previousState => {
+			previousState.startGrading = false
+			previousState.grading = false
+			previousState.step = 0
+			previousState.error = 0
+			previousState.modalIsOpen = false
+			previousState.loginToGradeModalIsOpen = false
+			previousState.affiliation = false
+			previousState.gradingType = null
+			return previousState
+		})
+	}
+
+	_closeModal = next => {
 		this.setState(previousState => {
 			previousState.modalIsOpen = false
+			previousState.grading = false
+			previousState.startGrading = false
+			previousState.loginToGradeModalIsOpen = false
+			previousState.gradingType = null
+			return previousState
+		})
+	}
+
+	_gradingType = type => {
+		this.setState(previousState => {
+			previousState.modalIsOpen = false
+			previousState.gradingType = type
+			previousState.grading = true
 			return previousState
 		})
 	}
@@ -146,6 +180,21 @@ class Deliberation extends React.Component {
 			previousState.affiliation = opinionId
 			return previousState
 		})
+	}
+
+	_nextStep = () => {
+		if (this.state.affiliation) {
+			this.setState(previousState => {
+				previousState.error = false
+				previousState.step = 1
+				return previousState
+			})
+		} else {
+			this.setState(previousState => {
+				previousState.error = true
+				return previousState
+			})
+		}
 	}
 
 	render() {
@@ -165,7 +214,15 @@ class Deliberation extends React.Component {
 								const opinionsFeed = data.opinionsFeed
 
 								return (
-									<Box>
+									<BlurOnModal
+										blur={
+											this.state.modalIsOpen || this.state.gradingType === 'new'
+												? 'blur(4px)'
+												: 'none'
+										}
+										marginbottom={this.state.grading ? '500px' : '96px'}
+										grading={this.state.grading}
+									>
 										<DeliberationHeader
 											companyId={companyId}
 											karma={karma}
@@ -174,33 +231,9 @@ class Deliberation extends React.Component {
 											act={act}
 											opinionsFeed={opinionsFeed}
 											pb={0}
+											grading={this.state.grading}
 										/>
 										<Grid fluid mt={5} px={5} py={3}>
-											{/*
-					{this.state.grading && (
-						<Row mt={4}>
-							<Col>
-								<ActJudgingInterface
-									act={act}
-									companyId={companyId}
-									affiliation={this.state.affiliation}
-								/>
-							</Col>
-						</Row>
-					)}
-					<Row mb={4}>
-						<Col className="col">
-							<GradeButton
-								type="button"
-								className={`btn btn-${
-									this.state.grading ? 'danger' : 'primary'
-								}`}
-								onClick={() => this._startGrading()}
-							>
-								{this.state.grading ? 'Annuler' : "Juger l'acte"}
-							</GradeButton>
-						</Col>
-					</Row>*/}
 											<Row my={4}>
 												<Col>
 													{/*Filtres – Pour commmencer Chronologique ou Top affiliation*/}
@@ -214,20 +247,44 @@ class Deliberation extends React.Component {
 														grading={this.state.grading}
 														affiliation={this.state.affiliation}
 														opinionsFeed={opinionsFeed}
+														step={this.state.step}
 														_selectOpinion={this._selectOpinion}
 													/>
 												</Col>
 											</Row>
+											{this.state.gradingType === 'affiliation' &&
+												this.state.grading && (
+													<ActJudgingAffiliationInterface
+														companyId={companyId}
+														_closeModal={this._closeModal}
+														_stopGrading={this._stopGrading}
+														act={act}
+														step={this.state.step}
+														error={this.state.error}
+														affiliation={this.state.affiliation}
+														_nextStep={this._nextStep}
+													/>
+												)}
 											<StartGradingActModal
 												isOpen={this.state.modalIsOpen}
 												_closeModal={this._closeModal}
+												_gradingType={this._gradingType}
 											/>
 											<LoginToGradeModal
 												isOpen={this.state.loginToGradeModalIsOpen}
 												_closeModal={this._closeLoginToGradeModal}
 											/>
+											<ActJudgingInterfaceForm
+												isOpen={
+													this.state.gradingType === 'new' && this.state.grading
+												}
+												companyId={companyId}
+												_closeModal={this._closeModal}
+												act={act}
+											/>
 										</Grid>
-									</Box>
+										<GradeKarmaButton _startGrading={this._startGrading} />
+									</BlurOnModal>
 								)
 							}}
 						</Query>

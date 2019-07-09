@@ -13,6 +13,7 @@ const OpinionFeed = ({
 	grading,
 	affiliation,
 	opinionsFeed,
+	step,
 	_selectOpinion,
 }) => {
 	return (
@@ -24,6 +25,7 @@ const OpinionFeed = ({
 						opinion={opinion}
 						affiliation={affiliation}
 						grading={grading}
+						step={step}
 						_selectOpinion={_selectOpinion}
 					/>
 				))

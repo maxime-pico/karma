@@ -9,7 +9,7 @@ const Count = styled.div`
 
 const OpinionsAndGradesCount = ({ opinionsFeed, color }) => {
 	var gradesCount = 0
-	opinionsFeed.map(opinion => {
+	opinionsFeed.forEach(opinion => {
 		gradesCount += opinion.affiliationsCount
 	})
 

@@ -3,8 +3,8 @@ import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 const ExpandingCol = styled(Col)`
 	transition: all 400ms ease;
-	flex-shrink: ${props => (props.expanded ? null : 1)};
-	flex-grow: ${props => (props.expanded ? 1 : null)};
+	flex-shrink: ${props => props.flexshrink};
+	flex-grow: ${props => props.flexgrow};
 	margin-bottom: 42px;
 `
 
@@ -14,10 +14,7 @@ const OpinionBox = styled.div`
 	padding: 36px;
 	background: white;
 	border-radius: 41px;
-	border: 9px solid transparent;
-	&.selected {
-		border-color: #61ff99;
-	}
+	border: 9px solid ${props => props.isSelected};
 `
 
 const UserName = styled.div`
@@ -92,7 +89,7 @@ class Opinion extends React.Component {
 	}
 
 	_opinionSelected = (opinionId, allowed) => {
-		if (allowed) {
+		if (allowed && this.state.selectable) {
 			if (this.state.selected) {
 				this._selectOpinion(null)
 			} else {
@@ -105,44 +102,32 @@ class Opinion extends React.Component {
 		}
 	}
 
-	_expand() {
+	_expand(e) {
 		this.setState(previousState => {
 			previousState.expanded = !previousState.expanded
 			return previousState
 		})
+		e.stopPropagation()
 	}
 
 	render() {
-		const { opinion, grading } = this.props
+		const { opinion, grading, step } = this.props
 		const expanded = this.state.expanded
 		return (
 			<ExpandingCol
 				md={expanded ? 12 : 6}
-				expanded={expanded}
+				flexshrink={expanded ? null : '1'}
+				flexgrow={expanded ? '1' : null}
 				key={opinion.id}
-				className={this.state.selected && 'selected'}
+				className={this.state.selected ? 'selected' : null}
 			>
-				<OpinionBox>
-					<OpinionTitle>Titre : {opinion.title}</OpinionTitle>
-					{/*				<Row>
-					
-					<Col>
-						{grading &&
-							this.state.selectable && (
-								<OpinionButtons
-									type="button"
-									className={`btn btn-${
-										this.state.selected ? 'danger' : 'primary'
-									}`}
-									onClick={() => this._opinionSelected(opinion.id, grading)}
-								>
-									{this.state.selected
-										? 'Annuler'
-										: "M'afillier a cette opinion"}
-								</OpinionButtons>
-							)}
-					</Col>
-				</Row>*/}
+				<OpinionBox
+					onClick={() =>
+						this._opinionSelected(opinion.id, grading && step === 0)
+					}
+					isSelected={this.state.selected ? '#D3E2FF' : 'transparent'}
+				>
+					<OpinionTitle>{opinion.title}</OpinionTitle>
 					<Tags mb={3}>
 						{opinion.tags.map(tag => (
 							<span className="px-1" key={opinion.id + tag}>
@@ -155,7 +140,11 @@ class Opinion extends React.Component {
 					</OpinionText>
 					{opinion.sources.map((source, index) => (
 						<Sources key={index}>
-							<a href={source} target={'_blank'}>
+							<a
+								href={source}
+								target={'_blank'}
+								onClick={e => e.stopPropagation()}
+							>
 								{this.state.expanded ? source : source.slice(0, 37) + '...'}
 							</a>
 						</Sources>
@@ -170,7 +159,7 @@ class Opinion extends React.Component {
 					</Row>
 					<Row>
 						<Col textAlign="center">
-							<SeeMore onClick={() => this._expand()}>
+							<SeeMore onClick={e => this._expand(e)}>
 								voir {expanded ? 'moins' : 'plus'}
 							</SeeMore>
 						</Col>

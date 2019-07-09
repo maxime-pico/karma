@@ -9,25 +9,16 @@ import CauseHeader from './CauseHeader'
 import ActAndOpinionPreviewList from './ActAndOpinionPreviewList'
 import StartGradingCausesModal from './StartGradingCausesModal'
 import LoginToGradeModal from './LoginToGradeModal'
-// import CausesJudgingInterface from './CausesJudgingInterface'
+import GradeKarmaButton from './GradeKarmaButton'
+import CausesJudgingInterface from './CausesJudgingInterface'
 // import GradeKarmaButton from './GradeKarmaButton'
 // import CauseDescription from './CauseDescription'
+import { styled } from '@smooth-ui/core-sc'
 
-// const CancelButton = styled.button`
-// 	font-size: 1.5em;
-// 	color: white;
-// 	background-color: #c20e13;
-// 	box-shadow: 3px 5px 18px #9c9c9c;
-// 	border-radius: 30px;
-// 	border: none;
-
-// 	:hover,
-// 	:focus:hover {
-// 		box-shadow: 0px 0px 32px white;
-// 		background-color: #fa7377;
-// 		color: white;
-// 	}
-// `
+const BlurOnModal = styled.div`
+	filter: ${props => props.blur};
+	margin-bottom: ${props => (props.grading ? '500' : '96')}px;
+`
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
@@ -50,6 +41,7 @@ class Cause extends React.Component {
 		startGrading: false,
 		grading: false,
 		modalIsOpen: false,
+		modalConfirmIsOpen: false,
 		loginToGradeModalIsOpen: false,
 		userGrades: {
 			ENVIRONMENT: null,
@@ -105,9 +97,18 @@ class Cause extends React.Component {
 		}
 	}
 
-	_closeModal = () => {
+	_blurBackground = blur => {
+		this.setState(previousState => {
+			previousState.modalConfirmIsOpen = blur
+			return previousState
+		})
+	}
+
+	_closeModalAndContinue = next => {
 		this.setState(previousState => {
 			previousState.modalIsOpen = false
+			previousState.grading = next
+			previousState.startGrading = next
 			return previousState
 		})
 	}
@@ -154,63 +155,44 @@ class Cause extends React.Component {
 					const overallKarma = causeGrades.ENVIRONMENT
 
 					return (
-						<div>
+						<BlurOnModal
+							blur={
+								this.state.modalIsOpen || this.state.modalConfirmIsOpen
+									? 'blur(4px)'
+									: 'none'
+							}
+							grading={this.state.grading}
+						>
 							<CauseHeader
 								companyId={companyId}
 								karma={overallKarma}
 								type={'cause'}
 								cause={cause}
 								pb={0}
+								grading={this.state.grading}
 							/>
-							{/*<Grid fluid>
-								<KarmaBubbleAndSlider karma={overallKarma} type="global" />
-							<OverviewList
-								grades={causeGrades}
-								type="cause"
-								companyId={companyId}
-								mode={cause}
-							/>
-							<CauseDescription cause={cause} />
-							</Grid> */}
-							{/*this.state.grading && (
+							<ActAndOpinionPreviewList cause={cause} companyId={companyId} />
+							{this.state.grading && (
 								<CausesJudgingInterface
 									companyId={companyId}
 									cause={cause}
-									grading={this.state.grading}
 									userGrades={this.state.userGrades}
+									_blurBackground={this._blurBackground}
 									_setGrade={this._setGrade}
 									_adjacentCause={this._adjacentCause}
 									_stopGrading={this._stopGrading}
 								/>
-							)*/}
-							{/*<Row mb={4}>
-								<Col>
-									{this.state.grading ? (
-										<CancelButton
-											type="button"
-											className="btn btn-danger"
-											onClick={() => this._stopGrading()}
-										>
-											Annuler
-										</CancelButton>
-									) : (
-										<GradeKarmaButton
-											label="Attribuer du Karma"
-											_startGrading={this._startGrading}
-										/>
-									)}
-								</Col>
-							</Row>*/}
-							<ActAndOpinionPreviewList cause={cause} companyId={companyId} />
+							)}
 							<StartGradingCausesModal
 								isOpen={this.state.modalIsOpen}
-								_closeModal={this._closeModal}
+								_closeModalAndContinue={this._closeModalAndContinue}
 							/>
 							<LoginToGradeModal
 								isOpen={this.state.loginToGradeModalIsOpen}
 								_closeModal={this._closeLoginToGradeModal}
 							/>
-						</div>
+							<GradeKarmaButton _startGrading={this._startGrading} />
+						</BlurOnModal>
 					)
 				}}
 			</Query>

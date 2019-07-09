@@ -5,10 +5,14 @@ import SoulHeader from './SoulHeader'
 /* import SoulExplanation from './SoulExplanation' */
 import CauseCard from './CauseCard'
 import LoginToGradeModal from './LoginToGradeModal'
-//import GradeKarmaButton from './GradeKarmaButton'
+import GradeKarmaButton from './GradeKarmaButton'
 import { CAUSE_AND_ACTS, AUTH_TOKEN } from '../constants.js'
 import Cookies from 'universal-cookie'
-import { Grid, Row, Col, Box } from '@smooth-ui/core-sc'
+import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
+
+const BlurOnModal = styled.div`
+	filter: ${props => (props.blur ? 'blur(4px)' : null)};
+`
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
@@ -74,7 +78,7 @@ class Soul extends React.Component {
 					const overallKarma = causeGrades.overallKarma
 
 					return (
-						<div>
+						<BlurOnModal blur={this.state.modalIsOpen}>
 							<SoulHeader
 								companyId={companyId}
 								karma={overallKarma}
@@ -89,7 +93,7 @@ class Soul extends React.Component {
 										{Object.keys(causeGrades).map(
 											identifier =>
 												CAUSE_AND_ACTS[identifier] && (
-													<Col key={identifier} md={10}>
+													<Col key={identifier} md={10} mb="42px">
 														<CauseCard
 															companyId={companyId}
 															causeKarma={causeGrades[identifier]}
@@ -99,21 +103,14 @@ class Soul extends React.Component {
 												),
 										)}
 									</Row>
-									{/*<Row>
-										<Col my={60}>
-											<GradeKarmaButton
-												label="Attribuer du Karma"
-												_startGrading={this._startGrading}
-											/>
-										</Col>
-									</Row>*/}
 								</Grid>
 							</Box>
 							<LoginToGradeModal
 								isOpen={this.state.modalIsOpen}
 								_closeModal={this._closeModal}
 							/>
-						</div>
+							<GradeKarmaButton _startGrading={this._startGrading} />
+						</BlurOnModal>
 					)
 				}}
 			</Query>
