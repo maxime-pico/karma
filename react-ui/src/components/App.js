@@ -5,6 +5,8 @@ import '../styles/App.css'
 import Header from './Header'
 import Home from './Home'
 import Search from './Search'
+import Help from './Help'
+import About from './About'
 import Soul from './Soul'
 import Cause from './Cause'
 import Deliberation from './Deliberation'
@@ -26,6 +28,8 @@ const App = () => (
 			/>
 			<Route exact path="/" component={Home} />
 			<Route exact path="/brands/" component={Search} />
+			<Route exact path="/help/" component={Help} />
+			<Route exact path="/about/" component={About} />
 			<Route exact path="/company/:companyId" component={Soul} />
 			<Route exact path="/company/:companyId/cause/:cause" component={Cause} />
 			<Route
