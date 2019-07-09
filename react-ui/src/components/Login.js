@@ -7,15 +7,24 @@ import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Grid, Row, Col, styled } from '@smooth-ui/core-sc'
 
+const LoginBox = styled(Grid)`
+	margin-top: 96px;
+	border-radius: 96px;
+	padding: 42px;
+	background-color: white;
+	color: #7f8799;
+	font-size: 16px;
+	max-width: 800px;
+	width: 70%;
+`
+
 const Title = styled(Row)`
-	color: white;
 	font-size: 2em;
 	text-align: center;
 `
 
 const Label = styled.div`
 	font-size: 1.2em;
-	color: white;
 	text-align: left;
 	margin-bottom: 5px;
 `
@@ -26,46 +35,45 @@ const ErrorMessage = styled.div`
 `
 const InputBox = styled.input`
   width: 100%
-	padding: 5px 10px;
-	border-radius: 10px;
-	border: none;
-	box-shadow: inset 0px 0px 8px #c3c3c3;
-
-	:focus {
-		outline-color: white;
+	padding: 6px 10px;
+	border-radius: 12px;
+	border: solid 1px #A9B4CC;
+  background-color: #F7F7F7;
+  margin-bottom: ${props => props.marginBottom}
+  :focus {
+    outline: none;
+		box-shadow: 0 0 0 3px #A9B4CC;
 	}
+  :focus::-webkit-input-placeholder { color:transparent; }
+  :focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
+  :focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+  :focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 `
 const FormSubmitButton = styled.button`
-	color: #989898;
-	background: white;
-	box-shadow: 0px 0px 32px #ada9a98c;
-	border-radius: 30px;
+	background-color: #a9b4cc;
+	border-radius: 35px;
 	border: none;
-	padding: 10px 20px;
-	font-size: 1.2em;
+	padding: 10px 40px;
+	font-size: 20px;
+	color: white;
+	white-space: normal;
+	max-width: 100%;
 
 	:hover {
-		color: white;
-		background: linear-gradient(
-			to right,
-			#85d8e6,
-			#b3d7f2 22.14%,
-			#baacd4 41.51%,
-			#af8cc0 56.2%,
-			#d02417 98.46%,
-			#d02417
-		);
+		color: #a9b4cc;
+		background: #d3e2ff;
+	}
+	&.btn-secondary {
+		background: #7f8799;
 	}
 `
 
-const SwitchButton = styled.div`
-	font-size: 1.2em;
-	color: white;
+const SwitchButton = styled.button`
+	font-size: 18px;
 	cursor: pointer;
-
-	:hover {
-		font-weight: 600;
-	}
+	border: none;
+	background-color: transparent;
+	color: inherit;
 `
 
 // signup new user and get token back
@@ -97,15 +105,15 @@ class Login extends React.Component {
 	render() {
 		const { login, email, password, name } = this.state
 		return (
-			<Grid>
+			<LoginBox>
 				<Row justifyContent="center">
-					<Col md={6}>
+					<Col md={8}>
 						<Title mb={30} justifyContent="center">
-							<Col>{login ? 'Connectez-vous :' : 'Inscrivez-vous'}</Col>
+							<Col>{login ? 'Connectez-vous' : 'Inscrivez-vous'}</Col>
 						</Title>
 						{!login && ( // if signup form then display name field
 							<Row justifyContent="center">
-								<Col md={5} mb={2}>
+								<Col md={8} mb={2}>
 									<Label>Votre Pseudo</Label>
 									<InputBox
 										value={name}
@@ -117,7 +125,7 @@ class Login extends React.Component {
 							</Row>
 						)}
 						<Row justifyContent="center">
-							<Col md={5} mb={2}>
+							<Col md={8} mb={2}>
 								<Label>Votre Email</Label>
 								<InputBox
 									value={email}
@@ -128,7 +136,7 @@ class Login extends React.Component {
 							</Col>
 						</Row>
 						<Row justifyContent="center" mb={1}>
-							<Col md={5} mb={2}>
+							<Col md={8} mb={2}>
 								<Label>Votre Mot de Passe</Label>
 								<InputBox
 									value={password}
@@ -139,7 +147,7 @@ class Login extends React.Component {
 							</Col>
 						</Row>
 						<Row justifyContent="center" mt={20}>
-							<Col md={6}>
+							<Col md={8}>
 								<Mutation // wrap login/signup button in mutation component to send mutation onclick
 									mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION} // use relevant mutation depending on state
 									variables={{ email, password, name }} // pass variables for the mutation
@@ -165,7 +173,7 @@ class Login extends React.Component {
 							</Col>
 						</Row>
 						<Row justifyContent="center" mt={10}>
-							<Col md={6}>
+							<Col md={8}>
 								<SwitchButton
 									className="pointer button"
 									onClick={() => this.setState({ login: !login })} // switch between signup and login forms
@@ -178,7 +186,7 @@ class Login extends React.Component {
 						</Row>
 					</Col>
 				</Row>
-			</Grid>
+			</LoginBox>
 		)
 	}
 

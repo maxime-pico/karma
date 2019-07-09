@@ -4,25 +4,27 @@ import { AUTH_TOKEN } from '../constants'
 import { Grid, Row, Col, styled } from '@smooth-ui/core-sc'
 
 const LogOutButton = styled.button`
-	cursor: pointer;
-	font-size: 1.2em;
-	color: white;
-	background: #c20e13;
-	box-shadow: 3px 5px 18px #9c9c9c;
-	border-radius: 30px;
+	background-color: #a9b4cc;
+	border-radius: 35px;
 	border: none;
-	padding: 10px 20px;
+	padding: 10px 40px;
+	font-size: 20px;
+	color: white;
+	white-space: normal;
+	max-width: 100%;
 
-	:hover,
-	:focus:hover {
-		background: #fa7377;
-		box-shadow: 0px 0px 32px white;
+	:hover {
+		color: #a9b4cc;
+		background: #d3e2ff;
+	}
+	&.btn-secondary {
+		background: #7f8799;
 	}
 `
 
 const MainText = styled.div`
-	font-size: 1.4em;
-	color: white;
+	font-size: 20px;
+	color: #7f8799;
 	margin-bottom: 30px;
 `
 
@@ -33,7 +35,7 @@ class UserProfile extends React.Component {
 		const authToken = cookies.get(AUTH_TOKEN) // check if token is set (user logged in)
 		return (
 			<Grid>
-				<Row justifyContent="center">
+				<Row justifyContent="center" mt="120px">
 					<Col md={6}>
 						<MainText>
 							Pour vous déconnecter cliquez sur le bouton ci-dessous :
