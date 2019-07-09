@@ -11,7 +11,7 @@ type Query {
   ): Company
 
   # exposes the resolver that gets the list of all companies in the database
-	allCompanies: [Company!]!
+	allCompanies(filter: String, skip: Int, first: Int, orderBy: CompanyOrderByInput): [Company!]!
 
   # exposes the resolver that gets an object with the avg grades per cause for
   # a specific company
@@ -45,10 +45,17 @@ type Query {
 
   # exposes the resolver that counts the number of opinions for a specific act
   # of a specific company
-  opinionsCount(
+  opinionsActCount(
     companyId: ID!
     act: Act!
-  ): Count!
+  ): ActCount!
+  
+  # exposes the resolver that counts the number of opinions for a specific cause
+  # of a specific company
+  opinionsAndGradesCauseCount(
+    companyId: ID!
+    cause: Cause!
+  ): CauseCount!
 }
 
 # prettier-ignore
@@ -163,7 +170,19 @@ type OpinionPreview {
 	affiliationsCount: Int
 }
 
-type Count {
+type ActCount {
 	act: Act
 	count: Int
+}
+
+type CauseCount {
+	opinionsCount: Int
+	gradesCount: Int
+}
+
+enum CompanyOrderByInput {
+	name_ASC
+	name_DESC
+	createdAt_ASC
+	createdAt_DESC
 }

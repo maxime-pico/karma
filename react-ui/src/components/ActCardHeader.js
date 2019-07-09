@@ -1,8 +1,9 @@
 import React from 'react'
 import { CAUSE_AND_ACTS } from '../constants.js'
+import { convertGradesIntoColors } from '../utils'
+import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
-import { convertGradesIntoColors } from '../utils'
 
 const Title = styled.span`
 	font-size: 26px;
@@ -18,7 +19,7 @@ const RoundWindow = styled.div`
 	background-color: ${props => props.color};
 	margin: auto;
 	position: relative;
-	top: -60px;
+	top: -40px;
 	img {
 		height: 60%;
 	}
@@ -30,8 +31,8 @@ const Push = styled.span`
 	vertical-align: middle;
 `
 
-const CauseCardTitle = ({ identifier, companyId, causeKarma }) => {
-	const karmaColor = convertGradesIntoColors(causeKarma)
+const ActCardHeader = ({ act, grade, companyId, location }) => {
+	const karmaColor = convertGradesIntoColors(grade)
 	return (
 		<div>
 			<Row justifyContent="center">
@@ -39,24 +40,24 @@ const CauseCardTitle = ({ identifier, companyId, causeKarma }) => {
 					<RoundWindow size={80} color={karmaColor}>
 						<Push />
 						<img
-							src={process.env.PUBLIC_URL + `/icons/cause/${identifier}.png`}
-							alt={identifier}
+							src={process.env.PUBLIC_URL + `/icons/act/${act}.png`}
+							alt={act}
 						/>
 					</RoundWindow>
 				</Col>
 			</Row>
-			<Row justifyContent="center" mt={'-40px'}>
+			<Row justifyContent="center" mt={'-24px'}>
 				<Col md={8} textAlign="left">
-					<Link to={`/company/${companyId}/cause/${identifier}`}>
-						<Title>{CAUSE_AND_ACTS[identifier].fr}</Title>
+					<Link to={`${location.pathname}act/${act}`}>
+						<Title>{CAUSE_AND_ACTS[act].fr}</Title>
 					</Link>
 				</Col>
 				<Col md={2} textAlign="right">
-					<Title>{causeKarma}</Title>
+					<Title>{grade !== null ? grade : 'N/A'}</Title>
 				</Col>
 			</Row>
 		</div>
 	)
 }
 
-export default CauseCardTitle
+export default withRouter(ActCardHeader)

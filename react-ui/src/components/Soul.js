@@ -1,16 +1,18 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import OverviewList from './OverviewList'
-import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
-import SoulExplanation from './SoulExplanation'
+import SoulHeader from './SoulHeader'
+/* import SoulExplanation from './SoulExplanation' */
 import CauseCard from './CauseCard'
 import LoginToGradeModal from './LoginToGradeModal'
 import GradeKarmaButton from './GradeKarmaButton'
 import { CAUSE_AND_ACTS, AUTH_TOKEN } from '../constants.js'
-import { Link } from 'react-router-dom'
 import Cookies from 'universal-cookie'
-import { Grid, Row, Col, Box } from '@smooth-ui/core-sc'
+import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
+
+const BlurOnModal = styled.div`
+	filter: ${props => (props.blur ? 'blur(4px)' : null)};
+`
 
 const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
@@ -76,43 +78,30 @@ class Soul extends React.Component {
 					const overallKarma = causeGrades.overallKarma
 
 					return (
-						<div>
-							<Grid fluid>
-								<KarmaBubbleAndSlider karma={overallKarma} type="global" />
-								<OverviewList
-									grades={causeGrades}
-									type="cause"
-									companyId={companyId}
-								/>
-							</Grid>
-							<Box pb={120} backgroundColor="white">
+						<BlurOnModal blur={this.state.modalIsOpen}>
+							<SoulHeader
+								companyId={companyId}
+								karma={overallKarma}
+								type={'global'}
+								causeGrades={causeGrades}
+								pb={0}
+							/>
+							<Box pb={120}>
 								<Grid>
-									<SoulExplanation />
+									{/*<SoulExplanation />*/}
 									<Row justifyContent="center">
 										{Object.keys(causeGrades).map(
 											identifier =>
 												CAUSE_AND_ACTS[identifier] && (
-													<Col key={identifier} md={5}>
-														<Link
-															to={`/company/${companyId}/cause/${identifier}`}
-														>
-															<CauseCard
-																companyId={companyId}
-																causeKarma={causeGrades[identifier]}
-																identifier={identifier}
-															/>
-														</Link>
+													<Col key={identifier} md={10} mb="42px">
+														<CauseCard
+															companyId={companyId}
+															causeKarma={causeGrades[identifier]}
+															identifier={identifier}
+														/>
 													</Col>
 												),
 										)}
-									</Row>
-									<Row>
-										<Col my={60}>
-											<GradeKarmaButton
-												label="Attribuer du Karma"
-												_startGrading={this._startGrading}
-											/>
-										</Col>
 									</Row>
 								</Grid>
 							</Box>
@@ -120,7 +109,8 @@ class Soul extends React.Component {
 								isOpen={this.state.modalIsOpen}
 								_closeModal={this._closeModal}
 							/>
-						</div>
+							<GradeKarmaButton _startGrading={this._startGrading} />
+						</BlurOnModal>
 					)
 				}}
 			</Query>

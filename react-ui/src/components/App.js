@@ -3,6 +3,7 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import '../styles/App.css'
 import Header from './Header'
+import Home from './Home'
 import Search from './Search'
 import Soul from './Soul'
 import Cause from './Cause'
@@ -23,7 +24,8 @@ const App = () => (
 				path="/:url*"
 				render={props => <Redirect to={`${props.location.pathname}/`} />}
 			/>
-			<Route exact path="/" component={Search} />
+			<Route exact path="/" component={Home} />
+			<Route exact path="/brands/" component={Search} />
 			<Route exact path="/company/:companyId" component={Soul} />
 			<Route exact path="/company/:companyId/cause/:cause" component={Cause} />
 			<Route

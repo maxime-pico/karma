@@ -5,7 +5,7 @@ import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 const Backdrop = styled.div`
 	position: absolute;
-	background-color: rgba(255, 255, 255, 0.8);
+	background-color: rgba(255, 255, 255, 0.21);
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -17,31 +17,40 @@ const Backdrop = styled.div`
 
 const Modal = styled.div`
 	font-size: 20px;
-	width: 500px;
+	width: 50%;
+	max-width: 800px;
 	background-color: #fff;
-	padding: 10px;
-	border-radius: 25px;
-	box-shadow: 0px 0px 30px grey;
+	padding: 60px;
+	border-radius: 50px;
+	z-index: 1;
+  }
 `
+
+const Title = styled.div`
+  font-size: 24px
+  font-weight: 600;
+  color: #545A66;
+  margin-bottom:12px
+`
+
+const Content = styled.div`
+  font-size: 20px
+  color: #7F8799;
+  text-align: left;
+  margin-bottom:24px
+`
+
 const LoginButton = styled.button`
-	background: linear-gradient(
-		to right,
-		#85d8e6,
-		#b3d7f2 22.14%,
-		#baacd4 41.51%,
-		#af8cc0 56.2%,
-		#d02417 98.46%,
-		#d02417
-	);
-	box-shadow: 0px 0px 32px #ada9a98c;
-	border-radius: 30px;
+	background-color: #a9b4cc;
+	border-radius: 35px;
 	border: none;
-	padding: 10px 20px;
-	font-size: 1.1em;
+	padding: 10px 40px;
+	font-size: 20px;
+	color: white;
 
 	:hover {
-		color: #989898;
-		background: white;
+		color: #a9b4cc;
+		background: #d3e2ff;
 	}
 `
 
@@ -57,18 +66,21 @@ class LoginToGradeModal extends React.Component {
 			return (
 				<Portal node={document && document.getElementById('App')}>
 					<Backdrop onClick={_closeModal}>
-						<Modal className="p-5">
+						<Modal>
 							<Row justifyContent="center" mb={5}>
 								<Col>
-									Vous devez être connecté pour noter ! Cliquez sur le bouton
-									ci-dessous pour vous connecter et/ou vous inscrire :
+									<Title> Vous devez être connecté pour noter !</Title>
+									<Content>
+										Cliquez sur le bouton ci-dessous pour vous connecter et/ou
+										vous inscrire :
+									</Content>
 								</Col>
 							</Row>
 							<Row justifyContent="center" textAlign="center" m={4}>
 								<Col className="col">
 									<Link to="/login/">
 										<LoginButton type="button" className="btn btn-primary">
-											Je deviens un Panda Eveillé !
+											Se connecter
 										</LoginButton>
 									</Link>
 								</Col>

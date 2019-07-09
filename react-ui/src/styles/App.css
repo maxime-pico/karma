@@ -34,15 +34,8 @@
 }
 
 body {
-	background: linear-gradient(
-		to right,
-		#85d8e6,
-		#85d8e6 11.3%,
-		#b3d7f2 36.24%,
-		#b7bde0 81.33%,
-		#baacd4
-	);
-	font-family: 'Poppins', sans-serif;
+	background: #f7f7f7;
+	font-family: Avenir, sans-serif;
 	font-size: 0.8rem;
 }
 
@@ -51,7 +44,6 @@ a {
 }
 
 a:hover {
-	text-decoration: none;
 	color: inherit;
-	text-shadow: 0 0 4px #ffffff91;
+	text-decoration: none;
 }

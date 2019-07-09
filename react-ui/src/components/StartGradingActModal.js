@@ -4,7 +4,7 @@ import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 const Backdrop = styled.div`
 	position: absolute;
-	background-color: rgba(255, 255, 255, 0.8);
+	background-color: rgba(255, 255, 255, 0.2);
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -12,39 +12,67 @@ const Backdrop = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 100vh;
 `
 
 const Modal = styled.div`
-	font-size: 1.2em;
-	width: 500px;
+	font-size: 16px;
+	width: 50%;
+	max-width: 800px;
 	background-color: #fff;
-	padding: 10px;
-	border-radius: 25px;
-	box-shadow: 0px 0px 30px grey;
+	padding: 60px;
+	border-radius: 50px;
 `
-const GradeButton = styled.button`
-	background: linear-gradient(
-		to right,
-		#85d8e6,
-		#b3d7f2 22.14%,
-		#baacd4 41.51%,
-		#af8cc0 56.2%,
-		#d02417 98.46%,
-		#d02417
-	);
-	box-shadow: 0px 0px 32px #ada9a98c;
-	border-radius: 30px;
-	border: none;
-	padding: 10px 20px;
-	font-size: 1.1em;
+const Title = styled.div`
+  font-size: 24px
+  font-weight: 600;
+  color: #545A66;
+  margin-bottom:12px
+`
+const SubTitle = styled.div`
+  font-size: 20px
+  font-weight: 600;
+  color: #545A66;
+  margin-bottom:12px
+`
+
+const Content = styled.div`
+  font-size: 20px
+  color: #7F8799;
+  text-align: left;
+  margin-bottom:24px
+`
+
+const CancelButton = styled.button`
+	background-color: white;
+	border-radius: 35px;
+	border: 1px solid #d8d8d8;
+	padding: 10px 40px;
+	font-size: 20px;
+	color: #7f8799;
 
 	:hover {
-		color: #989898;
-		background: white;
+		color: white;
+		background: #a9b4cc;
+		border-color: transparent;
 	}
-	:active {
-		background: #545b62;
+`
+
+const GradeButton = styled.button`
+	background-color: #a9b4cc;
+	border-radius: 35px;
+	border: none;
+	padding: 10px 40px;
+	font-size: 16px;
+	color: white;
+	white-space: normal;
+	max-width: 100%;
+
+	:hover {
+		color: #a9b4cc;
+		background: #d3e2ff;
+	}
+	&.btn-secondary {
+		background: #7f8799;
 	}
 `
 
@@ -52,44 +80,63 @@ class StartGradingActModal extends React.Component {
 	constructor(props) {
 		super(props)
 		this._closeModal = this.props._closeModal
+		this._gradingType = this.props._gradingType
 	}
 
 	render() {
-		const _closeModal = this._closeModal
+		const { _closeModal, _gradingType } = this
 		if (this.props.isOpen)
 			return (
 				<Portal node={document && document.getElementById('App')}>
-					<Backdrop onClick={_closeModal}>
-						<Modal className="p-5">
+					<Backdrop>
+						<Modal>
 							<Row justifyContent="center" mb={5}>
-								<Col>
-									<p>
-										Vous êtes sur le point de juger l'acte d'une entreprise.
-									</p>
-									<p>
-										Tout d'abord un grand merci de la part de tous les Pandas !
-									</p>
-									<p>
-										Tout jugement d'acte doit s'accompagner de l'affiliation à
-										une opinion. Une opinion c'est un texte, appuyé de sources,
-										qui va résumer tous les indices qui peuvent aider à juger le
-										rôle de l'entreprise pour l'acte en question. Nous vous
-										invitons à commencer à parcourir la liste des opinions des
-										Pandas qui ont fait un travail de recherche avant vous. Si
-										l'une de ces opinions vous convient, vous pouvez y affilier
-										votre note. Sinon, à vous d'écrire une nouvelle opinion !
-										Bon travail de recherche :)
-									</p>
-									<p>
-										Cliquez sur le bouton ci-dessous pour commencer à noter :
-									</p>
+								<Col className="col">
+									<Title>Vous entrez en mode notation</Title>
+									<Content>
+										<p>
+											Certaines fonctionnalités et navigations seront
+											restreintes tant que vous n’aurez pas fini votre notation.
+										</p>
+										<p>
+											Pour juger un Acte, vous devrez necessairement appuyer
+											votre note sur une opinion. Vous pouvez en créer une
+											nouvelle ou en choisir une parmis celles qui existent
+											déjà.
+										</p>
+									</Content>
+									<SubTitle>Que souhaitez-vous faire ?</SubTitle>
 								</Col>
 							</Row>
 							<Row justifyContent="center" textAlign="center" m={4}>
-								<Col>
-									<GradeButton type="button" className="btn btn-primary">
-										Appliquer la loi du Karma
+								<Col md={6}>
+									<GradeButton
+										type="button"
+										className="btn btn-secondary"
+										onClick={() => _gradingType('new')}
+									>
+										Ajouter ma propre opinion
 									</GradeButton>
+								</Col>
+								<Col md={6}>
+									<GradeButton
+										type="button"
+										className="btn btn-primary"
+										onClick={() => _gradingType('affiliation')}
+									>
+										M'affilier a une opinion existante
+									</GradeButton>
+								</Col>
+							</Row>
+							<Row justifyContent="center">
+								<Col md={4}>
+									<CancelButton
+										type="button"
+										className="btn btn-primary"
+										onClick={_closeModal}
+									>
+										Annuler
+									</CancelButton>
 								</Col>
 							</Row>
 						</Modal>

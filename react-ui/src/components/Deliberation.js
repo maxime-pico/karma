@@ -1,49 +1,82 @@
 import React from 'react'
 import Cookies from 'universal-cookie'
-import { Link } from 'react-router-dom'
 import { AUTH_TOKEN } from '../constants'
 import { adjacentAct } from '../utils'
-import ItemOverviewQuery from './ItemOverviewQuery'
-import CauseAndActExplanation from './CauseAndActExplanation'
-import ActsNavButtons from './ActsNavButtons'
+import DeliberationHeader from './DeliberationHeader'
 import OpinionFeed from './OpinionFeed'
-import ActJudgingInterface from './ActJudgingInterface'
+import ActJudgingInterfaceForm from './ActJudgingInterfaceForm'
+import ActJudgingAffiliationInterface from './ActJudgingAffiliationInterface'
 import StartGradingActModal from './StartGradingActModal'
 import LoginToGradeModal from './LoginToGradeModal'
+import GradeKarmaButton from './GradeKarmaButton'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
 import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
 
-const GradeButton = styled.button`
-	font-size: 2em;
-	color: white;
-	background: linear-gradient(
-		to right,
-		#85d8e6,
-		#b3d7f2 22.14%,
-		#baacd4 41.51%,
-		#af8cc0 56.2%,
-		#d02417 98.46%,
-		#d02417
-	);
-	box-shadow: 0px 0px 32px #ada9a98c;
-	border-radius: 30px;
-	border: none;
+const BlurOnModal = styled(Box)`
+	filter: ${props => props.blur};
+	margin-bottom: ${props => props.marginbottom};
+`
 
-	:hover {
-		background: white;
-		color: #989898;
-	}
+const ACT_GRADES_QUERIES = {
+	ENVIRONMENT: gql`
+		query EnvironmentGradesQuery($companyId: ID!) {
+			companyActGrades(companyId: $companyId) {
+				CLIMAT_CHANGE
+				ECOSYSTEM_PRESERVATION
+				RESOURCE_PRESERVATION
+				ANIMAL_CONDITION
+			}
+		}
+	`,
+	ETHICS: gql`
+		query EthicsGradesQuery($companyId: ID!) {
+			companyActGrades(companyId: $companyId) {
+				POLITICAL_RESPONSIBILITY
+				MARKET_INFLUENCE
+				POPULATION_RESPECT
+				CONSUMER_RESPECT
+				QUESTIONABLE_INDUSTRIES
+			}
+		}
+	`,
+	FISCAL: gql`
+		query FiscalGradesQuery($companyId: ID!) {
+			companyActGrades(companyId: $companyId) {
+				SHAREHOLDER_REMUNERATION
+				TAXATION_LEVEL
+				EXECUTIVE_COMPENSATION
+				EMPLOYEE_EQUITY
+			}
+		}
+	`,
+	SOCIAL: gql`
+		query SocialGradesQuery($companyId: ID!) {
+			companyActGrades(companyId: $companyId) {
+				EMPLOYMENT_CONDITIONS
+				EMPLOYEE_DISCRIMINATIONS
+				WORKING_CONDITIONS
+				MANAGING_CONDITIONS
+			}
+		}
+	`,
+}
 
-	&.btn-danger {
-		font-size: 1.5em;
-		background: #c20e13;
-		box-shadow: 3px 5px 18px #9c9c9c;
-		border-radius: 30px;
-		border: none;
-
-		:hover,
-		:focus:hover {
-			box-shadow: 0px 0px 32px white;
-			background: #fa7377;
+const OPINION_FEED_QUERY = gql`
+	query OpinionFeedQuery($companyId: ID!, $act: Act!) {
+		opinionsFeed(companyId: $companyId, act: $act) {
+			id
+			createdAt
+			title
+			text
+			regardingWhat
+			tags
+			sources
+			writtenBy {
+				name
+				picture
+			}
+			affiliationsCount
 		}
 	}
 `
@@ -60,9 +93,12 @@ class Deliberation extends React.Component {
 	state = {
 		startGrading: false,
 		grading: false,
+		step: 0,
+		error: 0,
 		modalIsOpen: false,
 		loginToGradeModalIsOpen: false,
 		affiliation: false,
+		gradingType: null,
 	}
 
 	_adjacentCause = direction => {
@@ -82,6 +118,7 @@ class Deliberation extends React.Component {
 				if (!previousState.grading) {
 					previousState.modalIsOpen = true
 					previousState.grading = true
+					previousState.clickedOutside = false
 					window.scrollTo(0, 0)
 				} else {
 					previousState.grading = false
@@ -97,9 +134,36 @@ class Deliberation extends React.Component {
 		}
 	}
 
-	_closeModal = () => {
+	_stopGrading = () => {
+		this.setState(previousState => {
+			previousState.startGrading = false
+			previousState.grading = false
+			previousState.step = 0
+			previousState.error = 0
+			previousState.modalIsOpen = false
+			previousState.loginToGradeModalIsOpen = false
+			previousState.affiliation = false
+			previousState.gradingType = null
+			return previousState
+		})
+	}
+
+	_closeModal = next => {
 		this.setState(previousState => {
 			previousState.modalIsOpen = false
+			previousState.grading = false
+			previousState.startGrading = false
+			previousState.loginToGradeModalIsOpen = false
+			previousState.gradingType = null
+			return previousState
+		})
+	}
+
+	_gradingType = type => {
+		this.setState(previousState => {
+			previousState.modalIsOpen = false
+			previousState.gradingType = type
+			previousState.grading = true
 			return previousState
 		})
 	}
@@ -118,89 +182,115 @@ class Deliberation extends React.Component {
 		})
 	}
 
+	_nextStep = () => {
+		if (this.state.affiliation) {
+			this.setState(previousState => {
+				previousState.error = false
+				previousState.step = 1
+				return previousState
+			})
+		} else {
+			this.setState(previousState => {
+				previousState.error = true
+				return previousState
+			})
+		}
+	}
+
 	render() {
 		const { companyId, cause, act } = this.props.match.params
+		const query = ACT_GRADES_QUERIES[cause]
 		return (
-			<Box>
-				<Grid fluid px={5}>
-					<Row>
-						<Col mb={1}>
-							<Link to={`/company/${companyId}/cause/${cause}/`}>
-								<ItemOverviewQuery
-									big={false}
-									type={'cause'}
-									identifier={cause}
-									companyId={companyId}
-								/>
-							</Link>
-						</Col>
-					</Row>
-					<Row md={4}>
-						<Col>
-							<ItemOverviewQuery
-								big={true}
-								type={'act'}
-								identifier={act}
-								cause={cause}
-								companyId={companyId}
-							/>
-						</Col>
-					</Row>
-					<ActsNavButtons _adjacentCause={this._adjacentCause} />
-				</Grid>
+			<Query query={query} variables={{ companyId, act }}>
+				{({ loading, error, data }) => {
+					if (loading) return <div> Fetching </div>
+					if (error) return <div> Error </div>
+					const karma = data.companyActGrades[act]
+					return (
+						<Query query={OPINION_FEED_QUERY} variables={{ companyId, act }}>
+							{({ loading, error, data }) => {
+								if (loading) return <div> Fetching </div>
+								if (error) return <div> Error </div>
+								const opinionsFeed = data.opinionsFeed
 
-				<Grid fluid mt={5} px={5} py={3} backgroundColor="white">
-					<CauseAndActExplanation identifier={act} />
-					{this.state.grading && (
-						<Row mt={4}>
-							<Col>
-								<ActJudgingInterface
-									act={act}
-									companyId={companyId}
-									affiliation={this.state.affiliation}
-								/>
-							</Col>
-						</Row>
-					)}
-					<Row mb={4}>
-						<Col className="col">
-							<GradeButton
-								type="button"
-								className={`btn btn-${
-									this.state.grading ? 'danger' : 'primary'
-								}`}
-								onClick={() => this._startGrading()}
-							>
-								{this.state.grading ? 'Annuler' : "Juger l'acte"}
-							</GradeButton>
-						</Col>
-					</Row>
-					<Row my={4}>
-						<Col my={3}>
-							{/*Filtres – Pour commmencer Chronologique ou Top affiliation*/}
-						</Col>
-					</Row>
-					<Row my={5}>
-						<Col>
-							<OpinionFeed
-								act={act}
-								companyId={companyId}
-								grading={this.state.grading}
-								affiliation={this.state.affiliation}
-								_selectOpinion={this._selectOpinion}
-							/>
-						</Col>
-					</Row>
-					<StartGradingActModal
-						isOpen={this.state.modalIsOpen}
-						_closeModal={this._closeModal}
-					/>
-					<LoginToGradeModal
-						isOpen={this.state.loginToGradeModalIsOpen}
-						_closeModal={this._closeLoginToGradeModal}
-					/>
-				</Grid>
-			</Box>
+								return (
+									<BlurOnModal
+										blur={
+											this.state.modalIsOpen || this.state.gradingType === 'new'
+												? 'blur(4px)'
+												: 'none'
+										}
+										marginbottom={this.state.grading ? '500px' : '96px'}
+										grading={this.state.grading}
+									>
+										<DeliberationHeader
+											companyId={companyId}
+											karma={karma}
+											type={'act'}
+											cause={cause}
+											act={act}
+											opinionsFeed={opinionsFeed}
+											pb={0}
+											grading={this.state.grading}
+										/>
+										<Grid fluid mt={5} px={5} py={3}>
+											<Row my={4}>
+												<Col>
+													{/*Filtres – Pour commmencer Chronologique ou Top affiliation*/}
+												</Col>
+											</Row>
+											<Row my={2} justifyContent="center">
+												<Col md={10}>
+													<OpinionFeed
+														act={act}
+														companyId={companyId}
+														grading={this.state.grading}
+														affiliation={this.state.affiliation}
+														opinionsFeed={opinionsFeed}
+														step={this.state.step}
+														_selectOpinion={this._selectOpinion}
+													/>
+												</Col>
+											</Row>
+											{this.state.gradingType === 'affiliation' &&
+												this.state.grading && (
+													<ActJudgingAffiliationInterface
+														companyId={companyId}
+														_closeModal={this._closeModal}
+														_stopGrading={this._stopGrading}
+														act={act}
+														step={this.state.step}
+														error={this.state.error}
+														affiliation={this.state.affiliation}
+														_nextStep={this._nextStep}
+													/>
+												)}
+											<StartGradingActModal
+												isOpen={this.state.modalIsOpen}
+												_closeModal={this._closeModal}
+												_gradingType={this._gradingType}
+											/>
+											<LoginToGradeModal
+												isOpen={this.state.loginToGradeModalIsOpen}
+												_closeModal={this._closeLoginToGradeModal}
+											/>
+											<ActJudgingInterfaceForm
+												isOpen={
+													this.state.gradingType === 'new' && this.state.grading
+												}
+												companyId={companyId}
+												_closeModal={this._closeModal}
+												act={act}
+											/>
+										</Grid>
+										<GradeKarmaButton _startGrading={this._startGrading} />
+									</BlurOnModal>
+								)
+							}}
+						</Query>
+					)
+				}}
+			</Query>
 		)
 	}
 }

@@ -1,4 +1,4 @@
-const { getUserId } = require('../utils')
+const { getUserId, CAUSE_AND_ACTS } = require('../utils')
 
 // Resolver querying the user info from token
 function getUserInfoFromContext(parent, args, context, info) {
@@ -21,7 +21,22 @@ function company(parent, args, context, info) {
 
 // Resolver querying all the companies in the database
 function allCompanies(parent, args, context, info) {
-	return context.db.query.companies({}, info)
+	const where = args.filter
+		? {
+				OR: [{ name_contains: args.filter }],
+		  }
+		: {}
+
+	const companies = context.db.query.companies(
+		{
+			where,
+			skip: args.skip,
+			first: args.first,
+			orderBy: args.orderBy,
+		},
+		info,
+	)
+	return companies
 }
 
 // resolver that gets the cause grades of a specific companyand averages them per cause
@@ -185,7 +200,7 @@ async function opinionsFeed(parent, args, context, info){
 
 // resolver that counts the number of opinions of a specific company (args.companyId)
 // for a specific act (args.act)
-async function opinionsCount(parent, args, context, info) {
+async function opinionsActCount(parent, args, context, info) {
 	const { companyId, act } = args // destructure arguments
 
 	const opinions = await context.db.query.opinions(
@@ -198,6 +213,30 @@ async function opinionsCount(parent, args, context, info) {
 	return { act: act, count: 0 }
 }
 
+// resolver that counts the number of grades and opinions of a specific company (args.companyId)
+// for a specific cause (args.cause)
+async function opinionsAndGradesCauseCount(parent, args, context, info) {
+	const { companyId, cause } = args // destructure arguments
+
+	const opinions = await context.db.query.opinions(
+		{
+			where: {
+				regardingWho: { id: companyId },
+				regardingWhat_in: CAUSE_AND_ACTS[cause].acts,
+			},
+		},
+		` { id affiliations { id } } `,
+	)
+	if (opinions) {
+		var gradesCount = 0
+		opinions.forEach(opinion => {
+			gradesCount += opinion.affiliations.length
+		})
+		return { opinionsCount: opinions.length, gradesCount: gradesCount }
+	}
+	return { opinionsCount: null, gradesCount: null }
+}
+
 module.exports = {
 	getUserInfoFromContext,
 	company,
@@ -207,5 +246,6 @@ module.exports = {
 	userBubbleQuery,
 	companyOverview,
 	opinionsFeed,
-	opinionsCount,
+	opinionsActCount,
+	opinionsAndGradesCauseCount,
 }

@@ -1,6 +1,7 @@
 import { GRADES_TO_WORDS, CAUSE_AND_ACTS } from './constants'
 
 export function convertGradesIntoWords(grade, type) {
+	if (grade === null) return GRADES_TO_WORDS.NULL
 	if (grade <= -1.5) return GRADES_TO_WORDS.WORST[type]
 	if (-1.5 < grade && grade <= -0.5) return GRADES_TO_WORDS.BAD[type]
 	if (-0.5 < grade && grade <= 0.5) return GRADES_TO_WORDS.NEUTRAL[type]
@@ -10,20 +11,20 @@ export function convertGradesIntoWords(grade, type) {
 }
 
 export function convertGradesIntoColors(grade) {
-	if (grade <= -1.5) return '#cd2316'
-	if (-1.5 < grade && grade <= -0.5) return '#fe8a8a'
-	if (-0.5 < grade && grade <= 0.5 && grade !== null) return '#d9ccff'
-	if (0.5 < grade && grade <= 1.5) return '#b2d6f2'
-	if (1.5 < grade) return '#88d8e6'
-	return '#b7b7b7'
+	if (grade <= -1.5) return '#AD454D'
+	if (-1.5 < grade && grade <= -0.5) return '#AE687B'
+	if (-0.5 < grade && grade <= 0.5 && grade !== null) return '#D7D0C8'
+	if (0.5 < grade && grade <= 1.5) return '#98E0DD'
+	if (1.5 < grade) return '#7BCDCB'
+	return '#B6B6B6'
 }
 
 export function adjacentCause(cause, direction) {
 	const causes = ['ENVIRONMENT', 'SOCIAL', 'ETHICS', 'FISCAL']
 	const currentIndex = causes.indexOf(cause)
-	var newIndex = (currentIndex + direction) % 5
+	var newIndex = (currentIndex + direction) % 4
 	if (newIndex < 0) {
-		newIndex += 5
+		newIndex += 4
 	}
 	return causes[newIndex]
 }
@@ -40,9 +41,7 @@ export function adjacentAct(cause, act, direction) {
 }
 
 export function isUrlValid(userInput) {
-	// var regexQuery =
-	// 	'^(https?://)?(www\\.)?([-a-z0-9]{1,63}\\.)*?[a-z0-9][-a-z0-9]{0,61}[a-z0-9]\\.[a-z]{2,6}(/[-\\w@\\+\\.~#\\?&/=%]*)?$'
-	// var url = new RegExp(regexQuery, 'i')
-	// return url.test(userInput)
-	return true
+	return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(
+		userInput,
+	)
 }

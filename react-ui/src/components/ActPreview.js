@@ -3,6 +3,8 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { CAUSE_AND_ACTS } from '../constants.js'
 import { convertGradesIntoColors } from '../utils'
+import OpinionPreviewBloc from './OpinionPreviewBloc'
+import { Link } from 'react-router-dom'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 const ItemIcon = styled.div`
@@ -42,7 +44,7 @@ const OPINIONS_COUNT_QUERY = gql`
 	}
 `
 
-const ActPreview = ({ identifier, grade, companyId }) => {
+const ActPreview = ({ identifier, grade, companyId, location }) => {
 	return (
 		<Row justifyContent="center" textAlign="left" pl={4}>
 			<Col md={1} textAlign="center">
@@ -55,7 +57,9 @@ const ActPreview = ({ identifier, grade, companyId }) => {
 				<ItemKarma>{grade !== null ? grade : 'N/A'}</ItemKarma>
 			</Col>
 			<Col pt={1}>
-				<ItemTitle>{CAUSE_AND_ACTS[identifier].fr}</ItemTitle>
+				<Link to={`${location.pathname}act/${identifier}`}>
+					<ItemTitle>{CAUSE_AND_ACTS[identifier].fr}</ItemTitle>
+				</Link>
 				<Query
 					query={OPINIONS_COUNT_QUERY}
 					variables={{ companyId, identifier }}
@@ -77,6 +81,11 @@ const ActPreview = ({ identifier, grade, companyId }) => {
 					{CAUSE_AND_ACTS[identifier].description.fr}
 				</ItemDescription>
 			</Col>
+			<OpinionPreviewBloc
+				act={identifier}
+				companyId={companyId}
+				location={location}
+			/>
 		</Row>
 	)
 }

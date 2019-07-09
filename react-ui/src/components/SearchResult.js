@@ -5,31 +5,31 @@ import { Row, Col } from '@smooth-ui/core-sc'
 
 const ResultCard = styled.div`
 	background-color: white;
-	margin: 10px;
-	padding: 20px 10px 10px 10px;
-	border-radius: 25px;
-	min-height: 140px;
+	border-radius: 30px;
+	min-height: 80px;
 	font-weight: 500;
-	box-shadow: 5px 5px 32px #989898a3;
-	width: 144px;
+	width: 140px;
+	margin: auto;
+	border: solid 9px transparent;
+	box-sizing: border-box;
 
 	&:hover {
-		box-shadow: 0 0 27px white;
+		border: solid 9px #cbcbcb;
 		cursor: pointer;
 	}
 `
 
 const CompanyName = styled.div`
-	color: black;
+	color: #a9b4cc;
 	font-size: 0.95rem;
 `
 
 const SearchResult = ({ name, id, logo }) => (
-	<Col md={4} key={name}>
+	<Col md={3} my={3} key={name}>
 		<Link to={`/company/${id}`} style={{ textDecoration: 'none' }}>
 			<ResultCard>
 				<Row>
-					<Col style={{ height: '60px', width: '60px' }}>
+					<Col style={{ height: '110px' }}>
 						<span
 							style={{
 								display: 'inline-block',
@@ -39,17 +39,17 @@ const SearchResult = ({ name, id, logo }) => (
 						/>
 						<img
 							src={process.env.PUBLIC_URL + '/images/' + logo}
-							width="60"
+							width="80"
 							alt="company"
 						/>
 					</Col>
 				</Row>
-				<Row>
-					<Col py={1}>
-						<CompanyName>{name}</CompanyName>
-					</Col>
-				</Row>
 			</ResultCard>
+			<Row>
+				<Col py={1}>
+					<CompanyName>{name}</CompanyName>
+				</Col>
+			</Row>
 		</Link>
 	</Col>
 )

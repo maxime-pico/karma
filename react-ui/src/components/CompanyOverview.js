@@ -11,9 +11,10 @@ const RoundWindow = styled.div`
 	border-radius: ${props => props.size}px;
 	overflow: hidden;
 	background-color: white;
+	margin: auto;
 
 	img {
-		width: ${props => props.size}px;
+		width: ${props => props.size - 40}px;
 	}
 `
 const Push = styled.span`
@@ -21,7 +22,14 @@ const Push = styled.span`
 	height: 100%;
 	vertical-align: middle;
 `
-const Figures = styled.div`
+const CompanyName = styled.div`
+	color: white;
+	font-size: 22px;
+	margin: auto;
+	margin-top: 12px;
+`
+
+/*const Figures = styled.div`
 	text-align: left;
 	padding-left: 10px;
 	color: black;
@@ -32,7 +40,7 @@ const Figures = styled.div`
 const Unit = styled.span`
 	font-size: 0.7em;
 	font-weight: 400;
-`
+`*/
 
 // query that retrieves the company overview from its id
 const COMPANY_OVERVIEW_QUERY = gql`
@@ -40,9 +48,6 @@ const COMPANY_OVERVIEW_QUERY = gql`
 		companyOverview(companyId: $companyId) {
 			name
 			logo
-			opinionsCount
-			actGradesCount
-			causeGradesCount
 		}
 	}
 `
@@ -56,26 +61,23 @@ class CompanyOverview extends React.Component {
 				{({ loading, error, data }) => {
 					if (loading) return <div> Fetching </div>
 					if (error) return <div> Error </div>
-					const {
-						name,
-						logo,
-						opinionsCount,
-						actGradesCount,
-						causeGradesCount,
-					} = data.companyOverview
+					const { name, logo } = data.companyOverview
 
 					return (
 						<Link to={`/company/${companyId}`}>
 							<Row alignItems="center">
-								<RoundWindow size={80}>
+								<RoundWindow size={140}>
 									<Push />
 									<img
 										src={process.env.PUBLIC_URL + '/images/' + logo}
 										alt="company"
 									/>
 								</RoundWindow>
-								<Figures>
-									<div>{name}</div>
+							</Row>
+							<Row>
+								<CompanyName>{name}</CompanyName>
+							</Row>
+							{/*<Figures>
 									<div>
 										{causeGradesCount + actGradesCount} <Unit>notes</Unit>
 									</div>
@@ -83,7 +85,7 @@ class CompanyOverview extends React.Component {
 										{opinionsCount} <Unit>opinions</Unit>
 									</div>
 								</Figures>
-							</Row>
+                */}
 						</Link>
 					)
 				}}
