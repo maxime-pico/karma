@@ -6,6 +6,8 @@ import SoulHeader from './SoulHeader'
 import CauseCard from './CauseCard'
 import LoginToGradeModal from './LoginToGradeModal'
 import GradeKarmaButton from './GradeKarmaButton'
+import SoulHelpInterface from './SoulHelpInterface'
+import HelpButton from './HelpButton'
 import { CAUSE_AND_ACTS, AUTH_TOKEN } from '../constants.js'
 import Cookies from 'universal-cookie'
 import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
@@ -36,6 +38,7 @@ class Soul extends React.Component {
 
 	state = {
 		grading: false,
+		help: false,
 		modalIsOpen: false,
 	}
 
@@ -59,6 +62,20 @@ class Soul extends React.Component {
 	_closeModal = () => {
 		this.setState(previousState => {
 			previousState.modalIsOpen = false
+			return previousState
+		})
+	}
+
+	_closeHelp = () => {
+		this.setState(previousState => {
+			previousState.help = false
+			return previousState
+		})
+	}
+
+	_openHelp = () => {
+		this.setState(previousState => {
+			previousState.help = true
 			return previousState
 		})
 	}
@@ -105,11 +122,18 @@ class Soul extends React.Component {
 									</Row>
 								</Grid>
 							</Box>
+							{this.state.help && (
+								<SoulHelpInterface
+									companyId={companyId}
+									_closeHelp={this._closeHelp}
+								/>
+							)}
 							<LoginToGradeModal
 								isOpen={this.state.modalIsOpen}
 								_closeModal={this._closeModal}
 							/>
 							<GradeKarmaButton _startGrading={this._startGrading} />
+							<HelpButton _openHelp={this._openHelp} />
 						</BlurOnModal>
 					)
 				}}

@@ -6,9 +6,11 @@ import DeliberationHeader from './DeliberationHeader'
 import OpinionFeed from './OpinionFeed'
 import ActJudgingInterfaceForm from './ActJudgingInterfaceForm'
 import ActJudgingAffiliationInterface from './ActJudgingAffiliationInterface'
+import ActHelpInterface from './ActHelpInterface'
 import StartGradingActModal from './StartGradingActModal'
 import LoginToGradeModal from './LoginToGradeModal'
 import GradeKarmaButton from './GradeKarmaButton'
+import HelpButton from './HelpButton'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
@@ -93,6 +95,7 @@ class Deliberation extends React.Component {
 	state = {
 		startGrading: false,
 		grading: false,
+		help: false,
 		step: 0,
 		error: 0,
 		modalIsOpen: false,
@@ -155,6 +158,20 @@ class Deliberation extends React.Component {
 			previousState.startGrading = false
 			previousState.loginToGradeModalIsOpen = false
 			previousState.gradingType = null
+			return previousState
+		})
+	}
+
+	_closeHelp = () => {
+		this.setState(previousState => {
+			previousState.help = false
+			return previousState
+		})
+	}
+
+	_openHelp = () => {
+		this.setState(previousState => {
+			previousState.help = true
 			return previousState
 		})
 	}
@@ -265,6 +282,13 @@ class Deliberation extends React.Component {
 														_nextStep={this._nextStep}
 													/>
 												)}
+											{this.state.help && (
+												<ActHelpInterface
+													companyId={companyId}
+													act={act}
+													_closeHelp={this._closeHelp}
+												/>
+											)}
 											<StartGradingActModal
 												isOpen={this.state.modalIsOpen}
 												_closeModal={this._closeModal}
@@ -284,6 +308,7 @@ class Deliberation extends React.Component {
 											/>
 										</Grid>
 										<GradeKarmaButton _startGrading={this._startGrading} />
+										<HelpButton _openHelp={this._openHelp} />
 									</BlurOnModal>
 								)
 							}}

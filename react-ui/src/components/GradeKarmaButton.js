@@ -15,7 +15,7 @@ const GradeButton = styled.button`
 	margin: auto;
 	box-shadow: 2px 2px 4px 2px #00000026;
 	position: fixed;
-	bottom: 70px;
+	bottom: 140px;
 	right: 64px;
 	border: none;
 	z-index: 1000;

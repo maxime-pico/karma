@@ -5,14 +5,13 @@ import Cookies from 'universal-cookie'
 import { AUTH_TOKEN } from '../constants'
 import { adjacentCause } from '../utils'
 import CauseHeader from './CauseHeader'
-// import KarmaBubbleAndSlider from './KarmaBubbleAndSlider'
 import ActAndOpinionPreviewList from './ActAndOpinionPreviewList'
 import StartGradingCausesModal from './StartGradingCausesModal'
 import LoginToGradeModal from './LoginToGradeModal'
 import GradeKarmaButton from './GradeKarmaButton'
+import HelpButton from './HelpButton'
 import CausesJudgingInterface from './CausesJudgingInterface'
-// import GradeKarmaButton from './GradeKarmaButton'
-// import CauseDescription from './CauseDescription'
+import CauseHelpInterface from './CauseHelpInterface'
 import { styled } from '@smooth-ui/core-sc'
 
 const BlurOnModal = styled.div`
@@ -43,6 +42,7 @@ class Cause extends React.Component {
 		modalIsOpen: false,
 		modalConfirmIsOpen: false,
 		loginToGradeModalIsOpen: false,
+		help: false,
 		userGrades: {
 			ENVIRONMENT: null,
 			SOCIAL: null,
@@ -80,6 +80,20 @@ class Cause extends React.Component {
 			return previousState
 		})
 		reload && window.location.reload()
+	}
+
+	_closeHelp = () => {
+		this.setState(previousState => {
+			previousState.help = false
+			return previousState
+		})
+	}
+
+	_openHelp = () => {
+		this.setState(previousState => {
+			previousState.help = true
+			return previousState
+		})
 	}
 
 	componentDidMount() {
@@ -183,6 +197,13 @@ class Cause extends React.Component {
 									_stopGrading={this._stopGrading}
 								/>
 							)}
+							{this.state.help && (
+								<CauseHelpInterface
+									companyId={companyId}
+									_closeHelp={this._closeHelp}
+									cause={cause}
+								/>
+							)}
 							<StartGradingCausesModal
 								isOpen={this.state.modalIsOpen}
 								_closeModalAndContinue={this._closeModalAndContinue}
@@ -192,6 +213,7 @@ class Cause extends React.Component {
 								_closeModal={this._closeLoginToGradeModal}
 							/>
 							<GradeKarmaButton _startGrading={this._startGrading} />
+							<HelpButton _openHelp={this._openHelp} />
 						</BlurOnModal>
 					)
 				}}
