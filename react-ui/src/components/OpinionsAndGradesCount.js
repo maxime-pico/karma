@@ -15,10 +15,12 @@ const OpinionsAndGradesCount = ({ opinionsFeed, color }) => {
 
 	return (
 		<Count color={color}>
-			{gradesCount} note
-			{gradesCount > 1 ? 's' : null} basée
-			{gradesCount > 1 ? 's' : null} sur {opinionsFeed.length} opinion
-			{opinionsFeed.length > 1 ? 's' : null}
+			<span className="opinioncount">
+				{gradesCount} note
+				{gradesCount > 1 ? 's' : null} basée
+				{gradesCount > 1 ? 's' : null} sur {opinionsFeed.length} opinion
+				{opinionsFeed.length > 1 ? 's' : null}
+			</span>
 		</Count>
 	)
 }

@@ -33,7 +33,7 @@ const GradeButton = styled.button`
 const GradeKarmaButton = ({ _startGrading }) => (
 	<GradeButton
 		type="button"
-		className="btn btn-primary"
+		className="btn btn-primary grade"
 		onClick={() => _startGrading()}
 	>
 		<Push />

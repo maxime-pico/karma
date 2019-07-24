@@ -60,7 +60,13 @@ const OPINION_FEED_QUERY = gql`
 	}
 `
 
-const ActAndOpinionPreview = ({ act, grade, companyId, location }) => {
+const ActAndOpinionPreview = ({
+	act,
+	grade,
+	companyId,
+	location,
+	tutorial,
+}) => {
 	const first = 3
 	return (
 		<ActCard>
@@ -69,9 +75,9 @@ const ActAndOpinionPreview = ({ act, grade, companyId, location }) => {
 					if (loading) return <div> Fetching </div>
 					if (error) return <div> Error </div>
 					const opinionsFeed = data.opinionsFeed
-
 					return (
 						<div>
+							<div className={tutorial ? 'act' : null}></div>
 							<ActCardHeader act={act} grade={grade} location={location} />
 							<ActDescription
 								act={act}
@@ -93,13 +99,16 @@ const ActAndOpinionPreview = ({ act, grade, companyId, location }) => {
 										companyId={companyId}
 										location={location}
 										opinionsFeed={opinionsFeed}
+										tutorial={tutorial}
 									/>
 									<OpinionsAndGradesCount
 										opinionsFeed={opinionsFeed}
 										color="#a9b4cc"
 									/>
 									<Link to={`${location.pathname}act/${act}`}>
-										<ReadMore>Voir les sources</ReadMore>
+										<ReadMore className={tutorial && 'more'}>
+											Voir les sources
+										</ReadMore>
 									</Link>
 								</div>
 							) : (

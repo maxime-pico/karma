@@ -85,10 +85,11 @@ const OPINIONS_COUNT_QUERY = gql`
 	}
 `
 
-const CauseCard = ({ companyId, causeKarma, identifier }) => {
+const CauseCard = ({ companyId, causeKarma, identifier, tutorial }) => {
 	return (
 		<Row mt="126px" justifyContent="center">
 			<CauseCardBorder md={10} py={3} pt={3} pb={0}>
+				<div className={tutorial ? 'cause' : null}></div>
 				<CauseCardTitle
 					companyId={companyId}
 					identifier={identifier}

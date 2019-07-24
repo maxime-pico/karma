@@ -48,7 +48,7 @@ const ACT_GRADES_QUERIES = {
 	`,
 }
 
-const ActAndOpinionPreviewList = ({ cause, companyId }) => (
+const ActAndOpinionPreviewList = ({ cause, companyId, _setDataLoaded }) => (
 	<Grid fluid px={{ md: '80px' }} pt={40}>
 		<Query query={ACT_GRADES_QUERIES[cause]} variables={{ companyId }}>
 			{({ loading, error, data }) => {
@@ -60,13 +60,15 @@ const ActAndOpinionPreviewList = ({ cause, companyId }) => (
 					<div>
 						{Object.keys(companyActGrades)
 							.filter(identifier => identifier !== '__typename')
-							.map(act => (
-								<Row mt={'96px'} key={act} justifyContent="center">
+							.map((act, i) => (
+								<Row mt={'96px'} key={i} justifyContent="center">
 									<Col md={10} mb="42px">
 										<ActAndOpinionPreview
 											act={act}
 											companyId={companyId}
 											grade={companyActGrades[act]}
+											tutorial={i === 0}
+											_setDataLoaded={_setDataLoaded}
 										/>
 									</Col>
 								</Row>

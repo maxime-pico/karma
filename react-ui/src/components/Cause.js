@@ -2,7 +2,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Cookies from 'universal-cookie'
-import { AUTH_TOKEN } from '../constants'
+import { AUTH_TOKEN, CAUSE_STEPS } from '../constants'
 import { adjacentCause } from '../utils'
 import CauseHeader from './CauseHeader'
 import ActAndOpinionPreviewList from './ActAndOpinionPreviewList'
@@ -12,6 +12,7 @@ import GradeKarmaButton from './GradeKarmaButton'
 import HelpButton from './HelpButton'
 import CausesJudgingInterface from './CausesJudgingInterface'
 import CauseHelpInterface from './CauseHelpInterface'
+import { Steps } from 'intro.js-react'
 import { styled } from '@smooth-ui/core-sc'
 
 const BlurOnModal = styled.div`
@@ -34,6 +35,7 @@ class Cause extends React.Component {
 		super(props)
 		const cookies = new Cookies() // get access to cookies
 		this.authToken = cookies.get(AUTH_TOKEN) // if user is logged in authToken contains the token
+		this.userOnboarded = cookies.get('userOnboarded_cause') // if user has been onboarded, is set at true, otherwise shouldn't exist
 	}
 
 	state = {
@@ -49,14 +51,60 @@ class Cause extends React.Component {
 			ETHICS: null,
 			FISCAL: null,
 		},
+		stepsEnabled: false, // when switched to true, launches the tutorial
+		initialStep: 0,
+		steps: CAUSE_STEPS, // references to the file containing the different 'steps' of the tutorial, ie. text content and dom reference (class of the element)
+	}
+
+	/*
+    >>>>>>>>>>>>>>> HELP <<<<<<<<<<<<<<<<<<<<<<<<<<
+    The context:
+    I use intro.js-react to have an interactive tutorial on the page.
+    I would like the tutorial to launch automatically upon first visit of the page for a user.
+    I achieved this well thanks to cookies.
+
+    The problem:
+    Unfortunantely on this page it doesn't work as expected because the tutorial triggers faster
+    than my browser loads the DOM elements of the page. Therefore intro.js cannot locate the elements
+    to annotate :(
+
+    Attempted solutions:
+    I tried using component did mount or even component did update + checking if all elements exist,
+    but somehow it didn't work. I'm not the most skillful in react so it might be that.
+
+    Additional infos:
+    The tutorial data is contained in CAUSE_STEPS. It has 5 steps with references to 5 classes that
+    target elements loaded by different components:
+    - .karma & .actsList reference stuff in the CauseHeader component. actsLists is wrapped in a query fetching info, this is the first reference that breaks
+    - .act & .more reference to elements in the ActAndOpinionPreview component
+    - .opinion refrences to an element in the OpinionPreview component
+  */
+
+	componentDidMount() {
+		if (!this.userOnboarded) {
+			this.setState(previousState => {
+				previousState.stepsEnabled = true // checking if the tutorial should be displayed for the user
+				return previousState
+			})
+		}
+		if (this.props.location.state) {
+			if (this.props.location.state.startGrading && !this.state.startGrading) {
+				this._startGrading()
+				window.scrollTo(0, 0)
+			}
+			if (this.props.location.state.grading) {
+				this.setState(previousState => {
+					previousState.userGrades = this.props.location.state.userGrades
+					return previousState
+				})
+			}
+		}
 	}
 
 	_startGrading = () => {
 		if (this.authToken) {
 			this.props.history.push({
-				pathname: `/company/${
-					this.props.match.params.companyId
-				}/cause/ENVIRONMENT/`,
+				pathname: `/company/${this.props.match.params.companyId}/cause/ENVIRONMENT/`,
 			})
 			this.setState(previousState => {
 				previousState.grading = true
@@ -94,21 +142,6 @@ class Cause extends React.Component {
 			previousState.help = true
 			return previousState
 		})
-	}
-
-	componentDidMount() {
-		if (this.props.location.state) {
-			if (this.props.location.state.startGrading && !this.state.startGrading) {
-				this._startGrading()
-				window.scrollTo(0, 0)
-			}
-			if (this.props.location.state.grading) {
-				this.setState(previousState => {
-					previousState.userGrades = this.props.location.state.userGrades
-					return previousState
-				})
-			}
-		}
 	}
 
 	_blurBackground = blur => {
@@ -153,6 +186,27 @@ class Cause extends React.Component {
 		})
 	}
 
+	_launchTutorial = () => {
+		// function used in CauseHelpInterface to manually launch the tutorial
+		this.setState(previousState => {
+			previousState.stepsEnabled = true
+			return previousState
+		})
+	}
+
+	_endTutorial = () => {
+		this.setState(previousState => {
+			previousState.stepsEnabled = false
+			return previousState
+		})
+		if (!this.userOnboarded) {
+			const cookies = new Cookies()
+			cookies.set('userOnboarded_cause', 'true', {
+				path: '/',
+			})
+		}
+	}
+
 	render() {
 		const companyId = this.props.match.params.companyId
 		const cause = this.props.match.params.cause
@@ -177,6 +231,21 @@ class Cause extends React.Component {
 							}
 							grading={this.state.grading}
 						>
+							<Steps
+								enabled={this.state.stepsEnabled}
+								steps={this.state.steps}
+								initialStep={this.state.initialStep}
+								onExit={this._endTutorial}
+								options={{
+									showStepNumbers: false,
+									overlayOpacity: 0.01,
+									showBullets: false,
+									hidePrev: true,
+									hideNext: true,
+									nextLabel: 'Suivant',
+									doneLabel: 'Terminé',
+								}}
+							/>
 							<CauseHeader
 								companyId={companyId}
 								karma={overallKarma}
@@ -184,8 +253,14 @@ class Cause extends React.Component {
 								cause={cause}
 								pb={0}
 								grading={this.state.grading}
+								_launchTutorial={this._launchTutorial}
+								_setDataLoaded={this._setDataLoaded}
 							/>
-							<ActAndOpinionPreviewList cause={cause} companyId={companyId} />
+							<ActAndOpinionPreviewList
+								cause={cause}
+								companyId={companyId}
+								_setDataLoaded={this._setDataLoaded}
+							/>
 							{this.state.grading && (
 								<CausesJudgingInterface
 									companyId={companyId}
@@ -202,6 +277,9 @@ class Cause extends React.Component {
 									companyId={companyId}
 									_closeHelp={this._closeHelp}
 									cause={cause}
+									_launchTutorial={this._launchTutorial}
+									_endTutorial={this._endTutorial}
+									stepsEnabled={this.state.stepsEnabled}
 								/>
 							)}
 							<StartGradingCausesModal

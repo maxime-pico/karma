@@ -53,7 +53,9 @@ class SoulHeader extends React.Component {
 							</Col>
 							<Col md={3}>
 								<KarmaDescription align={'right'}>
-									{karma === null ? 'N/A' : karma}
+									<span className="karma">
+										{karma === null ? 'N/A' : karma}
+									</span>
 								</KarmaDescription>
 							</Col>
 						</Row>

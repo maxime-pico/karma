@@ -100,7 +100,9 @@ class CauseHeader extends React.Component {
 							</Col>
 							<Col md={3}>
 								<KarmaDescription align={'right'}>
-									{karma === null ? 'N/A' : karma}
+									<span className="karma">
+										{karma === null ? 'N/A' : karma}
+									</span>
 								</KarmaDescription>
 							</Col>
 						</Row>
@@ -111,11 +113,13 @@ class CauseHeader extends React.Component {
 
 								const companyActGrades = data.companyActGrades
 								return (
-									<OverviewList
-										grades={companyActGrades}
-										cause={cause}
-										companyId={companyId}
-									/>
+									<div className="actsList">
+										<OverviewList
+											grades={companyActGrades}
+											cause={cause}
+											companyId={companyId}
+										/>
+									</div>
 								)
 							}}
 						</Query>

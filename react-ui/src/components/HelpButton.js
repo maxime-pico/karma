@@ -27,7 +27,11 @@ const Bubble = styled.button`
 // Deliberation component: gets the current act and company from path and
 // displays the list of corresponding opinions
 const HelpButton = ({ _openHelp }) => (
-	<Bubble type="button" className="btn btn-primary" onClick={() => _openHelp()}>
+	<Bubble
+		type="button"
+		className="btn btn-primary help"
+		onClick={() => _openHelp()}
+	>
 		?
 	</Bubble>
 )
