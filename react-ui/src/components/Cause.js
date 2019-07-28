@@ -23,6 +23,9 @@ const CAUSE_GRADES_QUERY = gql`
 	query CauseGradesQuery($companyId: ID!) {
 		companyCauseGrades(companyId: $companyId) {
 			ENVIRONMENT
+			SOCIAL
+			ETHICS
+			FISCAL
 		}
 	}
 `
@@ -54,9 +57,7 @@ class Cause extends React.Component {
 	_startGrading = () => {
 		if (this.authToken) {
 			this.props.history.push({
-				pathname: `/company/${
-					this.props.match.params.companyId
-				}/cause/ENVIRONMENT/`,
+				pathname: `/company/${this.props.match.params.companyId}/cause/ENVIRONMENT/`,
 			})
 			this.setState(previousState => {
 				previousState.grading = true
@@ -166,7 +167,7 @@ class Cause extends React.Component {
 					}
 
 					const causeGrades = data.companyCauseGrades
-					const overallKarma = causeGrades.ENVIRONMENT
+					const overallKarma = causeGrades[cause]
 
 					return (
 						<BlurOnModal
