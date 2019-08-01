@@ -12,6 +12,8 @@ import GradeKarmaButton from './GradeKarmaButton'
 import HelpButton from './HelpButton'
 import CausesJudgingInterface from './CausesJudgingInterface'
 import CauseHelpInterface from './CauseHelpInterface'
+import ErrorBoundary from './ErrorBoundary'
+
 import { Steps } from 'intro.js-react'
 import { styled } from '@smooth-ui/core-sc'
 
@@ -214,13 +216,13 @@ class Cause extends React.Component {
 		return (
 			<Query query={CAUSE_GRADES_QUERY} variables={{ companyId }}>
 				{({ loading, error, data }) => {
-					if (loading) return <div> Fetching </div>
-					if (error) {
-						return <div> Error: {error.message} </div>
-					}
+					// if (loading) return <div> Fetching </div>
+					// if (error) {
+					// 	return <div> Error: {error.message} </div>
+					// }
 
 					const causeGrades = data.companyCauseGrades
-					const overallKarma = causeGrades.ENVIRONMENT
+					const overallKarma = (error || loading) ? {} : causeGrades.ENVIRONMENT
 
 					return (
 						<BlurOnModal
@@ -256,11 +258,13 @@ class Cause extends React.Component {
 								_launchTutorial={this._launchTutorial}
 								_setDataLoaded={this._setDataLoaded}
 							/>
+              <ErrorBoundary>
 							<ActAndOpinionPreviewList
 								cause={cause}
 								companyId={companyId}
 								_setDataLoaded={this._setDataLoaded}
 							/>
+              </ErrorBoundary>
 							{this.state.grading && (
 								<CausesJudgingInterface
 									companyId={companyId}

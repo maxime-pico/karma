@@ -8,7 +8,6 @@ import OpinionsAndGradesCount from './OpinionsAndGradesCount'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
-
 const ActCard = styled.div`
 	border-radius: 96px;
 	background-color: white;
@@ -72,8 +71,9 @@ const ActAndOpinionPreview = ({
 		<ActCard>
 			<Query query={OPINION_FEED_QUERY} variables={{ companyId, act, first }}>
 				{({ loading, error, data }) => {
-					if (loading) return <div> Fetching </div>
-					if (error) return <div> Error </div>
+					// if (loading) return <div> Fetching </div>
+					// if (error) return <div> Error </div>
+
 					const opinionsFeed = data.opinionsFeed
 					return (
 						<div>
