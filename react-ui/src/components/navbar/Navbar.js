@@ -14,11 +14,41 @@ const NavbarBox = styled(Row)`
 	font-size: 14px;
 	background-color: white;
 	text-align: left;
+	@media (max-width: 425px) {
+    	padding: 0;
+  	}
 `
 
 const NavbarLink = styled(Link)`
 	margin: auto;
 	margin: auto 0 auto 42px;
+	@media (max-width: 425px) {
+    	width: 100%;
+    	height: 40px;
+    	line-height : 40px;
+    	margin: auto;
+    	text-align: center;
+    	border-top: 1px solid rgba(169, 180, 204, .7);
+    	//display: block;
+  	}
+`
+
+const NavbarLinkContainer = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	@media (max-width: 425px) {
+		flex-flow: column wrap;
+	}
+
+`
+
+const LogoContainer = styled(Col)`
+	padding: 0px;
+	margin-right: auto;
+	@media (max-width: 425px) {
+		padding: 7px;
+		text-align:center;
+	}
 `
 
 class Navbar extends React.Component {
@@ -28,13 +58,13 @@ class Navbar extends React.Component {
 		return (
 			<Grid fluid>
 				<NavbarBox>
-					<Col p={0} style={{ marginRight: 'auto' }}>
+					<LogoContainer xs={12} md={6}>
 						<Link to="/">
 							<img src={karmalogo} height="35" alt="karma panda" />
 						</Link>
-					</Col>
-					<Col p={0} style={{ alignSelf: 'center' }}>
-						<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+					</LogoContainer>
+					<Col xs={12} md={6} p={0} style={{ alignSelf: 'center' }}>
+						<NavbarLinkContainer>
 							<NavbarLink to="/brands">marques</NavbarLink>
 							<NavbarLink to="/help">aide</NavbarLink>
 							<NavbarLink to="/about">à propos</NavbarLink>
@@ -45,7 +75,7 @@ class Navbar extends React.Component {
 									connexion
 								</NavbarLink>
 							)}
-						</div>
+						</NavbarLinkContainer>
 					</Col>
 				</NavbarBox>
 			</Grid>
