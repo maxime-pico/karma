@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './styles/index.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import App from './components/App'
-import registerServiceWorker from './registerServiceWorker'
+import './styles/index.css'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { setContext } from 'apollo-link-context'
@@ -11,7 +9,9 @@ import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { BrowserRouter } from 'react-router-dom'
 import Cookies from 'universal-cookie'
-import { AUTH_TOKEN } from './constants'
+import App from './App'
+import registerServiceWorker from './services/registerServiceWorker'
+import { AUTH_TOKEN } from './services/constants'
 
 // gives link to server to initiate the apollo client
 const httpLink = createHttpLink({
