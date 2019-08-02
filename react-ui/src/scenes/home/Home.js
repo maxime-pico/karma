@@ -5,6 +5,12 @@ import karmalogo from '../../images/logo.svg'
 import styled from 'styled-components'
 import { Grid, Row, Col } from '@smooth-ui/core-sc'
 
+
+const ImageContainer = styled.div `
+  @media (max-width: 425px) {
+    display: none;
+  }
+`
 const TextZone = styled.div`
 	background-color: white;
 	padding: 80px;
@@ -13,6 +19,13 @@ const TextZone = styled.div`
 	color: #7f8799;
 	font-size: 22px;
 	font-family: Avenir;
+	
+	@media (max-width: 425px) {
+    	margin: 0 0 10px 0;
+    	border-radius: 0px;
+    	padding: 30px;
+    	font-size: 18px;
+  	}
 `
 const TextZoneTitle = styled.div`
 	color: #545a66;
@@ -20,6 +33,9 @@ const TextZoneTitle = styled.div`
 	font-family: Avenir;
 	font-weight: 900;
 	margin-bottom: 24px;
+	@media (max-width: 425px) {
+    	font-size: 25px;
+  	}
 `
 
 const ButtonContainer = styled.div`
@@ -40,6 +56,10 @@ const PlainButton = styled.button`
 	:focus:hover {
 		background-color: #bbbfc9;
 	}
+	@media (max-width: 425px) {
+    	width: 230px;
+    	font-size: 18px;
+  	}
 `
 
 // Display a text and button
@@ -49,11 +69,13 @@ const Home = () => {
 			<Grid>
 				<Row justifyContent={{ md: 'center' }} mt={'96px'}>
 					<Col md={4}>
-						<img src={karmalogo} height="140" alt="karma panda" />
+						<ImageContainer>
+							<img src={karmalogo} height="140" alt="karma panda" />
+						</ImageContainer>
 					</Col>
 				</Row>
 				<Row justifyContent={{ md: 'center' }}>
-					<Col md={8} textAlign="left">
+					<Col xs={12} md={8} textAlign="left">
 						<TextZone>
 							<TextZoneTitle> Bienvenue sur Karma Panda !</TextZoneTitle>
 							<p>
