@@ -13,6 +13,9 @@ type Query {
   # exposes the resolver that gets the list of all companies in the database
 	allCompanies(filter: String, skip: Int, first: Int, orderBy: CompanyOrderByInput): [Company!]!
 
+    # exposes the resolver that gets the list of all companies in the database
+	allCompanyCategories(filter: String, skip: Int, first: Int, orderBy: CompanyCategoryOrderByInput): [CompanyCategory!]!
+
   # exposes the resolver that gets an object with the avg grades per cause for
   # a specific company
 	companyCauseGrades(

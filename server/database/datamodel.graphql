@@ -7,6 +7,14 @@ type Company {
 	actGrades: [ActGrade!]! @relation(name: "ActGradesOfCompany" onDelete: CASCADE)
 	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesOfCompany" onDelete: CASCADE)
 	opinions: [Opinion!]! @relation(name: "OpinionsOfCompany" onDelete: CASCADE)
+  category: [CompanyCategory!]! @relation(name: "CategoriesOfCompany" link: INLINE) #@relation(name: "CategoryOfCompany" onDelete: CASCADE)
+}
+
+type CompanyCategory {
+	id: ID! @unique
+	createdAt: DateTime!
+	name: String! @unique
+  companies: [Company!]!  @relation(name: "CategoriesOfCompany" link: INLINE) #
 }
 
 # prettier-ignore

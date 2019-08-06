@@ -12,6 +12,9 @@ import SearchResult from './components/SearchResult'
 import styled from 'styled-components'
 import { Grid, Row, Col } from '@smooth-ui/core-sc'
 
+const SearchInput = styled.input``;
+const SearchSubmit = styled.button``;
+
 const Title = styled.div`
 	font-size: 30px;
 	font-weight: 900;
@@ -36,7 +39,17 @@ const COMPANY_LIST = gql(`
 			logo
 		}
 	}
-`)
+`);
+
+// preparing query that retireves the list of categories id, name
+const COMPANY_CATEGORY_LIST = gql(`
+	query CompanyCategoryList($filter: String, $orderBy: CompanyCategoryOrderByInput) {
+		allCompanyCategories(orderBy: $orderBy, filter: $filter) {
+			id
+			name
+		}
+	}
+`);
 
 // Search component: displays the list of companies in the database
 class Search extends React.Component {
@@ -47,16 +60,20 @@ class Search extends React.Component {
       searchValue: '',
       searchedValue: '',
       orderBy: 'name_ASC',
+      categories: []
     }
 
     this.handleChangeSearch = this.handleChangeSearch.bind(this);
     this.handleSubmitSearch = this.handleSubmitSearch.bind(this);
     this.clearSearchInput = this.clearSearchInput.bind(this);
     this.handleChangeOrderBy = this.handleChangeOrderBy.bind(this);
+    this.handleChangeCategory = this.handleChangeCategory.bind(this);
   }
 
+  /* Searching */
+
   handleChangeSearch(event) {
-    //this.setState({ searchedValue: event.target.value });
+    // this.setState({ searchedValue: event.target.value });
     this.setState({ searchValue: event.target.value });
   }
 
@@ -70,8 +87,23 @@ class Search extends React.Component {
     this.setState({ searchValue: '' });
   }
 
+  /* Sorting */
+
   handleChangeOrderBy(event) {
     this.setState({ orderBy: event.target.value });
+  }
+
+  /* Filtering */
+
+  handleChangeCategory(event) {
+    const targetValue = event.target.value;
+    const index = this.state.categories.indexOf(targetValue);
+    if (index > -1) {
+      this.state.categories.splice(index, 1)
+    } else {
+      this.state.categories.push(targetValue)
+    }
+    console.log(this.state.categories)
   }
 
   render() {
@@ -82,7 +114,7 @@ class Search extends React.Component {
       <Query query={COMPANY_LIST} variables={{ filter: this.state.searchedValue, orderBy: this.state.orderBy }} >
         {({ loading, error, data }) => {
           if (loading) return <div> Fetching </div>
-          if (error) return <div> Error </div>
+          if (error) return <div> Error  </div>
 
           const companyList = data.allCompanies
 
@@ -91,15 +123,31 @@ class Search extends React.Component {
 
               <Row justifyContent={{ md: 'center' }} mt={'96px'}>
                 <Col md={12}>
+
                   {/* Filters list -- TODO : transform elements into components */}
                   Filtres :
-                  <div class="filters">
-                    <button>Alimentation</button>
-                    <button>Finance</button>
-                    <button>Mode</button>
-                    <button>Energie</button>
-                    <button>Communication</button>
-                  </div>
+
+                  <Query query={COMPANY_CATEGORY_LIST} >
+                    {({ loading, error, data }) => {
+                      if (loading) return <div> Fetching Categories</div>
+                      if (error) return <div> Error while loading categories</div>
+
+                      const companyCategoryList = data.allCompanyCategories
+
+                      return (
+                        <div className="filters">
+                          <form>
+                            {companyCategoryList.map(category => (
+                              <label key={'s-' + category.id}>
+                                {category.name}
+                                <input type="checkbox" value={category.id} name="category" onChange={this.handleChangeCategory} />
+                              </label>
+                            ))}
+                          </form>
+                        </div>
+                      )
+                    }}
+                  </Query>
                 </Col>
               </Row>
 
@@ -109,8 +157,8 @@ class Search extends React.Component {
 
                   {/* Search input -- TODO : transform element into component */}
                   <form onSubmit={this.handleSubmitSearch}>
-                    <input type="text" value={this.state.searchValue} onChange={this.handleChangeSearch} placeholder="Rechercher une marque" />
-                    <button type="submit">Rechercher</button>
+                    <SearchInput type="text" value={this.state.searchValue} onChange={this.handleChangeSearch} placeholder="Rechercher une marque" />
+                    <SearchSubmit type="submit">Rechercher</SearchSubmit>
                     {searchValue.length ? (<button onClick={this.clearSearchInput} >x</button>) : ''}
                   </form>
 

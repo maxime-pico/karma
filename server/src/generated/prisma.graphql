@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Nov 21 2018 14:13:16 GMT+0100 (Central European Standard Time)
+# timestamp: Mon Aug 05 2019 17:54:46 GMT+0200 (CEST)
 
 enum Act {
   CLIMAT_CHANGE
@@ -132,9 +132,7 @@ input ActGradeSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [ActGradeSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -372,6 +370,10 @@ type AggregateCompany {
   count: Int!
 }
 
+type AggregateCompanyCategory {
+  count: Int!
+}
+
 type AggregateOpinion {
   count: Int!
 }
@@ -486,9 +488,7 @@ input CauseGradeSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [CauseGradeSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -691,6 +691,255 @@ type Company implements Node {
   actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
   causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade!]
   opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion!]
+  category(where: CompanyCategoryWhereInput, orderBy: CompanyCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CompanyCategory!]
+}
+
+type CompanyCategory implements Node {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company!]
+}
+
+"""A connection to a list of items."""
+type CompanyCategoryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CompanyCategoryEdge]!
+  aggregate: AggregateCompanyCategory!
+}
+
+input CompanyCategoryCreateInput {
+  name: String!
+  companies: CompanyCreateManyWithoutCategoryInput
+}
+
+input CompanyCategoryCreateManyWithoutCompaniesInput {
+  create: [CompanyCategoryCreateWithoutCompaniesInput!]
+  connect: [CompanyCategoryWhereUniqueInput!]
+}
+
+input CompanyCategoryCreateWithoutCompaniesInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type CompanyCategoryEdge {
+  """The item at the end of the edge."""
+  node: CompanyCategory!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CompanyCategoryOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CompanyCategoryPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+}
+
+type CompanyCategorySubscriptionPayload {
+  mutation: MutationType!
+  node: CompanyCategory
+  updatedFields: [String!]
+  previousValues: CompanyCategoryPreviousValues
+}
+
+input CompanyCategorySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompanyCategorySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompanyCategorySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompanyCategorySubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CompanyCategoryWhereInput
+}
+
+input CompanyCategoryUpdateInput {
+  name: String
+  companies: CompanyUpdateManyWithoutCategoryInput
+}
+
+input CompanyCategoryUpdateManyMutationInput {
+  name: String
+}
+
+input CompanyCategoryUpdateManyWithoutCompaniesInput {
+  create: [CompanyCategoryCreateWithoutCompaniesInput!]
+  connect: [CompanyCategoryWhereUniqueInput!]
+  disconnect: [CompanyCategoryWhereUniqueInput!]
+  delete: [CompanyCategoryWhereUniqueInput!]
+  update: [CompanyCategoryUpdateWithWhereUniqueWithoutCompaniesInput!]
+  upsert: [CompanyCategoryUpsertWithWhereUniqueWithoutCompaniesInput!]
+}
+
+input CompanyCategoryUpdateWithoutCompaniesDataInput {
+  name: String
+}
+
+input CompanyCategoryUpdateWithWhereUniqueWithoutCompaniesInput {
+  where: CompanyCategoryWhereUniqueInput!
+  data: CompanyCategoryUpdateWithoutCompaniesDataInput!
+}
+
+input CompanyCategoryUpsertWithWhereUniqueWithoutCompaniesInput {
+  where: CompanyCategoryWhereUniqueInput!
+  update: CompanyCategoryUpdateWithoutCompaniesDataInput!
+  create: CompanyCategoryCreateWithoutCompaniesInput!
+}
+
+input CompanyCategoryWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompanyCategoryWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompanyCategoryWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompanyCategoryWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  companies_every: CompanyWhereInput
+  companies_some: CompanyWhereInput
+  companies_none: CompanyWhereInput
+}
+
+input CompanyCategoryWhereUniqueInput {
+  id: ID
+  name: String
 }
 
 """A connection to a list of items."""
@@ -709,6 +958,12 @@ input CompanyCreateInput {
   actGrades: ActGradeCreateManyWithoutGradedToInput
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
+  category: CompanyCategoryCreateManyWithoutCompaniesInput
+}
+
+input CompanyCreateManyWithoutCategoryInput {
+  create: [CompanyCreateWithoutCategoryInput!]
+  connect: [CompanyWhereUniqueInput!]
 }
 
 input CompanyCreateOneWithoutActGradesInput {
@@ -731,6 +986,15 @@ input CompanyCreateWithoutActGradesInput {
   logo: String
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
+  category: CompanyCategoryCreateManyWithoutCompaniesInput
+}
+
+input CompanyCreateWithoutCategoryInput {
+  name: String!
+  logo: String
+  actGrades: ActGradeCreateManyWithoutGradedToInput
+  causeGrades: CauseGradeCreateManyWithoutGradedToInput
+  opinions: OpinionCreateManyWithoutRegardingWhoInput
 }
 
 input CompanyCreateWithoutCauseGradesInput {
@@ -738,6 +1002,7 @@ input CompanyCreateWithoutCauseGradesInput {
   logo: String
   actGrades: ActGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
+  category: CompanyCategoryCreateManyWithoutCompaniesInput
 }
 
 input CompanyCreateWithoutOpinionsInput {
@@ -745,6 +1010,7 @@ input CompanyCreateWithoutOpinionsInput {
   logo: String
   actGrades: ActGradeCreateManyWithoutGradedToInput
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
+  category: CompanyCategoryCreateManyWithoutCompaniesInput
 }
 
 """An edge in a connection."""
@@ -793,9 +1059,7 @@ input CompanySubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [CompanySubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -821,11 +1085,21 @@ input CompanyUpdateInput {
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
+  category: CompanyCategoryUpdateManyWithoutCompaniesInput
 }
 
 input CompanyUpdateManyMutationInput {
   name: String
   logo: String
+}
+
+input CompanyUpdateManyWithoutCategoryInput {
+  create: [CompanyCreateWithoutCategoryInput!]
+  connect: [CompanyWhereUniqueInput!]
+  disconnect: [CompanyWhereUniqueInput!]
+  delete: [CompanyWhereUniqueInput!]
+  update: [CompanyUpdateWithWhereUniqueWithoutCategoryInput!]
+  upsert: [CompanyUpsertWithWhereUniqueWithoutCategoryInput!]
 }
 
 input CompanyUpdateOneRequiredWithoutActGradesInput {
@@ -854,6 +1128,15 @@ input CompanyUpdateWithoutActGradesDataInput {
   logo: String
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
+  category: CompanyCategoryUpdateManyWithoutCompaniesInput
+}
+
+input CompanyUpdateWithoutCategoryDataInput {
+  name: String
+  logo: String
+  actGrades: ActGradeUpdateManyWithoutGradedToInput
+  causeGrades: CauseGradeUpdateManyWithoutGradedToInput
+  opinions: OpinionUpdateManyWithoutRegardingWhoInput
 }
 
 input CompanyUpdateWithoutCauseGradesDataInput {
@@ -861,6 +1144,7 @@ input CompanyUpdateWithoutCauseGradesDataInput {
   logo: String
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
+  category: CompanyCategoryUpdateManyWithoutCompaniesInput
 }
 
 input CompanyUpdateWithoutOpinionsDataInput {
@@ -868,6 +1152,12 @@ input CompanyUpdateWithoutOpinionsDataInput {
   logo: String
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
+  category: CompanyCategoryUpdateManyWithoutCompaniesInput
+}
+
+input CompanyUpdateWithWhereUniqueWithoutCategoryInput {
+  where: CompanyWhereUniqueInput!
+  data: CompanyUpdateWithoutCategoryDataInput!
 }
 
 input CompanyUpsertWithoutActGradesInput {
@@ -883,6 +1173,12 @@ input CompanyUpsertWithoutCauseGradesInput {
 input CompanyUpsertWithoutOpinionsInput {
   update: CompanyUpdateWithoutOpinionsDataInput!
   create: CompanyCreateWithoutOpinionsInput!
+}
+
+input CompanyUpsertWithWhereUniqueWithoutCategoryInput {
+  where: CompanyWhereUniqueInput!
+  update: CompanyUpdateWithoutCategoryDataInput!
+  create: CompanyCreateWithoutCategoryInput!
 }
 
 input CompanyWhereInput {
@@ -1045,6 +1341,9 @@ input CompanyWhereInput {
   opinions_every: OpinionWhereInput
   opinions_some: OpinionWhereInput
   opinions_none: OpinionWhereInput
+  category_every: CompanyCategoryWhereInput
+  category_some: CompanyCategoryWhereInput
+  category_none: CompanyCategoryWhereInput
 }
 
 input CompanyWhereUniqueInput {
@@ -1062,31 +1361,37 @@ scalar Long
 
 type Mutation {
   createCompany(data: CompanyCreateInput!): Company!
+  createCompanyCategory(data: CompanyCategoryCreateInput!): CompanyCategory!
   createUser(data: UserCreateInput!): User!
   createOpinion(data: OpinionCreateInput!): Opinion!
   createActGrade(data: ActGradeCreateInput!): ActGrade!
   createCauseGrade(data: CauseGradeCreateInput!): CauseGrade!
   updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
+  updateCompanyCategory(data: CompanyCategoryUpdateInput!, where: CompanyCategoryWhereUniqueInput!): CompanyCategory
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateOpinion(data: OpinionUpdateInput!, where: OpinionWhereUniqueInput!): Opinion
   updateActGrade(data: ActGradeUpdateInput!, where: ActGradeWhereUniqueInput!): ActGrade
   updateCauseGrade(data: CauseGradeUpdateInput!, where: CauseGradeWhereUniqueInput!): CauseGrade
   deleteCompany(where: CompanyWhereUniqueInput!): Company
+  deleteCompanyCategory(where: CompanyCategoryWhereUniqueInput!): CompanyCategory
   deleteUser(where: UserWhereUniqueInput!): User
   deleteOpinion(where: OpinionWhereUniqueInput!): Opinion
   deleteActGrade(where: ActGradeWhereUniqueInput!): ActGrade
   deleteCauseGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
   upsertCompany(where: CompanyWhereUniqueInput!, create: CompanyCreateInput!, update: CompanyUpdateInput!): Company!
+  upsertCompanyCategory(where: CompanyCategoryWhereUniqueInput!, create: CompanyCategoryCreateInput!, update: CompanyCategoryUpdateInput!): CompanyCategory!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertOpinion(where: OpinionWhereUniqueInput!, create: OpinionCreateInput!, update: OpinionUpdateInput!): Opinion!
   upsertActGrade(where: ActGradeWhereUniqueInput!, create: ActGradeCreateInput!, update: ActGradeUpdateInput!): ActGrade!
   upsertCauseGrade(where: CauseGradeWhereUniqueInput!, create: CauseGradeCreateInput!, update: CauseGradeUpdateInput!): CauseGrade!
   updateManyCompanies(data: CompanyUpdateManyMutationInput!, where: CompanyWhereInput): BatchPayload!
+  updateManyCompanyCategories(data: CompanyCategoryUpdateManyMutationInput!, where: CompanyCategoryWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyOpinions(data: OpinionUpdateManyMutationInput!, where: OpinionWhereInput): BatchPayload!
   updateManyActGrades(data: ActGradeUpdateManyMutationInput!, where: ActGradeWhereInput): BatchPayload!
   updateManyCauseGrades(data: CauseGradeUpdateManyMutationInput!, where: CauseGradeWhereInput): BatchPayload!
   deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
+  deleteManyCompanyCategories(where: CompanyCategoryWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyOpinions(where: OpinionWhereInput): BatchPayload!
   deleteManyActGrades(where: ActGradeWhereInput): BatchPayload!
@@ -1243,9 +1548,7 @@ input OpinionSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [OpinionSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -1563,16 +1866,19 @@ type PageInfo {
 
 type Query {
   companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
+  companyCategories(where: CompanyCategoryWhereInput, orderBy: CompanyCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CompanyCategory]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion]!
   actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade]!
   causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade]!
   company(where: CompanyWhereUniqueInput!): Company
+  companyCategory(where: CompanyCategoryWhereUniqueInput!): CompanyCategory
   user(where: UserWhereUniqueInput!): User
   opinion(where: OpinionWhereUniqueInput!): Opinion
   actGrade(where: ActGradeWhereUniqueInput!): ActGrade
   causeGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
   companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
+  companyCategoriesConnection(where: CompanyCategoryWhereInput, orderBy: CompanyCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyCategoryConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   opinionsConnection(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OpinionConnection!
   actGradesConnection(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActGradeConnection!
@@ -1594,6 +1900,7 @@ enum Status {
 
 type Subscription {
   company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
+  companyCategory(where: CompanyCategorySubscriptionWhereInput): CompanyCategorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   opinion(where: OpinionSubscriptionWhereInput): OpinionSubscriptionPayload
   actGrade(where: ActGradeSubscriptionWhereInput): ActGradeSubscriptionPayload
@@ -1734,9 +2041,7 @@ input UserSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [UserSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
