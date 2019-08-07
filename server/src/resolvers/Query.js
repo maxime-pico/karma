@@ -40,6 +40,10 @@ function allCompanies(parent, args, context, info) {
     }
   }
 
+  if (typeof args.karma !== 'undefined') {
+
+  }
+
   let where = {};
   if (conditions.or.length && conditions.and.length) {
     where = { OR: conditions.or, AND: conditions.and };

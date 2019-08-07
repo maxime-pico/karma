@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Mon Aug 05 2019 17:54:46 GMT+0200 (CEST)
+# timestamp: Wed Aug 07 2019 16:07:31 GMT+0200 (CEST)
 
 enum Act {
   CLIMAT_CHANGE
@@ -692,6 +692,7 @@ type Company implements Node {
   causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade!]
   opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion!]
   category(where: CompanyCategoryWhereInput, orderBy: CompanyCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CompanyCategory!]
+  karma: Float
 }
 
 type CompanyCategory implements Node {
@@ -955,6 +956,7 @@ type CompanyConnection {
 input CompanyCreateInput {
   name: String!
   logo: String
+  karma: Float
   actGrades: ActGradeCreateManyWithoutGradedToInput
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
@@ -984,6 +986,7 @@ input CompanyCreateOneWithoutOpinionsInput {
 input CompanyCreateWithoutActGradesInput {
   name: String!
   logo: String
+  karma: Float
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
   category: CompanyCategoryCreateManyWithoutCompaniesInput
@@ -992,6 +995,7 @@ input CompanyCreateWithoutActGradesInput {
 input CompanyCreateWithoutCategoryInput {
   name: String!
   logo: String
+  karma: Float
   actGrades: ActGradeCreateManyWithoutGradedToInput
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
@@ -1000,6 +1004,7 @@ input CompanyCreateWithoutCategoryInput {
 input CompanyCreateWithoutCauseGradesInput {
   name: String!
   logo: String
+  karma: Float
   actGrades: ActGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
   category: CompanyCategoryCreateManyWithoutCompaniesInput
@@ -1008,6 +1013,7 @@ input CompanyCreateWithoutCauseGradesInput {
 input CompanyCreateWithoutOpinionsInput {
   name: String!
   logo: String
+  karma: Float
   actGrades: ActGradeCreateManyWithoutGradedToInput
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   category: CompanyCategoryCreateManyWithoutCompaniesInput
@@ -1031,6 +1037,8 @@ enum CompanyOrderByInput {
   name_DESC
   logo_ASC
   logo_DESC
+  karma_ASC
+  karma_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -1040,6 +1048,7 @@ type CompanyPreviousValues {
   createdAt: DateTime!
   name: String!
   logo: String
+  karma: Float
 }
 
 type CompanySubscriptionPayload {
@@ -1082,6 +1091,7 @@ input CompanySubscriptionWhereInput {
 input CompanyUpdateInput {
   name: String
   logo: String
+  karma: Float
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
@@ -1091,6 +1101,7 @@ input CompanyUpdateInput {
 input CompanyUpdateManyMutationInput {
   name: String
   logo: String
+  karma: Float
 }
 
 input CompanyUpdateManyWithoutCategoryInput {
@@ -1126,6 +1137,7 @@ input CompanyUpdateOneRequiredWithoutOpinionsInput {
 input CompanyUpdateWithoutActGradesDataInput {
   name: String
   logo: String
+  karma: Float
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
   category: CompanyCategoryUpdateManyWithoutCompaniesInput
@@ -1134,6 +1146,7 @@ input CompanyUpdateWithoutActGradesDataInput {
 input CompanyUpdateWithoutCategoryDataInput {
   name: String
   logo: String
+  karma: Float
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
@@ -1142,6 +1155,7 @@ input CompanyUpdateWithoutCategoryDataInput {
 input CompanyUpdateWithoutCauseGradesDataInput {
   name: String
   logo: String
+  karma: Float
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
   category: CompanyCategoryUpdateManyWithoutCompaniesInput
@@ -1150,6 +1164,7 @@ input CompanyUpdateWithoutCauseGradesDataInput {
 input CompanyUpdateWithoutOpinionsDataInput {
   name: String
   logo: String
+  karma: Float
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   category: CompanyCategoryUpdateManyWithoutCompaniesInput
@@ -1332,6 +1347,28 @@ input CompanyWhereInput {
 
   """All values not ending with the given string."""
   logo_not_ends_with: String
+  karma: Float
+
+  """All values that are not equal to given value."""
+  karma_not: Float
+
+  """All values that are contained in given list."""
+  karma_in: [Float!]
+
+  """All values that are not contained in given list."""
+  karma_not_in: [Float!]
+
+  """All values less than the given value."""
+  karma_lt: Float
+
+  """All values less than or equal the given value."""
+  karma_lte: Float
+
+  """All values greater than the given value."""
+  karma_gt: Float
+
+  """All values greater than or equal the given value."""
+  karma_gte: Float
   actGrades_every: ActGradeWhereInput
   actGrades_some: ActGradeWhereInput
   actGrades_none: ActGradeWhereInput

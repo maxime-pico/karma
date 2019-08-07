@@ -188,4 +188,6 @@ enum CompanyOrderByInput {
 	name_DESC
 	createdAt_ASC
 	createdAt_DESC
+  karma_ASC
+  karma_DESC
 }

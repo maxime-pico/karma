@@ -36,7 +36,8 @@ const COMPANY_LIST = gql(`
 		allCompanies(orderBy: $orderBy, filter: $filter, categories: $categories) {
 			id
 			name
-			logo
+      logo
+      karma
     }
 	}
 `);
@@ -114,6 +115,8 @@ class Search extends React.Component {
     this.setState({ categories: '' })
   }
 
+  /* Render view */
+
   render() {
 
     const searchValue = this.state.searchValue;
@@ -127,9 +130,9 @@ class Search extends React.Component {
         <Row justifyContent={{ md: 'center' }} mt={'96px'}>
           <Col md={12}>
 
-            {/* Filters list -- TODO : transform elements into components */}
+            {/* Filters - categories list -- TODO : transform elements into components */}
 
-            Filtres :
+            Catégories :
 
             <Query query={COMPANY_CATEGORY_LIST} >
               {({ loading, error, data }) => {
@@ -153,6 +156,19 @@ class Search extends React.Component {
                 )
               }}
             </Query>
+
+            {/* Filters - karmas list -- TODO : transform elements into components */}
+
+            Karmas :
+
+            <form>
+              <label>Très Mauvais Karma <input value="-2" name="karma" type="checkbox" /></label>
+              <label>Plutôt Mauvais Karma <input value="-1" name="karma" type="checkbox" /></label>
+              <label>Karma Neutre <input value="0" name="karma" type="checkbox" /></label>
+              <label>Plutôt Bon Karma <input value="1" name="karma" type="checkbox" /></label>
+              <label>Très bon Karma <input value="2" name="karma" type="checkbox" /></label>
+            </form>
+
           </Col>
         </Row>
 
@@ -174,9 +190,10 @@ class Search extends React.Component {
           <Col md={4}>
             Trier par :
             <select value={this.state.orderBy} onChange={this.handleChangeOrderBy}>
-              <option value="name_ASC">A > Z</option>
-              <option value="name_DESC">Z > A</option>
-              <option value="note">Note</option>
+              <option value="name_ASC">Ordre alphabétique (A > Z)</option>
+              <option value="name_DESC">Ordre alphabétique (Z > A)</option>
+              <option value="karma_ASC">Karma (plus mauvais au meilleur)</option> {/* TODO */}
+              <option value="karma_DESC">Karma (meilleur au plus mauvais)</option> {/* TODO */}
             </select>
           </Col>
         </Row>
@@ -221,6 +238,7 @@ class Search extends React.Component {
                         name={company.name}
                         id={company.id}
                         logo={company.logo}
+                        karma={company.karma}
                         key={'s-' + company.id}
                       />
                     ))}

@@ -34,41 +34,42 @@ const CompanyName = styled.div`
 
 // Declare types of expected props
 type Props = {
-	name: string,
-	id: string,
-	logo: string,
+  name: string,
+  id: string,
+  logo: string,
+  karma: Float,
 }
 
 // SearchResult component: displays the company card based on the name, and
 // logo provided. Also adds a link to the relevant brand page based on the id
 const SearchResult = (props: Props) => (
-	<Col md={3} my={3}>
-		<Link to={`/company/${props.id}`} style={{ textDecoration: 'none' }}>
-			<ResultCard>
-				<Row>
-					<Col style={{ height: '110px' }}>
-						<span
-							style={{
-								display: 'inline-block',
-								height: '100%',
-								verticalAlign: 'middle',
-							}}
-						/>
-						<img
-							src={process.env.PUBLIC_URL + '/images/' + props.logo}
-							width="80"
-							alt="company"
-						/>
-					</Col>
-				</Row>
-			</ResultCard>
-			<Row>
-				<Col py={1}>
-					<CompanyName>{props.name}</CompanyName>
-				</Col>
-			</Row>
-		</Link>
-	</Col>
+  <Col md={3} my={3}>
+    <Link to={`/company/${props.id}`} style={{ textDecoration: 'none' }}>
+      <ResultCard>
+        <Row>
+          <Col style={{ height: '110px' }}>
+            <span
+              style={{
+                display: 'inline-block',
+                height: '100%',
+                verticalAlign: 'middle',
+              }}
+            />
+            <img
+              src={process.env.PUBLIC_URL + '/images/' + props.logo}
+              width="80"
+              alt="company"
+            />
+          </Col>
+        </Row>
+      </ResultCard>
+      <Row>
+        <Col py={1}>
+          <CompanyName>{props.name} ({props.karma})</CompanyName>
+        </Col>
+      </Row>
+    </Link>
+  </Col>
 )
 
 export default SearchResult

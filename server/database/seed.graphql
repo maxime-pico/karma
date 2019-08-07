@@ -24,9 +24,15 @@ mutation {
     }
   ){ id }
 
-    createCompanyCategory4: createCompanyCategory(
+  createCompanyCategory4: createCompanyCategory(
     data : {
       name : "Mode"
+      companies : { connect: [{ name: "H&M" },{ name: "Zalando" },{ name: "Nike" }] }
+    }
+  ){ id }
+  createCompanyCategory4: createCompanyCategory(
+    data : {
+      name : "Papeterie"
       companies : { connect: [{ name: "H&M" },{ name: "Zalando" },{ name: "Nike" }] }
     }
   ){ id }
