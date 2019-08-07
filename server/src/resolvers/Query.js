@@ -21,11 +21,26 @@ function company(parent, args, context, info) {
 
 // Resolver querying all the companies in the database
 function allCompanies(parent, args, context, info) {
-  const where = args.filter
-    ? {
-      OR: [{ name_contains: args.filter }],
+
+  const conditions = [];
+
+  if (typeof args.filter !== 'undefined') {
+    if (args.filter.length) {
+      conditions.push({ name_contains: args.filter });
     }
-    : {}
+  }
+
+  if (typeof args.categories !== 'undefined') {
+    const cats = args.categories.split(',');
+    if (cats.length) {
+      cats.forEach(cat => {
+        if (cat.length)
+          conditions.push({ category_some: { id: cat } });
+      });
+    }
+  }
+
+  const where = (conditions.length) ? { OR: conditions } : {};
 
   const companies = context.db.query.companies(
     {
@@ -35,18 +50,14 @@ function allCompanies(parent, args, context, info) {
       orderBy: args.orderBy,
     },
     info,
-  )
+  );
 
-  return companies
+  return companies;
 }
 
 // Resolver querying all the companies in the database
 function allCompanyCategories(parent, args, context, info) {
-  const where = args.filter
-    ? {
-      OR: [{ name_contains: args.filter }],
-    }
-    : {}
+  const where = {}
 
   const companyCategories = context.db.query.companyCategories(
     {
