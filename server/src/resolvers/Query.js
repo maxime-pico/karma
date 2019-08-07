@@ -22,11 +22,11 @@ function company(parent, args, context, info) {
 // Resolver querying all the companies in the database
 function allCompanies(parent, args, context, info) {
 
-  const conditions = [];
+  const conditions = { or: [], and: [] };
 
   if (typeof args.filter !== 'undefined') {
     if (args.filter.length) {
-      conditions.push({ name_contains: args.filter });
+      conditions.and.push({ name_contains: args.filter });
     }
   }
 
@@ -35,12 +35,21 @@ function allCompanies(parent, args, context, info) {
     if (cats.length) {
       cats.forEach(cat => {
         if (cat.length)
-          conditions.push({ category_some: { id: cat } });
+          conditions.or.push({ category_some: { id: cat } });
       });
     }
   }
 
-  const where = (conditions.length) ? { OR: conditions } : {};
+  let where = {};
+  if (conditions.or.length && conditions.and.length) {
+    where = { OR: conditions.or, AND: conditions.and };
+  } else {
+    if (conditions.or.length)
+      where = { OR: conditions.or };
+
+    if (conditions.and.length)
+      where = { AND: conditions.and };
+  }
 
   const companies = context.db.query.companies(
     {

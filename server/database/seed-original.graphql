@@ -34,22 +34,11 @@ mutation {
           grade: -2
         }
       }
-      category: {
-        
-      }
     },
     where: {
       name : "H&M"
     }
   ){ id }
-
-  createCompanyCategory1: createCompanyCategory(
-    data : {
-      name : "Alimentation"
-      companies : { connect: { name: "H&M" } }
-    }
-  ){ id }
-
 
 
   addCauseGrade2: createCauseGrade(

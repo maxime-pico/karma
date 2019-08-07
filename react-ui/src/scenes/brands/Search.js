@@ -114,78 +114,86 @@ class Search extends React.Component {
     const searchValue = this.state.searchValue;
 
     return (
-      <Query query={COMPANY_LIST} variables={{
-        filter: this.state.searchedValue,
-        orderBy: this.state.orderBy,
-        categories: this.state.categories,
-      }} >
 
-        {({ loading, error, data }) => {
+      <Grid>
 
-          if (loading) return <div> Fetching </div>
-          if (error) return <div> Error  </div>
+        {/* FILTERS */}
 
-          const companyList = data.allCompanies
+        <Row justifyContent={{ md: 'center' }} mt={'96px'}>
+          <Col md={12}>
 
-          return (
-            <Grid>
+            {/* Filters list -- TODO : transform elements into components */}
+
+            Filtres :
+
+            <Query query={COMPANY_CATEGORY_LIST} >
+              {({ loading, error, data }) => {
+                if (loading) return <div> Fetching Categories</div>
+                if (error) return <div> Error while loading categories</div>
+
+                const companyCategoryList = data.allCompanyCategories
+
+                return (
+                  <div className="filters">
+                    <form>
+                      {companyCategoryList.map(category => (
+                        <label key={'s-' + category.id}>
+                          {category.name}
+                          <input type="checkbox" checked={(this.state.categories.indexOf(category.id) > -1 ? 'checked' : '')} value={category.id} name="category" onChange={this.handleChangeCategory} />
+                        </label>
+                      ))}
+                    </form>
+                  </div>
+                )
+              }}
+            </Query>
+          </Col>
+        </Row>
+
+        {/* SEARCH AND SORT */}
+
+        <Row justifyContent={{ md: 'center' }} mt={'96px'}>
+
+          <Col md={8}>
+
+            {/* Search input -- TODO : transform element into component */}
+            <form onSubmit={this.handleSubmitSearch}>
+              <SearchInput type="text" value={this.state.searchValue} onChange={this.handleChangeSearch} placeholder="Rechercher une marque" />
+              <SearchSubmit type="submit">Rechercher</SearchSubmit>
+              {searchValue.length ? (<button onClick={this.clearSearchInput} >x</button>) : ''}
+            </form>
+
+          </Col>
+
+          <Col md={4}>
+            Trier par :
+            <select value={this.state.orderBy} onChange={this.handleChangeOrderBy}>
+              <option value="name_ASC">A > Z</option>
+              <option value="name_DESC">Z > A</option>
+              <option value="note">Note</option>
+            </select>
+          </Col>
+        </Row>
+
+        {/* RESULTS */}
+
+        <Query query={COMPANY_LIST} variables={{
+          filter: this.state.searchedValue,
+          orderBy: this.state.orderBy,
+          categories: this.state.categories,
+        }} >
+
+          {({ loading, error, data }) => {
+
+            if (loading) return <div> Fetching </div>
+            if (error) return <div> Error  </div>
+
+            const companyList = data.allCompanies
+
+            return (
 
               <Row justifyContent={{ md: 'center' }} mt={'96px'}>
-                <Col md={12}>
-
-                  {/* Filters list -- TODO : transform elements into components */}
-                  Filtres :
-
-                  <Query query={COMPANY_CATEGORY_LIST} >
-                    {({ loading, error, data }) => {
-                      if (loading) return <div> Fetching Categories</div>
-                      if (error) return <div> Error while loading categories</div>
-
-                      const companyCategoryList = data.allCompanyCategories
-
-                      return (
-                        <div className="filters">
-                          <form>
-                            {companyCategoryList.map(category => (
-                              <label key={'s-' + category.id}>
-                                {category.name}
-                                <input type="checkbox" checked={(this.state.categories.indexOf(category.id) > -1 ? 'checked' : '')} value={category.id} name="category" onChange={this.handleChangeCategory} />
-                              </label>
-                            ))}
-                          </form>
-                        </div>
-                      )
-                    }}
-                  </Query>
-                </Col>
-              </Row>
-
-              <Row justifyContent={{ md: 'center' }} mt={'96px'}>
-
                 <Col md={8}>
-
-                  {/* Search input -- TODO : transform element into component */}
-                  <form onSubmit={this.handleSubmitSearch}>
-                    <SearchInput type="text" value={this.state.searchValue} onChange={this.handleChangeSearch} placeholder="Rechercher une marque" />
-                    <SearchSubmit type="submit">Rechercher</SearchSubmit>
-                    {searchValue.length ? (<button onClick={this.clearSearchInput} >x</button>) : ''}
-                  </form>
-
-                </Col>
-
-                <Col md={4}>
-                  Trier par :
-                  <select value={this.state.orderBy} onChange={this.handleChangeOrderBy}>
-                    <option value="name_ASC">A > Z</option>
-                    <option value="name_DESC">Z > A</option>
-                    <option value="note">Note</option>
-                  </select>
-                </Col>
-              </Row>
-
-              <Row justifyContent={{ md: 'center' }} mt={'96px'}>
-                <Col md={8}>
-
 
                   <Title>
                     {
@@ -214,10 +222,10 @@ class Search extends React.Component {
 
                 </Col>
               </Row>
-            </Grid>
-          )
-        }}
-      </Query >
+            )
+          }}
+        </Query >
+      </Grid>
     )
   }
 }

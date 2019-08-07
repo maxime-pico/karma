@@ -2,16 +2,35 @@
 mutation {
   
 
-  updateGoogle: updateCompany(
-    data: {
-      category: {
-        connect: [{ name: "Communication" }],
-      }
-    },
-    where: {
-      name : "Google"
+
+  #createCompanyCategory1: createCompanyCategory(
+  #  data : {
+  #    name : "Finances"
+  #    companies : { connect: { name: "BNP" } }
+  #  }
+  #){ id }
+
+  createCompanyCategory2: createCompanyCategory(
+    data : {
+      name : "Automobile"
+      companies : { connect: { name: "Tesla" } }
     }
   ){ id }
+
+  createCompanyCategory3: createCompanyCategory(
+    data : {
+      name : "Energie"
+      companies : { connect: [{ name: "Total" },{ name: "ENGIE" }] }
+    }
+  ){ id }
+
+    createCompanyCategory4: createCompanyCategory(
+    data : {
+      name : "Mode"
+      companies : { connect: [{ name: "H&M" },{ name: "Zalando" },{ name: "Nike" }] }
+    }
+  ){ id }
+
 
 
 }
