@@ -32,12 +32,12 @@ const Title = styled.div`
 
 // preparing query that retireves the list of id, name and logos of all companies
 const COMPANY_LIST = gql(`
-	query CompanyList($filter: String, $orderBy: CompanyOrderByInput) {
-		allCompanies(orderBy: $orderBy, filter: $filter) {
+	query CompanyList($filter: String, $orderBy: CompanyOrderByInput, $categories: String) {
+		allCompanies(orderBy: $orderBy, filter: $filter, categories: $categories) {
 			id
 			name
 			logo
-		}
+    }
 	}
 `);
 
@@ -60,7 +60,7 @@ class Search extends React.Component {
       searchValue: '',
       searchedValue: '',
       orderBy: 'name_ASC',
-      categories: []
+      categories: ''
     }
 
     this.handleChangeSearch = this.handleChangeSearch.bind(this);
@@ -68,6 +68,8 @@ class Search extends React.Component {
     this.clearSearchInput = this.clearSearchInput.bind(this);
     this.handleChangeOrderBy = this.handleChangeOrderBy.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
+
+    this.categories = [];
   }
 
   /* Searching */
@@ -97,13 +99,14 @@ class Search extends React.Component {
 
   handleChangeCategory(event) {
     const targetValue = event.target.value;
-    const index = this.state.categories.indexOf(targetValue);
+    const index = this.categories.indexOf(targetValue);
+
     if (index > -1) {
-      this.state.categories.splice(index, 1)
+      this.categories.splice(index, 1);
     } else {
-      this.state.categories.push(targetValue)
+      this.categories.push(targetValue);
     }
-    console.log(this.state.categories)
+    this.setState({ categories: this.categories.join(',') });
   }
 
   render() {
@@ -111,8 +114,14 @@ class Search extends React.Component {
     const searchValue = this.state.searchValue;
 
     return (
-      <Query query={COMPANY_LIST} variables={{ filter: this.state.searchedValue, orderBy: this.state.orderBy }} >
+      <Query query={COMPANY_LIST} variables={{
+        filter: this.state.searchedValue,
+        orderBy: this.state.orderBy,
+        categories: this.state.categories,
+      }} >
+
         {({ loading, error, data }) => {
+
           if (loading) return <div> Fetching </div>
           if (error) return <div> Error  </div>
 
@@ -140,7 +149,7 @@ class Search extends React.Component {
                             {companyCategoryList.map(category => (
                               <label key={'s-' + category.id}>
                                 {category.name}
-                                <input type="checkbox" value={category.id} name="category" onChange={this.handleChangeCategory} />
+                                <input type="checkbox" checked={(this.state.categories.indexOf(category.id) > -1 ? 'checked' : '')} value={category.id} name="category" onChange={this.handleChangeCategory} />
                               </label>
                             ))}
                           </form>
