@@ -68,7 +68,7 @@ class Search extends React.Component {
     this.clearSearchInput = this.clearSearchInput.bind(this);
     this.handleChangeOrderBy = this.handleChangeOrderBy.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
-
+    this.clearFilters = this.clearFilters.bind(this);
     this.categories = [];
   }
 
@@ -109,6 +109,11 @@ class Search extends React.Component {
     this.setState({ categories: this.categories.join(',') });
   }
 
+  clearFilters(event) {
+    this.categories = [];
+    this.setState({ categories: '' })
+  }
+
   render() {
 
     const searchValue = this.state.searchValue;
@@ -143,6 +148,7 @@ class Search extends React.Component {
                         </label>
                       ))}
                     </form>
+                    {this.state.categories.length ? (<button onClick={this.clearFilters} >Supprimer les filtres x</button>) : ''}
                   </div>
                 )
               }}
