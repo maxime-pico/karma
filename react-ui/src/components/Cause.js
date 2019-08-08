@@ -12,7 +12,6 @@ import GradeKarmaButton from './GradeKarmaButton'
 import HelpButton from './HelpButton'
 import CausesJudgingInterface from './CausesJudgingInterface'
 import CauseHelpInterface from './CauseHelpInterface'
-import ErrorBoundary from './ErrorBoundary'
 
 import { Steps } from 'intro.js-react'
 import { styled } from '@smooth-ui/core-sc'
@@ -59,7 +58,7 @@ class Cause extends React.Component {
 	}
 
 	/*
-    >>>>>>>>>>>>>>> HELP <<<<<<<<<<<<<<<<<<<<<<<<<<
+    >>>>>>>>>>>>>>> HELP NEEDED <<<<<<<<<<<<<<<<<<<<<<<<<<
     The context:
     I use intro.js-react to have an interactive tutorial on the page.
     I would like the tutorial to launch automatically upon first visit of the page for a user.
@@ -73,6 +72,9 @@ class Cause extends React.Component {
     Attempted solutions:
     I tried using component did mount or even component did update + checking if all elements exist,
     but somehow it didn't work. I'm not the most skillful in react so it might be that.
+    I tried not having different structures between query loading states and actual data provided but it
+    didn't change anything...
+    Current patch is to set a timeout but it doesn't work on "slow 3G" for instance
 
     Additional infos:
     The tutorial data is contained in CAUSE_STEPS. It has 5 steps with references to 5 classes that
@@ -84,10 +86,13 @@ class Cause extends React.Component {
 
 	componentDidMount() {
 		if (!this.userOnboarded) {
-			this.setState(previousState => {
+      
+			setTimeout( () =>{ // dirty patch, sorry, I tried better :'(
+        console.log('launched')
+        this.setState(previousState => {
 				previousState.stepsEnabled = true // checking if the tutorial should be displayed for the user
 				return previousState
-			})
+			})}, 3000)
 		}
 		if (this.props.location.state) {
 			if (this.props.location.state.startGrading && !this.state.startGrading) {
@@ -216,13 +221,13 @@ class Cause extends React.Component {
 		return (
 			<Query query={CAUSE_GRADES_QUERY} variables={{ companyId }}>
 				{({ loading, error, data }) => {
-					// if (loading) return <div> Fetching </div>
-					// if (error) {
-					// 	return <div> Error: {error.message} </div>
-					// }
+					if (loading) return <div> Fetching </div>
+					if (error) {
+						return <div> Error: {error.message} </div>
+					}
 
 					const causeGrades = data.companyCauseGrades
-					const overallKarma = (error || loading) ? {} : causeGrades.ENVIRONMENT
+					const overallKarma = causeGrades.ENVIRONMENT
 
 					return (
 						<BlurOnModal
@@ -258,13 +263,14 @@ class Cause extends React.Component {
 								_launchTutorial={this._launchTutorial}
 								_setDataLoaded={this._setDataLoaded}
 							/>
-              <ErrorBoundary>
 							<ActAndOpinionPreviewList
 								cause={cause}
 								companyId={companyId}
+                userOnboarded={this.userOnboarded}
+                stepsEnabled={this.stepsEnabled}
 								_setDataLoaded={this._setDataLoaded}
+                _launchTutorial={this._launchTutorial}
 							/>
-              </ErrorBoundary>
 							{this.state.grading && (
 								<CausesJudgingInterface
 									companyId={companyId}
