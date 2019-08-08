@@ -318,4 +318,93 @@ export const GRADES_TO_WORDS = {
 	},
 }
 
-export const AUTH_TOKEN = 'auth-token_toBeHidden'
+export const SOUL_STEPS = [
+	{
+		element: '.global',
+		intro:
+			"Bienvenue ! Comme c'est ta première fois ici, prenons ensemble une minute pour découvrir comment une marque est notée...",
+	},
+	{
+		element: '.karma',
+		intro:
+			"Ici, c'est le Karma de la marque. Un karma va toujours de -2 à +2 et est la moyenne des notes par thématique",
+		position: 'left',
+	},
+	{
+		element: '.causeList',
+		intro:
+			'Ces thématiques, ce sont les Causes. Comme tu peux le voir, il y en a 4, également notées entre -2 et +2',
+		position: 'left',
+	},
+	{
+		element: '.cause',
+		intro:
+			"Ici tu as un apperçu d'une des Causes. Chaque cause est elle même faite de sous thèmatiques",
+		position: 'top',
+	},
+	{
+		element: '.grade',
+		intro:
+			"Il est encore un peu tôt pour cela, mais si jamais tu veux contribuer à la notation d'une marque, tu peux le faire en cliquant sur ce bouton",
+		position: 'left',
+	},
+	{
+		element: '.help',
+		intro:
+			"Et si jamais tu es perdu et a besoin d'aide et/ou de revoir ce tutoriel, tu peux cliquer ici",
+		position: 'left',
+	},
+]
+
+export const CAUSE_STEPS = [
+	{
+		element: '.karma',
+		intro:
+			"Ça, c'est le karma de la Cause. Attention, ce n'est pas un calcul à partir des notes que tu peux voir en dessous ! C'est une moyenne des notes que les Pandas ont attribué à la cause elle même, informés par le travail fait sur les sous-thematiques.",
+	},
+	{
+		element: '.actsList',
+		intro: "Ces sous-thématiques, justement, c'est ce qu'on appelle les Actes.",
+		position: 'left',
+	},
+	{
+		element: '.act',
+		intro:
+			"Ici, tu peux voir la synthèse du travail qui a été fait pour chacun de ces actes ainsi que le détail de ce qu'il représente.",
+		position: 'left',
+	},
+	{
+		element: '.opinion',
+		intro:
+			'Et là, tu peux voir un extrait des Opinions (véritable travaux de recherche) qui ont le plus aidé les Pandas à noter.',
+		position: 'left',
+	},
+	{
+		element: '.more',
+		intro: 'Clique sur ce bouton si tu souhaites découvrir ces travaux !',
+	},
+]
+
+export const DELIBERATION_STEPS = [
+	{
+		element: '.karma',
+		intro:
+			"Ici, c'est le karma de l'acte, c'est la moyenne des notes attribuées par les Pandas",
+	},
+	{
+		element: '.opinioncount',
+		intro:
+			"Là tu peux voir le nombre de notes qui ont été attribuées ainsi que le nombre d'opinions qui ont servi au jugement des Pandas",
+	},
+	{
+		element: '.opinion',
+		intro:
+			"Et ça, c'est une opinion ! Une opinion est toujours accompagnée d'un texte et de sources. N'hésites pas à cliquer sur les liens pour en savoir plus.",
+		position: 'right',
+	},
+]
+
+export const AUTH_TOKEN =
+	process.env.NODE_ENV === 'production'
+		? process.env.REACT_APP_AUTHTOKEN_LOCATION
+		: 'auth-token'

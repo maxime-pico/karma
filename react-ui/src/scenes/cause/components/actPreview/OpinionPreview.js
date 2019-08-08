@@ -75,11 +75,11 @@ const UserName = styled.div`
 // 	font-weight: 600;
 // `
 
-const OpinionPreview = ({ opinionsFeed, location, act }) => {
+const OpinionPreview = ({ opinionsFeed, location, act, tutorial }) => {
 	return (
 		<Row justifyContent="center" mt={2}>
 			<Col md={9} textAlign="left" color="#a9b4cc">
-				<Row justifyContent="left">
+				<Row justifyContent="left" className={tutorial ? 'opinion' : null}>
 					{opinionsFeed.map((opinion, index) => (
 						<Col key={index} md={4} p="6px">
 							<OpinionCard>
