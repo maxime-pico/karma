@@ -32,8 +32,8 @@ const Title = styled.div`
 
 // preparing query that retireves the list of id, name and logos of all companies
 const COMPANY_LIST = gql(`
-	query CompanyList($filter: String, $orderBy: CompanyOrderByInput, $categories: String) {
-		allCompanies(orderBy: $orderBy, filter: $filter, categories: $categories) {
+	query CompanyList($filter: String, $orderBy: CompanyOrderByInput, $categories: String, $karmas: String) {
+		allCompanies(orderBy: $orderBy, filter: $filter, categories: $categories, karmas: $karmas) {
 			id
 			name
       logo
@@ -61,7 +61,8 @@ class Search extends React.Component {
       searchValue: '',
       searchedValue: '',
       orderBy: 'name_ASC',
-      categories: ''
+      categories: '',
+      karmas: '',
     }
 
     this.handleChangeSearch = this.handleChangeSearch.bind(this);
@@ -69,8 +70,11 @@ class Search extends React.Component {
     this.clearSearchInput = this.clearSearchInput.bind(this);
     this.handleChangeOrderBy = this.handleChangeOrderBy.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
+    this.handleChangeKarma = this.handleChangeKarma.bind(this);
     this.clearFilters = this.clearFilters.bind(this);
+
     this.categories = [];
+    this.karmas = [];
   }
 
   /* Searching */
@@ -111,8 +115,21 @@ class Search extends React.Component {
   }
 
   clearFilters(event) {
-    this.categories = [];
+    this.categories = this.karmas = [];
     this.setState({ categories: '' })
+    this.setState({ karmas: '' })
+  }
+
+  handleChangeKarma(event) {
+    const targetValue = event.target.value;
+    const index = this.karmas.indexOf(targetValue);
+
+    if (index > -1) {
+      this.karmas.splice(index, 1);
+    } else {
+      this.karmas.push(targetValue);
+    }
+    this.setState({ karmas: this.karmas.join(',') });
   }
 
   /* Render view */
@@ -162,11 +179,11 @@ class Search extends React.Component {
             Karmas :
 
             <form>
-              <label>Très Mauvais Karma <input value="-2" name="karma" type="checkbox" /></label>
-              <label>Plutôt Mauvais Karma <input value="-1" name="karma" type="checkbox" /></label>
-              <label>Karma Neutre <input value="0" name="karma" type="checkbox" /></label>
-              <label>Plutôt Bon Karma <input value="1" name="karma" type="checkbox" /></label>
-              <label>Très bon Karma <input value="2" name="karma" type="checkbox" /></label>
+              <label>Très Mauvais Karma <input onChange={this.handleChangeKarma} value="-2" name="karma" type="checkbox" /></label>
+              <label>Plutôt Mauvais Karma <input onChange={this.handleChangeKarma} value="-1" name="karma" type="checkbox" /></label>
+              <label>Karma Neutre <input onChange={this.handleChangeKarma} value="0" name="karma" type="checkbox" /></label>
+              <label>Plutôt Bon Karma <input onChange={this.handleChangeKarma} value="1" name="karma" type="checkbox" /></label>
+              <label>Très bon Karma <input onChange={this.handleChangeKarma} value="2" name="karma" type="checkbox" /></label>
             </form>
 
           </Col>
@@ -204,6 +221,7 @@ class Search extends React.Component {
           filter: this.state.searchedValue,
           orderBy: this.state.orderBy,
           categories: this.state.categories,
+          karmas: this.state.karmas,
         }} >
 
           {({ loading, error, data }) => {

@@ -11,7 +11,7 @@ type Query {
   ): Company
 
   # exposes the resolver that gets the list of all companies in the database
-	allCompanies(categories: String, filter: String, skip: Int, first: Int, orderBy: CompanyOrderByInput): [Company!]!
+	allCompanies(karmas: String, categories: String, filter: String, skip: Int, first: Int, orderBy: CompanyOrderByInput): [Company!]!
 
     # exposes the resolver that gets the list of all companies in the database
 	allCompanyCategories(filter: String, skip: Int, first: Int, orderBy: CompanyCategoryOrderByInput): [CompanyCategory!]!

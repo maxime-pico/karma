@@ -40,8 +40,21 @@ function allCompanies(parent, args, context, info) {
     }
   }
 
-  if (typeof args.karma !== 'undefined') {
+  if (typeof args.karmas !== 'undefined') {
 
+    const karmas = args.karmas.split(',');
+    if (karmas.length) {
+      karmas.forEach(karma => {
+        if (karma.length) {
+          conditions.or.push({
+            AND: [
+              { karma_lt: parseFloat(karma) },
+              { karma_gte: parseFloat(karma) - 1 }
+            ]
+          });
+        }
+      });
+    }
   }
 
   let where = {};
