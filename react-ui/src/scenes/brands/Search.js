@@ -11,6 +11,7 @@ import gql from 'graphql-tag'
 import SearchResult from './components/SearchResult'
 import styled from 'styled-components'
 import { Grid, Row, Col } from '@smooth-ui/core-sc'
+import { KARMA_LABELS, BRANDS_SORTING_LABELS, BRANDS_RESULTS_MESSAGE, BRANDS_STATIC_CONTENTS } from '../../utils'
 
 const SearchInput = styled.input``;
 const SearchSubmit = styled.button``;
@@ -63,6 +64,7 @@ class Search extends React.Component {
       orderBy: 'name_ASC',
       categories: '',
       karmas: '',
+      karmas_slugs: [],
     }
 
     this.handleChangeSearch = this.handleChangeSearch.bind(this);
@@ -89,7 +91,7 @@ class Search extends React.Component {
     this.setState({ searchedValue: this.state.searchValue });
   }
 
-  clearSearchInput(event) {
+  clearSearchInput() {
     this.setState({ searchedValue: '' });
     this.setState({ searchValue: '' });
   }
@@ -114,7 +116,7 @@ class Search extends React.Component {
     this.setState({ categories: this.categories.join(',') });
   }
 
-  clearFilters(event) {
+  clearFilters() {
     this.categories = this.karmas = [];
     this.setState({ categories: '' })
     this.setState({ karmas: '' })
@@ -142,6 +144,10 @@ class Search extends React.Component {
     )
   }
 
+  renderKarmaFilters() {
+
+  }
+
   render() {
 
     const searchValue = this.state.searchValue;
@@ -157,7 +163,7 @@ class Search extends React.Component {
 
             {/* Filters - categories list -- TODO : transform elements into components */}
 
-            Catégories :
+            {BRANDS_STATIC_CONTENTS.filters_categories_title['fr']}
 
             <Query query={COMPANY_CATEGORY_LIST} >
               {({ loading, error, data }) => {
@@ -184,20 +190,19 @@ class Search extends React.Component {
 
             {/* Filters - karmas list -- TODO : transform elements into components */}
 
-            Karmas :
-
-            {/*
-            
-            
-            
-            */}
+            {BRANDS_STATIC_CONTENTS.filters_karmas_title['fr']}
 
             <form>
-              <label>Très Mauvais Karma <input onChange={this.handleChangeKarma} value="-2" name="karma" type="checkbox" /></label>
-              <label>Plutôt Mauvais Karma <input onChange={this.handleChangeKarma} value="-1" name="karma" type="checkbox" /></label>
-              <label>Karma Neutre <input onChange={this.handleChangeKarma} value="0" name="karma" type="checkbox" /></label>
-              <label>Plutôt Bon Karma <input onChange={this.handleChangeKarma} value="1" name="karma" type="checkbox" /></label>
-              <label>Très bon Karma <input onChange={this.handleChangeKarma} value="2" name="karma" type="checkbox" /></label>
+              {KARMA_LABELS.map((karma, index) => (
+                <label key={'k-' + index}> {karma.label['fr']}
+                  <input checked={(this.state.karmas.indexOf(karma.value) > -1 ? 'checked' : '')}
+                    onChange={this.handleChangeKarma}
+                    value={karma.value}
+                    name="karma"
+                    type="checkbox"
+                  />
+                </label>
+              ))}
             </form>
 
             {(this.state.categories.length || this.state.karmas.length) ? (<button onClick={this.clearFilters} >Supprimer les filtres x</button>) : ''}
@@ -213,7 +218,7 @@ class Search extends React.Component {
 
             {/* Search input -- TODO : transform element into component */}
             <form onSubmit={this.handleSubmitSearch}>
-              <SearchInput value={this.state.searchValue} onChange={this.handleChangeSearch} component={this.renderSearchInput} placeholder="Rechercher une marque" />
+              <SearchInput value={this.state.searchValue} onChange={this.handleChangeSearch} component={this.renderSearchInput} placeholder={BRANDS_STATIC_CONTENTS.search_input_placeholder['fr']} />
               {/*<SearchSubmit type="submit">Rechercher</SearchSubmit>*/}
               {searchValue.length ? (<button onClick={this.clearSearchInput} >x</button>) : ''}
             </form>
@@ -221,12 +226,12 @@ class Search extends React.Component {
           </Col>
 
           <Col md={4}>
-            Trier par :
+            {BRANDS_STATIC_CONTENTS.sorting_title['fr']}
+
             <select value={this.state.orderBy} onChange={this.handleChangeOrderBy}>
-              <option value="name_ASC">Ordre alphabétique (A > Z)</option>
-              <option value="name_DESC">Ordre alphabétique (Z > A)</option>
-              <option value="karma_ASC">Karma (plus mauvais au meilleur)</option> {/* TODO */}
-              <option value="karma_DESC">Karma (meilleur au plus mauvais)</option> {/* TODO */}
+              {BRANDS_SORTING_LABELS.map((sort, index) => (
+                <option key={'sort-' + index} value={sort.value}>{sort.name['fr']}</option>
+              ))}
             </select>
           </Col>
         </Row>
@@ -255,8 +260,8 @@ class Search extends React.Component {
                   <Title>
                     {
                       companyList.length ?
-                        ('Les marques déjà sur Karma Panda :') :
-                        ('Aucune marque ne correspond aux critères de recherche')
+                        (BRANDS_RESULTS_MESSAGE.main_results['fr']) :
+                        (BRANDS_RESULTS_MESSAGE.no_results['fr'])
                     }
                   </Title>
 
@@ -283,7 +288,7 @@ class Search extends React.Component {
             )
           }}
         </Query >
-      </Grid>
+      </Grid >
     )
   }
 }
