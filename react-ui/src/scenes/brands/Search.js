@@ -80,7 +80,7 @@ class Search extends React.Component {
   /* Searching */
 
   handleChangeSearch(event) {
-    // this.setState({ searchedValue: event.target.value });
+    this.setState({ searchedValue: event.target.value });
     this.setState({ searchValue: event.target.value });
   }
 
@@ -134,6 +134,14 @@ class Search extends React.Component {
 
   /* Render view */
 
+  renderSearchInput({ input, meta }) {
+    return (
+      <div>
+        <input type="text" />
+      </div>
+    )
+  }
+
   render() {
 
     const searchValue = this.state.searchValue;
@@ -168,7 +176,7 @@ class Search extends React.Component {
                         </label>
                       ))}
                     </form>
-                    {this.state.categories.length ? (<button onClick={this.clearFilters} >Supprimer les filtres x</button>) : ''}
+
                   </div>
                 )
               }}
@@ -178,6 +186,12 @@ class Search extends React.Component {
 
             Karmas :
 
+            {/*
+            
+            
+            
+            */}
+
             <form>
               <label>Très Mauvais Karma <input onChange={this.handleChangeKarma} value="-2" name="karma" type="checkbox" /></label>
               <label>Plutôt Mauvais Karma <input onChange={this.handleChangeKarma} value="-1" name="karma" type="checkbox" /></label>
@@ -185,6 +199,8 @@ class Search extends React.Component {
               <label>Plutôt Bon Karma <input onChange={this.handleChangeKarma} value="1" name="karma" type="checkbox" /></label>
               <label>Très bon Karma <input onChange={this.handleChangeKarma} value="2" name="karma" type="checkbox" /></label>
             </form>
+
+            {(this.state.categories.length || this.state.karmas.length) ? (<button onClick={this.clearFilters} >Supprimer les filtres x</button>) : ''}
 
           </Col>
         </Row>
@@ -197,8 +213,8 @@ class Search extends React.Component {
 
             {/* Search input -- TODO : transform element into component */}
             <form onSubmit={this.handleSubmitSearch}>
-              <SearchInput type="text" value={this.state.searchValue} onChange={this.handleChangeSearch} placeholder="Rechercher une marque" />
-              <SearchSubmit type="submit">Rechercher</SearchSubmit>
+              <SearchInput value={this.state.searchValue} onChange={this.handleChangeSearch} component={this.renderSearchInput} placeholder="Rechercher une marque" />
+              {/*<SearchSubmit type="submit">Rechercher</SearchSubmit>*/}
               {searchValue.length ? (<button onClick={this.clearSearchInput} >x</button>) : ''}
             </form>
 

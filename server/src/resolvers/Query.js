@@ -24,12 +24,14 @@ function allCompanies(parent, args, context, info) {
 
   const conditions = { or: [], and: [] };
 
+  // WHERE - filter
   if (typeof args.filter !== 'undefined') {
     if (args.filter.length) {
       conditions.and.push({ name_contains: args.filter });
     }
   }
 
+  // WHERE - categories
   if (typeof args.categories !== 'undefined') {
     const cats = args.categories.split(',');
     if (cats.length) {
@@ -40,6 +42,7 @@ function allCompanies(parent, args, context, info) {
     }
   }
 
+  // WHERE - karmas
   if (typeof args.karmas !== 'undefined') {
 
     const karmas = args.karmas.split(',');
