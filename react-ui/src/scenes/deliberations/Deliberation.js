@@ -16,7 +16,7 @@ import { AUTH_TOKEN, DELIBERATION_STEPS } from '../../services/constants'
 import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
 import { Steps } from 'intro.js-react'
 import 'intro.js/introjs.css'
-import 'intro.js/themes/introjs-custom.css'
+// import 'intro.js/themes/introjs-custom.css'
 
 const BlurOnModal = styled(Box)`
 	filter: ${props => props.blur};

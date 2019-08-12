@@ -49,8 +49,10 @@ const GradeKarmaButton = (props: Props) => (
 	>
 		<Push />
 		<img
-			src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.png'}
+			src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.svg'}
 			alt="grading hammer"
+			width="34"
+			height="32"
 		/>
 	</GradeButton>
 )

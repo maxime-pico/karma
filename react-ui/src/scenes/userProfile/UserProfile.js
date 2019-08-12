@@ -24,7 +24,6 @@ const LogOutButton = styled.button`
 
 const MainText = styled.div`
 	font-size: 20px;
-	color: #7f8799;
 	margin-bottom: 30px;
 `
 

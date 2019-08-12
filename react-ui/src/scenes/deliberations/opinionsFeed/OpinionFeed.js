@@ -3,8 +3,7 @@ import Opinion from '../../../components/opinion/Opinion'
 import { Row, styled } from '@smooth-ui/core-sc'
 
 const DefaultText = styled.span`
-	color: #7f8799;
-	font-size: 18px;
+	font-size: 1.8rem;
 `
 
 const OpinionFeed = ({
