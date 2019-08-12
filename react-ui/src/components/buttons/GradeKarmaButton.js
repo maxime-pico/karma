@@ -44,7 +44,7 @@ type Props = {
 const GradeKarmaButton = (props: Props) => (
 	<GradeButton
 		type="button"
-		className="btn btn-primary"
+		className="btn btn-primary grade"
 		onClick={() => props._startGrading()}
 	>
 		<Push />

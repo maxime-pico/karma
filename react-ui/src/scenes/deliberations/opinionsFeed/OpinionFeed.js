@@ -22,6 +22,7 @@ const OpinionFeed = ({
 				opinionsFeed.map((opinion, index) => (
 					<Opinion
 						key={index}
+						tutorial={index === 0}
 						opinion={opinion}
 						affiliation={affiliation}
 						grading={grading}

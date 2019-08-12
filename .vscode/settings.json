@@ -7,5 +7,6 @@
   "flow.useNPMPackagedFlow": true,
   "editor.detectIndentation": false,
 "editor.tabSize": 2,
-"git.ignoreLimitWarning": true
+"git.ignoreLimitWarning": true,
+"workbench.colorCustomizations": {}
 }

@@ -12,8 +12,11 @@ import LoginToGradeModal from '../../components/modals/LoginToGradeModal'
 import GradeKarmaButton from '../../components/buttons/GradeKarmaButton'
 import HelpButton from '../../components/buttons/HelpButton'
 import { adjacentAct } from '../../services/utils'
-import { AUTH_TOKEN } from '../../services/constants'
+import { AUTH_TOKEN, DELIBERATION_STEPS } from '../../services/constants'
 import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
+import { Steps } from 'intro.js-react'
+import 'intro.js/introjs.css'
+import 'intro.js/themes/introjs-custom.css'
 
 const BlurOnModal = styled(Box)`
 	filter: ${props => props.blur};
@@ -90,6 +93,7 @@ class Deliberation extends React.Component {
 		super(props)
 		const cookies = new Cookies() // get access to cookies
 		this.authToken = cookies.get(AUTH_TOKEN) // if user is logged in authToken contains the token
+		this.userOnboarded = cookies.get('userOnboarded_deliberation') // if user has been onboarded contains the token
 	}
 
 	state = {
@@ -102,6 +106,18 @@ class Deliberation extends React.Component {
 		loginToGradeModalIsOpen: false,
 		affiliation: false,
 		gradingType: null,
+		stepsEnabled: false,
+		initialStep: 0,
+		steps: DELIBERATION_STEPS,
+	}
+
+	componentDidMount() {
+		if (!this.userOnboarded) {
+			this.setState(previousState => {
+				previousState.stepsEnabled = true
+				return previousState
+			})
+		}
 	}
 
 	_adjacentCause = direction => {
@@ -214,6 +230,26 @@ class Deliberation extends React.Component {
 		}
 	}
 
+	_launchTutorial = () => {
+		this.setState(previousState => {
+			previousState.stepsEnabled = true
+			return previousState
+		})
+	}
+
+	_endTutorial = () => {
+		this.setState(previousState => {
+			previousState.stepsEnabled = false
+			return previousState
+		})
+		if (!this.userOnboarded) {
+			const cookies = new Cookies()
+			cookies.set('userOnboarded_deliberation', 'true', {
+				path: '/',
+			})
+		}
+	}
+
 	render() {
 		const { companyId, cause, act } = this.props.match.params
 		const query = ACT_GRADES_QUERIES[cause]
@@ -240,6 +276,21 @@ class Deliberation extends React.Component {
 										marginbottom={this.state.grading ? '500px' : '96px'}
 										grading={this.state.grading}
 									>
+										<Steps
+											enabled={this.state.stepsEnabled}
+											steps={this.state.steps}
+											initialStep={this.state.initialStep}
+											onExit={this._endTutorial}
+											options={{
+												showStepNumbers: false,
+												overlayOpacity: 0.01,
+												showBullets: false,
+												hidePrev: true,
+												hideNext: true,
+												nextLabel: 'Suivant',
+												doneLabel: 'Terminé',
+											}}
+										/>
 										<DeliberationHeader
 											companyId={companyId}
 											karma={karma}
@@ -259,6 +310,7 @@ class Deliberation extends React.Component {
 											<Row my={2} justifyContent="center">
 												<Col md={10}>
 													<OpinionFeed
+														className="hello"
 														act={act}
 														companyId={companyId}
 														grading={this.state.grading}
@@ -287,6 +339,9 @@ class Deliberation extends React.Component {
 													companyId={companyId}
 													act={act}
 													_closeHelp={this._closeHelp}
+													_launchTutorial={this._launchTutorial}
+													_endTutorial={this._endTutorial}
+													stepsEnabled={this.state.stepsEnabled}
 												/>
 											)}
 											<StartGradingActModal
