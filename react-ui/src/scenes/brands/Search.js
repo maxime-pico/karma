@@ -10,8 +10,9 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import SearchResult from './components/SearchResult'
 import styled from 'styled-components'
-import { Grid, Row, Col } from '@smooth-ui/core-sc'
+import { Grid, Row, Col, } from '@smooth-ui/core-sc'
 import { KARMA_LABELS, BRANDS_SORTING_LABELS, BRANDS_RESULTS_MESSAGES, BRANDS_STATIC_CONTENTS } from '../../utils'
+import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 
 const SearchInput = styled.input``;
 const SearchSubmit = styled.button``;
@@ -64,6 +65,7 @@ class Search extends React.Component {
       orderBy: 'name_ASC',
       categories: '',
       karmas: [],
+      reloaded : false,
     }
 
     this.handleChangeSearch = this.handleChangeSearch.bind(this);
@@ -112,6 +114,7 @@ class Search extends React.Component {
     } else {
       this.categories.push(targetValue);
     }
+    this.setState({reloaded : true})
     this.setState({ categories: this.categories.join(',') });
   }
 
@@ -119,7 +122,11 @@ class Search extends React.Component {
     this.categories = [];
     this.karmas = []
     this.setState({ categories: '' })
-    this.setState({ karmas: '' })
+    this.setState({ karmas: [] })
+  }
+
+  resetReload() {
+    this.setState({reloaded : false})
   }
 
   handleChangeKarma(event) {
@@ -246,25 +253,25 @@ class Search extends React.Component {
           orderBy: this.state.orderBy,
           categories: this.state.categories,
           karmas: this.state.karmas.join(','),
-        }} >
+        }} onCompleted={() => {this.resetReload()}} >
 
           {({ loading, error, data }) => {
 
-            if (loading) return <div> Fetching </div>
+            if (loading)  return <div> Fetching </div>
             if (error) return <div> Error  </div>
-
+            
             const companyList = data.allCompanies
 
             return (
 
               <Row justifyContent={{ md: 'center' }} mt={'96px'}>
                 <Col md={8}>
-
+              
                   <Title>
                     {
                       companyList.length ?
-                        (BRANDS_RESULTS_MESSAGES.main_results['fr']) :
-                        (BRANDS_RESULTS_MESSAGES.no_results['fr'])
+                      (BRANDS_RESULTS_MESSAGES.main_results['fr']) :
+                      (BRANDS_RESULTS_MESSAGES.no_results['fr'])
                     }
                   </Title>
 
@@ -274,18 +281,34 @@ class Search extends React.Component {
                   </SubTitle>*/}
 
                   {/* Results */}
+                 
                   <Row my={4} justifyContent={{ md: 'center' }}>
-                    {companyList.map(company => (
-                      <SearchResult
-                        name={company.name}
-                        id={company.id}
-                        logo={company.logo}
-                        karma={company.karma}
-                        key={'s-' + company.id}
-                      />
-                    ))}
-                  </Row>
 
+                    <TransitionGroup  className="results-list">
+
+                      {companyList.map(company => (
+
+                        <CSSTransition
+                        key={company.id}
+                        timeout={300}
+                        classNames="result-fade"
+                        exit={this.state.reloaded}
+                        >
+
+                          <SearchResult
+                          name={company.name}
+                          id={company.id}
+                          logo={company.logo}
+                          karma={company.karma}
+                          key={'s-' + company.id}
+                          />
+
+                        </CSSTransition>
+                      ))}
+
+                    </TransitionGroup>
+                    
+                  </Row>                  
                 </Col>
               </Row>
             )

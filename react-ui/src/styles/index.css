@@ -3,3 +3,47 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+/* Brand results fade*/
+
+.results-fade-enter {
+  opacity: 0;
+
+}
+.results-fade-enter-active {
+  opacity: 1;
+ 
+  transition: opacity 500ms, transform 300ms;
+}
+.results-fade-exit {
+  opacity: 1;
+}
+.results-fade-exit-active {
+  opacity: 0;
+  transition: opacity 500ms, transform 300ms;
+}
+
+
+.result-fade-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.result-fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.result-fade-exit {
+  opacity: 1;
+}
+.result-fade-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.results-list{
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+}
