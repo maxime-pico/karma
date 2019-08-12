@@ -1,10 +1,10 @@
-const KARMA_LABELS = [
-  { value: -2, slug: 'vb', label: { fr: 'Très Mauvais Karma' } },
-  { value: -1, slug: 'b', label: { fr: 'Plutôt Mauvais Karma' } },
-  { value: 0, slug: 'n', label: { fr: 'Karma Neutre' } },
-  { value: 1, slug: 'g', label: { fr: 'Plutôt Bon Karma' } },
-  { value: 2, slug: 'vg', label: { fr: 'Très bon Karma' } },
-];
+const KARMA_LABELS = {
+  vb : { value: -2, slug: 'vb', label: { fr: 'Très Mauvais Karma' } },
+  b : { value: -1, slug: 'b', label: { fr: 'Plutôt Mauvais Karma' } },
+  n : { value: 0, slug: 'n', label: { fr: 'Karma Neutre' } },
+  g :{ value: 1, slug: 'g', label: { fr: 'Plutôt Bon Karma' } },
+  vg : { value: 2, slug: 'vg', label: { fr: 'Très bon Karma' } },
+};
 
 const BRANDS_SORTING_LABELS = [
   { name: { fr: 'Ordre alphabétique (A > Z)' }, value: 'name_ASC' },
@@ -13,7 +13,7 @@ const BRANDS_SORTING_LABELS = [
   { name: { fr: 'Karma (meilleur au plus mauvais)' }, value: 'karma_DESC' }
 ];
 
-const BRANDS_RESULTS_MESSAGE = {
+const BRANDS_RESULTS_MESSAGES = {
   no_results: { fr: 'Aucune marque ne correspond aux critères de recherche' },
   main_results: { fr: 'Les marques déjà sur Karma Panda :' }
 }
@@ -28,6 +28,6 @@ const BRANDS_STATIC_CONTENTS = {
 module.exports = {
   KARMA_LABELS,
   BRANDS_SORTING_LABELS,
-  BRANDS_RESULTS_MESSAGE,
+  BRANDS_RESULTS_MESSAGES,
   BRANDS_STATIC_CONTENTS
 };

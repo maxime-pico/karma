@@ -1,4 +1,5 @@
 const { getUserId, CAUSE_AND_ACTS } = require('../utils')
+const { KARMA_LABELS } = require('../../../react-ui/src/utils')
 
 // Resolver querying the user info from token
 function getUserInfoFromContext(parent, args, context, info) {
@@ -49,10 +50,10 @@ function allCompanies(parent, args, context, info) {
     if (karmas.length) {
       karmas.forEach(karma => {
         if (karma.length) {
-          conditions.or.push({
+          conditions.and.push({
             AND: [
-              { karma_lt: parseFloat(karma) },
-              { karma_gte: parseFloat(karma) - 1 }
+              { karma_lt: parseFloat(KARMA_LABELS[karma].value) },
+              { karma_gte: parseFloat(KARMA_LABELS[karma].value) - 1 }
             ]
           });
         }

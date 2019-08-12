@@ -1,14 +1,7 @@
 # prettier-ignore
 mutation {
   
-
-
-  #createCompanyCategory1: createCompanyCategory(
-  #  data : {
-  #    name : "Finances"
-  #    companies : { connect: { name: "BNP" } }
-  #  }
-  #){ id }
+  # COMPANY CATEGORIES MUTATION
 
   createCompanyCategory2: createCompanyCategory(
     data : {
@@ -27,16 +20,34 @@ mutation {
   createCompanyCategory4: createCompanyCategory(
     data : {
       name : "Mode"
-      companies : { connect: [{ name: "H&M" },{ name: "Zalando" },{ name: "Nike" }] }
+      companies : { connect: [{ name: "H&M" },{ name: "Zalando" },{ name: "Nike" },{ name: "Quechua" }] }
     }
   ){ id }
   createCompanyCategory4: createCompanyCategory(
     data : {
       name : "Papeterie"
-      companies : { connect: [{ name: "H&M" },{ name: "Zalando" },{ name: "Nike" }] }
+      companies : { connect: [{ name: "Bic" }] }
     }
   ){ id }
 
+  createCompanyCategory5: createCompanyCategory(
+    data : {
+      name : "Papeterie"
+      companies : { connect: [{ name: "Bic" }] }
+    }
+  ){ id }
 
+  createCompanyCategory6: createCompanyCategory(
+    data : {
+      name : "Alimentation"
+      companies : { connect: [{ name: "Mc Donalds" }, { name: "Biocoop" }] }
+    }
+  ){ id }
 
+   createCompanyCategory7: createCompanyCategory(
+    data : {
+      name : "Vente en ligne"
+      companies : { connect: [{ name: "Amazon" }] }
+    }
+  ){ id }
 }

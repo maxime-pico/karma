@@ -11,7 +11,7 @@ import gql from 'graphql-tag'
 import SearchResult from './components/SearchResult'
 import styled from 'styled-components'
 import { Grid, Row, Col } from '@smooth-ui/core-sc'
-import { KARMA_LABELS, BRANDS_SORTING_LABELS, BRANDS_RESULTS_MESSAGE, BRANDS_STATIC_CONTENTS } from '../../utils'
+import { KARMA_LABELS, BRANDS_SORTING_LABELS, BRANDS_RESULTS_MESSAGES, BRANDS_STATIC_CONTENTS } from '../../utils'
 
 const SearchInput = styled.input``;
 const SearchSubmit = styled.button``;
@@ -63,8 +63,7 @@ class Search extends React.Component {
       searchedValue: '',
       orderBy: 'name_ASC',
       categories: '',
-      karmas: '',
-      karmas_slugs: [],
+      karmas: [],
     }
 
     this.handleChangeSearch = this.handleChangeSearch.bind(this);
@@ -76,7 +75,7 @@ class Search extends React.Component {
     this.clearFilters = this.clearFilters.bind(this);
 
     this.categories = [];
-    this.karmas = [];
+    this.karmas = []
   }
 
   /* Searching */
@@ -117,21 +116,22 @@ class Search extends React.Component {
   }
 
   clearFilters() {
-    this.categories = this.karmas = [];
+    this.categories = [];
+    this.karmas = []
     this.setState({ categories: '' })
     this.setState({ karmas: '' })
   }
 
   handleChangeKarma(event) {
     const targetValue = event.target.value;
-    const index = this.karmas.indexOf(targetValue);
-
+    const index = this.state.karmas.indexOf(targetValue);
+    const karmas = this.state.karmas;
     if (index > -1) {
-      this.karmas.splice(index, 1);
+      karmas.splice(index, 1);
     } else {
-      this.karmas.push(targetValue);
+      karmas.push(targetValue);
     }
-    this.setState({ karmas: this.karmas.join(',') });
+    this.setState({ karmas: karmas });
   }
 
   /* Render view */
@@ -144,8 +144,12 @@ class Search extends React.Component {
     )
   }
 
-  renderKarmaFilters() {
-
+  renderKarmaFilter({ input, meta }) {
+    return (
+      <div>
+        <input type="checkbox" />
+      </div>
+    )
   }
 
   render() {
@@ -193,11 +197,11 @@ class Search extends React.Component {
             {BRANDS_STATIC_CONTENTS.filters_karmas_title['fr']}
 
             <form>
-              {KARMA_LABELS.map((karma, index) => (
+              {Object.entries(KARMA_LABELS).map(([k, karma], index) => (
                 <label key={'k-' + index}> {karma.label['fr']}
-                  <input checked={(this.state.karmas.indexOf(karma.value) > -1 ? 'checked' : '')}
+                  <input component={this.renderKarmaField}  checked={(this.state.karmas.indexOf(karma.slug) > -1 ? 'checked' : '')}
                     onChange={this.handleChangeKarma}
-                    value={karma.value}
+                    value={karma.slug}
                     name="karma"
                     type="checkbox"
                   />
@@ -219,7 +223,6 @@ class Search extends React.Component {
             {/* Search input -- TODO : transform element into component */}
             <form onSubmit={this.handleSubmitSearch}>
               <SearchInput value={this.state.searchValue} onChange={this.handleChangeSearch} component={this.renderSearchInput} placeholder={BRANDS_STATIC_CONTENTS.search_input_placeholder['fr']} />
-              {/*<SearchSubmit type="submit">Rechercher</SearchSubmit>*/}
               {searchValue.length ? (<button onClick={this.clearSearchInput} >x</button>) : ''}
             </form>
 
@@ -242,7 +245,7 @@ class Search extends React.Component {
           filter: this.state.searchedValue,
           orderBy: this.state.orderBy,
           categories: this.state.categories,
-          karmas: this.state.karmas,
+          karmas: this.state.karmas.join(','),
         }} >
 
           {({ loading, error, data }) => {
@@ -260,8 +263,8 @@ class Search extends React.Component {
                   <Title>
                     {
                       companyList.length ?
-                        (BRANDS_RESULTS_MESSAGE.main_results['fr']) :
-                        (BRANDS_RESULTS_MESSAGE.no_results['fr'])
+                        (BRANDS_RESULTS_MESSAGES.main_results['fr']) :
+                        (BRANDS_RESULTS_MESSAGES.no_results['fr'])
                     }
                   </Title>
 
