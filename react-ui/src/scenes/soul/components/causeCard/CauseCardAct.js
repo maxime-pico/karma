@@ -12,7 +12,6 @@ import { Row, Col, styled } from '@smooth-ui/core-sc'
 const Text = styled(Col)`
 	color: #a9b4cc;
 	font-size: 18px;
-	line-height: 22px;
 `
 
 const Identifier = styled.div`

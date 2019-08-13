@@ -80,7 +80,7 @@ type Props = {
 // preview then dispatches the info in the relevant components or displays
 // a generic message if no opinions were found for the act
 const ActAndOpinionPreview = (props: Props) => {
-	const { act, grade, companyId, location } = props
+	const { act, grade, companyId, location, tutorial } = props
 	const first = 3 //only fetch the first n opinions
 	return (
 		<ActCard>
@@ -89,54 +89,60 @@ const ActAndOpinionPreview = (props: Props) => {
 					if (loading) return <div> Loading... </div>
 					if (error) return <div> Errorv: {error.message} </div>
 					const opinionsFeed = data.opinionsFeed //opinionsFeed contains the first n opinions
-
 					return (
-						<div>
-							<ActCardHeader act={act} grade={grade} />
-							<ActDescription
-								act={act}
-								color="#a9b4cc"
-								justifyContent="center"
-							/>
-							{opinionsFeed.length ? (
-								<div>
-									<Row justifyContent="center" mt={'12px'} mb={'42px'}>
-										<Col md={10} textAlign="left">
-											<ItemHeaderDescription>
-												Un extrait des opinions qui ont été les plus utiles aux
-												utilisateurs pour juger l'acte :
-											</ItemHeaderDescription>
-										</Col>
-									</Row>
-									<OpinionPreview
-										act={act}
-										companyId={companyId}
-										opinionsFeed={opinionsFeed}
-									/>
-									<OpinionsAndGradesCount
-										opinionsFeed={opinionsFeed}
-										color="#a9b4cc"
-									/>
-									<Link to={`${location.pathname}act/${act}`}>
-										<ReadMore>Voir les sources</ReadMore>
-									</Link>
-								</div>
-							) : (
-								<NoOpinions>
+							<div>
+								<div
+									className={tutorial ? 'act' : null}
+								></div>
+								<ActCardHeader act={act} grade={grade} location={location} />
+								<ActDescription
+									act={act}
+									color="#a9b4cc"
+									justifyContent="center"
+								/>
+								{opinionsFeed.length ? (
+									<div>
+										<Row justifyContent="center" mt={'12px'} mb={'42px'}>
+											<Col md={10} textAlign="left">
+												<ItemHeaderDescription>
+													Un extrait des opinions qui ont été les plus utiles
+													aux utilisateurs pour juger l'acte :
+												</ItemHeaderDescription>
+											</Col>
+										</Row>
+										<OpinionPreview
+											act={act}
+											companyId={companyId}
+											location={location}
+											opinionsFeed={opinionsFeed}
+											tutorial={tutorial}
+										/>
+										<OpinionsAndGradesCount
+											opinionsFeed={opinionsFeed}
+											color="#a9b4cc"
+										/>
+										<Link to={`${location.pathname}act/${act}`}>
+											<ReadMore className={tutorial && 'more'}>
+												Voir les sources
+											</ReadMore>
+										</Link>
+									</div>
+								) : (
 									<NoOpinions>
-										Il n'y a pas encore d'opinion pour cet acte... :'(
+										<NoOpinions>
+											Il n'y a pas encore d'opinion pour cet acte... :'(
+										</NoOpinions>
+										<Link to={`${location.pathname}act/${act}`}>
+											<ReadMore>Ajouter une opinion</ReadMore>
+										</Link>
 									</NoOpinions>
-									<Link to={`${location.pathname}act/${act}`}>
-										<ReadMore>Ajouter une opinion</ReadMore>
-									</Link>
-								</NoOpinions>
-							)}
-						</div>
-					)
-				}}
-			</Query>
-		</ActCard>
-	)
-}
+								)}
+							</div>
+						)
+					}}
+				</Query>
+			</ActCard>
+		)
+	}
 
 export default withRouter(ActAndOpinionPreview)

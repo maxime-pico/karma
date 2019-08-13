@@ -37,7 +37,6 @@ const SubTitle = styled.div`
 
 const Content = styled.div`
   font-size: 20px
-  color: #7F8799;
   text-align: left;
   margin-bottom:24px
 `

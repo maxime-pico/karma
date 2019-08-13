@@ -5,6 +5,7 @@ import React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import Cookies from 'universal-cookie'
+import { Steps } from 'intro.js-react'
 import CauseHeader from './components/header/CauseHeader'
 import ActAndOpinionPreviewList from './components/actPreview/ActAndOpinionPreviewList'
 import StartGradingCausesModal from './components/modals/StartGradingCausesModal'
@@ -14,7 +15,7 @@ import HelpButton from '../../components/buttons/HelpButton'
 import CausesJudgingInterface from './components/judgingInterface/CausesJudgingInterface'
 import CauseHelpInterface from './components/helpInterface/CauseHelpInterface'
 import { adjacentCause } from '../../services/utils'
-import { AUTH_TOKEN } from '../../services/constants'
+import { AUTH_TOKEN, CAUSE_STEPS } from '../../services/constants'
 import { styled } from '@smooth-ui/core-sc'
 
 // <STYLE>
@@ -43,6 +44,7 @@ class Cause extends React.Component {
 		super(props)
 		const cookies = new Cookies() // get access to cookies
 		this.authToken = cookies.get(AUTH_TOKEN) // if user is logged in authToken contains the token
+		this.userOnboarded = cookies.get('userOnboarded_cause') // if user has been onboarded, is set at true, otherwise shouldn't exist
 	}
 
 	state = {
@@ -59,11 +61,50 @@ class Cause extends React.Component {
 			ETHICS: null,
 			FISCAL: null,
 		},
+		stepsEnabled: false, // when switched to true, launches the tutorial
+		initialStep: 0,
+		steps: CAUSE_STEPS, // references to the file containing the different 'steps' of the tutorial, ie. text content and dom reference (class of the element)
 	}
+
+	/*
+    >>>>>>>>>>>>>>> HELP NEEDED <<<<<<<<<<<<<<<<<<<<<<<<<<
+    The context:
+    I use intro.js-react to have an interactive tutorial on the page.
+    I would like the tutorial to launch automatically upon first visit of the page for a user.
+    I achieved this well thanks to cookies.
+
+    The problem:
+    Unfortunantely on this page it doesn't work as expected because the tutorial triggers faster
+    than my browser loads the DOM elements of the page. Therefore intro.js cannot locate the elements
+    to annotate :(
+
+    Attempted solutions:
+    I tried using component did mount or even component did update + checking if all elements exist,
+    but somehow it didn't work. I'm not the most skillful in react so it might be that.
+    I tried not having different structures between query loading states and actual data provided but it
+    didn't change anything...
+    Current patch is to set a timeout but it doesn't work on "slow 3G" for instance
+
+    Additional infos:
+    The tutorial data is contained in CAUSE_STEPS. It has 5 steps with references to 5 classes that
+    target elements loaded by different components:
+    - .karma & .actsList reference stuff in the CauseHeader component. actsLists is wrapped in a query fetching info, this is the first reference that breaks
+    - .act & .more reference to elements in the ActAndOpinionPreview component
+    - .opinion refrences to an element in the OpinionPreview component
+  */
+
 
 	//upon loading of the page, check if comming from Soul page or another cause page
 	//in grading mode. If so, then copy location state into component state
 	componentDidMount() {
+    if (!this.userOnboarded) {
+			setTimeout( () =>{ // dirty patch, sorry, I tried better :'(
+        this.setState(previousState => {
+				previousState.stepsEnabled = true // checking if the tutorial should be displayed for the user
+				return previousState
+			})}, 3000)
+		}
+
 		//if location state exists = context of the route is defined, then...
 		if (this.props.location.state) {
 			//if startGrading = true and startGrading not true for component, that means
@@ -186,6 +227,27 @@ class Cause extends React.Component {
 		})
 	}
 
+	_launchTutorial = () => {
+		// function used in CauseHelpInterface to manually launch the tutorial
+		this.setState(previousState => {
+			previousState.stepsEnabled = true
+			return previousState
+		})
+	}
+
+	_endTutorial = () => {
+		this.setState(previousState => {
+			previousState.stepsEnabled = false
+			return previousState
+		})
+		if (!this.userOnboarded) {
+			const cookies = new Cookies()
+			cookies.set('userOnboarded_cause', 'true', {
+				path: '/',
+			})
+		}
+	}
+
 	render() {
 		const companyId = this.props.match.params.companyId //getting the companyId from url
 		const cause = this.props.match.params.cause //getting the cause from url
@@ -211,6 +273,21 @@ class Cause extends React.Component {
 							}
 							grading={this.state.grading}
 						>
+							<Steps
+								enabled={this.state.stepsEnabled}
+								steps={this.state.steps}
+								initialStep={this.state.initialStep}
+								onExit={this._endTutorial}
+								options={{
+									showStepNumbers: false,
+									overlayOpacity: 0.01,
+									showBullets: false,
+									hidePrev: true,
+									hideNext: true,
+									nextLabel: 'Suivant',
+									doneLabel: 'Terminé',
+								}}
+							/>
 							<CauseHeader
 								companyId={companyId}
 								karma={overallKarma}
@@ -218,8 +295,17 @@ class Cause extends React.Component {
 								cause={cause}
 								pb={0}
 								grading={this.state.grading}
+								_launchTutorial={this._launchTutorial}
+								_setDataLoaded={this._setDataLoaded}
 							/>
-							<ActAndOpinionPreviewList cause={cause} companyId={companyId} />
+							<ActAndOpinionPreviewList
+								cause={cause}
+								companyId={companyId}
+                userOnboarded={this.userOnboarded}
+                stepsEnabled={this.stepsEnabled}
+								_setDataLoaded={this._setDataLoaded}
+                _launchTutorial={this._launchTutorial}
+							/>
 							{this.state.grading && (
 								<CausesJudgingInterface
 									companyId={companyId}
@@ -236,6 +322,9 @@ class Cause extends React.Component {
 									companyId={companyId}
 									_closeHelp={this._closeHelp}
 									cause={cause}
+									_launchTutorial={this._launchTutorial}
+									_endTutorial={this._endTutorial}
+									stepsEnabled={this.state.stepsEnabled}
 								/>
 							)}
 							<StartGradingCausesModal

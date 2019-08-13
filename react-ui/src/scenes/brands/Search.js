@@ -20,28 +20,28 @@ import Select from './../../components/form/Select'
 import PrettyCheckbox from './../../components/form/PrettyCheckbox'
 
 const SearchInput = styled.input`
-  border-radius: 2rem;
-  padding: 1rem 0.8rem 1rem 3.5rem;
+  border-radius: 3rem;
+  padding: 1rem 0.8rem 1rem 4.5rem;
   width: 100%;
-  height: 4rem;
-  font-size: 1rem;
+  height: 6rem;
+  font-size: 1.6rem;
   border:0;
   background-color:white;
   background-image: url(${icon_magnifier});
   background-repeat:no-repeat;
-  background-position: 1rem center;
+  background-position: 1.5rem center;
   background-size: auto 2rem;
 `;
 
 const SearchInputClearButton = styled.button`
-  border-radius: 2rem;
-  height: 2rem;
-  width: 2rem;
+  border-radius: 3rem;
+  height: 3rem;
+  width: 3rem;
   background-color:#ccc;
   padding: 0.5rem 0.8rem;
   border: 2px solid #ececec;
   position: absolute;
-  right: 1rem;
+  right: 1.5rem;
   top:50%;
   transform:translateY(-50%);
   display:flex;
@@ -224,18 +224,18 @@ class Search extends React.Component {
         {/* TITLE */}
 
         <Row mt={'96px'}>
-          <Col justifyContent="flex-start" md={7}>
-            <h1>{BRANDS_STATIC_CONTENTS.title['fr']}</h1>
+          <Col justifyContent="flex-start" md={8}>
+            <h1 class="title-size1">{BRANDS_STATIC_CONTENTS.title['fr']}</h1>
           </Col>
 
-          <Col justifyContent="flex-end" md={5}>
+          <Col justifyContent="flex-end" md={4}>
             {(this.state.categories.length || this.state.karmas.length) ? (<button onClick={this.clearFilters} >Supprimer les filtres x</button>) : ''}
           </Col>
         </Row>
 
         {/* FILTERS */}
 
-        <Row justifyContent="flex-start" mt={'2rem'}>
+        <Row className="brands-filtering" justifyContent="flex-start" mt={'2rem'}>
           <Col md={7}>
 
             {/* Filters - categories list -- TODO : transform elements into components */}
@@ -306,7 +306,7 @@ class Search extends React.Component {
 
         {/* SEARCH AND SORT */}
 
-        <Row justifyContent="flex-start" mt={'96px'}>
+        <Row className="brands-sorting" justifyContent="flex-start" mt={'3rem'}>
 
           <Col md={7}>
 
@@ -326,9 +326,9 @@ class Search extends React.Component {
 
           </Col>
 
-          <Col md={5}>
+          <Col omd={1} md={4} className="sorter">
 
-            {BRANDS_STATIC_CONTENTS.sorting_title['fr']}
+            <h5>{BRANDS_STATIC_CONTENTS.sorting_title['fr']}</h5>
 
             <Select
               options={BRANDS_SORTING_LABELS}

@@ -57,7 +57,6 @@ const Sources = styled.div`
 `
 const SeeMore = styled.span`
 	font-size: 16px;
-	color: #7f8799;
 	font-weight: 600;
 	cursor: pointer;
 `
@@ -111,14 +110,13 @@ class Opinion extends React.Component {
 	}
 
 	render() {
-		const { opinion, grading, step } = this.props
+		const { opinion, grading, step, tutorial } = this.props
 		const expanded = this.state.expanded
 		return (
 			<ExpandingCol
 				md={expanded ? 12 : 6}
 				flexshrink={expanded ? null : '1'}
 				flexgrow={expanded ? '1' : null}
-				key={opinion.id}
 				className={this.state.selected ? 'selected' : null}
 			>
 				<OpinionBox
@@ -126,6 +124,7 @@ class Opinion extends React.Component {
 						this._opinionSelected(opinion.id, grading && step === 0)
 					}
 					isSelected={this.state.selected ? '#D3E2FF' : 'transparent'}
+					className={tutorial ? 'opinion' : null}
 				>
 					<OpinionTitle>{opinion.title}</OpinionTitle>
 					<Tags mb={3}>

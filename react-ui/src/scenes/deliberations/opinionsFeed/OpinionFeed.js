@@ -3,8 +3,7 @@ import Opinion from '../../../components/opinion/Opinion'
 import { Row, styled } from '@smooth-ui/core-sc'
 
 const DefaultText = styled.span`
-	color: #7f8799;
-	font-size: 18px;
+	font-size: 1.8rem;
 `
 
 const OpinionFeed = ({
@@ -22,6 +21,7 @@ const OpinionFeed = ({
 				opinionsFeed.map((opinion, index) => (
 					<Opinion
 						key={index}
+						tutorial={index === 0}
 						opinion={opinion}
 						affiliation={affiliation}
 						grading={grading}

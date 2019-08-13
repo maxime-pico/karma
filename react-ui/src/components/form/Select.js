@@ -4,6 +4,7 @@ import { styled } from '@smooth-ui/core-sc'
 const SelectInput = styled.select`
 height: 2.5rem;
 margin-left: 0.8rem;
+font-size: 1.3rem;
 `;
 
 class Select extends React.Component {

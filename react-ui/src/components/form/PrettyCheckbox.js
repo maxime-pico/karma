@@ -6,7 +6,7 @@ const PrettyCheckboxLabel = styled.label`
   cursor: pointer;
   margin: 0 0.1rem 0 0.1rem;
   padding: 0.2rem 0.4rem;
-  font-size: 0.8rem;
+  font-size: 1.6rem;
 `
 
 const PrettyCheckboxInput = styled.input`
@@ -33,16 +33,21 @@ const PrettyCheckboxInput = styled.input`
 
 const PrettyCheckboxReplacer = styled.span`
   width: 100%;
-  padding: 0.4rem 1rem;
+  padding: 1rem 1.5rem;
+  margin-bottom:1rem;
   border: 2px solid white;
   background-color:white;
   position: relative;
   display: flex;
   align-items : center;
   justify-content:center;
-  border-radius: 2rem;
+  border-radius: 3rem;
   color: #333;
-  transition: color 0.1s ease;
+  transition: all 0.1s ease;
+
+  &:hover {
+    background-color:#ccc;
+  }
 
   &::before {
     content: "";
