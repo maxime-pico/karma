@@ -13,9 +13,52 @@ import styled from 'styled-components'
 import { Grid, Row, Col, } from '@smooth-ui/core-sc'
 import { KARMA_LABELS, BRANDS_SORTING_LABELS, BRANDS_RESULTS_MESSAGES, BRANDS_STATIC_CONTENTS } from '../../utils'
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
+import icon_magnifier from '../../images/icons/loupe.svg'
 
-const SearchInput = styled.input``;
-const SearchSubmit = styled.button``;
+
+import Select from './../../components/form/Select'
+import PrettyCheckbox from './../../components/form/PrettyCheckbox'
+
+const SearchInput = styled.input`
+  border-radius: 2rem;
+  padding: 1rem 0.8rem 1rem 3.5rem;
+  width: 100%;
+  height: 4rem;
+  font-size: 1rem;
+  border:0;
+  background-color:white;
+  background-image: url(${icon_magnifier});
+  background-repeat:no-repeat;
+  background-position: 1rem center;
+  background-size: auto 2rem;
+`;
+
+const SearchInputClearButton = styled.button`
+  border-radius: 2rem;
+  height: 2rem;
+  width: 2rem;
+  background-color:#ccc;
+  padding: 0.5rem 0.8rem;
+  border: 2px solid #ececec;
+  position: absolute;
+  right: 1rem;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: all 0.3s ease;
+
+  :hover {
+    background-color:#45bcb6;
+    color: white;
+  }
+`;
+
+const SearchInputForm = styled.form`
+  width: 100%;
+  position:relative;
+`;
 
 const Title = styled.div`
 	font-size: 30px;
@@ -34,8 +77,18 @@ const Title = styled.div`
 
 // preparing query that retireves the list of id, name and logos of all companies
 const COMPANY_LIST = gql(`
-	query CompanyList($filter: String, $orderBy: CompanyOrderByInput, $categories: String, $karmas: String) {
-		allCompanies(orderBy: $orderBy, filter: $filter, categories: $categories, karmas: $karmas) {
+	query CompanyList(
+    $filter: String, 
+    $orderBy: CompanyOrderByInput, 
+    $categories: String, 
+    $karmas: String
+  ) {
+		allCompanies(
+      orderBy: $orderBy, 
+      filter: $filter, 
+      categories: $categories, 
+      karmas: $karmas
+    ) {
 			id
 			name
       logo
@@ -46,8 +99,14 @@ const COMPANY_LIST = gql(`
 
 // preparing query that retireves the list of categories id, name
 const COMPANY_CATEGORY_LIST = gql(`
-	query CompanyCategoryList($filter: String, $orderBy: CompanyCategoryOrderByInput) {
-		allCompanyCategories(orderBy: $orderBy, filter: $filter) {
+	query CompanyCategoryList(
+    $filter: String, 
+    $orderBy: CompanyCategoryOrderByInput
+  ) {
+		allCompanyCategories(
+      orderBy: $orderBy, 
+      filter: $filter
+    ) {
 			id
 			name
 		}
@@ -57,16 +116,17 @@ const COMPANY_CATEGORY_LIST = gql(`
 // Search component: displays the list of companies in the database
 class Search extends React.Component {
 
+  state = {
+    searchValue: '',
+    searchedValue: '',
+    orderBy: 'name_ASC',
+    categories: '',
+    karmas: [],
+    reloaded: false,
+  }
+
   constructor(props) {
     super(props)
-    this.state = {
-      searchValue: '',
-      searchedValue: '',
-      orderBy: 'name_ASC',
-      categories: '',
-      karmas: [],
-      reloaded : false,
-    }
 
     this.handleChangeSearch = this.handleChangeSearch.bind(this);
     this.handleSubmitSearch = this.handleSubmitSearch.bind(this);
@@ -114,7 +174,7 @@ class Search extends React.Component {
     } else {
       this.categories.push(targetValue);
     }
-    this.setState({reloaded : true})
+    this.setState({ reloaded: true })
     this.setState({ categories: this.categories.join(',') });
   }
 
@@ -126,13 +186,15 @@ class Search extends React.Component {
   }
 
   resetReload() {
-    this.setState({reloaded : false})
+    this.setState({ reloaded: false })
   }
 
   handleChangeKarma(event) {
+
     const targetValue = event.target.value;
     const index = this.state.karmas.indexOf(targetValue);
     const karmas = this.state.karmas;
+
     if (index > -1) {
       karmas.splice(index, 1);
     } else {
@@ -151,14 +213,6 @@ class Search extends React.Component {
     )
   }
 
-  renderKarmaFilter({ input, meta }) {
-    return (
-      <div>
-        <input type="checkbox" />
-      </div>
-    )
-  }
-
   render() {
 
     const searchValue = this.state.searchValue;
@@ -167,148 +221,180 @@ class Search extends React.Component {
 
       <Grid>
 
+        {/* TITLE */}
+
+        <Row mt={'96px'}>
+          <Col justifyContent="flex-start" md={7}>
+            <h1>{BRANDS_STATIC_CONTENTS.title['fr']}</h1>
+          </Col>
+
+          <Col justifyContent="flex-end" md={5}>
+            {(this.state.categories.length || this.state.karmas.length) ? (<button onClick={this.clearFilters} >Supprimer les filtres x</button>) : ''}
+          </Col>
+        </Row>
+
         {/* FILTERS */}
 
-        <Row justifyContent={{ md: 'center' }} mt={'96px'}>
-          <Col md={12}>
+        <Row justifyContent="flex-start" mt={'2rem'}>
+          <Col md={7}>
 
             {/* Filters - categories list -- TODO : transform elements into components */}
 
-            {BRANDS_STATIC_CONTENTS.filters_categories_title['fr']}
+            <h5>{BRANDS_STATIC_CONTENTS.filters_categories_title['fr']}</h5>
 
-            <Query query={COMPANY_CATEGORY_LIST} >
-              {({ loading, error, data }) => {
-                if (loading) return <div> Fetching Categories</div>
-                if (error) return <div> Error while loading categories</div>
+            <Query
+              query={COMPANY_CATEGORY_LIST}
+            >
+              {
+                ({ loading, error, data }) => {
 
-                const companyCategoryList = data.allCompanyCategories
+                  if (loading) return <div> Fetching Categories</div>
+                  if (error) return <div> Error while loading categories</div>
 
-                return (
-                  <div className="filters">
-                    <form>
-                      {companyCategoryList.map(category => (
-                        <label key={'s-' + category.id}>
-                          {category.name}
-                          <input type="checkbox" checked={(this.state.categories.indexOf(category.id) > -1 ? 'checked' : '')} value={category.id} name="category" onChange={this.handleChangeCategory} />
-                        </label>
-                      ))}
-                    </form>
+                  const companyCategoryList = data.allCompanyCategories
 
-                  </div>
-                )
-              }}
+                  return (
+                    <div className="filters">
+                      <form>
+                        {companyCategoryList.map(category => (
+
+                          <PrettyCheckbox
+                            key={'c-' + category.id}
+                            title={category.name}
+                            name="category"
+                            checked={(this.state.categories.indexOf(category.id) > -1 && 'checked')}
+                            value={category.id}
+                            handleChange={this.handleChangeCategory.bind(this)}
+                            theme="theme-1"
+                          />
+
+                        ))}
+                      </form>
+                    </div>
+                  )
+                }
+              }
             </Query>
+
+          </Col>
+
+          <Col md={5}>
 
             {/* Filters - karmas list -- TODO : transform elements into components */}
 
-            {BRANDS_STATIC_CONTENTS.filters_karmas_title['fr']}
+            <h5>{BRANDS_STATIC_CONTENTS.filters_karmas_title['fr']}</h5>
 
             <form>
               {Object.entries(KARMA_LABELS).map(([k, karma], index) => (
-                <label key={'k-' + index}> {karma.label['fr']}
-                  <input component={this.renderKarmaField}  checked={(this.state.karmas.indexOf(karma.slug) > -1 ? 'checked' : '')}
-                    onChange={this.handleChangeKarma}
-                    value={karma.slug}
-                    name="karma"
-                    type="checkbox"
-                  />
-                </label>
+
+                <PrettyCheckbox
+                  className={'karma-' + karma.slug}
+                  key={'k-' + karma.slug}
+                  title={karma.value}
+                  name="karma"
+                  checked={(this.state.karmas.indexOf(karma.slug) > -1 && 'checked')}
+                  value={karma.slug}
+                  handleChange={this.handleChangeKarma.bind(this)}
+                  theme="theme-2"
+                />
+
               ))}
             </form>
-
-            {(this.state.categories.length || this.state.karmas.length) ? (<button onClick={this.clearFilters} >Supprimer les filtres x</button>) : ''}
 
           </Col>
         </Row>
 
         {/* SEARCH AND SORT */}
 
-        <Row justifyContent={{ md: 'center' }} mt={'96px'}>
+        <Row justifyContent="flex-start" mt={'96px'}>
 
-          <Col md={8}>
+          <Col md={7}>
 
             {/* Search input -- TODO : transform element into component */}
-            <form onSubmit={this.handleSubmitSearch}>
-              <SearchInput value={this.state.searchValue} onChange={this.handleChangeSearch} component={this.renderSearchInput} placeholder={BRANDS_STATIC_CONTENTS.search_input_placeholder['fr']} />
-              {searchValue.length ? (<button onClick={this.clearSearchInput} >x</button>) : ''}
-            </form>
+            <SearchInputForm onSubmit={this.handleSubmitSearch}>
+
+              <SearchInput
+                value={this.state.searchValue}
+                onChange={this.handleChangeSearch}
+                component={this.renderSearchInput}
+                placeholder={BRANDS_STATIC_CONTENTS.search_input_placeholder['fr']}
+              />
+
+              {searchValue.length ? (<SearchInputClearButton onClick={this.clearSearchInput} >x</SearchInputClearButton>) : ''}
+
+            </SearchInputForm>
 
           </Col>
 
-          <Col md={4}>
+          <Col md={5}>
+
             {BRANDS_STATIC_CONTENTS.sorting_title['fr']}
 
-            <select value={this.state.orderBy} onChange={this.handleChangeOrderBy}>
-              {BRANDS_SORTING_LABELS.map((sort, index) => (
-                <option key={'sort-' + index} value={sort.value}>{sort.name['fr']}</option>
-              ))}
-            </select>
+            <Select
+              options={BRANDS_SORTING_LABELS}
+              handleChange={this.handleChangeOrderBy.bind(this)}
+            />
+
           </Col>
         </Row>
 
         {/* RESULTS */}
 
-        <Query query={COMPANY_LIST} variables={{
-          filter: this.state.searchedValue,
-          orderBy: this.state.orderBy,
-          categories: this.state.categories,
-          karmas: this.state.karmas.join(','),
-        }} onCompleted={() => {this.resetReload()}} >
+        <Query
+          query={COMPANY_LIST}
+          variables={{
+            filter: this.state.searchedValue,
+            orderBy: this.state.orderBy,
+            categories: this.state.categories,
+            karmas: this.state.karmas.join(','),
+          }}
+          onCompleted={() => { this.resetReload() }}
+        >
 
           {({ loading, error, data }) => {
 
-            if (loading)  return <div> Fetching </div>
+            if (loading) return <div> Fetching </div>
             if (error) return <div> Error  </div>
-            
+
             const companyList = data.allCompanies
 
             return (
 
-              <Row justifyContent={{ md: 'center' }} mt={'96px'}>
-                <Col md={8}>
-              
+              <Row justifyContent={{ md: 'center' }} mt={'2rem'}>
+                <Col md={12}>
+
                   <Title>
                     {
-                      companyList.length ?
-                      (BRANDS_RESULTS_MESSAGES.main_results['fr']) :
-                      (BRANDS_RESULTS_MESSAGES.no_results['fr'])
+                      !companyList.length && (BRANDS_RESULTS_MESSAGES.no_results['fr'])
                     }
                   </Title>
 
-                  {/*<SubTitle>
-										Les 3 marques les plus notées (cool pour découvrir la
-										plateforme) :
-                  </SubTitle>*/}
-
                   {/* Results */}
-                 
-                  <Row my={4} justifyContent={{ md: 'center' }}>
 
-                    <TransitionGroup  className="results-list">
+                  <TransitionGroup className="results-list">
 
-                      {companyList.map(company => (
+                    {companyList.map(company => (
 
-                        <CSSTransition
+                      <CSSTransition
                         key={company.id}
                         timeout={300}
                         classNames="result-fade"
                         exit={this.state.reloaded}
-                        >
+                      >
 
-                          <SearchResult
+                        <SearchResult
                           name={company.name}
                           id={company.id}
                           logo={company.logo}
                           karma={company.karma}
                           key={'s-' + company.id}
-                          />
+                        />
 
-                        </CSSTransition>
-                      ))}
+                      </CSSTransition>
+                    ))}
 
-                    </TransitionGroup>
-                    
-                  </Row>                  
+                  </TransitionGroup>
+
                 </Col>
               </Row>
             )

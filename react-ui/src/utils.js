@@ -1,9 +1,9 @@
 const KARMA_LABELS = {
-  vb : { value: -2, slug: 'vb', label: { fr: 'Très Mauvais Karma' } },
-  b : { value: -1, slug: 'b', label: { fr: 'Plutôt Mauvais Karma' } },
-  n : { value: 0, slug: 'n', label: { fr: 'Karma Neutre' } },
-  g :{ value: 1, slug: 'g', label: { fr: 'Plutôt Bon Karma' } },
-  vg : { value: 2, slug: 'vg', label: { fr: 'Très bon Karma' } },
+  vb: { value: -2, slug: 'vb', label: { fr: 'Très Mauvais Karma' } },
+  b: { value: -1, slug: 'b', label: { fr: 'Plutôt Mauvais Karma' } },
+  n: { value: 0, slug: 'n', label: { fr: 'Karma Neutre' } },
+  g: { value: 1, slug: 'g', label: { fr: 'Plutôt Bon Karma' } },
+  vg: { value: 2, slug: 'vg', label: { fr: 'Très bon Karma' } },
 };
 
 const BRANDS_SORTING_LABELS = [
@@ -19,8 +19,9 @@ const BRANDS_RESULTS_MESSAGES = {
 }
 
 const BRANDS_STATIC_CONTENTS = {
-  filters_categories_title: { fr: 'Catégories :' },
-  filters_karmas_title: { fr: 'Catégories :' },
+  title: { fr: 'Trouver une marque' },
+  filters_categories_title: { fr: 'Par catégories :' },
+  filters_karmas_title: { fr: 'Par karma :' },
   sorting_title: { fr: 'Trier par :' },
   search_input_placeholder: { fr: 'Rechercher une marque' }
 }

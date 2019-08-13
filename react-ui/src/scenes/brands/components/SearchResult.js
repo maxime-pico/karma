@@ -14,21 +14,52 @@ const ResultCard = styled.div`
 	background-color: white;
 	border-radius: 30px;
 	min-height: 80px;
-	font-weight: 500;
-	width: 140px;
+  font-weight: 500;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height: 10rem;
+
 	margin: auto;
-	border: solid 9px transparent;
+	position: relative;
 	box-sizing: border-box;
 
 	&:hover {
-		border: solid 9px #cbcbcb;
-		cursor: pointer;
-	}
+		//border: solid 9px #cbcbcb;
+    cursor: pointer;
+    
+    img{
+      transform:scale(1.2);
+    }
+  }
+  
+  img{
+    display: block;
+    margin: auto;
+    transition: transform 0.5s ease;
+    transform:scale(1);
+  }
 `
 
 const CompanyName = styled.div`
 	color: #a9b4cc;
-	font-size: 0.95rem;
+  font-size: 0.95rem;
+  text-align: center;
+`
+
+const KarmaBadge = styled.div`
+  position: absolute;
+  width:3rem;
+  height:3rem;
+  background-color:red;
+  right: 0;
+  bottom: 0;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 `
 // </STYLE>
 
@@ -47,14 +78,7 @@ const SearchResult = (props: Props) => (
     <Link to={`/company/${props.id}`} style={{ textDecoration: 'none' }}>
       <ResultCard>
         <Row>
-          <Col style={{ height: '110px' }}>
-            <span
-              style={{
-                display: 'inline-block',
-                height: '100%',
-                verticalAlign: 'middle',
-              }}
-            />
+          <Col>
             <img
               src={process.env.PUBLIC_URL + '/images/' + props.logo}
               width="80"
@@ -62,10 +86,12 @@ const SearchResult = (props: Props) => (
             />
           </Col>
         </Row>
+        <KarmaBadge>{props.karma} 2.5</KarmaBadge>
       </ResultCard>
       <Row>
         <Col py={1}>
-          <CompanyName>{props.name} ({props.karma})</CompanyName>
+          <CompanyName>{props.name}</CompanyName>
+
         </Col>
       </Row>
     </Link>
