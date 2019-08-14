@@ -57,7 +57,6 @@ const Sources = styled.div`
 `
 const SeeMore = styled.span`
 	font-size: 16px;
-	color: #7f8799;
 	font-weight: 600;
 	cursor: pointer;
 `

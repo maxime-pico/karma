@@ -40,7 +40,6 @@ const SubTitle = styled.div`
 
 const Content = styled.div`
   font-size: 20px
-  color: #7F8799;
   text-align: left;
   margin-bottom:42px
 `
@@ -51,7 +50,6 @@ const CancelButton = styled.button`
 	border: 1px solid #d8d8d8;
 	padding: 10px 40px;
 	font-size: 20px;
-	color: #7f8799;
 
 	:hover {
 		color: white;

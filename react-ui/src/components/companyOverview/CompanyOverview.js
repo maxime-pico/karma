@@ -31,7 +31,6 @@ const Push = styled.span`
 `
 const CompanyName = styled.div`
 	color: white;
-	font-size: 22px;
 	margin: auto;
 	margin-top: 12px;
 `

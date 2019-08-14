@@ -124,7 +124,7 @@ Open a new terminal window and go back to the server directory (if needed):
 From there globally install the prisma cli and deploy the prisma service taking into acount the environment variables:
 
 ```
-npm intall -g prisma
+npm install -g prisma
 prisma deploy -e .env
 ```
 

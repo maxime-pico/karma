@@ -31,7 +31,6 @@ const Title = styled.div`
 	font-size: 24px;
 	text-align: center;
 	margin-bottom: 12px;
-	color: #7f8799;
 `
 
 const Content = styled.div`
