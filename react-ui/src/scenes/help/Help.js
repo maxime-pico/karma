@@ -17,7 +17,6 @@ const BackGround = styled(Grid)`
 const Title = styled.div`
 	color: #545a66;
 	font-size: 40px;
-	font-family: Avenir;
 	font-weight: 900;
 	margin-bottom: 24px;
 `
@@ -25,7 +24,6 @@ const Title = styled.div`
 const Header1 = styled.div`
 	color: #545a66;
 	font-size: 30px;
-	font-family: Avenir;
 	font-weight: 900;
 	margin-bottom: 12px;
 	margin-top: 42px;
@@ -33,7 +31,6 @@ const Header1 = styled.div`
 const Header2 = styled.div`
 	color: #545a66;
 	font-size: 24px;
-	font-family: Avenir;
 	margin-top: 24px;
 	margin-bottom: 6px;
 `

@@ -99,13 +99,15 @@ type Props = {
 	companyId: string,
 	causeKarma: number,
 	identifier: string,
+	tutorial: boolean,
 }
 
 const CauseCard = (props: Props) => {
-	const { companyId, causeKarma, identifier } = props
+	const { companyId, causeKarma, identifier, tutorial } = props
 	return (
 		<Row mt="126px" justifyContent="center">
 			<CauseCardBorder md={10} py={3} pt={3} pb={0}>
+				<div className={tutorial ? 'cause' : null}></div>
 				<CauseCardTitle
 					companyId={companyId}
 					identifier={identifier}

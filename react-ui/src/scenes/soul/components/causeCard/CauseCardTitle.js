@@ -14,7 +14,6 @@ import { Row, Col, styled } from '@smooth-ui/core-sc'
 const Title = styled.span`
 	font-size: 26px;
 	font-weight: 600;
-	color: #7f8799;
 `
 // Size and color can be adapted
 const RoundWindow = styled.div`

@@ -9,7 +9,6 @@ const Label = styled.span`
 `
 const Description = styled.div`
   font-size: 16px
-  color: #7F8799;
   margin-bottom:12px
 `
 

@@ -12,7 +12,6 @@ const LoginBox = styled(Grid)`
 	border-radius: 96px;
 	padding: 42px;
 	background-color: white;
-	color: #7f8799;
 	font-size: 16px;
 	max-width: 800px;
 	width: 70%;

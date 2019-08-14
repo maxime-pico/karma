@@ -5,7 +5,7 @@ import ItemOverview from './ItemOverview'
 import { Link } from 'react-router-dom'
 
 const OverviewList = ({ cause, grades, companyId }) => (
-	<div>
+	<div className="causeList">
 		{Object.keys(grades).map(
 			identifier =>
 				CAUSE_AND_ACTS[identifier] && (

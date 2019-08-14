@@ -44,13 +44,15 @@ type Props = {
 const GradeKarmaButton = (props: Props) => (
 	<GradeButton
 		type="button"
-		className="btn btn-primary"
+		className="btn btn-primary grade"
 		onClick={() => props._startGrading()}
 	>
 		<Push />
 		<img
-			src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.png'}
+			src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.svg'}
 			alt="grading hammer"
+			width="34"
+			height="32"
 		/>
 	</GradeButton>
 )
