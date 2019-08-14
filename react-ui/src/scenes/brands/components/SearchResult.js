@@ -7,15 +7,15 @@ Here is a component called by Search.js that renders the brand "cards" on the
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { KARMA_LABELS } from '../../../utils'
 
 // <STYLE>
 const ResultCard = styled.div`
-	
 	border-radius: 30px;
 	min-height: 80px;
   font-weight: 500;
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   margin-right: 5rem;
   margin-bottom: 4rem;
   box-sizing: border-box;
@@ -25,30 +25,24 @@ const ResultCard = styled.div`
       margin-right: 0;
     }
   }
-
   &:nth-child(4n+4) {
     @media (min-width: 990px) and (max-width: 1200px) {
       margin-right: 0;
     }
   }
-
   &:nth-child(3n+3) {
     @media (min-width: 768px) and (max-width: 990px) {
       margin-right: 0;
     }
   }
-
   &:nth-child(2n+2) {
-   
     @media (max-width: 768px) {
       margin-right: 0;
     }
   }
   @media (max-width: 768px) {
-  margin-right: 3.2vw;
+    margin-right: 3.2vw;
   }
-
-
 
   .square {
     position: relative;
@@ -70,18 +64,21 @@ const ResultCard = styled.div`
     }
 
     @media(max-width: 768px) {
+      height: 43.1vw;
+      width: 43.1vw;
+    }
+
+    @media(max-width: 576px) {
       height: 45vw;
       width: 45vw;
     }
-      
   }	
 
 	&:hover {
-		//border: solid 9px #cbcbcb;
     cursor: pointer;
     
     img{
-      transform:scale(1.2);
+      transform: scale(1.2);
     }
   }
   
@@ -89,7 +86,7 @@ const ResultCard = styled.div`
     display: block;
     margin: auto;
     transition: transform 0.5s ease;
-    transform:scale(1);
+    transform: scale(1);
   }
 `
 
@@ -102,19 +99,40 @@ const CompanyName = styled.div`
 
 const KarmaBadge = styled.div`
   position: absolute;
-  width:3.5rem;
-  height:3.5rem;
-  background-color:red;
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: #f0f0f0;
+  color: #D7CFC7;
   right: 0;
   bottom: 0;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-top-left-radius: 10px;
   border-bottom-right-radius: 10px;
   font-size: 1.3rem;
-  font-weight:bold;
+  font-weight: bold;
+
+  &.vb {
+    background-color: #B52832;
+    color: white;
+  }
+  &.b{
+    background-color: #B4586D;
+    color: white;
+  }
+  &.n{
+    background-color: #D7CFC7;
+    color: white;
+  }
+  &.g{
+    background-color: #89DFDC;
+    color: white;
+  }
+  &.vg{
+    background-color: #28CBC8;
+    color: white;
+  }
 `
 // </STYLE>
 
@@ -128,23 +146,66 @@ type Props = {
 
 // SearchResult component: displays the company card based on the name, and
 // logo provided. Also adds a link to the relevant brand page based on the id
-const SearchResult = (props: Props) => (
-  <ResultCard>
-    <Link
-      to={`/company/${props.id}`}
-      style={{ textDecoration: 'none' }}
-    >
-      <div class="square">
-        <img
-          src={process.env.PUBLIC_URL + '/images/' + props.logo}
-          width="80"
-          alt="company"
-        />
-        <KarmaBadge>{props.karma} 2.5</KarmaBadge>
-      </div>
-      <CompanyName>{props.name}</CompanyName>
-    </Link>
-  </ResultCard>
-)
+class SearchResult extends React.Component {
+
+  state = {
+    karmaSlug : '',
+    karmaTitle : ''
+  }
+
+  constructor(props) {
+    super(props)
+    if(this.props.karma) {
+      this.state.karmaSlug = this.getKarmaSlugByValue(this.props.karma);
+      this.state.karmaTitle = KARMA_LABELS[this.state.karmaSlug].label['fr']
+    } else {
+      //this.state.karmaSlug = 'Non nôté';
+      this.state.karmaTitle = 'Non nôté'
+    }
+  }
+
+  getKarmaSlugByValue(val) {
+    if(val){
+      if(val == 0) {
+        return 'n';
+      } else {
+        if(val >= 1) {
+          return (val >= 2) ? 'vg' : 'g';
+        }else{
+          if(val < 0) {
+            return (val >= -1) ? 'b' : 'vb';
+          } else {
+            return 'n';
+          }
+        }
+      }
+    }else {
+      return 'na'
+    }
+  }
+
+  render() {
+    return (
+      <ResultCard >
+        <Link
+          to={`/company/${this.props.id}`}
+          style={{ textDecoration: 'none' }}
+          title={this.props.name + ' - ' + this.state.karmaTitle}
+        >
+          <div class="square">
+            <img
+              src={process.env.PUBLIC_URL + '/images/' + this.props.logo}
+              width="80"
+              alt="company"
+            />
+            <KarmaBadge  className={this.state.karmaSlug}>{this.props.karma ? (this.props.karma) : ('N/A')}</KarmaBadge>
+          </div>
+          <CompanyName>{this.props.name}</CompanyName>
+        </Link>
+      </ResultCard>
+      )
+    }
+  }
+
 
 export default SearchResult

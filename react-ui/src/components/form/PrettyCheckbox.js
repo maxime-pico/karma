@@ -22,7 +22,7 @@ const PrettyCheckboxInput = styled.input`
   &:checked {
     & ~ span {
       color: white;
-      background-color:transparent;
+      background-color: transparent;
 
       &::before {
         transform: scale(1);
@@ -34,13 +34,13 @@ const PrettyCheckboxInput = styled.input`
 const PrettyCheckboxReplacer = styled.span`
   width: 100%;
   padding: 1rem 1.5rem;
-  margin-bottom:1rem;
+  margin-bottom: 1rem;
   border: 2px solid white;
-  background-color:white;
+  background-color: white;
   position: relative;
   display: flex;
-  align-items : center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
   border-radius: 3rem;
   color: #333;
   transition: all 0.1s ease;
@@ -54,7 +54,7 @@ const PrettyCheckboxReplacer = styled.span`
     display: block;
     width: 100%;
     height: 100%;
-    background-color: #45bcb6;
+    background-color: #7C8696;
     position: absolute;
     padding: 0.5rem;
     left: 0;
@@ -92,7 +92,7 @@ class PrettyCheckbox extends React.Component {
 
   render() {
     return (
-      <PrettyCheckboxLabel>
+      <PrettyCheckboxLabel className={this.props.className}>
         <PrettyCheckboxInput
           type="checkbox"
           checked={this.props.checked}

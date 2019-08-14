@@ -128,7 +128,6 @@ async function gradeCauses(parent, args, context, info) {
   let globalKarma = 0;
   const avgCauseGrades = {}
   const numberOfCauses = causes.length
-  const divider = (allCauseGrades.length) / (numberOfCauses)
   const allCauseGrades = await context.db.query.causeGrades(
     {
       where:
@@ -136,31 +135,34 @@ async function gradeCauses(parent, args, context, info) {
     },
     ` { cause grade } `,
   )
+  const divider = (allCauseGrades.length) / (numberOfCauses)
 
-  allCauseGrades.forEach(causeGrade => {
-    avgCauseGrades[causeGrade.cause] ?
-      avgCauseGrades[causeGrade.cause] += causeGrade.grade :
-      avgCauseGrades[causeGrade.cause] = causeGrade.grade
-  })
+  //if(allCauseGrades.length) {
+    allCauseGrades.forEach(causeGrade => {
+      avgCauseGrades[causeGrade.cause] ?
+        avgCauseGrades[causeGrade.cause] += causeGrade.grade :
+        avgCauseGrades[causeGrade.cause] = causeGrade.grade
+    })
 
-  causes.forEach(cause => {
-    const avgCauseGrade = avgCauseGrades[cause] / divider
-    globalKarma += avgCauseGrade
-    avgCauseGrades[cause] = Math.round(avgCauseGrade * 10) / 10
-  })
+    causes.forEach(cause => {
+      const avgCauseGrade = avgCauseGrades[cause] / divider
+      globalKarma += avgCauseGrade
+      avgCauseGrades[cause] = Math.round(avgCauseGrade * 10) / 10
+    })
 
-  globalKarma = Math.round((globalKarma / 4) * 10) / 10
+    globalKarma = Math.round((globalKarma / 4) * 10) / 10
 
-  context.db.mutation.updateCompany(
-    {
-      data: {
-        karma: globalKarma
+    context.db.mutation.updateCompany(
+      {
+        data: {
+          karma: globalKarma
+        },
+        where: {
+          id: companyId,
+        },
       },
-      where: {
-        id: companyId,
-      },
-    },
-  )
+    )
+  //}
 
   /** - - - - - - - - -  */
 

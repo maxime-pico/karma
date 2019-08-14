@@ -8,16 +8,15 @@ filters and ordering on the companies.
 import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import SearchResult from './components/SearchResult'
-import styled from 'styled-components'
+import styled, {css } from 'styled-components'
 import { Grid, Row, Col, } from '@smooth-ui/core-sc'
-import { KARMA_LABELS, BRANDS_SORTING_LABELS, BRANDS_RESULTS_MESSAGES, BRANDS_STATIC_CONTENTS } from '../../utils'
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
+import { KARMA_LABELS, BRANDS_SORTING_LABELS, BRANDS_RESULTS_MESSAGES, BRANDS_STATIC_CONTENTS } from '../../utils'
 import icon_magnifier from '../../images/icons/loupe.svg'
-
-
+import SearchResult from './components/SearchResult'
 import Select from './../../components/form/Select'
 import PrettyCheckbox from './../../components/form/PrettyCheckbox'
+import BasicButton from './../../components/buttons/BasicButton'
 
 const SearchInput = styled.input`
   border-radius: 3rem;
@@ -25,10 +24,10 @@ const SearchInput = styled.input`
   width: 100%;
   height: 6rem;
   font-size: 1.6rem;
-  border:0;
-  background-color:white;
+  border: 0;
+  background-color: white;
   background-image: url(${icon_magnifier});
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
   background-position: 1.5rem center;
   background-size: auto 2rem;
 `;
@@ -37,20 +36,20 @@ const SearchInputClearButton = styled.button`
   border-radius: 3rem;
   height: 3rem;
   width: 3rem;
-  background-color:#ccc;
+  background-color: #ccc;
   padding: 0.5rem 0.8rem;
   border: 2px solid #ececec;
   position: absolute;
   right: 1.5rem;
-  top:50%;
-  transform:translateY(-50%);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
 
   :hover {
-    background-color:#45bcb6;
+    background-color: #45bcb6;
     color: white;
   }
 `;
@@ -223,20 +222,20 @@ class Search extends React.Component {
 
         {/* TITLE */}
 
-        <Row mt={'96px'}>
-          <Col justifyContent="flex-start" md={8}>
+        <Row mt={'96px'} alignItems="center">
+          <Col xs={12} justifyContent="flex-start" md={8}>
             <h1 class="title-size1">{BRANDS_STATIC_CONTENTS.title['fr']}</h1>
           </Col>
 
-          <Col justifyContent="flex-end" md={4}>
-            {(this.state.categories.length || this.state.karmas.length) ? (<button onClick={this.clearFilters} >Supprimer les filtres x</button>) : ''}
+          <Col xs={12} textAlign="right" md={4}>
+            {(this.state.categories.length || this.state.karmas.length) ? (<BasicButton ghost onClick={this.clearFilters} >Supprimer les filtres x</BasicButton>) : ''}
           </Col>
         </Row>
 
         {/* FILTERS */}
 
         <Row className="brands-filtering" justifyContent="flex-start" mt={'2rem'}>
-          <Col md={7}>
+          <Col xs={12} md={7}>
 
             {/* Filters - categories list -- TODO : transform elements into components */}
 
@@ -265,7 +264,6 @@ class Search extends React.Component {
                             checked={(this.state.categories.indexOf(category.id) > -1 && 'checked')}
                             value={category.id}
                             handleChange={this.handleChangeCategory.bind(this)}
-                            theme="theme-1"
                           />
 
                         ))}
@@ -278,7 +276,7 @@ class Search extends React.Component {
 
           </Col>
 
-          <Col md={5}>
+          <Col xs={12} md={5}>
 
             {/* Filters - karmas list -- TODO : transform elements into components */}
 
@@ -288,14 +286,13 @@ class Search extends React.Component {
               {Object.entries(KARMA_LABELS).map(([k, karma], index) => (
 
                 <PrettyCheckbox
-                  className={'karma-' + karma.slug}
+                  className={'karma-pcb karma-' + karma.slug}
                   key={'k-' + karma.slug}
                   title={karma.value}
                   name="karma"
                   checked={(this.state.karmas.indexOf(karma.slug) > -1 && 'checked')}
                   value={karma.slug}
                   handleChange={this.handleChangeKarma.bind(this)}
-                  theme="theme-2"
                 />
 
               ))}
@@ -308,7 +305,7 @@ class Search extends React.Component {
 
         <Row className="brands-sorting" justifyContent="flex-start" mt={'3rem'}>
 
-          <Col md={7}>
+          <Col xs={12} md={7}>
 
             {/* Search input -- TODO : transform element into component */}
             <SearchInputForm onSubmit={this.handleSubmitSearch}>
@@ -326,7 +323,7 @@ class Search extends React.Component {
 
           </Col>
 
-          <Col omd={1} md={4} className="sorter">
+          <Col xs={12} omd={1} md={4} className="sorter">
 
             <h5>{BRANDS_STATIC_CONTENTS.sorting_title['fr']}</h5>
 
@@ -399,8 +396,8 @@ class Search extends React.Component {
               </Row>
             )
           }}
-        </Query >
-      </Grid >
+        </Query>
+      </Grid>
     )
   }
 }
