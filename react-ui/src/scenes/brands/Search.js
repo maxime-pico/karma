@@ -20,7 +20,7 @@ import BasicButton from './../../components/buttons/BasicButton'
 
 const SearchInput = styled.input`
   border-radius: 3rem;
-  padding: 1rem 0.8rem 1rem 4.5rem;
+  padding: 1rem 0.8rem 1rem 5.5rem;
   width: 100%;
   height: 6rem;
   font-size: 1.6rem;
@@ -29,13 +29,18 @@ const SearchInput = styled.input`
   background-image: url(${icon_magnifier});
   background-repeat: no-repeat;
   background-position: 1.5rem center;
-  background-size: auto 2rem;
+  background-size: auto 3rem;
+
+  &::placeholder {
+    opacity: 0.6;
+  }
 `;
 
 const SearchInputClearButton = styled.button`
   border-radius: 3rem;
   height: 3rem;
   width: 3rem;
+  line-height: 1.4rem;
   background-color: #ccc;
   padding: 0.5rem 0.8rem;
   border: 2px solid #ececec;
@@ -259,7 +264,7 @@ class Search extends React.Component {
 
                           <PrettyCheckbox
                             key={'c-' + category.id}
-                            title={category.name}
+                            label={category.name}
                             name="category"
                             checked={(this.state.categories.indexOf(category.id) > -1 && 'checked')}
                             value={category.id}
@@ -288,11 +293,12 @@ class Search extends React.Component {
                 <PrettyCheckbox
                   className={'karma-pcb karma-' + karma.slug}
                   key={'k-' + karma.slug}
-                  title={karma.value}
+                  label={karma.value}
                   name="karma"
                   checked={(this.state.karmas.indexOf(karma.slug) > -1 && 'checked')}
                   value={karma.slug}
                   handleChange={this.handleChangeKarma.bind(this)}
+                  title={karma.label['fr']}
                 />
 
               ))}

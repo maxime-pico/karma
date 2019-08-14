@@ -41,7 +41,14 @@ const ResultCard = styled.div`
     }
   }
   @media (max-width: 768px) {
-    margin-right: 3.2vw;
+    margin-right: 6%;
+    width: 47%;
+  }
+
+  a {
+    @media (max-width: 768px) {
+      width: 100%;
+    }
   }
 
   .square {
@@ -64,13 +71,18 @@ const ResultCard = styled.div`
     }
 
     @media(max-width: 768px) {
-      height: 43.1vw;
-      width: 43.1vw;
+      height: auto;
+      width: 100%;
+      padding-bottom: 100%;
     }
 
-    @media(max-width: 576px) {
-      height: 45vw;
-      width: 45vw;
+    img{
+      @media(max-width: 768px) {
+       position: absolute;
+       left: 50%;
+       top: 50%;
+       transform:translate(-50%, -50%);
+      }
     }
   }	
 
@@ -78,7 +90,9 @@ const ResultCard = styled.div`
     cursor: pointer;
     
     img{
-      transform: scale(1.2);
+      @media(min-width: 768px) {
+        transform: scale(1.2);
+      }
     }
   }
   

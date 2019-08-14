@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+*{
+  outline : 0;
+}
+
 /* Brand results fade*/
 
 .results-fade-enter {
@@ -81,6 +85,11 @@ body {
   color:#a9b4cc;
 }
 
+@media(max-width: 768px) {
+  .brands-filtering h5{
+    margin-top: 3rem;
+  }
+}
 
 .karma-vb span,
 .karma-vb span::before{
@@ -120,6 +129,7 @@ body {
   border: 0;
   font-weight: bold;
   color: white;
+  padding: 0;
 }
 
 

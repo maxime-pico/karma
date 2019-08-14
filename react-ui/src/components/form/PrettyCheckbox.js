@@ -33,9 +33,9 @@ const PrettyCheckboxInput = styled.input`
 
 const PrettyCheckboxReplacer = styled.span`
   width: 100%;
-  padding: 1rem 1.5rem;
+  padding: 1.3rem 2.5rem;
   margin-bottom: 1rem;
-  border: 2px solid white;
+  border: 0;
   background-color: white;
   position: relative;
   display: flex;
@@ -61,7 +61,7 @@ const PrettyCheckboxReplacer = styled.span`
     top: 0;
     transform: scale(0);
     transition: transform 0.1s ease;
-    border-radius: 2rem;
+    border-radius: 3rem;
     z-index: -2;
   }
 `
@@ -69,7 +69,7 @@ const PrettyCheckboxReplacer = styled.span`
 class PrettyCheckbox extends React.Component {
 
   state = {
-    title: '',
+    label: '',
     name: '',
     checked: false,
     value: '',
@@ -78,7 +78,7 @@ class PrettyCheckbox extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state.title = this.props.title
+    this.state.label = this.props.label
     this.state.name = this.props.name
     this.state.checked = this.props.checked
     this.state.value = this.props.value
@@ -92,7 +92,7 @@ class PrettyCheckbox extends React.Component {
 
   render() {
     return (
-      <PrettyCheckboxLabel className={this.props.className}>
+      <PrettyCheckboxLabel title={this.props.title} className={this.props.className}>
         <PrettyCheckboxInput
           type="checkbox"
           checked={this.props.checked}
@@ -101,7 +101,7 @@ class PrettyCheckbox extends React.Component {
           onChange={this.handleChange}
         />
         <PrettyCheckboxReplacer>
-          {this.state.title}
+          {this.state.label}
         </PrettyCheckboxReplacer>
 
       </PrettyCheckboxLabel>
