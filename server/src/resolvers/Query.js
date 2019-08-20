@@ -50,12 +50,35 @@ function allCompanies(parent, args, context, info) {
     if (karmas.length) {
       karmas.forEach(karma => {
         if (karma.length) {
-          conditions.and.push({
-            AND: [
-              { karma_lt: parseFloat(KARMA_LABELS[karma].value) },
-              { karma_gte: parseFloat(KARMA_LABELS[karma].value) - 1 }
-            ]
-          });
+          if (parseFloat(KARMA_LABELS[karma].value) * -1 > 0) {
+            // negative
+
+            if (karmas.length > 1) {
+              conditions.and.push({
+                OR: [
+                  { karma_lt: parseFloat(KARMA_LABELS[karma].value) + 0.5 },
+                  { karma_gte: parseFloat(KARMA_LABELS[karma].value) - 0.5 }
+                ]
+              });
+            } else {
+              conditions.and.push({ karma_lt: parseFloat(KARMA_LABELS[karma].value) + 0.5 })
+              conditions.and.push({ karma_gte: parseFloat(KARMA_LABELS[karma].value) - 0.5 })
+            }
+
+          } else {
+            // positive
+            if (karmas.length > 1) {
+              conditions.and.push({
+                OR: [
+                  { karma_lte: parseFloat(KARMA_LABELS[karma].value) + 0.5 },
+                  { karma_gt: parseFloat(KARMA_LABELS[karma].value) - 0.5 }
+                ]
+              });
+            } else {
+              conditions.and.push({ karma_lte: parseFloat(KARMA_LABELS[karma].value) + 0.5 })
+              conditions.and.push({ karma_gt: parseFloat(KARMA_LABELS[karma].value) - 0.5 })
+            }
+          }
         }
       });
     }
