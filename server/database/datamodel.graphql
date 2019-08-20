@@ -7,6 +7,16 @@ type Company {
 	actGrades: [ActGrade!]! @relation(name: "ActGradesOfCompany" onDelete: CASCADE)
 	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesOfCompany" onDelete: CASCADE)
 	opinions: [Opinion!]! @relation(name: "OpinionsOfCompany" onDelete: CASCADE)
+  adminApproved: Boolean
+  validated: Boolean
+  upVotes: [CompanyUpVote!]! @relation(name: "CompanyUpVotesOfCompany" onDelete: CASCADE)
+}
+
+type CompanyUpVote {
+	id: ID! @unique
+	createdAt: DateTime!
+	votedTo: Company! @relation(name: "CompanyUpVotesOfCompany")
+	votedBy: User! @relation(name: "CompanyUpVotesByUser")
 }
 
 # prettier-ignore
@@ -21,6 +31,7 @@ type User {
 	opinions: [Opinion!]! @relation(name: "OpinionsByUser" onDelete: CASCADE)
 	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesByUser" onDelete: CASCADE)
 	actGrades: [ActGrade!]! @relation(name: "ActGradesByUser" onDelete: CASCADE)
+  upVotes: [CompanyUpVote!]! @relation(name: "CompanyUpVotesByUser" onDelete: CASCADE)
 }
 
 type Opinion {
