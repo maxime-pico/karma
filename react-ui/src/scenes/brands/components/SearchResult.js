@@ -163,13 +163,13 @@ type Props = {
 class SearchResult extends React.Component {
 
   state = {
-    karmaSlug : '',
-    karmaTitle : ''
+    karmaSlug: '',
+    karmaTitle: ''
   }
 
   constructor(props) {
     super(props)
-    if(this.props.karma) {
+    if (this.props.karma) {
       this.state.karmaSlug = this.getKarmaSlugByValue(this.props.karma);
       this.state.karmaTitle = KARMA_LABELS[this.state.karmaSlug].label['fr']
     } else {
@@ -179,21 +179,21 @@ class SearchResult extends React.Component {
   }
 
   getKarmaSlugByValue(val) {
-    if(val){
-      if(val == 0) {
+    if (val) {
+      if (val >= 0 && val < 0.5) {
         return 'n';
       } else {
-        if(val >= 1) {
-          return (val >= 2) ? 'vg' : 'g';
-        }else{
-          if(val < 0) {
-            return (val >= -1) ? 'b' : 'vb';
+        if (val > 0.5) {
+          return (val >= 1.5) ? 'vg' : 'g';
+        } else {
+          if (val < 0) {
+            return (val >= -1.5) ? 'b' : 'vb';
           } else {
             return 'n';
           }
         }
       }
-    }else {
+    } else {
       return 'na'
     }
   }
@@ -212,14 +212,14 @@ class SearchResult extends React.Component {
               width="80"
               alt="company"
             />
-            <KarmaBadge  className={this.state.karmaSlug}>{this.props.karma ? (this.props.karma) : ('N/A')}</KarmaBadge>
+            <KarmaBadge className={this.state.karmaSlug}>{this.props.karma ? (this.props.karma) : ('N/A')}</KarmaBadge>
           </div>
           <CompanyName>{this.props.name}</CompanyName>
         </Link>
       </ResultCard>
-      )
-    }
+    )
   }
+}
 
 
 export default SearchResult
