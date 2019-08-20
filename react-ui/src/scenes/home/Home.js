@@ -190,13 +190,6 @@ const Home = () => {
 	return (
 		<HomeWrapper>
 			<Grid>
-<<<<<<< HEAD
-				<Row justifyContent={{ md: 'center' }} mt={'96px'}>
-					<Col md={4}>
-						<ImageContainer>
-							<img src={karmalogo} height="140" alt="karma panda" />
-						</ImageContainer>
-=======
 				<Row justifyContent={{ md: 'center' }} pt={'9.6rem'}>
 					<Col md={5}>
 						<Logo src={karmalogo} alt="karma panda" />
@@ -213,7 +206,6 @@ const Home = () => {
 							/>
 							Jugez l'âme des marques
 						</CTAButton>
->>>>>>> develop
 					</Col>
 				</Row>
 				<Row justifyContent={{ md: 'center' }}>
