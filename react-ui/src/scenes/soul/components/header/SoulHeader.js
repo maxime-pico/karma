@@ -67,7 +67,7 @@ const SoulHeader = (props: Props) => {
 						<Col md={9}>
 							<KarmaDescription align={'left'}>
 								<span className="karma">
-										{overallKarma === null ? 'N/A' : overallKarma}
+										{karmaDescription}
 									</span>
 							</KarmaDescription>
 						</Col>
