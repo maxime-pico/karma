@@ -16,11 +16,11 @@ const Logo = styled.img`
 	margin-bottom: 3rem;
 `
 
-
-const ImageContainer = styled.div `
-  @media (max-width: 425px) {
-    display: none;
-  }
+const ImageContainer = styled.div`
+	width: 100%;
+	@media (max-width: 540px) {
+		display: none;
+	}
 `
 const TextZone = styled.div`
 	background-color: white;
@@ -30,13 +30,13 @@ const TextZone = styled.div`
 	color: #7f8799;
 	font-size: 22px;
 	font-family: Avenir;
-	
-	@media (max-width: 425px) {
-    	margin: 0 0 10px 0;
-    	border-radius: 0px;
-    	padding: 30px;
-    	font-size: 18px;
-  	}
+
+	@media (max-width: 540px) {
+		margin: 42px 0px;
+		border-radius: 0px;
+		padding: 30px;
+		font-size: 18px;
+	}
 `
 const TextZoneTitle = styled.div`
 	color: #545a66;
@@ -44,33 +44,28 @@ const TextZoneTitle = styled.div`
 	font-family: Avenir;
 	font-weight: 900;
 	margin-bottom: 24px;
-	@media (max-width: 425px) {
-    	font-size: 25px;
-  	}
+	@media (max-width: 540px) {
+		font-size: 25px;
+	}
 	padding: 8rem 9rem;
 	margin: 10rem 0 11rem 0;
 	border-radius: 11.2rem;
 `
 
-const CauseRow = styled.div`
+const CauseRow = styled(Row)`
 	background-color: white;
 	padding: 3rem 5rem;
 	margin: 3.5rem 0 0 0;
 	border-radius: 7.2rem;
-	display: flex;
 	align-items: center;
 	min-height: 21rem;
-
-	> div {
-		flex-basis: 50%;
-		min-width: 50%;
-		max-width: 50%;
-	}
 `
 
-const CauseTitle = styled.div`
-	display: flex;
-	align-items: center;
+const CauseTitle = styled(Col)`
+	@media (max-width: 540px) {
+		text-align: center;
+		margin-bottom: 2rem;
+	}
 `
 
 const RoundWindow = styled.div`
@@ -84,6 +79,10 @@ const RoundWindow = styled.div`
 	position: relative;
 	img {
 		height: 60%;
+	}
+	@media (max-width: 540px) {
+		margin: 0 auto;
+		margin-botton: 2rem;
 	}
 `
 
@@ -132,7 +131,7 @@ const ExplanationWrapper = styled.section`
 	padding: 11rem 0;
 `
 
-const ExplanationIntro = styled.div`
+const ExplanationIntro = styled(Row)`
 	background-color: white;
 	text-align: left;
 	display: flex;
@@ -153,15 +152,11 @@ const ExplanationIntro = styled.div`
 	}
 `
 
-const ExplanationScale = styled.div`
+const ExplanationScale = styled(Col)`
 	background-color: #f7f7f7;
 	border-radius: 7.2rem;
 	text-align: center;
 	padding: 4rem 4.5rem;
-	flex-basis: 50rem;
-	min-width: 50rem;
-	max-width: 50rem;
-	margin-left: 6rem;
 
 	img {
 		margin: 2rem 0;
@@ -172,17 +167,17 @@ const ExplanationScale = styled.div`
 	}
 `
 
-const ExplanationDiagram = styled.div`
+const ExplanationDiagram = styled(Row)`
+	justify-content: center;
 	h3 {
 		margin-bottom: 1rem;
 	}
 	img {
 		margin: 3.5rem 0 4rem 0;
 	}
-	@media (max-width: 425px) {
-    	width: 230px;
-    	font-size: 18px;
-  	}
+	@media (max-width: 540px) {
+		font-size: 18px;
+	}
 `
 
 // Display a text and button
@@ -190,8 +185,8 @@ const Home = () => {
 	return (
 		<HomeWrapper>
 			<Grid>
-				<Row justifyContent={{ md: 'center' }} pt={'9.6rem'}>
-					<Col md={5}>
+				<Row justifyContent="center" pt={'9.6rem'}>
+					<Col xs={10} md={5}>
 						<Logo src={karmalogo} alt="karma panda" />
 						<h1 class="title-size2">
 							Faites appliquer la loi du Karma
@@ -208,8 +203,8 @@ const Home = () => {
 						</CTAButton>
 					</Col>
 				</Row>
-				<Row justifyContent={{ md: 'center' }}>
-					<Col xs={12} md={8} textAlign="left">
+				<Row justifyContent="center">
+					<Col xs={12} md={8} textAlign="left" px={'0px'}>
 						<TextZone>
 							<p>
 								<strong>
@@ -242,9 +237,9 @@ const Home = () => {
 						Jugez le Karma des marques qui nous entourent
 					</h3>
 					<h2 class="title-size1">Basé sur 4 grandes causes</h2>
-					<Col md={12} textAlign="left">
+					<Col xs={12} textAlign="left">
 						<CauseRow>
-							<CauseTitle>
+							<CauseTitle xs={12} md={6}>
 								<RoundWindow size={108} color="#D7D0C8">
 									<Push />
 									<img
@@ -259,16 +254,18 @@ const Home = () => {
 									<h4 class="title-size5">Décomposée en 4 Actes</h4>
 								</div>
 							</CauseTitle>
-							<ul>
-								<li>Implication dans le changement climatique</li>
-								<li>Préservation des écosystèmes</li>
-								<li>Préservation des ressources naturelles</li>
-								<li>Condition animale</li>
-							</ul>
+							<Col>
+								<ul>
+									<li>Implication dans le changement climatique</li>
+									<li>Préservation des écosystèmes</li>
+									<li>Préservation des ressources naturelles</li>
+									<li>Condition animale</li>
+								</ul>
+							</Col>
 						</CauseRow>
 
 						<CauseRow>
-							<CauseTitle>
+							<CauseTitle xs={12} md={6}>
 								<RoundWindow size={108} color="#D7D0C8">
 									<Push />
 									<img
@@ -281,16 +278,18 @@ const Home = () => {
 									<h4 class="title-size5">Décomposée en 4 Actes</h4>
 								</div>
 							</CauseTitle>
-							<ul>
-								<li>Conditions salariales</li>
-								<li>Discriminations</li>
-								<li>Conditions de travail</li>
-								<li>Management et Epanouïssement salarial</li>
-							</ul>
+							<Col>
+								<ul>
+									<li>Conditions salariales</li>
+									<li>Discriminations</li>
+									<li>Conditions de travail</li>
+									<li>Management et Epanouïssement salarial</li>
+								</ul>
+							</Col>
 						</CauseRow>
 
 						<CauseRow>
-							<CauseTitle>
+							<CauseTitle xs={12} md={6}>
 								<RoundWindow size={108} color="#D7D0C8">
 									<Push />
 									<img
@@ -303,17 +302,21 @@ const Home = () => {
 									<h4 class="title-size5">Décomposée en 5 Actes</h4>
 								</div>
 							</CauseTitle>
-							<ul>
-								<li>Responsabilité politique</li>
-								<li>Influence du marché</li>
-								<li>Respect des populations</li>
-								<li>Respect du consommateur</li>
-								<li>Industries critiquables et/ou technologies critiquables</li>
-							</ul>
+							<Col>
+								<ul>
+									<li>Responsabilité politique</li>
+									<li>Influence du marché</li>
+									<li>Respect des populations</li>
+									<li>Respect du consommateur</li>
+									<li>
+										Industries critiquables et/ou technologies critiquables
+									</li>
+								</ul>
+							</Col>
 						</CauseRow>
 
 						<CauseRow>
-							<CauseTitle>
+							<CauseTitle xs={12} md={6}>
 								<RoundWindow size={108} color="#D7D0C8">
 									<Push />
 									<img
@@ -326,12 +329,14 @@ const Home = () => {
 									<h4 class="title-size5">Décomposée en 4 Actes</h4>
 								</div>
 							</CauseTitle>
-							<ul>
-								<li>Taux de rémunération de l'actionnariat</li>
-								<li>Taux d'imposition</li>
-								<li>Surémunération des dirigeants</li>
-								<li>Participation des salariés</li>
-							</ul>
+							<Col>
+								<ul>
+									<li>Taux de rémunération de l'actionnariat</li>
+									<li>Taux d'imposition</li>
+									<li>Surémunération des dirigeants</li>
+									<li>Participation des salariés</li>
+								</ul>
+							</Col>
 						</CauseRow>
 					</Col>
 				</Row>
@@ -358,7 +363,7 @@ const Home = () => {
 			<ExplanationWrapper>
 				<Grid>
 					<ExplanationIntro>
-						<div>
+						<Col xs={11} lg={6}>
 							<h3 class="title-size4">Le système de notation du Karma</h3>
 							<h2 class="title-size1">Le Karma en bref</h2>
 							<p>
@@ -372,8 +377,8 @@ const Home = () => {
 								: les marques sont jugées par les Pandas, pour les Pandas, sur
 								la base de sources collectées et validées par la communauté.
 							</p>
-						</div>
-						<ExplanationScale>
+						</Col>
+						<ExplanationScale xs={11} olg={1} lg={5}>
 							<h3 class="title-size4">Echelle de notation</h3>
 							<img
 								src={process.env.PUBLIC_URL + `/images/karma-scale.svg`}
@@ -392,16 +397,20 @@ const Home = () => {
 					</ExplanationIntro>
 
 					<ExplanationDiagram>
-						<h3 class="title-size3">Les différents niveaux de notation</h3>
-						<p>
-							Il existe plusieurs niveaux de notation qui ne sont
-							<br /> pas tous liés algorithmiquement entre eux.
-						</p>
-
-						<img
-							src={process.env.PUBLIC_URL + `/images/karma-diagram.svg`}
-							alt="Les différents niveaux de notation"
-						/>
+						<Col xs={12} md={9}>
+							<h3 class="title-size3">Les différents niveaux de notation</h3>
+							<p>
+								Il existe plusieurs niveaux de notation qui ne sont
+								<br /> pas tous liés algorithmiquement entre eux.
+							</p>
+							<ImageContainer>
+								<img
+									width="100%"
+									src={process.env.PUBLIC_URL + `/images/karma-diagram.svg`}
+									alt="Les différents niveaux de notation"
+								/>
+							</ImageContainer>
+						</Col>
 					</ExplanationDiagram>
 
 					<CTAButton ghost link="/brands">

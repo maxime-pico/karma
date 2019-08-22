@@ -19,6 +19,9 @@ const Title = styled.div`
 	color: #545a66;
 	text-align: left;
 	margin-bottom: 42px;
+	@media (max-width: 540px) {
+		padding: 0 24px;
+	}
 `
 // </STYLE>
 

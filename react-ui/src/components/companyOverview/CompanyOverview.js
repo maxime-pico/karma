@@ -12,6 +12,12 @@ import { Row } from '@smooth-ui/core-sc'
 import styled from 'styled-components'
 
 // <STYLE>
+const Logo = styled(Row)`
+	display: block;
+	@media (max-width: 540px) {
+		display: ${props => props.displayLogo};
+	}
+`
 const RoundWindow = styled.div`
 	height: ${props => props.size}px;
 	width: ${props => props.size}px;
@@ -33,6 +39,10 @@ const CompanyName = styled.div`
 	color: white;
 	margin: auto;
 	margin-top: 12px;
+	@media (max-width: 540px) {
+		font-size: 1.2em;
+		margin: 24px auto;
+	}
 `
 // </STYLE>
 
@@ -49,11 +59,12 @@ const COMPANY_OVERVIEW_QUERY = gql`
 //Declaring prop types
 type Props = {
 	companyId: string,
+	displayLogo: boolean,
 }
 
 // Displays the logo and name of a company, receives companyId as a prop
 const CompanyOverview = (props: Props) => {
-	const companyId = props.companyId
+	const { companyId, displayLogo } = props
 	return (
 		<Query query={COMPANY_OVERVIEW_QUERY} variables={{ companyId }}>
 			{({ loading, error, data }) => {
@@ -63,7 +74,10 @@ const CompanyOverview = (props: Props) => {
 
 				return (
 					<Link to={`/company/${companyId}`}>
-						<Row alignItems="center">
+						<Logo
+							alignItems="center"
+							displayLogo={displayLogo ? 'initial' : 'none'}
+						>
 							<RoundWindow size={140}>
 								<Push />
 								<img
@@ -71,7 +85,7 @@ const CompanyOverview = (props: Props) => {
 									alt="company"
 								/>
 							</RoundWindow>
-						</Row>
+						</Logo>
 						<Row>
 							<CompanyName>{name}</CompanyName>
 						</Row>

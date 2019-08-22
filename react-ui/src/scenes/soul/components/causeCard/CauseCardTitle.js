@@ -11,15 +11,22 @@ import { convertGradesIntoColors } from '../../../../services/utils'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 //<STYLE>
+const TitleCol = styled(Col)`
+	text-align: ${props => props.align};
+	@media (max-width: 540px) {
+		text-align: center;
+	}
+`
+
 const Title = styled.span`
 	font-size: 26px;
 	font-weight: 600;
 `
-// Size and color can be adapted
+// Color can be adapted
 const RoundWindow = styled.div`
-	height: ${props => props.size}px;
-	width: ${props => props.size}px;
-	border-radius: ${props => props.size}px;
+	height: 80px;
+	width: 80px;
+	border-radius: 80px;
 	overflow: hidden;
 	background-color: ${props => props.color};
 	margin: auto;
@@ -27,6 +34,11 @@ const RoundWindow = styled.div`
 	top: -60px;
 	img {
 		height: 60%;
+	}
+	@media (max-width: 540px) {
+		height: 100px;
+		width: 100px;
+		border-radius: 100px;
 	}
 `
 
@@ -51,7 +63,7 @@ const CauseCardTitle = (props: Props) => {
 		<div>
 			<Row justifyContent="center">
 				<Col md={4}>
-					<RoundWindow size={80} color={karmaColor}>
+					<RoundWindow color={karmaColor}>
 						<Push />
 						<img
 							src={process.env.PUBLIC_URL + `/icons/cause/${identifier}.png`}
@@ -61,14 +73,14 @@ const CauseCardTitle = (props: Props) => {
 				</Col>
 			</Row>
 			<Row justifyContent="center" mt={'-40px'}>
-				<Col md={8} textAlign="left">
+				<TitleCol xs={10} sm={8} align="left">
 					<Link to={`/company/${companyId}/cause/${identifier}`}>
 						<Title>{CAUSE_AND_ACTS[identifier].fr}</Title>
 					</Link>
-				</Col>
-				<Col md={2} textAlign="right">
+				</TitleCol>
+				<TitleCol xs={10} sm={2} align="right">
 					<Title>{causeKarma}</Title>
-				</Col>
+				</TitleCol>
 			</Row>
 		</div>
 	)

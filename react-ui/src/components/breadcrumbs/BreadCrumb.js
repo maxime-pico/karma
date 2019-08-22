@@ -58,7 +58,7 @@ class BreadCrumb extends React.Component {
 	render() {
 		const { companyId, cause, act, grading } = this.props
 		return (
-			<Row justifyContent="left" mb="60px">
+			<Row justifyContent="left" mb="60px" className="d-none d-sm-block">
 				<Col ml={4} textAlign="left">
 					<Crumb>
 						<Link to={grading ? '#' : `/company/${companyId}`}>

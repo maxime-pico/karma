@@ -14,7 +14,7 @@ const NavbarBox = styled(Row)`
 	font-size: 14px;
 	background-color: white;
 	text-align: left;
-	@media (max-width: 425px) {
+	@media (max-width: 540px) {
 		padding: 0;
 	}
 `
@@ -22,7 +22,7 @@ const NavbarBox = styled(Row)`
 const NavbarLink = styled(Link)`
 	margin: auto;
 	margin: auto 0 auto 42px;
-	@media (max-width: 425px) {
+	@media (max-width: 540px) {
 		width: 100%;
 		height: 40px;
 		line-height: 40px;
@@ -36,7 +36,7 @@ const NavbarLink = styled(Link)`
 const NavbarLinkContainer = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	@media (max-width: 425px) {
+	@media (max-width: 540px) {
 		flex-flow: column wrap;
 		display: ${props => props.displayValue};
 	}
@@ -45,7 +45,7 @@ const NavbarLinkContainer = styled.div`
 const LogoContainer = styled(Col)`
 	padding: 0px;
 	margin-right: auto;
-	@media (max-width: 425px) {
+	@media (max-width: 540px) {
 		padding: 7px;
 	}
 `
@@ -58,7 +58,7 @@ const BurgerBar = styled.div`
 
 const BurgerMenu = styled(Col)`
 	display: none;
-	@media (max-width: 425px) {
+	@media (max-width: 540px) {
 		display: block;
 	}
 `

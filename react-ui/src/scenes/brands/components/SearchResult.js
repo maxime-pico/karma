@@ -28,7 +28,7 @@ const ResultCard = styled.div`
 
 const CompanyName = styled.div`
 	color: #a9b4cc;
-	font-size: 0.95rem;
+	font-size: 0.95em;
 `
 // </STYLE>
 

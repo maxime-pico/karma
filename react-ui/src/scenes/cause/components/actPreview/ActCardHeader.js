@@ -5,6 +5,13 @@ import { CAUSE_AND_ACTS } from '../../../../services/constants.js'
 import { convertGradesIntoColors } from '../../../../services/utils'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
+const TitleCol = styled(Col)`
+	text-align: ${props => props.align};
+	@media (max-width: 540px) {
+		text-align: center;
+	}
+`
+
 const Title = styled.span`
 	font-size: 26px;
 	font-weight: 600;
@@ -21,6 +28,11 @@ const RoundWindow = styled.div`
 	top: -40px;
 	img {
 		height: 60%;
+	}
+	@media (max-width: 540px) {
+		height: 100px;
+		width: 100px;
+		border-radius: 100px;
 	}
 `
 
@@ -46,14 +58,14 @@ const ActCardHeader = ({ act, grade, companyId, location }) => {
 				</Col>
 			</Row>
 			<Row justifyContent="center" mt={'-24px'}>
-				<Col md={8} textAlign="left">
+				<TitleCol xs={10} md={8} align="left">
 					<Link to={`${location.pathname}act/${act}`}>
 						<Title>{CAUSE_AND_ACTS[act].fr}</Title>
 					</Link>
-				</Col>
-				<Col md={2} textAlign="right">
+				</TitleCol>
+				<TitleCol xs={10} md={2} align="right">
 					<Title>{grade !== null ? grade : 'N/A'}</Title>
-				</Col>
+				</TitleCol>
 			</Row>
 		</div>
 	)

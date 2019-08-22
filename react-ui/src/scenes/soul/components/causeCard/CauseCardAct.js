@@ -11,7 +11,12 @@ import { Row, Col, styled } from '@smooth-ui/core-sc'
 // <STYLE>
 const Text = styled(Col)`
 	color: #a9b4cc;
-	font-size: 18px;
+	font-size: 1em;
+	text-align: ${props => props.align};
+	@media (max-width: 540px) {
+		text-align: center;
+		font-size: 1.2em;
+	}
 `
 
 const Identifier = styled.div`
@@ -30,10 +35,10 @@ const CauseCardAct = (props: Props) => {
 	const { identifier, grade } = props
 	return (
 		<Row justifyContent="center" my={2}>
-			<Text md={8}>
+			<Text xs={12} sm={8} align="left">
 				<Identifier>{CAUSE_AND_ACTS[identifier].fr}</Identifier>
 			</Text>
-			<Text md={2} textAlign="right">
+			<Text xs={12} sm={2} align="right">
 				{grade !== null ? grade : 'N/A'}
 			</Text>
 		</Row>

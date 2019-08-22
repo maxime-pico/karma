@@ -40,7 +40,7 @@ type Props = {
 const HelpButton = (props: Props) => (
 	<Bubble
 		type="button"
-		className="btn btn-primary help"
+		className="btn btn-primary help d-none d-md-block"
 		onClick={() => props._openHelp()}
 	>
 		?

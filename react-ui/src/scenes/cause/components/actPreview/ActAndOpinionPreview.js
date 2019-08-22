@@ -18,12 +18,18 @@ import { Row, Col, styled } from '@smooth-ui/core-sc'
 const ActCard = styled.div`
 	border-radius: 96px;
 	background-color: white;
+	@media (max-width: 540px) {
+		border-radius: 0px;
+	}
 `
 
 const ItemHeaderDescription = styled.div`
-	font-size: 16px;
 	color: #a9b4cc;
 	text-align: left;
+	font-size: 0.9em;
+	@media (max-width: 540px) {
+		font-size: 1.2em;
+	}
 `
 
 const ReadMore = styled.button`
@@ -40,6 +46,7 @@ const ReadMore = styled.button`
   bottom: -30px;
   z-index: 2;
   cursor: pointer;
+  border: none;
 `
 
 const NoOpinions = styled.div`
@@ -74,6 +81,7 @@ type Props = {
 	grade: number,
 	companyId: string,
 	location: { pathname: string },
+	tutorial: boolean,
 }
 
 // Component gets all information to make the query and load the opinions to
@@ -87,62 +95,60 @@ const ActAndOpinionPreview = (props: Props) => {
 			<Query query={OPINION_FEED_QUERY} variables={{ companyId, act, first }}>
 				{({ loading, error, data }) => {
 					if (loading) return <div> Loading... </div>
-					if (error) return <div> Errorv: {error.message} </div>
+					if (error) return <div> Error: {error.message} </div>
 					const opinionsFeed = data.opinionsFeed //opinionsFeed contains the first n opinions
 					return (
-							<div>
-								<div
-									className={tutorial ? 'act' : null}
-								></div>
-								<ActCardHeader act={act} grade={grade} location={location} />
-								<ActDescription
-									act={act}
-									color="#a9b4cc"
-									justifyContent="center"
-								/>
-								{opinionsFeed.length ? (
-									<div>
-										<Row justifyContent="center" mt={'12px'} mb={'42px'}>
-											<Col md={10} textAlign="left">
-												<ItemHeaderDescription>
-													Un extrait des opinions qui ont été les plus utiles
-													aux utilisateurs pour juger l'acte :
-												</ItemHeaderDescription>
-											</Col>
-										</Row>
-										<OpinionPreview
-											act={act}
-											companyId={companyId}
-											location={location}
-											opinionsFeed={opinionsFeed}
-											tutorial={tutorial}
-										/>
-										<OpinionsAndGradesCount
-											opinionsFeed={opinionsFeed}
-											color="#a9b4cc"
-										/>
-										<Link to={`${location.pathname}act/${act}`}>
-											<ReadMore className={tutorial && 'more'}>
-												Voir les sources
-											</ReadMore>
-										</Link>
-									</div>
-								) : (
+						<div>
+							<div className={tutorial ? 'act' : null}></div>
+							<ActCardHeader act={act} grade={grade} location={location} />
+							<ActDescription
+								act={act}
+								color="#a9b4cc"
+								justifyContent="center"
+							/>
+							{opinionsFeed.length ? (
+								<div>
+									<Row justifyContent="center" mt={'12px'} mb={'42px'}>
+										<Col xs={10} md={10} textAlign="left">
+											<ItemHeaderDescription>
+												Un extrait des opinions qui ont été les plus utiles aux
+												utilisateurs pour juger l'acte :
+											</ItemHeaderDescription>
+										</Col>
+									</Row>
+									<OpinionPreview
+										act={act}
+										companyId={companyId}
+										location={location}
+										opinionsFeed={opinionsFeed}
+										tutorial={tutorial}
+									/>
+									<OpinionsAndGradesCount
+										opinionsFeed={opinionsFeed}
+										color="#a9b4cc"
+									/>
+									<Link to={`${location.pathname}act/${act}`}>
+										<ReadMore className={tutorial && 'more'}>
+											Voir les sources
+										</ReadMore>
+									</Link>
+								</div>
+							) : (
+								<NoOpinions>
 									<NoOpinions>
-										<NoOpinions>
-											Il n'y a pas encore d'opinion pour cet acte... :'(
-										</NoOpinions>
-										<Link to={`${location.pathname}act/${act}`}>
-											<ReadMore>Ajouter une opinion</ReadMore>
-										</Link>
+										Il n'y a pas encore d'opinion pour cet acte... :'(
 									</NoOpinions>
-								)}
-							</div>
-						)
-					}}
-				</Query>
-			</ActCard>
-		)
-	}
+									<Link to={`${location.pathname}act/${act}`}>
+										<ReadMore>Ajouter une opinion</ReadMore>
+									</Link>
+								</NoOpinions>
+							)}
+						</div>
+					)
+				}}
+			</Query>
+		</ActCard>
+	)
+}
 
 export default withRouter(ActAndOpinionPreview)

@@ -93,16 +93,17 @@ class Cause extends React.Component {
     - .opinion refrences to an element in the OpinionPreview component
   */
 
-
 	//upon loading of the page, check if comming from Soul page or another cause page
 	//in grading mode. If so, then copy location state into component state
 	componentDidMount() {
-    if (!this.userOnboarded) {
-			setTimeout( () =>{ // dirty patch, sorry, I tried better :'(
-        this.setState(previousState => {
-				previousState.stepsEnabled = true // checking if the tutorial should be displayed for the user
-				return previousState
-			})}, 3000)
+		if (!this.userOnboarded) {
+			setTimeout(() => {
+				// dirty patch, sorry, I tried better :'(
+				this.setState(previousState => {
+					previousState.stepsEnabled = true // checking if the tutorial should be displayed for the user
+					return previousState
+				})
+			}, 3000)
 		}
 
 		//if location state exists = context of the route is defined, then...
@@ -301,10 +302,10 @@ class Cause extends React.Component {
 							<ActAndOpinionPreviewList
 								cause={cause}
 								companyId={companyId}
-                userOnboarded={this.userOnboarded}
-                stepsEnabled={this.stepsEnabled}
+								userOnboarded={this.userOnboarded}
+								stepsEnabled={this.stepsEnabled}
 								_setDataLoaded={this._setDataLoaded}
-                _launchTutorial={this._launchTutorial}
+								_launchTutorial={this._launchTutorial}
 							/>
 							{this.state.grading && (
 								<CausesJudgingInterface

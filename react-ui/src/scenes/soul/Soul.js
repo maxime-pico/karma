@@ -12,7 +12,11 @@ import LoginToGradeModal from '../../components/modals/LoginToGradeModal'
 import GradeKarmaButton from '../../components/buttons/GradeKarmaButton'
 import SoulHelpInterface from './components/helpInterface/SoulHelpInterface'
 import HelpButton from '../../components/buttons/HelpButton'
-import { CAUSE_AND_ACTS, AUTH_TOKEN, SOUL_STEPS } from '../../services/constants.js'
+import {
+	CAUSE_AND_ACTS,
+	AUTH_TOKEN,
+	SOUL_STEPS,
+} from '../../services/constants.js'
 import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
 
 // <STYLE>
@@ -175,7 +179,7 @@ class Soul extends React.Component {
 										Object.keys(causeGrades).map(
 											(identifier, i) =>
 												CAUSE_AND_ACTS[identifier] && (
-													<Col key={i} md={10} mb="42px">
+													<Col key={i} md={10} mb="42px" xs={12}>
 														<CauseCard
 															companyId={companyId}
 															causeKarma={causeGrades[identifier]}
