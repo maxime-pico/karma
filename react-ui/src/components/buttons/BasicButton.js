@@ -1,6 +1,5 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { Link } from 'react-router-dom'
 
 const Button = styled.button`
 	font-size: 1.5rem;

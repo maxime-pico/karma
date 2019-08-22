@@ -150,14 +150,6 @@ const KarmaBadge = styled.div`
 `
 // </STYLE>
 
-// Declare types of expected props
-type Props = {
-  name: string,
-  id: string,
-  logo: string,
-  karma: Float,
-}
-
 // SearchResult component: displays the company card based on the name, and
 // logo provided. Also adds a link to the relevant brand page based on the id
 class SearchResult extends React.Component {
@@ -180,7 +172,7 @@ class SearchResult extends React.Component {
 
   getKarmaSlugByValue(val) {
     if (val) {
-      if (val >= 0 && val < 0.5) {
+      if ((val >= 0 && val < 0.5) || (val <= 0 && val > -0.5)) {
         return 'n';
       } else {
         if (val > 0.5) {

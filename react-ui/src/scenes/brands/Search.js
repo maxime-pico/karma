@@ -8,7 +8,7 @@ filters and ordering on the companies.
 import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Grid, Row, Col, } from '@smooth-ui/core-sc'
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 import { KARMA_LABELS, BRANDS_SORTING_LABELS, BRANDS_RESULTS_MESSAGES, BRANDS_STATIC_CONTENTS } from '../../utils'
@@ -210,7 +210,7 @@ class Search extends React.Component {
     if (karmas.length) {
       karmas.splice(0, 1)
     }
-    if (index == -1) {
+    if (index === -1) {
       karmas.push(targetValue);
     }
     this.setState({ karmas: karmas });

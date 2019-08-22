@@ -77,6 +77,10 @@ type Mutation {
     userGrades: [Int!]!,
   ): [CauseGrade!]!
 
+  setOverallKarma(
+    companyId: ID!,
+  ): [Company!]!
+
   # exposes the resolver that allows a logged in user to grade the act of a
   # company and affiliation to an opinion
 	gradeAct(
