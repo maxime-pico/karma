@@ -55,7 +55,7 @@ type ActGrade {
 	affiliatedTo: Opinion!
 }
 
-type CauseGrade {
+type CauseGrade @cacheControl(maxAge: 0) {
 	id: ID! @unique
 	createdAt: DateTime!
 	gradedTo: Company! @relation(name: "CauseGradesOfCompany")

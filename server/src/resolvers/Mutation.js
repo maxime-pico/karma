@@ -130,6 +130,7 @@ async function setOverallKarma(parent, args, context, info) {
   let globalKarma = 0;
   const avgCauseGrades = {}
   const numberOfCauses = causes.length
+  
   const allCauseGrades = await context.db.query.causeGrades(
     {
       where:

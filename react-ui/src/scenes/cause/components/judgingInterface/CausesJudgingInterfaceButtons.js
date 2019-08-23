@@ -62,7 +62,8 @@ class CausesJudgingInterfaceButtons extends React.Component {
 			_updateGrade,
 			_setGrade,
 			_stopGrading,
-			gradingMutation,
+      gradingMutation,
+      overallMutation,
 			cause,
 			userGrades,
 			brandName,
@@ -116,7 +117,8 @@ class CausesJudgingInterfaceButtons extends React.Component {
 					brandName={brandName}
 					_closeGradesModal={this._closeGradesModal}
 					_stopGrading={_stopGrading}
-					gradingMutation={gradingMutation}
+          gradingMutation={gradingMutation}
+          overallMutation={overallMutation}
 				/>
 			</Row>
 		)

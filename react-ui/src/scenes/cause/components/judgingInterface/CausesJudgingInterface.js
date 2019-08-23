@@ -68,13 +68,13 @@ const GRADING_MUTATION = gql`
 		gradeCauses(companyId: $companyId, userGrades: $userGrades) {
 			id
 		}
-    setOverallKarma(companyId: $companyId){
-      id
-    }
+    
 	}
 `
 /*
-
+setOverallKarma(companyId: $companyId){
+      id
+    }
 */
 
 const OVERALL_MUTATION = gql`
@@ -209,18 +209,40 @@ class CausesJudgingInterface extends React.Component {
                 }}
               >
                 {GradingMutation => (
+                    <Mutation
+                    mutation={OVERALL_MUTATION}
+                    refetchQueries={[
+                      `CauseGradesQuery`,
+                      `CauseGradesQueryMain`,
+                      `CauseGradesQuerySoul`,
+                      `OpinionsAndGradesCauseCount`,
+                      `Company_Overview_Query`,
+                      `SocialGradesQuery`,
+                      `EnvironmentGradesQuery`,
+                      `EthicsGradesQuery`,
+                      `FiscalGradesQuery`
+                    ]}
+                    variables={{
+                      companyId: companyId,
+                    }}
+                  >
+                     {OverallMutation => (
                   <CausesJudgingInterfaceButtons
                     cause={cause}
                     userGrades={userGrades}
                     brandName={name}
                     gradingMutation={GradingMutation}
+                    overallMutation={OverallMutation}
                     _blurBackground={this._blurBackground}
                     _adjacentCause={this._adjacentCause}
                     _stopGrading={this._stopGrading}
                     _updateGrade={this._updateGrade}
                     _setGrade={this._setGrade}
                   />
-                )}
+                  )}
+               
+                </Mutation>
+                 )}
               </Mutation>
               <Row mt="6px" mb="42px">
                 <Col color="#A9B4CC" fontSize="12px">

@@ -73,82 +73,84 @@ const GradeButton = styled.button`
 `
 
 class ConfirmGradesModal extends React.Component {
-	constructor(props) {
-		super(props)
-		this.userGrades = this.props.userGrades
-		this.brandName = this.props.brandName
-		this._closeGradesModal = this.props._closeGradesModal
-		this.gradingMutation = this.props.gradingMutation
-		this._stopGrading = this.props._stopGrading
-	}
+  constructor(props) {
+    super(props)
+    this.userGrades = this.props.userGrades
+    this.brandName = this.props.brandName
+    this._closeGradesModal = this.props._closeGradesModal
+    this.gradingMutation = this.props.gradingMutation
+    this.overallMutation = this.props.overallMutation
+    this._stopGrading = this.props._stopGrading
+  }
 
-	_validateGrading = async () => {
-		const reload = true
-		await this.gradingMutation()
-		this._stopGrading(reload)
-		return null
-	}
+  _validateGrading = async () => {
+    const reload = true
+    await this.gradingMutation()
+    await this.overallMutation()
+    this._stopGrading(reload)
+    return null
+  }
 
-	render() {
-		const grades = this.userGrades
-		if (this.props.isOpen)
-			return (
-				<Portal node={document && document.getElementById('App')}>
-					<Backdrop onClick={() => this._closeGradesModal()}>
-						<Modal>
-							<Row justifyContent="center" mb={5}>
-								<Col className="col">
-									<Title>Petit récapitulatif...</Title>
-									<Content>
-										Vous êtes sur le point d'attribuer les notes suivantes à{' '}
-										{this.brandName} :
+  render() {
+    const grades = this.userGrades
+    if (this.props.isOpen)
+      return (
+        <Portal node={document && document.getElementById('App')}>
+          <Backdrop onClick={() => this._closeGradesModal()}>
+            <Modal>
+              <Row justifyContent="center" mb={5}>
+                <Col className="col">
+                  <Title>Petit récapitulatif...</Title>
+                  <Content>
+                    Vous êtes sur le point d'attribuer les notes suivantes à{' '}
+                    {this.brandName} :
 										{grades
-											? Object.keys(grades).map((category, i) => (
-													<Row
-														key={i}
-														pl="12px"
-														pr="24px"
-														justifyContent="space-between"
-														fontSize="17px"
-														mt="6px"
-													>
-														<Col>{CAUSE_AND_ACTS[category].fr}</Col>{' '}
-														<Col md={1} textAlign="right">
-															{grades[category]}
-														</Col>
-													</Row>
-											  ))
-											: null}
-									</Content>
-									<SubTitle>Ceci est bien votre jugement final ?</SubTitle>
-								</Col>
-							</Row>
-							<Row justifyContent="center" textAlign="center" m={4}>
-								<Col md={4}>
-									<CancelButton
-										type="button"
-										className="btn btn-primary"
-										onClick={() => this._closeGradesModal()}
-									>
-										Non
+                      ? Object.keys(grades).map((category, i) => (
+                        <Row
+                          key={i}
+                          pl="12px"
+                          pr="24px"
+                          justifyContent="space-between"
+                          fontSize="17px"
+                          mt="6px"
+                        >
+                          <Col>{CAUSE_AND_ACTS[category].fr}</Col>{' '}
+                          <Col md={1} textAlign="right">
+                            {grades[category]}
+                          </Col>
+                        </Row>
+                      ))
+                      : null}
+                  </Content>
+                  <SubTitle>Ceci est bien votre jugement final ?</SubTitle>
+                </Col>
+              </Row>
+              <Row justifyContent="center" textAlign="center" m={4}>
+                <Col md={4}>
+                  <CancelButton
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => this._closeGradesModal()}
+                  >
+                    Non
 									</CancelButton>
-								</Col>
-								<Col md={4}>
-									<GradeButton
-										type="button"
-										className="btn btn-primary"
-										onClick={() => this._validateGrading()}
-									>
-										Oui
+                </Col>
+                <Col md={4}>
+                  <GradeButton
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => this._validateGrading()}
+                  >
+                    Oui
 									</GradeButton>
-								</Col>
-							</Row>
-						</Modal>
-					</Backdrop>
-				</Portal>
-			)
-		else return null
-	}
+                </Col>
+              </Row>
+            </Modal>
+          </Backdrop>
+        </Portal>
+      )
+    else return null
+  }
 }
 
 export default ConfirmGradesModal
