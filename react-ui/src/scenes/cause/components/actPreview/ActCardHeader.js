@@ -50,7 +50,7 @@ const ActCardHeader = ({ act, grade, companyId, location }) => {
   const karmaColor = convertGradesIntoColors(grade)
   return (
     <div>
-      <Row justifyContent="center">
+      <Row justifyContent="center" textAlign="center" >
         <Col md={4}>
           <RoundWindow size={80} color={karmaColor}>
             <Push />
@@ -61,7 +61,7 @@ const ActCardHeader = ({ act, grade, companyId, location }) => {
           </RoundWindow>
         </Col>
       </Row>
-      <Row justifyContent="center" mt={'-24px'}>
+      <Row justifyContent="center" textAlign="center"  mt={'-24px'}>
         <TitleCol xs={10} md={8} align="left">
           <Link to={`${location.pathname}act/${act}`}>
             <Title>{CAUSE_AND_ACTS[act].fr}</Title>

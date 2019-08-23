@@ -51,7 +51,8 @@ const ReadMore = styled.button`
 
 const NoOpinions = styled.div`
 	font-size: 16px;
-	margin: 42px 0px;
+  margin: 42px 0px;
+  text-align:center;
 `
 // </STYLE>
 
@@ -78,18 +79,11 @@ const OPINION_FEED_QUERY = gql`
 // Declaring props Type
 /*
 type Props = {
-<<<<<<< HEAD
-  act: string,
-  grade: number,
-  companyId: string,
-  location: { pathname: string },
-=======
 	act: string,
 	grade: number,
 	companyId: string,
 	location: { pathname: string },
 	tutorial: boolean,
->>>>>>> a9f35b8ebc2149125d13b0103d8c0ee6f4840775
 }
 */
 
@@ -116,10 +110,11 @@ const ActAndOpinionPreview = (props) => {
                 act={act}
                 color="#a9b4cc"
                 justifyContent="center"
+
               />
               {opinionsFeed.length ? (
                 <div>
-                  <Row justifyContent="center" mt={'12px'} mb={'42px'}>
+                  <Row justifyContent="center" textAlign="center" mt={'12px'} mb={'42px'}>
                     <Col md={10} textAlign="left">
                       <ItemHeaderDescription>
                         Un extrait des opinions qui ont été les plus utiles
