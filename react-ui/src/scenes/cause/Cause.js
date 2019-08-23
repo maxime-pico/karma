@@ -27,7 +27,7 @@ const BlurOnModal = styled.div`
 
 // Preparing query that retireves the list of grades for the 4 causes
 const CAUSE_GRADES_QUERY = gql`
-	query CauseGradesQuery($companyId: ID!) {
+	query CauseGradesQuerySoul($companyId: ID!) {
 		companyCauseGrades(companyId: $companyId) {
 			ENVIRONMENT
 			SOCIAL
@@ -45,6 +45,7 @@ class Cause extends React.Component {
     const cookies = new Cookies() // get access to cookies
     this.authToken = cookies.get(AUTH_TOKEN) // if user is logged in authToken contains the token
     this.userOnboarded = cookies.get('userOnboarded_cause') // if user has been onboarded, is set at true, otherwise shouldn't exist
+    this.refetch = null
   }
 
   state = {
@@ -65,10 +66,11 @@ class Cause extends React.Component {
     initialStep: 0,
     steps: CAUSE_STEPS, // references to the file containing the different 'steps' of the tutorial, ie. text content and dom reference (class of the element)
     stepDatasLoading: 0,
+
   }
 
 	/*
-    >>>>>>>>>>>>>>> HELP NEEDED <<<<<<<<<<<<<<<<<<<<<<<<<<
+    >>>>>>>>>>>>>>> HELP NEEDED (SOLVED) <<<<<<<<<<<<<<<<<<<<<<<<<<
     The context:
     I use intro.js-react to have an interactive tutorial on the page.
     I would like the tutorial to launch automatically upon first visit of the page for a user.
@@ -92,14 +94,17 @@ class Cause extends React.Component {
     - .karma & .actsList reference stuff in the CauseHeader component. actsLists is wrapped in a query fetching info, this is the first reference that breaks
     - .act & .more reference to elements in the ActAndOpinionPreview component
     - .opinion refrences to an element in the OpinionPreview component
+
+    >>>>>>>>>>>>>>> SOLUTION <<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    Instead of using timer we use "onComplete" Apollo's event handler in sub components queries 
+
   */
 
 
   //upon loading of the page, check if comming from Soul page or another cause page
   //in grading mode. If so, then copy location state into component state
   componentDidMount() {
-
-
     //if location state exists = context of the route is defined, then...
     if (this.props.location.state) {
       //if startGrading = true and startGrading not true for component, that means
@@ -118,19 +123,7 @@ class Cause extends React.Component {
     }
   }
 
-  domLoaded = () => {
 
-    if (!this.userOnboarded) {
-      if (this.state.stepDatasLoading == 2) {
-        setTimeout(() => { // dirty patch, sorry, I tried better :'(
-          this.setState(previousState => {
-            previousState.stepsEnabled = true // checking if the tutorial should be displayed for the user
-            return previousState
-          })
-        }, 0)
-      }
-    }
-  }
 
   //event handler to start grading process
   _startGrading = () => {
@@ -162,7 +155,7 @@ class Cause extends React.Component {
       previousState.grading = false
       return previousState
     })
-    reload && window.location.reload()
+    //reload && window.location.reload()
   }
 
   //event handler to close the help interface
@@ -265,6 +258,17 @@ class Cause extends React.Component {
     this.domLoaded()
   }
 
+  domLoaded = () => {
+    if (!this.userOnboarded) {
+      if (this.state.stepDatasLoading === 2) {
+        this.setState(previousState => {
+          previousState.stepsEnabled = true // checking if the tutorial should be displayed for the user
+          return previousState
+        })
+      }
+    }
+  }
+
   render() {
     const companyId = this.props.match.params.companyId //getting the companyId from url
     const cause = this.props.match.params.cause //getting the cause from url
@@ -272,11 +276,13 @@ class Cause extends React.Component {
     return (
       // Query to fetch the Cause karma for the brand
       <Query query={CAUSE_GRADES_QUERY} variables={{ companyId }}>
-        {({ loading, error, data }) => {
+        {({ loading, error, data, refetch }) => {
           if (loading) return <div> Loading... </div>
           if (error) {
             return <div> Error: {error.message} </div>
           }
+
+
 
           const causeGrades = data.companyCauseGrades
           const overallKarma = causeGrades[cause]

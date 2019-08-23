@@ -31,7 +31,8 @@ const WaveHeader = styled(Grid)`
 		border: solid ${props => props.color};
 		border-width: 31px 0 0 31px;
 		border-top-left-radius: 100px;
-		z-index: -2;
+    z-index: -2;
+    transition: background 0.3s ease-in;
 	}
 `
 const ACT_GRADES_QUERIES = {

@@ -142,6 +142,13 @@ class Search extends React.Component {
 
     this.categories = [];
     this.karmas = []
+    this.refetch = null
+  }
+
+  componentDidMount() {
+    if (this.refetch) {
+      this.refetch()
+    }
   }
 
   /* Searching */
@@ -363,10 +370,12 @@ class Search extends React.Component {
           onCompleted={() => { this.resetReload() }}
         >
 
-          {({ loading, error, data }) => {
+          {({ loading, error, data, refetch }) => {
 
             if (loading) return <div> Fetching </div>
             if (error) return <div> Error  </div>
+
+            this.refetch = refetch
 
             const companyList = data.allCompanies
 

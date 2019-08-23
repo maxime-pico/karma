@@ -18,10 +18,13 @@ const RoundWindow = styled.div`
 	border-radius: ${props => props.size}px;
 	overflow: hidden;
 	background-color: white;
-	margin: auto;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
 	img {
-		width: ${props => props.size - 40}px;
+    width: ${props => props.size - 40}px;
 	}
 `
 const Push = styled.span`

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Query, Mutation } from 'react-apollo'
+import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import CausesJudgingInterfaceButtons from './CausesJudgingInterfaceButtons'
 import { CAUSE_AND_ACTS } from '../../../../services/constants.js'
@@ -72,6 +73,18 @@ const GRADING_MUTATION = gql`
     }
 	}
 `
+/*
+
+*/
+
+const OVERALL_MUTATION = gql`
+	mutation OverallMutation($companyId: ID!) {
+    setOverallKarma(companyId: $companyId){
+      id
+    }
+	}
+`
+
 
 class CausesJudgingInterface extends React.Component {
   constructor(props) {
@@ -179,6 +192,17 @@ class CausesJudgingInterface extends React.Component {
               </Row>
               <Mutation
                 mutation={GRADING_MUTATION}
+                refetchQueries={[
+                  `CauseGradesQuery`,
+                  `CauseGradesQueryMain`,
+                  `CauseGradesQuerySoul`,
+                  `OpinionsAndGradesCauseCount`,
+                  `Company_Overview_Query`,
+                  `SocialGradesQuery`,
+                  `EnvironmentGradesQuery`,
+                  `EthicsGradesQuery`,
+                  `FiscalGradesQuery`
+                ]}
                 variables={{
                   companyId: companyId,
                   userGrades: this._intoArray(userGrades),

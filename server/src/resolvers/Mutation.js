@@ -121,63 +121,12 @@ async function gradeCauses(parent, args, context, info) {
     })
   }
 
-  /** - - - - - - - - - Edited 07/08/19 */
-  /** Take snippet from companyCauseGrades in Query.js */
-  /** TODO : See if nested mutation is possible */
-
-  /*let globalKarma = 0;
-  const avgCauseGrades = {}
-  const numberOfCauses = causes.length
-  const allCauseGrades = await context.db.query.causeGrades(
-    {
-      where:
-        { gradedTo: { id: companyId } }
-    },
-    ` { cause grade } `,
-  )
-  const divider = (allCauseGrades.length) / (numberOfCauses)
-
-  //if(allCauseGrades.length) {
-  allCauseGrades.forEach(causeGrade => {
-    avgCauseGrades[causeGrade.cause] ?
-      avgCauseGrades[causeGrade.cause] += causeGrade.grade :
-      avgCauseGrades[causeGrade.cause] = causeGrade.grade
-  })
-
-  causes.forEach((cause) => {
-    const avgCauseGrade = avgCauseGrades[cause] / divider
-    globalKarma += avgCauseGrade
-    avgCauseGrades[cause] = Math.round(avgCauseGrade * 10) / 10
-  })
-
-  globalKarma = Math.round((globalKarma / 4) * 10) / 10
-
-  await context.db.mutation.updateCompany(
-    {
-      data: {
-        karma: globalKarma
-      },
-      where: {
-        id: companyId,
-      },
-    },
-  )*/
-  //}
-
-  /** - - - - - - - - -  */
-
   return causeGrades
 }
 
 async function setOverallKarma(parent, args, context, info) {
   const { companyId } = args
   const causes = ['ENVIRONMENT', 'SOCIAL', 'ETHICS', 'FISCAL']
-
-  // get user id from context thantks to imported function
-  const userId = getUserId(context)
-
-
-
   let globalKarma = 0;
   const avgCauseGrades = {}
   const numberOfCauses = causes.length
@@ -205,7 +154,7 @@ async function setOverallKarma(parent, args, context, info) {
 
   globalKarma = Math.round((globalKarma / 4) * 10) / 10
 
-  return await context.db.mutation.updateCompany(
+  return context.db.mutation.updateCompany(
     {
       data: {
         karma: globalKarma
