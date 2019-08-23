@@ -7,25 +7,34 @@ const ItemLine = styled(Row)`
 	font-size: 18px;
 	line-height: 24px;
 	margin-bottom: 10px;
+	@media (max-width: 540px) {
+		margin-bottom: 18px;
+	}
 `
 
 const ItemText = styled.div`
 	text-align: left;
-	font-size: 18px;
+	font-size: 1.1em;
+	@media (max-width: 540px) {
+		text-align: center;
+	}
 `
 const ItemKarma = styled.div`
-	font-size: 18px;
+	font-size: 1.1em;
 	text-align: right;
+	@media (max-width: 540px) {
+		text-align: center;
+	}
 `
 const ItemOverview = ({ identifier, grade }) => {
 	return (
 		<ItemLine>
-			<Col md={9}>
+			<Col sm={9} xs={12}>
 				<ItemText>
 					<div>{CAUSE_AND_ACTS[identifier].fr}</div>
 				</ItemText>
 			</Col>
-			<Col>
+			<Col sm={3} xs={12}>
 				<ItemKarma>{grade !== null ? grade : 'N/A'}</ItemKarma>
 			</Col>
 		</ItemLine>

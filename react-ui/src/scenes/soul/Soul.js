@@ -12,7 +12,11 @@ import LoginToGradeModal from '../../components/modals/LoginToGradeModal'
 import GradeKarmaButton from '../../components/buttons/GradeKarmaButton'
 import SoulHelpInterface from './components/helpInterface/SoulHelpInterface'
 import HelpButton from '../../components/buttons/HelpButton'
-import { CAUSE_AND_ACTS, AUTH_TOKEN, SOUL_STEPS } from '../../services/constants.js'
+import {
+  CAUSE_AND_ACTS,
+  AUTH_TOKEN,
+  SOUL_STEPS,
+} from '../../services/constants.js'
 import { Grid, Row, Col, Box, styled } from '@smooth-ui/core-sc'
 
 // <STYLE>

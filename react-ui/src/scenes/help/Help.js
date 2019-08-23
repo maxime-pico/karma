@@ -12,6 +12,11 @@ const BackGround = styled(Grid)`
 	max-width: 885px;
 	background-color: white;
 	border-radius: 90px;
+
+	@media (max-width: 540px) {
+		width: 100%;
+		border-radius: 0px;
+	}
 `
 
 const Title = styled.div`
@@ -37,6 +42,8 @@ const Header2 = styled.div`
 const Video = styled.div`
 	margin-top: 24px;
 	margin-bottom: 96px;
+	padding: 56.25% 0 0 0;
+	position: relative;
 `
 
 // The Help component Displays the text of the page, no other components called here
@@ -67,22 +74,20 @@ const Help = () => {
 							tu devrais y voir plus clair :
 						</p>
 						<Video>
-							<div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
-								<iframe
-									title="Tutorial video"
-									src="https://player.vimeo.com/video/347089786"
-									style={{
-										position: 'absolute',
-										top: '0',
-										left: '0',
-										width: '100%',
-										height: '100%',
-									}}
-									frameborder="0"
-									allow="autoplay; fullscreen"
-									allowfullscreen
-								/>
-							</div>
+							<iframe
+								title="Tutorial video"
+								src="https://player.vimeo.com/video/347089786"
+								style={{
+									position: 'absolute',
+									top: '0',
+									left: '0',
+									width: '100%',
+									height: '100%',
+								}}
+								frameborder="0"
+								allow="autoplay; fullscreen"
+								allowfullscreen
+							/>
 							<script src="https://player.vimeo.com/api/player.js" />
 						</Video>
 						<Header1>Explications du système de notation</Header1>

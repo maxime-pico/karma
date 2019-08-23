@@ -20,6 +20,9 @@ const KarmaDescription = styled.div`
 	font-weight: 600;
 	text-align: ${props => props.align};
 	color: white;
+	@media (max-width: 540px) {
+		text-align: center;
+	}
 `
 
 // Change background color depending on the overall karma
@@ -29,16 +32,24 @@ const WaveHeader = styled(Grid)`
 	border-bottom-right-radius: 96px;
 	::after {
 		content: ' ';
-		padding-bottom: 76px;
-		padding-right: 86px;
+		padding-bottom: 38px;
+		padding-right: 80px;
 		position: relative;
-		bottom: -19px;
+		bottom: -26px;
 		left: -49%;
 		background-color: #f7f7f7;
 		border: solid ${props => props.color};
 		border-width: 31px 0 0 31px;
 		border-top-left-radius: 100px;
 		z-index: -2;
+		@media (max-width: 540px) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 540px) {
+		border-radius: 0px;
+		padding-bottom: 24px;
 	}
 `
 // </STYLE>
@@ -52,26 +63,24 @@ type Props = {
 }
 
 const SoulHeader = (props: Props) => {
-  const { companyId, overallKarma, type, causeGrades } = props
+  const { companyId, overallKarma, type, causeGrades, karmaDescription } = props
   // const karmaDescription = convertGradesIntoWords(overallKarma, type).fr
   const karmaColor = convertGradesIntoColors(overallKarma)
 
   return (
     <WaveHeader fluid color={karmaColor}>
       <Row justifyContent="center">
-        <Col md={2}>
-          <CompanyOverview companyId={companyId} />
+        <Col md={2} xs={12}>
+          <CompanyOverview companyId={companyId} displayLogo={true} />
         </Col>
-        <Col md={7}>
+        <Col md={7} xs={10}>
           <Row mb={'12px'}>
-            <Col md={9}>
+            <Col sm={9} xs={12}>
               <KarmaDescription align={'left'}>
-                <span className="karma">
-                  {overallKarma === null ? 'N/A' : overallKarma}
-                </span>
+                <span className="karma">{karmaDescription}</span>
               </KarmaDescription>
             </Col>
-            <Col md={3}>
+            <Col sm={3} xs={12}>
               <KarmaDescription align={'right'}>
                 {// if overallKarma is undefined (no grades yet) the display 'N/A' instead
                   overallKarma === null ? 'N/A' : overallKarma}

@@ -2,15 +2,27 @@ import React from 'react'
 //import { Link } from 'react-router-dom'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
+const OpinionContainer = styled(Row)`
+	justify-content: left;
+	@media (max-width: 540px) {
+		justify-content: center;
+	}
+`
+
 const OpinionCard = styled(Col)`
 	background-color: #f2f2f2;
 	border-radius: 26px;
-	height: 306px;
+	min-height: 306px;
 	padding: 30px;
-	font-size: 14px;
+	font-size: 0.8em;
 	color: #2b2e34;
 	:hover + .OpinionCardBack {
 		display: block;
+	}
+	@media (max-width: 960px) {
+		font-size: 1em;
+		hmin-eight: 390px;
+		margin-bottom: 24px;
 	}
 `
 
@@ -78,10 +90,10 @@ const UserName = styled.div`
 const OpinionPreview = ({ opinionsFeed, location, act, tutorial }) => {
   return (
     <Row justifyContent="center" mt={2}>
-      <Col md={9} textAlign="left" color="#a9b4cc">
-        <Row justifyContent="left" className={tutorial ? 'opinion' : null}>
+      <Col md={10} sm={11} xs={12} textAlign="left" color="#a9b4cc">
+        <OpinionContainer className={tutorial ? 'opinion' : null}>
           {opinionsFeed.map((opinion, index) => (
-            <Col key={index} md={4} p="6px">
+            <Col xs={8} sm={6} lg={4} key={index} p="6px">
               <OpinionCard>
                 <div>
                   <b>
@@ -120,7 +132,7 @@ const OpinionPreview = ({ opinionsFeed, location, act, tutorial }) => {
               </OpinionCard>
             </Col>
           ))}
-        </Row>
+        </OpinionContainer>
       </Col>
     </Row>
   )

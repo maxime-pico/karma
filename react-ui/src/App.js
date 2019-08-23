@@ -6,6 +6,8 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import './styles/App.css'
+import 'intro.js/introjs.css'
+import './styles/introjs-custom.css'
 import Navbar from './components/navbar/Navbar'
 import Home from './scenes/home/Home'
 import Search from './scenes/brands/Search'

@@ -106,9 +106,7 @@ const ResultCard = styled.div`
 
 const CompanyName = styled.div`
 	color: #a9b4cc;
-  font-size: 1.5rem;
-  text-align: center;
-  margin-top: 1rem;
+	font-size: 0.95em;
 `
 
 const KarmaBadge = styled.div`

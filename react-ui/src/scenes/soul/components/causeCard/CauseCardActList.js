@@ -17,8 +17,8 @@ type Props = {
 const CauseCardActList = (props: Props) => {
 	const { actGradesObject } = props
 	return (
-		<Row textAlign="left">
-			<Col>
+		<Row textAlign="left" justifyContent="center">
+			<Col xs={10} md={12}>
 				{// for each valid label inside the object, call CauseCardAct with
 				// corresponing variables
 

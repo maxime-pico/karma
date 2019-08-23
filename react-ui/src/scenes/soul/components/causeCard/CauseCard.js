@@ -14,11 +14,17 @@ import { Row, Col, styled } from '@smooth-ui/core-sc'
 const CauseCardBorder = styled(Col)`
 	border-radius: 96px;
 	background-color: white;
+	@media (max-width: 540px) {
+		border-radius: 0px;
+	}
 `
 
 const Count = styled.div`
-	font-size: 12px;
+	font-size: 0.7em;
 	color: #a9b4cc;
+	@media (max-width: 540px) {
+		font-size: 0.9em;
+	}
 `
 const MoreButton = styled.button`
   background-color: #7F8799;
@@ -34,6 +40,7 @@ const MoreButton = styled.button`
   bottom: -30px;
   z-index: 2;
   cursor: pointer;
+  border:none;
 `
 //</STYLE>
 
@@ -106,7 +113,7 @@ const CauseCard = (props: Props) => {
 	const { companyId, causeKarma, identifier, tutorial } = props
 	return (
 		<Row mt="126px" justifyContent="center">
-			<CauseCardBorder md={10} py={3} pt={3} pb={0}>
+			<CauseCardBorder xs={12} md={10} py={3} pt={3} pb={0}>
 				<div className={tutorial ? 'cause' : null}></div>
 				<CauseCardTitle
 					companyId={companyId}

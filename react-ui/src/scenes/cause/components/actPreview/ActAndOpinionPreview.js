@@ -18,12 +18,18 @@ import { Row, Col, styled } from '@smooth-ui/core-sc'
 const ActCard = styled.div`
 	border-radius: 96px;
 	background-color: white;
+	@media (max-width: 540px) {
+		border-radius: 0px;
+	}
 `
 
 const ItemHeaderDescription = styled.div`
-	font-size: 16px;
 	color: #a9b4cc;
 	text-align: left;
+	font-size: 0.9em;
+	@media (max-width: 540px) {
+		font-size: 1.2em;
+	}
 `
 
 const ReadMore = styled.button`
@@ -40,6 +46,7 @@ const ReadMore = styled.button`
   bottom: -30px;
   z-index: 2;
   cursor: pointer;
+  border: none;
 `
 
 const NoOpinions = styled.div`
@@ -71,10 +78,18 @@ const OPINION_FEED_QUERY = gql`
 // Declaring props Type
 /*
 type Props = {
+<<<<<<< HEAD
   act: string,
   grade: number,
   companyId: string,
   location: { pathname: string },
+=======
+	act: string,
+	grade: number,
+	companyId: string,
+	location: { pathname: string },
+	tutorial: boolean,
+>>>>>>> a9f35b8ebc2149125d13b0103d8c0ee6f4840775
 }
 */
 
