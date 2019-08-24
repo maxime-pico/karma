@@ -114,7 +114,12 @@ const CTABlock = styled.div`
 
 const CTABand = styled.div`
 	background-color: #545a66;
-	padding: 12rem 4rem;
+  padding: 12rem 4rem;
+  
+  h2,
+  h3{
+    text-align:center;
+  }
 
 	h2 {
 		color: white;
@@ -128,7 +133,11 @@ const CTABand = styled.div`
 
 const ExplanationWrapper = styled.section`
 	background-color: white;
-	padding: 11rem 0;
+  padding: 11rem 0;
+  
+  h3, h3+p{
+    text-align:center;
+  }
 `
 
 const ExplanationIntro = styled(Row)`
@@ -185,25 +194,25 @@ const Home = () => {
 	return (
 		<HomeWrapper>
 			<Grid>
-				<Row justifyContent="center" pt={'9.6rem'}>
+				<Row justifyContent="center" textAlign="center" pt={'9.6rem'}>
 					<Col xs={10} md={5}>
 						<Logo src={karmalogo} alt="karma panda" />
 						<h1 class="title-size2">
 							Faites appliquer la loi du Karma
 							<br /> aux marques qui nous entourent
 						</h1>
-						<CTAButton link="/brands">
-							<img
-								src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.svg'}
-								alt="grading hammer"
-								width="24"
-								height="22"
-							/>
-							Jugez l'âme des marques
+            <CTAButton link="/brands">
+              <img
+                src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.svg'}
+                alt="grading hammer"
+                width="24"
+                height="22"
+              />
+              Jugez l'âme des marques
 						</CTAButton>
 					</Col>
 				</Row>
-				<Row justifyContent="center">
+				<Row justifyContent="center" textAlign="center" >
 					<Col xs={12} md={8} textAlign="left" px={'0px'}>
 						<TextZone>
 							<p>
@@ -211,30 +220,30 @@ const Home = () => {
 									Ici, une communauté de Pandas s’est éveillée pour faire
 									appliquer la loi du Karma aux marques qui nous entourent.
 								</strong>
-							</p>
-							<p>
-								Ensemble, nous pouvons juger de l’Âme des entreprises en
+              </p>
+              <p>
+                Ensemble, nous pouvons juger de l’Âme des entreprises en
 								fonction de leur impact réel sur le monde et créer un vrai
 								contrepouvoir citoyen à l’influence des marques.
 							</p>
-							<p>
-								Plus nous serons de Pandas, plus nous pourrons favoriser les
+              <p>
+                Plus nous serons de Pandas, plus nous pourrons favoriser les
 								entreprises bénéfiques pour nos sociétés et notre environnement.
 								Les autres seront forcées de changer radicalement, ou
 								disparaitre.
 							</p>
-							<p>
-								<big>
-									Pandas, Pandas : Ensemble, appliquons
+              <p>
+                <big>
+                  Pandas, Pandas : Ensemble, appliquons
 									<br /> la loi du Karma !
 								</big>
-							</p>
-						</TextZone>
-					</Col>
-				</Row>
-				<Row justifyContent={{ md: 'center' }}>
-					<h3 class="title-size2">
-						Jugez le Karma des marques qui nous entourent
+              </p>
+            </TextZone>
+          </Col>
+        </Row>
+        <Row justifyContent={{ md: 'center' }} textAlign="center" >
+          <h3 class="title-size2">
+            Jugez le Karma des marques qui nous entourent
 					</h3>
 					<h2 class="title-size1">Basé sur 4 grandes causes</h2>
 					<Col xs={12} textAlign="left">
@@ -340,21 +349,21 @@ const Home = () => {
 						</CauseRow>
 					</Col>
 				</Row>
-				<Row justifyContent={{ md: 'center' }}>
+				<Row justifyContent={{ md: 'center' }} textAlign="center" >
 					<Col md={7} textAlign="right">
 						<CTABlock>
 							<h3 class="title-size4">
 								Envie d’appliquer
 								<br /> la loi du karma ?
 							</h3>
-							<CTAButton link="/brands">
-								<img
-									src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.svg'}
-									alt="grading hammer"
-									width="24"
-									height="22"
-								/>
-								Jugez l'âme des marques
+              <CTAButton link="/brands">
+                <img
+                  src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.svg'}
+                  alt="grading hammer"
+                  width="24"
+                  height="22"
+                />
+                Jugez l'âme des marques
 							</CTAButton>
 						</CTABlock>
 					</Col>
@@ -371,9 +380,9 @@ const Home = () => {
 									Le Karma est le reflet de ce que les Pandas pensent
 									collectivement des actions concrètes d'une entreprise
 								</strong>
-							</p>
-							<p>
-								Nous avons mis en place un système de notation « démocratique »
+              </p>
+              <p>
+                Nous avons mis en place un système de notation « démocratique »
 								: les marques sont jugées par les Pandas, pour les Pandas, sur
 								la base de sources collectées et validées par la communauté.
 							</p>
@@ -388,13 +397,13 @@ const Home = () => {
 								Nous avons décidé de choisir <br />
 								une notation discrète à 5 niveaux :
 							</p>
-							<p>
-								<strong>-2</strong> étant la moins bonne note,
+              <p>
+                <strong>-2</strong> étant la moins bonne note,
 								<br />
-								<strong>+2</strong> la meilleure.
+                <strong>+2</strong> la meilleure.
 							</p>
-						</ExplanationScale>
-					</ExplanationIntro>
+            </ExplanationScale>
+          </ExplanationIntro>
 
 					<ExplanationDiagram>
 						<Col xs={12} md={9}>
@@ -413,26 +422,26 @@ const Home = () => {
 						</Col>
 					</ExplanationDiagram>
 
-					<CTAButton ghost link="/brands">
-						+ d'explications sur les notes
+          <CTAButton ghost link="/brands">
+            + d'explications sur les notes
 					</CTAButton>
-				</Grid>
-			</ExplanationWrapper>
-			<CTABand>
-				<h3 class="title-size5">Envie d’appliquer la loi du Karma ?</h3>
-				<h2 class="title-size1">Devenez un panda !</h2>
-				<CTAButton link="/brands">
-					<img
-						src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.svg'}
-						alt="grading hammer"
-						width="24"
-						height="22"
-					/>
-					Jugez l'âme des marques
+        </Grid>
+      </ExplanationWrapper>
+      <CTABand>
+        <h3 class="title-size5">Envie d’appliquer la loi du Karma ?</h3>
+        <h2 class="title-size1">Devenez un panda !</h2>
+        <CTAButton link="/brands">
+          <img
+            src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.svg'}
+            alt="grading hammer"
+            width="24"
+            height="22"
+          />
+          Jugez l'âme des marques
 				</CTAButton>
-			</CTABand>
-		</HomeWrapper>
-	)
+      </CTABand>
+    </HomeWrapper>
+  )
 }
 
 export default Home

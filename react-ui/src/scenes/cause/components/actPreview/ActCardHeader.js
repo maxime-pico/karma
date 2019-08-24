@@ -25,7 +25,11 @@ const RoundWindow = styled.div`
 	background-color: ${props => props.color};
 	margin: auto;
 	position: relative;
-	top: -40px;
+  top: -40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 	img {
 		height: 60%;
 	}
@@ -43,32 +47,32 @@ const Push = styled.span`
 `
 
 const ActCardHeader = ({ act, grade, companyId, location }) => {
-	const karmaColor = convertGradesIntoColors(grade)
-	return (
-		<div>
-			<Row justifyContent="center">
-				<Col md={4}>
-					<RoundWindow size={80} color={karmaColor}>
-						<Push />
-						<img
-							src={process.env.PUBLIC_URL + `/icons/act/${act}.png`}
-							alt={act}
-						/>
-					</RoundWindow>
-				</Col>
-			</Row>
-			<Row justifyContent="center" mt={'-24px'}>
-				<TitleCol xs={10} md={8} align="left">
-					<Link to={`${location.pathname}act/${act}`}>
-						<Title>{CAUSE_AND_ACTS[act].fr}</Title>
-					</Link>
-				</TitleCol>
-				<TitleCol xs={10} md={2} align="right">
-					<Title>{grade !== null ? grade : 'N/A'}</Title>
-				</TitleCol>
-			</Row>
-		</div>
-	)
+  const karmaColor = convertGradesIntoColors(grade)
+  return (
+    <div>
+      <Row justifyContent="center" textAlign="center" >
+        <Col md={4}>
+          <RoundWindow size={80} color={karmaColor}>
+            <Push />
+            <img
+              src={process.env.PUBLIC_URL + `/icons/act/${act}.png`}
+              alt={act}
+            />
+          </RoundWindow>
+        </Col>
+      </Row>
+      <Row justifyContent="center" textAlign="center"  mt={'-24px'}>
+        <TitleCol xs={10} md={8} align="left">
+          <Link to={`${location.pathname}act/${act}`}>
+            <Title>{CAUSE_AND_ACTS[act].fr}</Title>
+          </Link>
+        </TitleCol>
+        <TitleCol xs={10} md={2} align="right">
+          <Title>{grade !== null ? grade : 'N/A'}</Title>
+        </TitleCol>
+      </Row>
+    </div>
+  )
 }
 
 export default withRouter(ActCardHeader)

@@ -5,7 +5,7 @@ import ActAndOpinionPreview from './ActAndOpinionPreview'
 import { Grid, Row, Col } from '@smooth-ui/core-sc'
 
 const ACT_GRADES_QUERIES = {
-	ENVIRONMENT: gql`
+  ENVIRONMENT: gql`
 		query EnvironmentGradesQuery($companyId: ID!) {
 			companyActGrades(companyId: $companyId) {
 				CLIMAT_CHANGE
@@ -15,7 +15,7 @@ const ACT_GRADES_QUERIES = {
 			}
 		}
 	`,
-	ETHICS: gql`
+  ETHICS: gql`
 		query EthicsGradesQuery($companyId: ID!) {
 			companyActGrades(companyId: $companyId) {
 				POLITICAL_RESPONSIBILITY
@@ -26,7 +26,7 @@ const ACT_GRADES_QUERIES = {
 			}
 		}
 	`,
-	FISCAL: gql`
+  FISCAL: gql`
 		query FiscalGradesQuery($companyId: ID!) {
 			companyActGrades(companyId: $companyId) {
 				SHAREHOLDER_REMUNERATION
@@ -36,7 +36,7 @@ const ACT_GRADES_QUERIES = {
 			}
 		}
 	`,
-	SOCIAL: gql`
+  SOCIAL: gql`
 		query SocialGradesQuery($companyId: ID!) {
 			companyActGrades(companyId: $companyId) {
 				EMPLOYMENT_CONDITIONS
@@ -48,35 +48,36 @@ const ACT_GRADES_QUERIES = {
 	`,
 }
 
-const ActAndOpinionPreviewList = ({ cause, companyId, _launchTutorial }) => (
-	<Grid pt={40}>
-		<Query query={ACT_GRADES_QUERIES[cause]} variables={{ companyId }}>
-			{({ loading, error, data }) => {
-				if (loading) return <div> Fetching </div>
-				if (error) return <div> Error </div>
-				const companyActGrades = data.companyActGrades
-				return (
-					<div>
-						{companyActGrades &&
-							Object.keys(companyActGrades)
-								.filter(identifier => identifier !== '__typename')
-								.map((act, i) => (
-									<Row mt={'96px'} key={i} justifyContent="center">
-										<Col px={'0px'} lg={10} md={12} mb="42px">
-											<ActAndOpinionPreview
-												act={act}
-												companyId={companyId}
-												grade={companyActGrades[act]}
-												tutorial={i === 0}
-											/>
-										</Col>
-									</Row>
-								))}
-					</div>
-				)
-			}}
-		</Query>
-	</Grid>
+const ActAndOpinionPreviewList = ({ cause, companyId, _launchTutorial, _dataLoaded }) => (
+  <Grid fluid px={{ md: '80px' }} pt={40}>
+    <Query query={ACT_GRADES_QUERIES[cause]} variables={{ companyId }} onCompleted={_dataLoaded}>
+      {({ loading, error, data }) => {
+        if (loading) return <div> Fetching </div>
+        if (error) return <div> Error </div>
+        const companyActGrades = data.companyActGrades
+        return (
+          <div>
+            {companyActGrades &&
+              Object.keys(companyActGrades)
+                .filter(identifier => identifier !== '__typename')
+                .map((act, i) => (
+                  <Row mt={'96px'} key={i} justifyContent="center">
+                    <Col md={10} mb="42px">
+                      <ActAndOpinionPreview
+                        act={act}
+                        companyId={companyId}
+                        grade={companyActGrades[act]}
+                        tutorial={i === 0}
+                        _dataLoaded={_dataLoaded}
+                      />
+                    </Col>
+                  </Row>
+                ))}
+          </div>
+        )
+      }}
+    </Query>
+  </Grid>
 )
 
 export default ActAndOpinionPreviewList

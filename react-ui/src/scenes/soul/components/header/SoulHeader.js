@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
 import {
-	convertGradesIntoWords,
-	convertGradesIntoColors,
+  convertGradesIntoWords,
+  convertGradesIntoColors,
 } from '../../../../services/utils'
 import CompanyOverview from '../../../../components/companyOverview/CompanyOverview'
 import OverviewList from '../../../../components/karmaLists/OverviewList'
@@ -56,51 +56,51 @@ const WaveHeader = styled(Grid)`
 
 // Declare types of expected props
 type Props = {
-	companyId: string,
-	overallKarma?: number, // karma here is the overall karma of the Soul Component
-	type: string,
-	causeGrades: {},
+  companyId: string,
+  overallKarma?: number, // karma here is the overall karma of the Soul Component
+  type: string,
+  causeGrades: {},
 }
 
 const SoulHeader = (props: Props) => {
-	const { companyId, overallKarma, type, causeGrades } = props
-	const karmaDescription = convertGradesIntoWords(overallKarma, type).fr
-	const karmaColor = convertGradesIntoColors(overallKarma)
+  const { companyId, overallKarma, type, causeGrades, karmaDescription } = props
+  // const karmaDescription = convertGradesIntoWords(overallKarma, type).fr
+  const karmaColor = convertGradesIntoColors(overallKarma)
 
-	return (
-		<WaveHeader fluid color={karmaColor}>
-			<Row justifyContent="center">
-				<Col md={2} xs={12}>
-					<CompanyOverview companyId={companyId} displayLogo={true} />
-				</Col>
-				<Col md={7} xs={10}>
-					<Row mb={'12px'}>
-						<Col sm={9} xs={12}>
-							<KarmaDescription align={'left'}>
-								<span className="karma">{karmaDescription}</span>
-							</KarmaDescription>
-						</Col>
-						<Col sm={3} xs={12}>
-							<KarmaDescription align={'right'}>
-								{// if overallKarma is undefined (no grades yet) the display 'N/A' instead
-								overallKarma === null ? 'N/A' : overallKarma}
-							</KarmaDescription>
-						</Col>
-					</Row>
-					<OverviewList
-						grades={causeGrades}
-						type="cause"
-						companyId={companyId}
-					/>
-				</Col>
-			</Row>
-			<Row mt={'48px'} justifyContent="center">
-				<Col md={3}>
-					<CompanyGradesCount companyId={companyId} />
-				</Col>
-			</Row>
-		</WaveHeader>
-	)
+  return (
+    <WaveHeader fluid color={karmaColor}>
+      <Row justifyContent="center">
+        <Col md={2} xs={12}>
+          <CompanyOverview companyId={companyId} displayLogo={true} />
+        </Col>
+        <Col md={7} xs={10}>
+          <Row mb={'12px'}>
+            <Col sm={9} xs={12}>
+              <KarmaDescription align={'left'}>
+                <span className="karma">{karmaDescription}</span>
+              </KarmaDescription>
+            </Col>
+            <Col sm={3} xs={12}>
+              <KarmaDescription align={'right'}>
+                {// if overallKarma is undefined (no grades yet) the display 'N/A' instead
+                  overallKarma === null ? 'N/A' : overallKarma}
+              </KarmaDescription>
+            </Col>
+          </Row>
+          <OverviewList
+            grades={causeGrades}
+            type="cause"
+            companyId={companyId}
+          />
+        </Col>
+      </Row>
+      <Row mt={'48px'} justifyContent="center">
+        <Col md={3}>
+          <CompanyGradesCount companyId={companyId} />
+        </Col>
+      </Row>
+    </WaveHeader>
+  )
 }
 
 export default SoulHeader
