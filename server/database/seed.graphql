@@ -4,6 +4,7 @@ mutation {
     data: {
       name: "H&M"
       logo: "hm.png"
+      karma: -1.5
       actGrades: {
         create: {
           gradedBy: {
