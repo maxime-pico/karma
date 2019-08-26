@@ -12,6 +12,9 @@ const Count = styled.div`
 	font-size: 12px;
 	color: ${props => props.color};
 	margin-top: 42px;
+	@media (max-width: 540px) {
+		font-size: 1em;
+	}
 `
 // </STYLE>
 

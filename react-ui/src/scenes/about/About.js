@@ -11,6 +11,10 @@ const BackGround = styled(Grid)`
 	max-width: 885px;
 	background-color: white;
 	border-radius: 90px;
+	@media (max-width: 540px) {
+		width: 100%;
+		border-radius: 0px;
+	}
 `
 
 const Title = styled.div`

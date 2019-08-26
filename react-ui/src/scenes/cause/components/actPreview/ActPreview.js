@@ -15,7 +15,10 @@ const ItemIcon = styled.div`
 	background: url(${props => props.src}) no-repeat 15px 15px;
 	background-color: ${props => convertGradesIntoColors(props.grade)};
 	background-size: 38px, contain;
-	margin: auto;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 const ItemKarma = styled.div`
 	font-size: 1.5em;
@@ -45,49 +48,49 @@ const OPINIONS_COUNT_QUERY = gql`
 `
 
 const ActPreview = ({ identifier, grade, companyId, location }) => {
-	return (
-		<Row justifyContent="center" textAlign="left" pl={4}>
-			<Col md={1} textAlign="center">
-				<ItemIcon
-					src={process.env.PUBLIC_URL + `/icons/act/${identifier}.png`}
-					size={65}
-					alt={identifier}
-					grade={grade}
-				/>
-				<ItemKarma>{grade !== null ? grade : 'N/A'}</ItemKarma>
-			</Col>
-			<Col pt={1}>
-				<Link to={`${location.pathname}act/${identifier}`}>
-					<ItemTitle>{CAUSE_AND_ACTS[identifier].fr}</ItemTitle>
-				</Link>
-				<Query
-					query={OPINIONS_COUNT_QUERY}
-					variables={{ companyId, identifier }}
-				>
-					{({ loading, error, data }) => {
-						if (loading) return <div> Fetching </div>
-						if (error) return <div> Error </div>
-						const opinionsCountInt = data.opinionsCount.count
-						return (
-							<ItemOpinions>
-								{opinionsCountInt} opinion
+  return (
+    <Row justifyContent="center" textAlign="left" pl={4}>
+      <Col md={1} textAlign="center">
+        <ItemIcon
+          src={process.env.PUBLIC_URL + `/icons/act/${identifier}.png`}
+          size={65}
+          alt={identifier}
+          grade={grade}
+        />
+        <ItemKarma>{grade !== null ? grade : 'N/A'}</ItemKarma>
+      </Col>
+      <Col pt={1}>
+        <Link to={`${location.pathname}act/${identifier}`}>
+          <ItemTitle>{CAUSE_AND_ACTS[identifier].fr}</ItemTitle>
+        </Link>
+        <Query
+          query={OPINIONS_COUNT_QUERY}
+          variables={{ companyId, identifier }}
+        >
+          {({ loading, error, data }) => {
+            if (loading) return <div> Fetching </div>
+            if (error) return <div> Error </div>
+            const opinionsCountInt = data.opinionsCount.count
+            return (
+              <ItemOpinions>
+                {opinionsCountInt} opinion
 								{opinionsCountInt > 1 && 's'}
-							</ItemOpinions>
-							/* <div className="col"> tags </div> */
-						)
-					}}
-				</Query>
-				<ItemDescription>
-					{CAUSE_AND_ACTS[identifier].description.fr}
-				</ItemDescription>
-			</Col>
-			<OpinionPreviewBloc
-				act={identifier}
-				companyId={companyId}
-				location={location}
-			/>
-		</Row>
-	)
+              </ItemOpinions>
+              /* <div className="col"> tags </div> */
+            )
+          }}
+        </Query>
+        <ItemDescription>
+          {CAUSE_AND_ACTS[identifier].description.fr}
+        </ItemDescription>
+      </Col>
+      <OpinionPreviewBloc
+        act={identifier}
+        companyId={companyId}
+        location={location}
+      />
+    </Row>
+  )
 }
 
 export default ActPreview

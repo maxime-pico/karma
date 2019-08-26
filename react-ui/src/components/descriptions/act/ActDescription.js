@@ -9,14 +9,28 @@ import { CAUSE_AND_ACTS } from '../../../services/constants.js'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 //<STYLE>
+const DescriptionRow = styled(Row)`
+	justify-content: ${props => props.justifyCont};
+	@media (max-width: 540px) {
+		justify-content: center;
+	}
+`
+
 const ItemHeaderDescription = styled.div`
-	font-size: 16px;
+	font-size: 0.9em;
+	@media (max-width: 540px) {
+		font-size: 1.2em;
+	}
 `
 
 const ItemDescription = styled.div`
 	margin-top: 6px;
-	font-size: 12px;
+	font-size: 0.8em;
 	line-height: 20px;
+	@media (max-width: 540px) {
+		font-size: 1em;
+		margin-top: 18px;
+	}
 `
 //</STYLE>
 
@@ -30,10 +44,10 @@ type Props = {
 const ActDescription = (props: Props) => {
 	const { act, color, justifyContent } = props
 	return (
-		<Row justifyContent={justifyContent} mt={2}>
-			<Col md={10} textAlign="left" color={color}>
+		<DescriptionRow justifyCont={justifyContent} mt={2}>
+			<Col xs={10} textAlign="left" color={color}>
 				<ItemHeaderDescription>
-					Ce sur quoi la marque a été jugée :
+					Ce sur quoi la marque a été jugée :
 				</ItemHeaderDescription>
 				<ItemDescription>
 					<ul>
@@ -43,7 +57,7 @@ const ActDescription = (props: Props) => {
 					</ul>
 				</ItemDescription>
 			</Col>
-		</Row>
+		</DescriptionRow>
 	)
 }
 

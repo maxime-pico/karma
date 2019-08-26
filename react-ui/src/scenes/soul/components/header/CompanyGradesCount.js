@@ -3,10 +3,13 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import styled from 'styled-components'
 
-const Figures = styled.div`
+const Count = styled.div`
 	color: white;
-	font-size: 12px;
+	font-size: 0.7em;
 	line-height: 1.2em;
+	@media (max-width: 540px) {
+		font-size: 1em;
+	}
 `
 
 // query that retrieves the company overview from its id
@@ -36,10 +39,10 @@ class CompanyGradesCount extends React.Component {
 					} = data.companyOverview
 
 					return (
-						<Figures>
+						<Count>
 							{causeGradesCount + actGradesCount} notes basées sur{' '}
 							{opinionsCount} opinions
-						</Figures>
+						</Count>
 					)
 				}}
 			</Query>

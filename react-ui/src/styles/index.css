@@ -3,3 +3,147 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+*{
+  outline : 0;
+}
+
+/* Brand results fade*/
+
+.results-fade-enter {
+  opacity: 0;
+
+}
+.results-fade-enter-active {
+  opacity: 1;
+ 
+  transition: opacity 500ms, transform 300ms;
+}
+.results-fade-exit {
+  opacity: 1;
+}
+.results-fade-exit-active {
+  opacity: 0;
+  transition: opacity 500ms, transform 300ms;
+}
+
+
+.result-fade-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.result-fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.result-fade-exit {
+  opacity: 1;
+}
+.result-fade-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.results-list{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  /*justify-content: space-between; C'était presque bien !*/
+  padding-bottom: 4rem;
+}
+
+.sorter{
+  display:flex;
+  height:6rem;
+  align-items:center;
+  justify-content:flex-end;
+}
+
+.sorter select{
+  height:100%;
+  background-color: white;
+  border: 2px solid #ececec;
+  padding: 1rem;
+}
+
+.brands-sorting,
+.brands-filtering{
+  border-top: 1px solid #ececec;
+  margin-top:1rem;
+  padding-top: 4rem;
+}
+
+.brands-filtering h5{
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.sorter h5,
+.brands-filtering h5{
+  color:#a9b4cc;
+}
+
+@media(max-width: 768px) {
+  .brands-filtering h5{
+    margin-top: 3rem;
+  }
+}
+
+.karma-vb span,
+.karma-vb span::before{
+  background-color: #B52832;
+}
+.karma-b span,
+.karma-b span::before{
+  background-color: #B4586D;
+}
+.karma-n span,
+.karma-n span::before{
+  background-color: #D7CFC7;
+}
+.karma-g span,
+.karma-g span::before{
+  background-color: #89DFDC;
+}
+.karma-vg span,
+.karma-vg span::before{
+  background-color: #28CBC8;
+}
+
+.karma-pcb input:checked ~ span {
+  color: white;
+  background-color: transparent;
+  border: 4px solid white;
+  overflow: visible;
+}
+
+
+.karma-pcb input:checked ~ span::before {
+  transform: scale(1.25);
+  opacity: 1;
+}
+
+.karma-pcb span {
+  border: 0;
+  font-weight: bold;
+  color: white;
+  padding: 0;
+}
+
+
+.karma-pcb span::before {
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}
+
+.karma-pcb span::before,
+.karma-pcb span {
+  border-radius:5rem;
+}
+
+.karma-pcb span {
+  width:5rem;
+  height: 5rem;  
+}

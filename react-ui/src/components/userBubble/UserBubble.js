@@ -40,8 +40,8 @@ class UserBubble extends React.Component {
 		return (
 			<Query query={USER_ID_QUERY}>
 				{({ loading, error, data }) => {
-					if (loading) return <div> Fetching </div>
-					if (error) return <div> Error </div>
+					if (loading) return <div> Loading... </div>
+					if (error) return <div> Error: {error.message} </div>
 					const { id, picture } = data.getUserInfoFromContext
 					return (
 						<Link to={`/user/${id}`} className="ml1 no-underline black">

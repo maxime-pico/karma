@@ -11,15 +11,22 @@ import { convertGradesIntoColors } from '../../../../services/utils'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 //<STYLE>
+const TitleCol = styled(Col)`
+	text-align: ${props => props.align};
+	@media (max-width: 540px) {
+		text-align: center;
+	}
+`
+
 const Title = styled.span`
 	font-size: 26px;
 	font-weight: 600;
 `
-// Size and color can be adapted
+// Color can be adapted
 const RoundWindow = styled.div`
-	height: ${props => props.size}px;
-	width: ${props => props.size}px;
-	border-radius: ${props => props.size}px;
+	height: 80px;
+	width: 80px;
+	border-radius: 80px;
 	overflow: hidden;
 	background-color: ${props => props.color};
 	margin: auto;
@@ -27,6 +34,11 @@ const RoundWindow = styled.div`
 	top: -60px;
 	img {
 		height: 60%;
+	}
+	@media (max-width: 540px) {
+		height: 100px;
+		width: 100px;
+		border-radius: 100px;
 	}
 `
 
@@ -39,39 +51,39 @@ const Push = styled.span`
 
 // Declare types of expected props
 type Props = {
-	companyId: string,
-	causeKarma: number,
-	identifier: string,
+  companyId: string,
+  causeKarma: number,
+  identifier: string,
 }
 
 const CauseCardTitle = (props: Props) => {
-	const { identifier, companyId, causeKarma } = props
-	const karmaColor = convertGradesIntoColors(causeKarma)
-	return (
-		<div>
-			<Row justifyContent="center">
-				<Col md={4}>
-					<RoundWindow size={80} color={karmaColor}>
-						<Push />
-						<img
-							src={process.env.PUBLIC_URL + `/icons/cause/${identifier}.png`}
-							alt={identifier}
-						/>
-					</RoundWindow>
-				</Col>
-			</Row>
-			<Row justifyContent="center" mt={'-40px'}>
-				<Col md={8} textAlign="left">
-					<Link to={`/company/${companyId}/cause/${identifier}`}>
-						<Title>{CAUSE_AND_ACTS[identifier].fr}</Title>
-					</Link>
-				</Col>
-				<Col md={2} textAlign="right">
-					<Title>{causeKarma}</Title>
-				</Col>
-			</Row>
-		</div>
-	)
+  const { identifier, companyId, causeKarma } = props
+  const karmaColor = convertGradesIntoColors(causeKarma)
+  return (
+    <div>
+      <Row justifyContent="center" textAlign="center" >
+        <Col md={4}>
+          <RoundWindow textAlign="center" color={karmaColor}>
+            <Push />
+            <img
+              src={process.env.PUBLIC_URL + `/icons/cause/${identifier}.png`}
+              alt={identifier}
+            />
+          </RoundWindow>
+        </Col>
+      </Row>
+      <Row justifyContent="center" textAlign="center" mt={'-40px'}>
+        <TitleCol xs={10} sm={8} align="left">
+          <Link to={`/company/${companyId}/cause/${identifier}`}>
+            <Title>{CAUSE_AND_ACTS[identifier].fr}</Title>
+          </Link>
+        </TitleCol>
+        <TitleCol xs={10} sm={2} align="right">
+          <Title>{causeKarma}</Title>
+        </TitleCol>
+      </Row>
+    </div>
+  )
 }
 
 export default CauseCardTitle

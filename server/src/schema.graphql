@@ -11,7 +11,10 @@ type Query {
   ): Company
 
   # exposes the resolver that gets the list of all companies in the database
-	allCompanies(filter: String, skip: Int, first: Int, orderBy: CompanyOrderByInput): [Company!]!
+	allCompanies(karmas: String, categories: String, filter: String, skip: Int, first: Int, orderBy: CompanyOrderByInput): [Company!]!
+
+    # exposes the resolver that gets the list of all companies in the database
+	allCompanyCategories(filter: String, skip: Int, first: Int, orderBy: CompanyCategoryOrderByInput): [CompanyCategory!]!
 
   # exposes the resolver that gets an object with the avg grades per cause for
   # a specific company
@@ -73,6 +76,10 @@ type Mutation {
     companyId: ID!,
     userGrades: [Int!]!,
   ): [CauseGrade!]!
+
+  setOverallKarma(
+    companyId: ID!,
+  ): Company!
 
   # exposes the resolver that allows a logged in user to grade the act of a
   # company and affiliation to an opinion
@@ -185,4 +192,6 @@ enum CompanyOrderByInput {
 	name_DESC
 	createdAt_ASC
 	createdAt_DESC
+  karma_ASC
+  karma_DESC
 }

@@ -4,8 +4,12 @@ import gql from 'graphql-tag'
 import { styled } from '@smooth-ui/core-sc'
 
 const Count = styled.div`
-	font-size: 12px;
 	color: white;
+	font-size: 0.7em;
+	line-height: 1.2em;
+	@media (max-width: 540px) {
+		font-size: 1em;
+	}
 `
 
 const OPINIONS_COUNT_QUERY = gql`
