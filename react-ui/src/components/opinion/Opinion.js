@@ -31,6 +31,10 @@ const Tick = styled.div`
 	color: #a4cdcc;
 	font-weight: 600;
 	font-size: 16px;
+
+	span {
+		font-size: 20px;
+	}
 `
 
 const Tags = styled.div`
@@ -55,10 +59,11 @@ const Sources = styled.div`
 		text-overflow: ellipsis;
 	}
 `
-const SeeMore = styled.span`
+const SeeMore = styled.div`
 	font-size: 16px;
 	font-weight: 600;
 	cursor: pointer;
+	margin-top: 25px;
 `
 
 class Opinion extends React.Component {
@@ -150,7 +155,10 @@ class Opinion extends React.Component {
 					))}
 					<Row mt={2}>
 						<Col textAlign="left">
-							<Tick>✔{opinion.affiliationsCount}</Tick>
+							<Tick>
+								<span>✔</span> {opinion.affiliationsCount} personnes affiliées à
+								cette opinion
+							</Tick>
 						</Col>
 						<Col textAlign="right">
 							<UserName>@{opinion.writtenBy.name}</UserName>

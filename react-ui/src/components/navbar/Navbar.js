@@ -22,6 +22,10 @@ const NavbarBox = styled(Row)`
 const NavbarLink = styled(Link)`
 	margin: auto;
 	margin: auto 0 auto 42px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
 	@media (max-width: 540px) {
 		width: 100%;
 		height: 40px;
@@ -30,6 +34,10 @@ const NavbarLink = styled(Link)`
 		text-align: center;
 		border-top: 1px solid rgba(169, 180, 204, 0.7);
 		//display: block;
+	}
+
+	&:hover {
+		color: #545a66;
 	}
 `
 
@@ -49,11 +57,31 @@ const LogoContainer = styled(Col)`
 		padding: 7px;
 	}
 `
+
 const BurgerBar = styled.div`
 	width: 25px;
 	height: 2px;
 	background-color: rgba(169, 180, 204, 0.7);
 	margin: 6px 0;
+`
+
+const IconCircle = styled.div`
+	background-color: #545a66;
+	margin: 0 8px 0 0;
+	border-radius: 100px;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	img {
+		width: 17px;
+	}
+
+	& + strong {
+		color: #545a66;
+	}
 `
 
 const BurgerMenu = styled(Col)`
@@ -96,7 +124,17 @@ class Navbar extends React.Component {
 					</BurgerMenu>
 					<Col xs={12} md={6} p={0} style={{ alignSelf: 'center' }}>
 						<NavbarLinkContainer displayValue={burgerDisplayProp}>
-							<NavbarLink to="/brands">marques</NavbarLink>
+							<NavbarLink to="/brands">
+								<IconCircle>
+									<img
+										src={process.env.PUBLIC_URL + '/icons/gradekarmabutton.svg'}
+										alt="grading hammer"
+										width="24"
+										height="22"
+									/>
+								</IconCircle>
+								<strong>Jugez les marques</strong>
+							</NavbarLink>
 							<NavbarLink to="/help">aide</NavbarLink>
 							<NavbarLink to="/about">à propos</NavbarLink>
 							<div className="d-none d-sm-block">

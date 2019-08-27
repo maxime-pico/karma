@@ -47,7 +47,7 @@ const ActDescription = (props: Props) => {
 		<DescriptionRow justifyCont={justifyContent} mt={2}>
 			<Col xs={10} textAlign="left" color={color}>
 				<ItemHeaderDescription>
-					Ce sur quoi la marque a été jugée :
+					Ce sur quoi la marque est jugée :
 				</ItemHeaderDescription>
 				<ItemDescription>
 					<ul>
