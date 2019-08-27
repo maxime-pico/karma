@@ -23,7 +23,7 @@ function company(parent, args, context, info) {
 // Resolver querying all the companies in the database
 function allCompanies(parent, args, context, info) {
 
-  const conditions = { or: [], and: [] };
+  const conditions = { or: [], and: [{ validated: 1 }] };
 
   // WHERE - filter
   if (typeof args.filter !== 'undefined') {
@@ -94,6 +94,27 @@ function allCompanies(parent, args, context, info) {
     if (conditions.and.length)
       where = { AND: conditions.and };
   }
+
+  const companies = context.db.query.companies(
+    {
+      where,
+      skip: args.skip,
+      first: args.first,
+      orderBy: args.orderBy,
+    },
+    info,
+  );
+
+  return companies;
+}
+
+function suggestedCompanies(parent, args, context, info) {
+  let where = {
+
+    validated: 0,
+    adminApproved: 1
+
+  };
 
   const companies = context.db.query.companies(
     {
@@ -337,4 +358,5 @@ module.exports = {
   opinionsFeed,
   opinionsActCount,
   opinionsAndGradesCauseCount,
+  suggestedCompanies
 }

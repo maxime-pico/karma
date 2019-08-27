@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Aug 07 2019 16:07:31 GMT+0200 (CEST)
+# timestamp: Tue Aug 27 2019 17:10:07 GMT+0200 (GMT+02:00)
 
 enum Act {
   CLIMAT_CHANGE
@@ -374,6 +374,10 @@ type AggregateCompanyCategory {
   count: Int!
 }
 
+type AggregateCompanyUpVote {
+  count: Int!
+}
+
 type AggregateOpinion {
   count: Int!
 }
@@ -691,8 +695,11 @@ type Company implements Node {
   actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
   causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade!]
   opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion!]
-  category(where: CompanyCategoryWhereInput, orderBy: CompanyCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CompanyCategory!]
   karma: Float
+  adminApproved: Int
+  validated: Int
+  upVotes(where: CompanyUpVoteWhereInput, orderBy: CompanyUpVoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CompanyUpVote!]
+  category(where: CompanyCategoryWhereInput, orderBy: CompanyCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CompanyCategory!]
 }
 
 type CompanyCategory implements Node {
@@ -957,9 +964,12 @@ input CompanyCreateInput {
   name: String!
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
   actGrades: ActGradeCreateManyWithoutGradedToInput
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
+  upVotes: CompanyUpVoteCreateManyWithoutVotedToInput
   category: CompanyCategoryCreateManyWithoutCompaniesInput
 }
 
@@ -983,12 +993,20 @@ input CompanyCreateOneWithoutOpinionsInput {
   connect: CompanyWhereUniqueInput
 }
 
+input CompanyCreateOneWithoutUpVotesInput {
+  create: CompanyCreateWithoutUpVotesInput
+  connect: CompanyWhereUniqueInput
+}
+
 input CompanyCreateWithoutActGradesInput {
   name: String!
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
+  upVotes: CompanyUpVoteCreateManyWithoutVotedToInput
   category: CompanyCategoryCreateManyWithoutCompaniesInput
 }
 
@@ -996,17 +1014,23 @@ input CompanyCreateWithoutCategoryInput {
   name: String!
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
   actGrades: ActGradeCreateManyWithoutGradedToInput
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
+  upVotes: CompanyUpVoteCreateManyWithoutVotedToInput
 }
 
 input CompanyCreateWithoutCauseGradesInput {
   name: String!
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
   actGrades: ActGradeCreateManyWithoutGradedToInput
   opinions: OpinionCreateManyWithoutRegardingWhoInput
+  upVotes: CompanyUpVoteCreateManyWithoutVotedToInput
   category: CompanyCategoryCreateManyWithoutCompaniesInput
 }
 
@@ -1014,8 +1038,23 @@ input CompanyCreateWithoutOpinionsInput {
   name: String!
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
   actGrades: ActGradeCreateManyWithoutGradedToInput
   causeGrades: CauseGradeCreateManyWithoutGradedToInput
+  upVotes: CompanyUpVoteCreateManyWithoutVotedToInput
+  category: CompanyCategoryCreateManyWithoutCompaniesInput
+}
+
+input CompanyCreateWithoutUpVotesInput {
+  name: String!
+  logo: String
+  karma: Float
+  adminApproved: Int
+  validated: Int
+  actGrades: ActGradeCreateManyWithoutGradedToInput
+  causeGrades: CauseGradeCreateManyWithoutGradedToInput
+  opinions: OpinionCreateManyWithoutRegardingWhoInput
   category: CompanyCategoryCreateManyWithoutCompaniesInput
 }
 
@@ -1039,6 +1078,10 @@ enum CompanyOrderByInput {
   logo_DESC
   karma_ASC
   karma_DESC
+  adminApproved_ASC
+  adminApproved_DESC
+  validated_ASC
+  validated_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -1049,6 +1092,8 @@ type CompanyPreviousValues {
   name: String!
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
 }
 
 type CompanySubscriptionPayload {
@@ -1092,9 +1137,12 @@ input CompanyUpdateInput {
   name: String
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
+  upVotes: CompanyUpVoteUpdateManyWithoutVotedToInput
   category: CompanyCategoryUpdateManyWithoutCompaniesInput
 }
 
@@ -1102,6 +1150,8 @@ input CompanyUpdateManyMutationInput {
   name: String
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
 }
 
 input CompanyUpdateManyWithoutCategoryInput {
@@ -1134,12 +1184,22 @@ input CompanyUpdateOneRequiredWithoutOpinionsInput {
   upsert: CompanyUpsertWithoutOpinionsInput
 }
 
+input CompanyUpdateOneRequiredWithoutUpVotesInput {
+  create: CompanyCreateWithoutUpVotesInput
+  connect: CompanyWhereUniqueInput
+  update: CompanyUpdateWithoutUpVotesDataInput
+  upsert: CompanyUpsertWithoutUpVotesInput
+}
+
 input CompanyUpdateWithoutActGradesDataInput {
   name: String
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
+  upVotes: CompanyUpVoteUpdateManyWithoutVotedToInput
   category: CompanyCategoryUpdateManyWithoutCompaniesInput
 }
 
@@ -1147,17 +1207,23 @@ input CompanyUpdateWithoutCategoryDataInput {
   name: String
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
+  upVotes: CompanyUpVoteUpdateManyWithoutVotedToInput
 }
 
 input CompanyUpdateWithoutCauseGradesDataInput {
   name: String
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   opinions: OpinionUpdateManyWithoutRegardingWhoInput
+  upVotes: CompanyUpVoteUpdateManyWithoutVotedToInput
   category: CompanyCategoryUpdateManyWithoutCompaniesInput
 }
 
@@ -1165,8 +1231,23 @@ input CompanyUpdateWithoutOpinionsDataInput {
   name: String
   logo: String
   karma: Float
+  adminApproved: Int
+  validated: Int
   actGrades: ActGradeUpdateManyWithoutGradedToInput
   causeGrades: CauseGradeUpdateManyWithoutGradedToInput
+  upVotes: CompanyUpVoteUpdateManyWithoutVotedToInput
+  category: CompanyCategoryUpdateManyWithoutCompaniesInput
+}
+
+input CompanyUpdateWithoutUpVotesDataInput {
+  name: String
+  logo: String
+  karma: Float
+  adminApproved: Int
+  validated: Int
+  actGrades: ActGradeUpdateManyWithoutGradedToInput
+  causeGrades: CauseGradeUpdateManyWithoutGradedToInput
+  opinions: OpinionUpdateManyWithoutRegardingWhoInput
   category: CompanyCategoryUpdateManyWithoutCompaniesInput
 }
 
@@ -1190,10 +1271,283 @@ input CompanyUpsertWithoutOpinionsInput {
   create: CompanyCreateWithoutOpinionsInput!
 }
 
+input CompanyUpsertWithoutUpVotesInput {
+  update: CompanyUpdateWithoutUpVotesDataInput!
+  create: CompanyCreateWithoutUpVotesInput!
+}
+
 input CompanyUpsertWithWhereUniqueWithoutCategoryInput {
   where: CompanyWhereUniqueInput!
   update: CompanyUpdateWithoutCategoryDataInput!
   create: CompanyCreateWithoutCategoryInput!
+}
+
+type CompanyUpVote implements Node {
+  id: ID!
+  createdAt: DateTime!
+  votedTo: Company!
+  votedBy: User!
+  karma: Float
+}
+
+"""A connection to a list of items."""
+type CompanyUpVoteConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CompanyUpVoteEdge]!
+  aggregate: AggregateCompanyUpVote!
+}
+
+input CompanyUpVoteCreateInput {
+  karma: Float
+  votedTo: CompanyCreateOneWithoutUpVotesInput!
+  votedBy: UserCreateOneWithoutUpVotesInput!
+}
+
+input CompanyUpVoteCreateManyWithoutVotedByInput {
+  create: [CompanyUpVoteCreateWithoutVotedByInput!]
+  connect: [CompanyUpVoteWhereUniqueInput!]
+}
+
+input CompanyUpVoteCreateManyWithoutVotedToInput {
+  create: [CompanyUpVoteCreateWithoutVotedToInput!]
+  connect: [CompanyUpVoteWhereUniqueInput!]
+}
+
+input CompanyUpVoteCreateWithoutVotedByInput {
+  karma: Float
+  votedTo: CompanyCreateOneWithoutUpVotesInput!
+}
+
+input CompanyUpVoteCreateWithoutVotedToInput {
+  karma: Float
+  votedBy: UserCreateOneWithoutUpVotesInput!
+}
+
+"""An edge in a connection."""
+type CompanyUpVoteEdge {
+  """The item at the end of the edge."""
+  node: CompanyUpVote!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CompanyUpVoteOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  karma_ASC
+  karma_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CompanyUpVotePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  karma: Float
+}
+
+type CompanyUpVoteSubscriptionPayload {
+  mutation: MutationType!
+  node: CompanyUpVote
+  updatedFields: [String!]
+  previousValues: CompanyUpVotePreviousValues
+}
+
+input CompanyUpVoteSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompanyUpVoteSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompanyUpVoteSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompanyUpVoteSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CompanyUpVoteWhereInput
+}
+
+input CompanyUpVoteUpdateInput {
+  karma: Float
+  votedTo: CompanyUpdateOneRequiredWithoutUpVotesInput
+  votedBy: UserUpdateOneRequiredWithoutUpVotesInput
+}
+
+input CompanyUpVoteUpdateManyMutationInput {
+  karma: Float
+}
+
+input CompanyUpVoteUpdateManyWithoutVotedByInput {
+  create: [CompanyUpVoteCreateWithoutVotedByInput!]
+  connect: [CompanyUpVoteWhereUniqueInput!]
+  disconnect: [CompanyUpVoteWhereUniqueInput!]
+  delete: [CompanyUpVoteWhereUniqueInput!]
+  update: [CompanyUpVoteUpdateWithWhereUniqueWithoutVotedByInput!]
+  upsert: [CompanyUpVoteUpsertWithWhereUniqueWithoutVotedByInput!]
+}
+
+input CompanyUpVoteUpdateManyWithoutVotedToInput {
+  create: [CompanyUpVoteCreateWithoutVotedToInput!]
+  connect: [CompanyUpVoteWhereUniqueInput!]
+  disconnect: [CompanyUpVoteWhereUniqueInput!]
+  delete: [CompanyUpVoteWhereUniqueInput!]
+  update: [CompanyUpVoteUpdateWithWhereUniqueWithoutVotedToInput!]
+  upsert: [CompanyUpVoteUpsertWithWhereUniqueWithoutVotedToInput!]
+}
+
+input CompanyUpVoteUpdateWithoutVotedByDataInput {
+  karma: Float
+  votedTo: CompanyUpdateOneRequiredWithoutUpVotesInput
+}
+
+input CompanyUpVoteUpdateWithoutVotedToDataInput {
+  karma: Float
+  votedBy: UserUpdateOneRequiredWithoutUpVotesInput
+}
+
+input CompanyUpVoteUpdateWithWhereUniqueWithoutVotedByInput {
+  where: CompanyUpVoteWhereUniqueInput!
+  data: CompanyUpVoteUpdateWithoutVotedByDataInput!
+}
+
+input CompanyUpVoteUpdateWithWhereUniqueWithoutVotedToInput {
+  where: CompanyUpVoteWhereUniqueInput!
+  data: CompanyUpVoteUpdateWithoutVotedToDataInput!
+}
+
+input CompanyUpVoteUpsertWithWhereUniqueWithoutVotedByInput {
+  where: CompanyUpVoteWhereUniqueInput!
+  update: CompanyUpVoteUpdateWithoutVotedByDataInput!
+  create: CompanyUpVoteCreateWithoutVotedByInput!
+}
+
+input CompanyUpVoteUpsertWithWhereUniqueWithoutVotedToInput {
+  where: CompanyUpVoteWhereUniqueInput!
+  update: CompanyUpVoteUpdateWithoutVotedToDataInput!
+  create: CompanyUpVoteCreateWithoutVotedToInput!
+}
+
+input CompanyUpVoteWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompanyUpVoteWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompanyUpVoteWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompanyUpVoteWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  karma: Float
+
+  """All values that are not equal to given value."""
+  karma_not: Float
+
+  """All values that are contained in given list."""
+  karma_in: [Float!]
+
+  """All values that are not contained in given list."""
+  karma_not_in: [Float!]
+
+  """All values less than the given value."""
+  karma_lt: Float
+
+  """All values less than or equal the given value."""
+  karma_lte: Float
+
+  """All values greater than the given value."""
+  karma_gt: Float
+
+  """All values greater than or equal the given value."""
+  karma_gte: Float
+  votedTo: CompanyWhereInput
+  votedBy: UserWhereInput
+}
+
+input CompanyUpVoteWhereUniqueInput {
+  id: ID
 }
 
 input CompanyWhereInput {
@@ -1369,6 +1723,50 @@ input CompanyWhereInput {
 
   """All values greater than or equal the given value."""
   karma_gte: Float
+  adminApproved: Int
+
+  """All values that are not equal to given value."""
+  adminApproved_not: Int
+
+  """All values that are contained in given list."""
+  adminApproved_in: [Int!]
+
+  """All values that are not contained in given list."""
+  adminApproved_not_in: [Int!]
+
+  """All values less than the given value."""
+  adminApproved_lt: Int
+
+  """All values less than or equal the given value."""
+  adminApproved_lte: Int
+
+  """All values greater than the given value."""
+  adminApproved_gt: Int
+
+  """All values greater than or equal the given value."""
+  adminApproved_gte: Int
+  validated: Int
+
+  """All values that are not equal to given value."""
+  validated_not: Int
+
+  """All values that are contained in given list."""
+  validated_in: [Int!]
+
+  """All values that are not contained in given list."""
+  validated_not_in: [Int!]
+
+  """All values less than the given value."""
+  validated_lt: Int
+
+  """All values less than or equal the given value."""
+  validated_lte: Int
+
+  """All values greater than the given value."""
+  validated_gt: Int
+
+  """All values greater than or equal the given value."""
+  validated_gte: Int
   actGrades_every: ActGradeWhereInput
   actGrades_some: ActGradeWhereInput
   actGrades_none: ActGradeWhereInput
@@ -1378,6 +1776,9 @@ input CompanyWhereInput {
   opinions_every: OpinionWhereInput
   opinions_some: OpinionWhereInput
   opinions_none: OpinionWhereInput
+  upVotes_every: CompanyUpVoteWhereInput
+  upVotes_some: CompanyUpVoteWhereInput
+  upVotes_none: CompanyUpVoteWhereInput
   category_every: CompanyCategoryWhereInput
   category_some: CompanyCategoryWhereInput
   category_none: CompanyCategoryWhereInput
@@ -1398,36 +1799,42 @@ scalar Long
 
 type Mutation {
   createCompany(data: CompanyCreateInput!): Company!
+  createCompanyUpVote(data: CompanyUpVoteCreateInput!): CompanyUpVote!
   createCompanyCategory(data: CompanyCategoryCreateInput!): CompanyCategory!
   createUser(data: UserCreateInput!): User!
   createOpinion(data: OpinionCreateInput!): Opinion!
   createActGrade(data: ActGradeCreateInput!): ActGrade!
   createCauseGrade(data: CauseGradeCreateInput!): CauseGrade!
   updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
+  updateCompanyUpVote(data: CompanyUpVoteUpdateInput!, where: CompanyUpVoteWhereUniqueInput!): CompanyUpVote
   updateCompanyCategory(data: CompanyCategoryUpdateInput!, where: CompanyCategoryWhereUniqueInput!): CompanyCategory
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateOpinion(data: OpinionUpdateInput!, where: OpinionWhereUniqueInput!): Opinion
   updateActGrade(data: ActGradeUpdateInput!, where: ActGradeWhereUniqueInput!): ActGrade
   updateCauseGrade(data: CauseGradeUpdateInput!, where: CauseGradeWhereUniqueInput!): CauseGrade
   deleteCompany(where: CompanyWhereUniqueInput!): Company
+  deleteCompanyUpVote(where: CompanyUpVoteWhereUniqueInput!): CompanyUpVote
   deleteCompanyCategory(where: CompanyCategoryWhereUniqueInput!): CompanyCategory
   deleteUser(where: UserWhereUniqueInput!): User
   deleteOpinion(where: OpinionWhereUniqueInput!): Opinion
   deleteActGrade(where: ActGradeWhereUniqueInput!): ActGrade
   deleteCauseGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
   upsertCompany(where: CompanyWhereUniqueInput!, create: CompanyCreateInput!, update: CompanyUpdateInput!): Company!
+  upsertCompanyUpVote(where: CompanyUpVoteWhereUniqueInput!, create: CompanyUpVoteCreateInput!, update: CompanyUpVoteUpdateInput!): CompanyUpVote!
   upsertCompanyCategory(where: CompanyCategoryWhereUniqueInput!, create: CompanyCategoryCreateInput!, update: CompanyCategoryUpdateInput!): CompanyCategory!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertOpinion(where: OpinionWhereUniqueInput!, create: OpinionCreateInput!, update: OpinionUpdateInput!): Opinion!
   upsertActGrade(where: ActGradeWhereUniqueInput!, create: ActGradeCreateInput!, update: ActGradeUpdateInput!): ActGrade!
   upsertCauseGrade(where: CauseGradeWhereUniqueInput!, create: CauseGradeCreateInput!, update: CauseGradeUpdateInput!): CauseGrade!
   updateManyCompanies(data: CompanyUpdateManyMutationInput!, where: CompanyWhereInput): BatchPayload!
+  updateManyCompanyUpVotes(data: CompanyUpVoteUpdateManyMutationInput!, where: CompanyUpVoteWhereInput): BatchPayload!
   updateManyCompanyCategories(data: CompanyCategoryUpdateManyMutationInput!, where: CompanyCategoryWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyOpinions(data: OpinionUpdateManyMutationInput!, where: OpinionWhereInput): BatchPayload!
   updateManyActGrades(data: ActGradeUpdateManyMutationInput!, where: ActGradeWhereInput): BatchPayload!
   updateManyCauseGrades(data: CauseGradeUpdateManyMutationInput!, where: CauseGradeWhereInput): BatchPayload!
   deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
+  deleteManyCompanyUpVotes(where: CompanyUpVoteWhereInput): BatchPayload!
   deleteManyCompanyCategories(where: CompanyCategoryWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyOpinions(where: OpinionWhereInput): BatchPayload!
@@ -1903,18 +2310,21 @@ type PageInfo {
 
 type Query {
   companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
+  companyUpVotes(where: CompanyUpVoteWhereInput, orderBy: CompanyUpVoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CompanyUpVote]!
   companyCategories(where: CompanyCategoryWhereInput, orderBy: CompanyCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CompanyCategory]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion]!
   actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade]!
   causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade]!
   company(where: CompanyWhereUniqueInput!): Company
+  companyUpVote(where: CompanyUpVoteWhereUniqueInput!): CompanyUpVote
   companyCategory(where: CompanyCategoryWhereUniqueInput!): CompanyCategory
   user(where: UserWhereUniqueInput!): User
   opinion(where: OpinionWhereUniqueInput!): Opinion
   actGrade(where: ActGradeWhereUniqueInput!): ActGrade
   causeGrade(where: CauseGradeWhereUniqueInput!): CauseGrade
   companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
+  companyUpVotesConnection(where: CompanyUpVoteWhereInput, orderBy: CompanyUpVoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyUpVoteConnection!
   companyCategoriesConnection(where: CompanyCategoryWhereInput, orderBy: CompanyCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyCategoryConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   opinionsConnection(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OpinionConnection!
@@ -1937,6 +2347,7 @@ enum Status {
 
 type Subscription {
   company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
+  companyUpVote(where: CompanyUpVoteSubscriptionWhereInput): CompanyUpVoteSubscriptionPayload
   companyCategory(where: CompanyCategorySubscriptionWhereInput): CompanyCategorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   opinion(where: OpinionSubscriptionWhereInput): OpinionSubscriptionPayload
@@ -1955,6 +2366,7 @@ type User implements Node {
   opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion!]
   causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade!]
   actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
+  upVotes(where: CompanyUpVoteWhereInput, orderBy: CompanyUpVoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CompanyUpVote!]
 }
 
 """A connection to a list of items."""
@@ -1976,6 +2388,7 @@ input UserCreateInput {
   opinions: OpinionCreateManyWithoutWrittenByInput
   causeGrades: CauseGradeCreateManyWithoutGradedByInput
   actGrades: ActGradeCreateManyWithoutGradedByInput
+  upVotes: CompanyUpVoteCreateManyWithoutVotedByInput
 }
 
 input UserCreateOneWithoutActGradesInput {
@@ -1993,6 +2406,11 @@ input UserCreateOneWithoutOpinionsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutUpVotesInput {
+  create: UserCreateWithoutUpVotesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutActGradesInput {
   name: String
   email: String!
@@ -2001,6 +2419,7 @@ input UserCreateWithoutActGradesInput {
   status: Status
   opinions: OpinionCreateManyWithoutWrittenByInput
   causeGrades: CauseGradeCreateManyWithoutGradedByInput
+  upVotes: CompanyUpVoteCreateManyWithoutVotedByInput
 }
 
 input UserCreateWithoutCauseGradesInput {
@@ -2011,6 +2430,7 @@ input UserCreateWithoutCauseGradesInput {
   status: Status
   opinions: OpinionCreateManyWithoutWrittenByInput
   actGrades: ActGradeCreateManyWithoutGradedByInput
+  upVotes: CompanyUpVoteCreateManyWithoutVotedByInput
 }
 
 input UserCreateWithoutOpinionsInput {
@@ -2019,6 +2439,18 @@ input UserCreateWithoutOpinionsInput {
   password: String!
   picture: String
   status: Status
+  causeGrades: CauseGradeCreateManyWithoutGradedByInput
+  actGrades: ActGradeCreateManyWithoutGradedByInput
+  upVotes: CompanyUpVoteCreateManyWithoutVotedByInput
+}
+
+input UserCreateWithoutUpVotesInput {
+  name: String
+  email: String!
+  password: String!
+  picture: String
+  status: Status
+  opinions: OpinionCreateManyWithoutWrittenByInput
   causeGrades: CauseGradeCreateManyWithoutGradedByInput
   actGrades: ActGradeCreateManyWithoutGradedByInput
 }
@@ -2107,6 +2539,7 @@ input UserUpdateInput {
   opinions: OpinionUpdateManyWithoutWrittenByInput
   causeGrades: CauseGradeUpdateManyWithoutGradedByInput
   actGrades: ActGradeUpdateManyWithoutGradedByInput
+  upVotes: CompanyUpVoteUpdateManyWithoutVotedByInput
 }
 
 input UserUpdateManyMutationInput {
@@ -2138,6 +2571,13 @@ input UserUpdateOneRequiredWithoutOpinionsInput {
   upsert: UserUpsertWithoutOpinionsInput
 }
 
+input UserUpdateOneRequiredWithoutUpVotesInput {
+  create: UserCreateWithoutUpVotesInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutUpVotesDataInput
+  upsert: UserUpsertWithoutUpVotesInput
+}
+
 input UserUpdateWithoutActGradesDataInput {
   name: String
   email: String
@@ -2146,6 +2586,7 @@ input UserUpdateWithoutActGradesDataInput {
   status: Status
   opinions: OpinionUpdateManyWithoutWrittenByInput
   causeGrades: CauseGradeUpdateManyWithoutGradedByInput
+  upVotes: CompanyUpVoteUpdateManyWithoutVotedByInput
 }
 
 input UserUpdateWithoutCauseGradesDataInput {
@@ -2156,6 +2597,7 @@ input UserUpdateWithoutCauseGradesDataInput {
   status: Status
   opinions: OpinionUpdateManyWithoutWrittenByInput
   actGrades: ActGradeUpdateManyWithoutGradedByInput
+  upVotes: CompanyUpVoteUpdateManyWithoutVotedByInput
 }
 
 input UserUpdateWithoutOpinionsDataInput {
@@ -2164,6 +2606,18 @@ input UserUpdateWithoutOpinionsDataInput {
   password: String
   picture: String
   status: Status
+  causeGrades: CauseGradeUpdateManyWithoutGradedByInput
+  actGrades: ActGradeUpdateManyWithoutGradedByInput
+  upVotes: CompanyUpVoteUpdateManyWithoutVotedByInput
+}
+
+input UserUpdateWithoutUpVotesDataInput {
+  name: String
+  email: String
+  password: String
+  picture: String
+  status: Status
+  opinions: OpinionUpdateManyWithoutWrittenByInput
   causeGrades: CauseGradeUpdateManyWithoutGradedByInput
   actGrades: ActGradeUpdateManyWithoutGradedByInput
 }
@@ -2181,6 +2635,11 @@ input UserUpsertWithoutCauseGradesInput {
 input UserUpsertWithoutOpinionsInput {
   update: UserUpdateWithoutOpinionsDataInput!
   create: UserCreateWithoutOpinionsInput!
+}
+
+input UserUpsertWithoutUpVotesInput {
+  update: UserUpdateWithoutUpVotesDataInput!
+  create: UserCreateWithoutUpVotesInput!
 }
 
 input UserWhereInput {
@@ -2433,6 +2892,9 @@ input UserWhereInput {
   actGrades_every: ActGradeWhereInput
   actGrades_some: ActGradeWhereInput
   actGrades_none: ActGradeWhereInput
+  upVotes_every: CompanyUpVoteWhereInput
+  upVotes_some: CompanyUpVoteWhereInput
+  upVotes_none: CompanyUpVoteWhereInput
 }
 
 input UserWhereUniqueInput {

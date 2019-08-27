@@ -52,6 +52,7 @@ body {
   width: 100%;
   /*justify-content: space-between; C'était presque bien !*/
   padding-bottom: 4rem;
+  min-height: 30rem;
 }
 
 .sorter{

@@ -33,7 +33,9 @@ mutation {
           cause: ENVIRONMENT
           grade: -2
         }
-      }
+      },
+      validated: 1
+      adminApproved: 1
     }
   ){ id }
 
@@ -89,6 +91,8 @@ mutation {
     data: {
       name: "Total"
       logo: "total.png"
+      validated: 1
+      adminApproved: 1
     }
   ){ id }
   
@@ -96,6 +100,8 @@ mutation {
     data: {
       name: "Mc Donalds"
       logo: "mcdonalds.png"
+      validated: 1
+      adminApproved: 1
     }
   ){ id }
   
@@ -103,6 +109,8 @@ mutation {
     data: {
       name: "BNP"
       logo: "bnp.png"
+      validated: 1
+      adminApproved: 1
     }
   ){ id }
 
@@ -110,6 +118,8 @@ mutation {
     data: {
       name: "Google"
       logo: "google.png"
+      validated: 1
+      adminApproved: 1
     }
   ){ id }
 
@@ -117,6 +127,8 @@ mutation {
     data: {
       name: "Nike"
       logo: "nike.png"
+      validated: 1
+      adminApproved: 1
     }
   ){ id }
 
@@ -124,6 +136,8 @@ mutation {
     data: {
       name: "Tesla"
       logo: "tesla.png"
+      validated: 1
+      adminApproved: 1
     }
   ){ id }
 
@@ -131,6 +145,8 @@ mutation {
     data: {
       name: "Bic"
       logo: "bic.png"
+      validated: 1
+      adminApproved: 1
     }
   ){ id }
 
@@ -138,6 +154,8 @@ mutation {
     data: {
       name: "Biocoop"
       logo: "biocoop.png"
+      validated: 1
+      adminApproved: 1
     }
   ){ id }
 
@@ -145,6 +163,7 @@ mutation {
     data: {
       name: "Nature & Découvertes"
       logo: "natureetdecouvertes.png"
+      validated: 1
     }
   ){ id }
 
@@ -152,6 +171,8 @@ mutation {
     data: {
       name: "Quechua"
       logo: "quechua.png"
+      validated: 0
+      adminApproved: 1
     }
   ){ id }
 
@@ -159,6 +180,7 @@ mutation {
     data: {
       name: "Bouygues Telecom"
       logo: "bouyguestelecom.png"
+      validated: 1
     }
   ){ id }
 
@@ -166,6 +188,8 @@ mutation {
     data: {
       name: "ENGIE"
       logo: "engie.png"
+      validated: 0
+      adminApproved: 1
     }
   ){ id }
 
@@ -173,6 +197,8 @@ mutation {
     data: {
       name: "Zalando"
       logo: "zalando.png"
+      validated: 0
+      adminApproved: 1
     }
   ){ id }
 
@@ -180,6 +206,8 @@ mutation {
     data: {
       name: "Amazon"
       logo: "amazon.png"
+      validated: 1
+      adminApproved: 1
     }
   ){ id }
 
@@ -271,5 +299,7 @@ mutation {
       companies : { connect: [{ name: "Amazon" }] }
     }
   ){ id }
+
+  
 
 }

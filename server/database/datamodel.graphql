@@ -7,9 +7,11 @@ type Company {
 	actGrades: [ActGrade!]! @relation(name: "ActGradesOfCompany" onDelete: CASCADE)
 	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesOfCompany" onDelete: CASCADE)
 	opinions: [Opinion!]! @relation(name: "OpinionsOfCompany" onDelete: CASCADE)
-  adminApproved: Boolean
-  validated: Boolean
+  karma: Float
+  adminApproved: Int
+  validated: Int
   upVotes: [CompanyUpVote!]! @relation(name: "CompanyUpVotesOfCompany" onDelete: CASCADE)
+  category: [CompanyCategory!]! @relation(name: "CategoriesOfCompany")
 }
 
 type CompanyUpVote {
@@ -17,7 +19,6 @@ type CompanyUpVote {
 	createdAt: DateTime!
 	votedTo: Company! @relation(name: "CompanyUpVotesOfCompany")
 	votedBy: User! @relation(name: "CompanyUpVotesByUser")
-  category: [CompanyCategory!]! @relation(name: "CategoriesOfCompany") #@relation(name: "CategoryOfCompany" onDelete: CASCADE)
   karma: Float
 }
 

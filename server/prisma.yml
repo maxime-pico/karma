@@ -5,6 +5,7 @@ secret: ${env:PRISMA_MANAGEMENT_API_SECRET}
 #deploy hook
 hooks:
   post-deploy:
+    - echo "Deployment finished"
     - graphql get-schema
 
 # Points to a `.graphql` file containing GraphQL

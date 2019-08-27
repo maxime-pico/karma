@@ -110,43 +110,6 @@ const CompanyName = styled.div`
   text-align: center;
 `
 
-const KarmaBadge = styled.div`
-  position: absolute;
-  width: 3.5rem;
-  height: 3.5rem;
-  background-color: #f0f0f0;
-  color: #D7CFC7;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  font-size: 1.3rem;
-  font-weight: bold;
-
-  &.vb {
-    background-color: #B52832;
-    color: white;
-  }
-  &.b{
-    background-color: #B4586D;
-    color: white;
-  }
-  &.n{
-    background-color: #D7CFC7;
-    color: white;
-  }
-  &.g{
-    background-color: #89DFDC;
-    color: white;
-  }
-  &.vg{
-    background-color: #28CBC8;
-    color: white;
-  }
-`
 // </STYLE>
 
 // SearchResult component: displays the company card based on the name, and
@@ -197,21 +160,16 @@ class SearchResult extends React.Component {
   render() {
     return (
       <ResultCard >
-        <Link
-          to={`/company/${this.props.id}`}
-          style={{ textDecoration: 'none' }}
-          title={this.props.name + ' - ' + this.state.karmaTitle}
-        >
+        <div>
           <div class="square">
             <img
               src={process.env.PUBLIC_URL + '/images/' + this.props.logo}
               width="80"
               alt="company"
             />
-            <KarmaBadge className={this.state.karmaSlug}>{this.props.karma ? (this.props.karma) : ('N/A')}</KarmaBadge>
           </div>
           <CompanyName>{this.props.name}</CompanyName>
-        </Link>
+        </div>
       </ResultCard>
     )
   }

@@ -13,6 +13,9 @@ type Query {
   # exposes the resolver that gets the list of all companies in the database
 	allCompanies(karmas: String, categories: String, filter: String, skip: Int, first: Int, orderBy: CompanyOrderByInput): [Company!]!
 
+  #
+  suggestedCompanies: [Company!]!
+
     # exposes the resolver that gets the list of all companies in the database
 	allCompanyCategories(filter: String, skip: Int, first: Int, orderBy: CompanyCategoryOrderByInput): [CompanyCategory!]!
 
@@ -162,6 +165,7 @@ type CompanyOverview {
 	opinionsCount: Int
 	actGradesCount: Int
 	causeGradesCount: Int
+  validated: Boolean
 }
 
 # defines the return type of opinionsFeed
