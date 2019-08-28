@@ -164,14 +164,83 @@ Give an example
 ## Deployment
 
 ### Front-end
-Move
+
+Move to the react-ui folder
+
+```
+cd react-ui
+```
+
+Add the .env file with production values to the directory. Also add the now.json file.
+Then build the project
+
+```
+npm run build
+```
+
+Move to the build folder and deploy to now, this will copy an url to your clipboard with the build online.
+
+```
+now
+```
+
+Once you tested the build and you are satisfied with it, alias it to the production url
+
+```
+now alias [build_url] [prod_url]
+```
 
 ### Server
 
+To update the servers, go to the server folder
+
+```
+cd server
+```
+
+Install the production now.json file.
+Deploy on now. This will copy a test url to your clipboard.
+
+```
+now
+```
+
+At the url, a graphql playground should appear. To test it and interact with it, you must first add a bearer token to the header.
+First generate the token by running the following prisma command
+
+```
+prisma token
+```
+
+Head back to the playground and copy the following inside the HTTP HEADERS tab at the bottom of the page
+
+```
+{
+  "Authorization": "Bearer [generated_token]"
+}
+```
+
+You can now test the server.
+When you are happy with it, alias it to the correct production url
+
+```
+now alias [test_url] [server_production_url]
+```
+
 ### Database
-Provide yourself the .env.prod environment files.
+
+Move to the server folder
+
+```
+cd server
+```
+
+Provide yourself the .env.prod environment files and paste them inside the folder.
 Run the following command to update the prisma database.
+
+```
 prisma deploy -e .env.prod
+```
 
 ## Built With
 
