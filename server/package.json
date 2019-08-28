@@ -7,16 +7,6 @@
 		"url": "git://github.com/Green-Dirt/karma.git"
 	},
 	"main": "index.js",
-	"now": {
-		"dotenv": ".env.prod",
-		"alias": "karma-server.now.sh",
-		"scale": {
-			"bru1": {
-				"min": 1,
-				"max": "auto"
-			}
-		}
-	},
 	"scripts": {
 		"start": "node src/index.js",
 		"dev": "npm-run-all --parallel start playground",

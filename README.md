@@ -161,9 +161,17 @@ Explain what these tests test and why
 Give an example
 ```
 
-## Deployment - TODO
+## Deployment
 
-Add additional notes about how to deploy this on a live system
+### Front-end
+Move
+
+### Server
+
+### Database
+Provide yourself the .env.prod environment files.
+Run the following command to update the prisma database.
+prisma deploy -e .env.prod
 
 ## Built With
 
