@@ -84,6 +84,10 @@ type Mutation {
     companyId: ID!,
   ): Company!
 
+  upVote(
+    companyId: ID!
+  ): CompanyUpVote
+
   # exposes the resolver that allows a logged in user to grade the act of a
   # company and affiliation to an opinion
 	gradeAct(

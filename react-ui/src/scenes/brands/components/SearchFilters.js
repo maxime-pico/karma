@@ -76,7 +76,7 @@ class SearchFilters extends React.Component {
   state = {
     searchValue: '',
     searchedValue: '',
-    orderBy: 'name_ASC',
+    orderBy: 'karma_DESC',
     categories: '',
     karmas: [],
     reloaded: false,
@@ -92,15 +92,19 @@ class SearchFilters extends React.Component {
     this.handleChangeCategory = this.props.handleChangeCategory.bind(this)
     this.handleChangeKarma = this.props.handleChangeKarma.bind(this)
     this.clearFilters = this.props.clearFilters.bind(this)
+    this.renderSearchInput = this.props.renderSearchInput.bind(this)
 
     this.categories = this.props.categories;
     this.karmas = this.props.karmas
     this.refetch = null
+    this.setState({ orderBy: this.props.orderBy })
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ categories: nextProps.categories })
     this.setState({ karmas: nextProps.karmas })
+    this.setState({ searchValue: nextProps.searchValue })
+    this.setState({ orderBy: nextProps.orderBy })
   }
 
   resetReload() {
@@ -108,14 +112,6 @@ class SearchFilters extends React.Component {
   }
 
   /* Render view */
-
-  renderSearchInput({ input, meta }) {
-    return (
-      <div>
-        <input type="text" />
-      </div>
-    )
-  }
 
   render() {
     return (
@@ -201,7 +197,7 @@ class SearchFilters extends React.Component {
 
               <SearchInput
                 value={this.state.searchValue}
-                onChange={this.handleChangeSearch}
+                onChange={this.handleChangeSearch.bind(this)}
                 component={this.renderSearchInput}
                 placeholder={BRANDS_STATIC_CONTENTS.search_input_placeholder['fr']}
               />
@@ -219,6 +215,7 @@ class SearchFilters extends React.Component {
             <Select
               options={BRANDS_SORTING_LABELS}
               handleChange={this.handleChangeOrderBy.bind(this)}
+              model={this.state.orderBy}
             />
 
           </Col>

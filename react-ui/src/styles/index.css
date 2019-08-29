@@ -148,3 +148,7 @@ body {
   width:5rem;
   height: 5rem;  
 }
+
+.bg-white{
+  background-color: white;
+}

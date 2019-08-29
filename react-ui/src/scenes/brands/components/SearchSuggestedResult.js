@@ -8,6 +8,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { KARMA_LABELS } from '../../../utils'
+import icon_clap from '../../../images/icons/clap.svg'
 
 // <STYLE>
 const ResultCard = styled.div`
@@ -59,6 +60,7 @@ const ResultCard = styled.div`
     border-radius: 3rem;
     display: flex;
     align-items:center; 
+    overflow: hidden;
 
     @media(max-width: 1200px) {
       height: 19.8rem;
@@ -89,9 +91,10 @@ const ResultCard = styled.div`
 	&:hover {
     cursor: pointer;
     
-    img{
-      @media(min-width: 768px) {
-        transform: scale(1.2);
+    .square {
+      div {
+        opacity: 1;
+        transform: scale(1);
       }
     }
   }
@@ -99,7 +102,7 @@ const ResultCard = styled.div`
   img{
     display: block;
     margin: auto;
-    transition: transform 0.5s ease;
+    transition: transform 1.2s ease;
     transform: scale(1);
   }
 `
@@ -108,6 +111,33 @@ const CompanyName = styled.div`
 	color: #a9b4cc;
   font-size: 0.95em;
   text-align: center;
+`
+
+const ResultHover = styled.div`
+  position: absolute;
+  background-color:rgba(83,91,101,0.85);
+  text-align:center;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: white;
+  flex-direction: column;
+  opacity: 0;
+  transform: scale(1.2);
+  transition: all 0.3s ease-in-out;
+`
+const RoundImage = styled.div`
+  width: 7rem;
+  height:7rem;
+  border-radius:50%;
+  background-color: white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 `
 
 // </STYLE>
@@ -123,38 +153,11 @@ class SearchResult extends React.Component {
 
   constructor(props) {
     super(props)
-    if (this.props.karma) {
-      this.state.karmaSlug = this.getKarmaSlugByValue(this.props.karma);
-      this.state.karmaTitle = KARMA_LABELS[this.state.karmaSlug].label['fr']
-    } else {
-      //this.state.karmaSlug = 'Non nôté';
-      this.state.karmaTitle = 'Non nôté'
-    }
+    this.upVote = this.props.upVote.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ karmaSlug: this.getKarmaSlugByValue(nextProps.karma) })
-    // this.setState({ karmaTitle: KARMA_LABELS[this.state.karmaSlug].label['fr'] })
-  }
 
-  getKarmaSlugByValue(val) {
-    if (val) {
-      if ((val >= 0 && val < 0.5) || (val <= 0 && val > -0.5)) {
-        return 'n';
-      } else {
-        if (val > 0.5) {
-          return (val >= 1.5) ? 'vg' : 'g';
-        } else {
-          if (val < 0) {
-            return (val >= -1.5) ? 'b' : 'vb';
-          } else {
-            return 'n';
-          }
-        }
-      }
-    } else {
-      return 'na'
-    }
   }
 
   render() {
@@ -167,8 +170,14 @@ class SearchResult extends React.Component {
               width="80"
               alt="company"
             />
+            <ResultHover onClick={this.upVote.bind(this)}>
+              <small>1200 votes</small>
+              <RoundImage><img src={icon_clap} /></RoundImage>
+              Je veux aussi !
+            </ResultHover>
           </div>
           <CompanyName>{this.props.name}</CompanyName>
+
         </div>
       </ResultCard>
     )

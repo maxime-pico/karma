@@ -55,6 +55,22 @@ async function login(parent, args, context, info) {
   }
 }
 
+async function upVote(parent, args, context, info) {
+  const { companyId } = args
+  const userId = getUserId(context)
+
+  const upVoteExists = await context.db.exists.CompanyUpVote({
+    votedBy: {id: userId},
+    votedTo: {id : companyId}
+  })
+
+  if (upVoteExists) {
+    // UPDATE updateCompanyUpVote
+  } else {
+    // CREATE createCompanyUpVote
+  }
+}
+
 // resolver that gets user id from context and then checks if user did not
 // already grade the company on this cause if not, creates a new grade cause
 // from the arguments given by the user
@@ -317,4 +333,5 @@ module.exports = {
   gradeAct,
   postOpinion,
   setOverallKarma,
+  upVote
 }

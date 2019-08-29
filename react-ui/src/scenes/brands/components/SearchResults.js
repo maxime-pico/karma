@@ -45,7 +45,7 @@ class SearchResults extends React.Component {
   state = {
     searchValue: '',
     searchedValue: '',
-    orderBy: 'name_ASC',
+    orderBy: 'karma_DESC',
     categories: '',
     karmas: [],
     reloaded: false,
@@ -57,6 +57,7 @@ class SearchResults extends React.Component {
     this.categories = [];
     this.karmas = []
     this.refetch = null
+    this.setState({ orderBy: this.props.orderBy })
   }
 
   componentDidMount() {
@@ -69,7 +70,7 @@ class SearchResults extends React.Component {
     this.setState({ categories: nextProps.categories })
     this.setState({ karmas: nextProps.karmas })
     this.setState({ orderBy: nextProps.orderBy })
-    this.setState({ searchValue: nextProps.searchValue })
+    this.setState({ searchedValue: nextProps.searchedValue })
     this.setState({ reloaded: nextProps.reloaded })
   }
 

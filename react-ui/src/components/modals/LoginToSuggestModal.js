@@ -10,8 +10,8 @@ import { Row, Col, styled } from '@smooth-ui/core-sc'
 
 // <STYLE>
 const Backdrop = styled.div`
-	position: absolute;
-	background-color: rgba(255, 255, 255, 0.21);
+  position: fixed; 
+  background-color:rgba(83,91,101,0.95);  
 	top: 0;
 	right: 0;
 	bottom: 0;
