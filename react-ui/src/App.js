@@ -47,7 +47,6 @@ const App = () => (
       <Route path="/user/" component={UserProfile} />
       <Route path="/signup/" component={Login} />
       <Route path="/login/" component={Login} />
-      <Route path="/suggest/" component={Suggest} />
       <Route component={LostPanda} />
     </Switch>
   </div>

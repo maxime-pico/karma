@@ -5,9 +5,10 @@
 */
 import React from 'react'
 import { Portal } from 'react-portal'
-import { Link } from 'react-router-dom'
-import { Row, Col, styled } from '@smooth-ui/core-sc'
+import { Row, styled } from '@smooth-ui/core-sc'
 import BasicButton from './../../../components//buttons/BasicButton'
+import gql from 'graphql-tag'
+import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 
 // <STYLE>
 const Backdrop = styled.div`
@@ -89,57 +90,105 @@ const Buttons = styled.div`
 `
 
 const Legend = styled.p`
-font-size:1.4rem;
-text-align:center;
-width:100%;
-margin-top: 1.2rem;
+  font-size:1.4rem;
+  text-align:center;
+  width:100%;
+  margin-top: 1.2rem;
 `
 // </STYLE>
+
+const SUGGEST_COMPANY = gql(`
+query SuggestCompany(
+  $name: String, 
+  $website: String
+) {
+  createCompany(
+    name: $name, 
+    website: $website
+  ) {
+    id
+    name
+  }
+}
+`);
 
 // Checks if modal should be open, then displays it and its content
 class SuggestBrandModal extends React.Component {
 
   state = {
-    isOpen: false
+    isOpen: false,
+    brandName: '',
+    brandWebsite: ''
   }
+
   constructor(props) {
     super(props)
     this._closeModal = this.props.closeModal.bind(this) // get event handler from parent
     this.setState({ isOpen: this.props.isOpen })
   }
 
+  handleChangeForm(target, event) {
+    if(target == 'brand_name') {
+      this.setState({brandName:event.target.value})
+    }
+    if(target == 'brand_website') {
+      this.setState({brandWebsite:event.target.value})
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({ isOpen: nextProps.isOpen })
   }
 
+  renderSearchInput({ input, meta }) {
+    return (
+      <div>
+        <input type="text" />
+      </div>
+    )
+  }
+
+  suggestBrand() {
+
+  }
+
+  checkExistingBrand() {
+
+  }
 
   render() {
     const _closeModal = this._closeModal
     if (this.state.isOpen)
       // isOpen is equal to modalIsOpen for the parent component
       return (
+       
         <Portal node={document && document.getElementById('App')}>
-          <Backdrop >
-            <Modal>
-              <Row justifyContent="center" mb={5}>
-                <Title>Suggérer une nouvelle marque</Title>
-                <Subtitle>Proposer une nouvelle marque qui doit être évaluée</Subtitle>
-                <form>
-                  <TextInput type="text" name="brand_name" value="" placeholder="Nom de la marque" />
-                  <TextInput type="text" name="brand_website" value="" placeholder="Adresse du site internet" />
-                  <Buttons>
-                    <span onClick={this._closeModal}>Annuler</span>
-                    <BasicButton type="submit">Ajouter</BasicButton>
-                  </Buttons>
-                  <Legend>Proposition soumise à modération avant ajout dans la liste</Legend>
-                </form>
-              </Row>
-              <Row justifyContent="center" textAlign="center" m={4}>
-
-              </Row>
-            </Modal>
-          </Backdrop>
+          <TransitionGroup>
+            <CSSTransition
+              timeout={300}
+              appear
+            >
+              <Backdrop >
+                <Modal>
+                  <Row justifyContent="center" mb={5}>
+                    <Title>Suggérer une nouvelle marque</Title>
+                    <Subtitle>Proposer une nouvelle marque qui doit être évaluée</Subtitle>
+                    <form >
+                      <TextInput onChange={(e) => this.handleChangeForm('brand_name', e)} component={this.renderSearchInput} type="text" name="brand_name" value={this.state.brandName} placeholder="Nom de la marque" />
+                      <TextInput onChange={(e) => this.handleChangeForm('brand_website', e)} component={this.renderSearchInput} type="text" name="brand_website" value={this.state.brandWebsite} placeholder="Adresse du site internet" />
+                      <Buttons>
+                        <span onClick={this._closeModal}>Annuler</span>
+                        <BasicButton type="submit">Ajouter</BasicButton>
+                      </Buttons>
+                      <Legend>Proposition soumise à modération avant ajout dans la liste</Legend>
+                    </form>
+                  </Row>
+                </Modal>
+              </Backdrop>
+            </CSSTransition>
+          </TransitionGroup>
         </Portal>
+        
       )
     else return null
   }
