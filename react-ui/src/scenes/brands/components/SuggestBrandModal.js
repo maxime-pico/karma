@@ -158,39 +158,36 @@ class SuggestBrandModal extends React.Component {
 
   render() {
     const _closeModal = this._closeModal
-    if (this.state.isOpen)
-      // isOpen is equal to modalIsOpen for the parent component
-      return (
-       
-        <Portal node={document && document.getElementById('App')}>
-          <TransitionGroup>
-            <CSSTransition
-              timeout={300}
-              appear
-            >
-              <Backdrop >
-                <Modal>
-                  <Row justifyContent="center" mb={5}>
-                    <Title>Suggérer une nouvelle marque</Title>
-                    <Subtitle>Proposer une nouvelle marque qui doit être évaluée</Subtitle>
-                    <form >
-                      <TextInput onChange={(e) => this.handleChangeForm('brand_name', e)} component={this.renderSearchInput} type="text" name="brand_name" value={this.state.brandName} placeholder="Nom de la marque" />
-                      <TextInput onChange={(e) => this.handleChangeForm('brand_website', e)} component={this.renderSearchInput} type="text" name="brand_website" value={this.state.brandWebsite} placeholder="Adresse du site internet" />
-                      <Buttons>
-                        <span onClick={this._closeModal}>Annuler</span>
-                        <BasicButton type="submit">Ajouter</BasicButton>
-                      </Buttons>
-                      <Legend>Proposition soumise à modération avant ajout dans la liste</Legend>
-                    </form>
-                  </Row>
-                </Modal>
-              </Backdrop>
-            </CSSTransition>
-          </TransitionGroup>
-        </Portal>
-        
-      )
-    else return null
+    return (
+      <TransitionGroup component={null}>
+        {this.state.isOpen && (
+          <CSSTransition
+            timeout={500}
+            classNames="modal"
+          >
+            <Portal node={document && document.getElementById('App')}>
+            <Backdrop >
+              <Modal>
+                <Row justifyContent="center" mb={5}>
+                  <Title>Suggérer une nouvelle marque</Title>
+                  <Subtitle>Proposer une nouvelle marque qui doit être évaluée</Subtitle>
+                  <form >
+                    <TextInput onChange={(e) => this.handleChangeForm('brand_name', e)} component={this.renderSearchInput} type="text" name="brand_name" value={this.state.brandName} placeholder="Nom de la marque" />
+                    <TextInput onChange={(e) => this.handleChangeForm('brand_website', e)} component={this.renderSearchInput} type="text" name="brand_website" value={this.state.brandWebsite} placeholder="Adresse du site internet" />
+                    <Buttons>
+                      <span onClick={this._closeModal}>Annuler</span>
+                      <BasicButton type="submit">Ajouter</BasicButton>
+                    </Buttons>
+                    <Legend>Proposition soumise à modération avant ajout dans la liste</Legend>
+                  </form>
+                </Row>
+              </Modal>
+            </Backdrop>
+            </Portal>
+          </CSSTransition>
+        )}
+      </TransitionGroup>
+    )
   }
 }
 

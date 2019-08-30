@@ -7,6 +7,7 @@ import React from 'react'
 import { Portal } from 'react-portal'
 import { Link } from 'react-router-dom'
 import { Row, Col, styled } from '@smooth-ui/core-sc'
+import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 
 // <STYLE>
 const Backdrop = styled.div`
@@ -62,18 +63,36 @@ const LoginButton = styled.button`
 
 // Checks if modal should be open, then displays it and its content
 class LoginToSuggestModal extends React.Component {
+
+  state = {
+    isOpen: false
+  }
   constructor(props) {
     super(props)
-    this._closeModal = this.props._closeModal // get event handler from parent
+    // this._closeModal = this.props._closeModal // get event handler from parent
+    this.state.isOpen = this.props.isOpen 
+  }
+
+  _closeModal(){
+    this.setState({ isOpen: false })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ isOpen: nextProps.isOpen })
   }
 
   render() {
-    const _closeModal = this._closeModal
-    if (this.props.isOpen)
+    
       // isOpen is equal to modalIsOpen for the parent component
       return (
+        <TransitionGroup component={null}>
+        {this.state.isOpen && (
+          <CSSTransition
+            timeout={500}
+            classNames="modal"
+          >
         <Portal node={document && document.getElementById('App')}>
-          <Backdrop onClick={_closeModal}>
+          <Backdrop onClick={this._closeModal.bind(this)}>
             <Modal>
               <Row justifyContent="center" mb={5}>
                 <Col>
@@ -96,8 +115,11 @@ class LoginToSuggestModal extends React.Component {
             </Modal>
           </Backdrop>
         </Portal>
+        </CSSTransition>
+        )}
+      </TransitionGroup>
       )
-    else return null
+   
   }
 }
 

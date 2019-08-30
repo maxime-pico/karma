@@ -152,3 +152,25 @@ body {
 .bg-white{
   background-color: white;
 }
+
+.modal-enter {
+  opacity: 0.01;
+  transform: scale(1.1);
+}
+
+.modal-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 300ms;
+}
+
+.modal-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-exit-active {
+  opacity: 0.01;
+  transform: scale(1.1);
+  transition: all 300ms;
+}

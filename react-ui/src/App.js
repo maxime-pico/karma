@@ -19,7 +19,6 @@ import Deliberation from './scenes/deliberations/Deliberation'
 import UserProfile from './scenes/userProfile/UserProfile'
 import Login from './scenes/login/Login'
 import LostPanda from './scenes/404/LostPanda'
-import Suggest from './scenes/suggest/Suggest'
 
 // implements the routing thanks to react router dom. It loads the right
 // component by matching the path

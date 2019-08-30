@@ -9,6 +9,9 @@ import icon_magnifier from '../../../images/icons/loupe.svg'
 import Select from './../../../components/form/Select'
 import PrettyCheckbox from './../../../components/form/PrettyCheckbox'
 
+import LoaderContainer from '../../../components/loader/styles/LoaderContainer.css'
+import BasicLoader from '../../../components/loader/BasicLoader'
+
 const SearchInput = styled.input`
   border-radius: 3rem;
   padding: 1rem 0.8rem 1rem 5.5rem;
@@ -131,7 +134,7 @@ class SearchFilters extends React.Component {
               {
                 ({ loading, error, data }) => {
 
-                  if (loading) return <div> Fetching Categories</div>
+                  if (loading) return <LoaderContainer><BasicLoader /></LoaderContainer>
                   if (error) return <div> Error while loading categories</div>
 
                   const companyCategoryList = data.allCompanyCategories

@@ -6,6 +6,9 @@ import { Row, Col, } from '@smooth-ui/core-sc'
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 import { BRANDS_RESULTS_MESSAGES } from '../../../utils'
 import SearchResult from './SearchResult'
+import LoaderContainer from '../../../components/loader/styles/LoaderContainer.css'
+import BasicLoader from '../../../components/loader/BasicLoader'
+
 
 const Title = styled.div`
 	font-size: 30px;
@@ -94,7 +97,7 @@ class SearchResults extends React.Component {
 
         {({ loading, error, data, refetch }) => {
 
-          if (loading) return <div> Fetching </div>
+          if (loading) return <LoaderContainer> <BasicLoader /> </LoaderContainer>
           if (error) return <div> Error  </div>
 
           this.refetch = refetch

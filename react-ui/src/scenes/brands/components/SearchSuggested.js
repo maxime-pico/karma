@@ -4,7 +4,10 @@ import gql from 'graphql-tag'
 import styled from 'styled-components'
 import { Row, Col, } from '@smooth-ui/core-sc'
 import SearchSuggestedResult from './SearchSuggestedResult'
-import BasicButton from './../../../components//buttons/BasicButton'
+import BasicButton from './../../../components/buttons/BasicButton'
+
+import LoaderContainer from '../../../components/loader/styles/LoaderContainer.css'
+import BasicLoader from '../../../components/loader/BasicLoader'
 
 const COMPANY_SUGGESTED_LIST = gql(`
   query CompanyList {
@@ -19,41 +22,32 @@ const COMPANY_SUGGESTED_LIST = gql(`
 `);
 
 const Title = styled.h3`
-font-size: 5rem;
-font-family: 'Avenir-Black', sans-serif;
+  font-size: 5rem;
+  font-family: 'Avenir-Black', sans-serif;
 `
 
 const Description = styled.p`
-font-weight: bold;
+  font-weight: bold;
 `
 
 const Band = styled.div`
-background-color:#535B65;
-display:flex;
-align-items:center;
-justify-content:center;
-padding: 4rem 5rem;
-border-radius:3rem;
-color: white;
-margin-bottom: 3rem;
-
-&::before{
-  content:"";
-  position:absolute;
-  z-index:0;
-  width:100%;
-  left: 0;
-  background-color:red;
-}
+  background-color:#535B65;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 4rem 5rem;
+  border-radius:3rem;
+  color: white;
+  margin-bottom: 3rem;
 `
 
 const TitleBand = styled.h3`
-font-size: 2.5rem;
-color: white;
-margin-right: 2rem;
-text-align:right;
-width: 50%;
-font-family: 'Avenir-Black', sans-serif;
+  font-size: 2.5rem;
+  color: white;
+  margin-right: 2rem;
+  text-align:right;
+  width: 50%;
+  font-family: 'Avenir-Black', sans-serif;
 `
 
 class SearchSuggested extends React.Component {
@@ -85,7 +79,7 @@ class SearchSuggested extends React.Component {
         >
           {({ loading, error, data, refetch }) => {
 
-            if (loading) return <div> Fetching </div>
+            if (loading) return <LoaderContainer><BasicLoader /></LoaderContainer>
             if (error) return <div> Error  </div>
 
             const companyList = data.suggestedCompanies
