@@ -1,128 +1,129 @@
-const { getUserId, CAUSE_AND_ACTS } = require('../utils')
-const { KARMA_LABELS } = require('../../../react-ui/src/utils')
+const { getUserId, CAUSE_AND_ACTS, KARMA_LABELS } = require('../utils')
 
 // Resolver querying the user info from token
 function getUserInfoFromContext(parent, args, context, info) {
-  const userId = getUserId(context)
-  return context.db.query.user(
-    { where: { id: userId } },
-    `{ id name email picture status }`,
-  )
+	const userId = getUserId(context)
+	return context.db.query.user(
+		{ where: { id: userId } },
+		`{ id name email picture status }`,
+	)
 }
 
 // Resolver querying all the companies in the database
 function company(parent, args, context, info) {
-  return context.db.query.company(
-    {
-      where: { id: args.companyId },
-    },
-    `{name}`,
-  )
+	return context.db.query.company(
+		{
+			where: { id: args.companyId },
+		},
+		`{name}`,
+	)
 }
 
 // Resolver querying all the companies in the database
 function allCompanies(parent, args, context, info) {
+	const conditions = { or: [], and: [] }
 
-  const conditions = { or: [], and: [] };
+	// WHERE - filter
+	if (typeof args.filter !== 'undefined') {
+		if (args.filter.length) {
+			conditions.and.push({ name_contains: args.filter })
+		}
+	}
 
-  // WHERE - filter
-  if (typeof args.filter !== 'undefined') {
-    if (args.filter.length) {
-      conditions.and.push({ name_contains: args.filter });
-    }
-  }
+	// WHERE - categories
+	if (typeof args.categories !== 'undefined') {
+		const cats = args.categories.split(',')
+		if (cats.length) {
+			cats.forEach(cat => {
+				if (cat.length) conditions.or.push({ category_some: { id: cat } })
+			})
+		}
+	}
 
-  // WHERE - categories
-  if (typeof args.categories !== 'undefined') {
-    const cats = args.categories.split(',');
-    if (cats.length) {
-      cats.forEach(cat => {
-        if (cat.length)
-          conditions.or.push({ category_some: { id: cat } });
-      });
-    }
-  }
+	// WHERE - karmas
+	if (typeof args.karmas !== 'undefined') {
+		const karmas = args.karmas.split(',')
+		if (karmas.length) {
+			karmas.forEach(karma => {
+				if (karma.length) {
+					if (parseFloat(KARMA_LABELS[karma].value) * -1 > 0) {
+						// negative
 
-  // WHERE - karmas
-  if (typeof args.karmas !== 'undefined') {
+						if (karmas.length > 1) {
+							conditions.and.push({
+								OR: [
+									{ karma_lt: parseFloat(KARMA_LABELS[karma].value) + 0.5 },
+									{ karma_gte: parseFloat(KARMA_LABELS[karma].value) - 0.5 },
+								],
+							})
+						} else {
+							conditions.and.push({
+								karma_lt: parseFloat(KARMA_LABELS[karma].value) + 0.5,
+							})
+							conditions.and.push({
+								karma_gte: parseFloat(KARMA_LABELS[karma].value) - 0.5,
+							})
+						}
+					} else {
+						// positive
+						if (karmas.length > 1) {
+							conditions.and.push({
+								OR: [
+									{ karma_lte: parseFloat(KARMA_LABELS[karma].value) + 0.5 },
+									{ karma_gt: parseFloat(KARMA_LABELS[karma].value) - 0.5 },
+								],
+							})
+						} else {
+							conditions.and.push({
+								karma_lte: parseFloat(KARMA_LABELS[karma].value) + 0.5,
+							})
+							conditions.and.push({
+								karma_gt: parseFloat(KARMA_LABELS[karma].value) - 0.5,
+							})
+						}
+					}
+				}
+			})
+		}
+	}
 
-    const karmas = args.karmas.split(',');
-    if (karmas.length) {
-      karmas.forEach(karma => {
-        if (karma.length) {
-          if (parseFloat(KARMA_LABELS[karma].value) * -1 > 0) {
-            // negative
+	let where = {}
+	if (conditions.or.length && conditions.and.length) {
+		where = { OR: conditions.or, AND: conditions.and }
+	} else {
+		if (conditions.or.length) where = { OR: conditions.or }
 
-            if (karmas.length > 1) {
-              conditions.and.push({
-                OR: [
-                  { karma_lt: parseFloat(KARMA_LABELS[karma].value) + 0.5 },
-                  { karma_gte: parseFloat(KARMA_LABELS[karma].value) - 0.5 }
-                ]
-              });
-            } else {
-              conditions.and.push({ karma_lt: parseFloat(KARMA_LABELS[karma].value) + 0.5 })
-              conditions.and.push({ karma_gte: parseFloat(KARMA_LABELS[karma].value) - 0.5 })
-            }
+		if (conditions.and.length) where = { AND: conditions.and }
+	}
 
-          } else {
-            // positive
-            if (karmas.length > 1) {
-              conditions.and.push({
-                OR: [
-                  { karma_lte: parseFloat(KARMA_LABELS[karma].value) + 0.5 },
-                  { karma_gt: parseFloat(KARMA_LABELS[karma].value) - 0.5 }
-                ]
-              });
-            } else {
-              conditions.and.push({ karma_lte: parseFloat(KARMA_LABELS[karma].value) + 0.5 })
-              conditions.and.push({ karma_gt: parseFloat(KARMA_LABELS[karma].value) - 0.5 })
-            }
-          }
-        }
-      });
-    }
-  }
+	const companies = context.db.query.companies(
+		{
+			where,
+			skip: args.skip,
+			first: args.first,
+			orderBy: args.orderBy,
+		},
+		info,
+	)
 
-  let where = {};
-  if (conditions.or.length && conditions.and.length) {
-    where = { OR: conditions.or, AND: conditions.and };
-  } else {
-    if (conditions.or.length)
-      where = { OR: conditions.or };
-
-    if (conditions.and.length)
-      where = { AND: conditions.and };
-  }
-
-  const companies = context.db.query.companies(
-    {
-      where,
-      skip: args.skip,
-      first: args.first,
-      orderBy: args.orderBy,
-    },
-    info,
-  );
-
-  return companies;
+	return companies
 }
 
 // Resolver querying all the companies in the database
 function allCompanyCategories(parent, args, context, info) {
-  const where = {}
+	const where = {}
 
-  const companyCategories = context.db.query.companyCategories(
-    {
-      where,
-      skip: args.skip,
-      first: args.first,
-      orderBy: args.orderBy,
-    },
-    info,
-  )
+	const companyCategories = context.db.query.companyCategories(
+		{
+			where,
+			skip: args.skip,
+			first: args.first,
+			orderBy: args.orderBy,
+		},
+		info,
+	)
 
-  return companyCategories
+	return companyCategories
 }
 
 // resolver that gets the cause grades of a specific companyand averages them per cause
@@ -224,41 +225,41 @@ async function companyActGrades(parent, args, context, info) {
 
 // resolver that gets the needed info for a specific user to display its bubble
 function userBubbleQuery(parent, args, context, info) {
-  const userBubbleInfo = context.db.query.user(
-    {
-      where: { id: args.userId },
-    },
-    ` { name picture status } `,
-  )
-  if (!userBubbleInfo) {
-    throw new Error('User does not exist')
-  }
-  return userBubbleInfo
+	const userBubbleInfo = context.db.query.user(
+		{
+			where: { id: args.userId },
+		},
+		` { name picture status } `,
+	)
+	if (!userBubbleInfo) {
+		throw new Error('User does not exist')
+	}
+	return userBubbleInfo
 }
 
 // resolver that gets the needed info for a specific Company to display its Overview
 async function companyOverview(parent, args, context, info) {
-  // get the info from a company query. Unfortunately at the moment of coding
-  // prisma doesn't allow to query the count on a return field right away
-  const companyOverviewInfo = await context.db.query.company(
-    {
-      where: { id: args.companyId },
-    },
-    ` { name logo opinions{ id } actGrades{ id } causeGrades{ id } } `,
-  )
+	// get the info from a company query. Unfortunately at the moment of coding
+	// prisma doesn't allow to query the count on a return field right away
+	const companyOverviewInfo = await context.db.query.company(
+		{
+			where: { id: args.companyId },
+		},
+		` { name logo opinions{ id } actGrades{ id } causeGrades{ id } } `,
+	)
 
-  // test existence
-  if (!companyOverviewInfo) {
-    throw new Error('Company does not exist')
-  }
+	// test existence
+	if (!companyOverviewInfo) {
+		throw new Error('Company does not exist')
+	}
 
-  // add count fields to result from query
-  companyOverviewInfo.opinionsCount = companyOverviewInfo.opinions.length
-  companyOverviewInfo.actGradesCount = companyOverviewInfo.actGrades.length
-  companyOverviewInfo.causeGradesCount =
-    companyOverviewInfo.causeGrades.length / 4
+	// add count fields to result from query
+	companyOverviewInfo.opinionsCount = companyOverviewInfo.opinions.length
+	companyOverviewInfo.actGradesCount = companyOverviewInfo.actGrades.length
+	companyOverviewInfo.causeGradesCount =
+		companyOverviewInfo.causeGrades.length / 4
 
-  return companyOverviewInfo
+	return companyOverviewInfo
 }
 
 // resolver that gets a list of the first $first opinions starting from the $skip
@@ -289,52 +290,52 @@ async function opinionsFeed(parent, args, context, info) {
 // resolver that counts the number of opinions of a specific company (args.companyId)
 // for a specific act (args.act)
 async function opinionsActCount(parent, args, context, info) {
-  const { companyId, act } = args // destructure arguments
+	const { companyId, act } = args // destructure arguments
 
-  const opinions = await context.db.query.opinions(
-    {
-      where: { regardingWho: { id: companyId }, regardingWhat: act },
-    },
-    ` { id } `,
-  )
-  if (opinions) return { act: act, count: opinions.length }
-  return { act: act, count: 0 }
+	const opinions = await context.db.query.opinions(
+		{
+			where: { regardingWho: { id: companyId }, regardingWhat: act },
+		},
+		` { id } `,
+	)
+	if (opinions) return { act: act, count: opinions.length }
+	return { act: act, count: 0 }
 }
 
 // resolver that counts the number of grades and opinions of a specific company (args.companyId)
 // for a specific cause (args.cause)
 async function opinionsAndGradesCauseCount(parent, args, context, info) {
-  const { companyId, cause } = args // destructure arguments
+	const { companyId, cause } = args // destructure arguments
 
-  const opinions = await context.db.query.opinions(
-    {
-      where: {
-        regardingWho: { id: companyId },
-        regardingWhat_in: CAUSE_AND_ACTS[cause].acts,
-      },
-    },
-    ` { id affiliations { id } } `,
-  )
-  if (opinions) {
-    var gradesCount = 0
-    opinions.forEach(opinion => {
-      gradesCount += opinion.affiliations.length
-    })
-    return { opinionsCount: opinions.length, gradesCount: gradesCount }
-  }
-  return { opinionsCount: null, gradesCount: null }
+	const opinions = await context.db.query.opinions(
+		{
+			where: {
+				regardingWho: { id: companyId },
+				regardingWhat_in: CAUSE_AND_ACTS[cause].acts,
+			},
+		},
+		` { id affiliations { id } } `,
+	)
+	if (opinions) {
+		var gradesCount = 0
+		opinions.forEach(opinion => {
+			gradesCount += opinion.affiliations.length
+		})
+		return { opinionsCount: opinions.length, gradesCount: gradesCount }
+	}
+	return { opinionsCount: null, gradesCount: null }
 }
 
 module.exports = {
-  getUserInfoFromContext,
-  company,
-  allCompanies,
-  allCompanyCategories,
-  companyCauseGrades,
-  companyActGrades,
-  userBubbleQuery,
-  companyOverview,
-  opinionsFeed,
-  opinionsActCount,
-  opinionsAndGradesCauseCount,
+	getUserInfoFromContext,
+	company,
+	allCompanies,
+	allCompanyCategories,
+	companyCauseGrades,
+	companyActGrades,
+	userBubbleQuery,
+	companyOverview,
+	opinionsFeed,
+	opinionsActCount,
+	opinionsAndGradesCauseCount,
 }

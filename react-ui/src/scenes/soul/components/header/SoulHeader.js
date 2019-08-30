@@ -63,8 +63,8 @@ type Props = {
 }
 
 const SoulHeader = (props: Props) => {
-	const { companyId, overallKarma, type, causeGrades, karmaDescription } = props
-	// const karmaDescription = convertGradesIntoWords(overallKarma, type).fr
+	const { companyId, overallKarma, type, causeGrades } = props
+	const karmaDescription = convertGradesIntoWords(overallKarma, type).fr
 	const karmaColor = convertGradesIntoColors(overallKarma)
 
 	return (
