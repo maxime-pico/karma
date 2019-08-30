@@ -88,27 +88,27 @@ const UserName = styled.div`
 // `
 
 const OpinionPreview = ({ opinionsFeed, location, act, tutorial }) => {
-	return (
-		<Row justifyContent="center" mt={2}>
-			<Col md={10} sm={11} xs={12} textAlign="left" color="#a9b4cc">
-				<OpinionContainer className={tutorial ? 'opinion' : null}>
-					{opinionsFeed.map((opinion, index) => (
-						<Col xs={8} sm={6} lg={4} key={index} p="6px">
-							<OpinionCard>
-								<div>
-									<b>
-										{opinion.title.length > 50
-											? opinion.title.slice(0, 47) + '...'
-											: opinion.title}
-									</b>
-								</div>
-								<div>
-									{opinion.text.length > 200
-										? opinion.text.slice(0, 197) + '...'
-										: opinion.text}
-								</div>
-								<UserName>by @{opinion.writtenBy.name}</UserName>
-								{/*<OpinionCardBack key={index} md={4} className="OpinionCardBack">
+  return (
+    <Row justifyContent="center" mt={2}>
+      <Col md={10} sm={11} xs={12} textAlign="left" color="#a9b4cc">
+        <OpinionContainer className={tutorial ? 'opinion' : null}>
+          {opinionsFeed.map((opinion, index) => (
+            <Col xs={8} sm={6} lg={4} key={index} p="6px">
+              <OpinionCard>
+                <div>
+                  <b>
+                    {opinion.title.length > 50
+                      ? opinion.title.slice(0, 47) + '...'
+                      : opinion.title}
+                  </b>
+                </div>
+                <div>
+                  {opinion.text.length > 200
+                    ? opinion.text.slice(0, 197) + '...'
+                    : opinion.text}
+                </div>
+                <UserName>by @{opinion.writtenBy.name}</UserName>
+                {/*<OpinionCardBack key={index} md={4} className="OpinionCardBack">
 					<Tick>✔</Tick>
 					<AffiliationsCount>{opinion.affiliationsCount}</AffiliationsCount>
 					<RoundWindow size={60}>
@@ -129,13 +129,13 @@ const OpinionPreview = ({ opinionsFeed, location, act, tutorial }) => {
 						))}
 					</Tags>
 				</OpinionCardBack>*/}
-							</OpinionCard>
-						</Col>
-					))}
-				</OpinionContainer>
-			</Col>
-		</Row>
-	)
+              </OpinionCard>
+            </Col>
+          ))}
+        </OpinionContainer>
+      </Col>
+    </Row>
+  )
 }
 
 export default OpinionPreview

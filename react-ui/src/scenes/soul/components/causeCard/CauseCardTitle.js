@@ -51,39 +51,39 @@ const Push = styled.span`
 
 // Declare types of expected props
 type Props = {
-	companyId: string,
-	causeKarma: number,
-	identifier: string,
+  companyId: string,
+  causeKarma: number,
+  identifier: string,
 }
 
 const CauseCardTitle = (props: Props) => {
-	const { identifier, companyId, causeKarma } = props
-	const karmaColor = convertGradesIntoColors(causeKarma)
-	return (
-		<div>
-			<Row justifyContent="center">
-				<Col md={4}>
-					<RoundWindow color={karmaColor}>
-						<Push />
-						<img
-							src={process.env.PUBLIC_URL + `/icons/cause/${identifier}.png`}
-							alt={identifier}
-						/>
-					</RoundWindow>
-				</Col>
-			</Row>
-			<Row justifyContent="center" mt={'-40px'}>
-				<TitleCol xs={10} sm={8} align="left">
-					<Link to={`/company/${companyId}/cause/${identifier}`}>
-						<Title>{CAUSE_AND_ACTS[identifier].fr}</Title>
-					</Link>
-				</TitleCol>
-				<TitleCol xs={10} sm={2} align="right">
-					<Title>{causeKarma}</Title>
-				</TitleCol>
-			</Row>
-		</div>
-	)
+  const { identifier, companyId, causeKarma } = props
+  const karmaColor = convertGradesIntoColors(causeKarma)
+  return (
+    <div>
+      <Row justifyContent="center" textAlign="center" >
+        <Col md={4}>
+          <RoundWindow textAlign="center" color={karmaColor}>
+            <Push />
+            <img
+              src={process.env.PUBLIC_URL + `/icons/cause/${identifier}.png`}
+              alt={identifier}
+            />
+          </RoundWindow>
+        </Col>
+      </Row>
+      <Row justifyContent="center" textAlign="center" mt={'-40px'}>
+        <TitleCol xs={10} sm={8} align="left">
+          <Link to={`/company/${companyId}/cause/${identifier}`}>
+            <Title>{CAUSE_AND_ACTS[identifier].fr}</Title>
+          </Link>
+        </TitleCol>
+        <TitleCol xs={10} sm={2} align="right">
+          <Title>{causeKarma}</Title>
+        </TitleCol>
+      </Row>
+    </div>
+  )
 }
 
 export default CauseCardTitle

@@ -10,10 +10,6 @@
 		url('../fonts/Avenir-Black.woff') format('woff');
 }
 
-.App {
-	text-align: center;
-}
-
 .App-logo {
 	animation: App-logo-spin infinite 20s linear;
 	height: 80px;
@@ -68,6 +64,10 @@ big {
 
 a {
 	color: inherit;
+}
+
+a:hover {
+	color: #545a66;
 }
 
 a:hover {

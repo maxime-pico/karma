@@ -7,6 +7,15 @@ type Company {
 	actGrades: [ActGrade!]! @relation(name: "ActGradesOfCompany" onDelete: CASCADE)
 	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesOfCompany" onDelete: CASCADE)
 	opinions: [Opinion!]! @relation(name: "OpinionsOfCompany" onDelete: CASCADE)
+  category: [CompanyCategory!]! @relation(name: "CategoriesOfCompany") #@relation(name: "CategoryOfCompany" onDelete: CASCADE)
+  karma: Float
+}
+
+type CompanyCategory {
+	id: ID! @unique
+	createdAt: DateTime!
+	name: String! @unique
+  companies: [Company!]!  @relation(name: "CategoriesOfCompany") #
 }
 
 # prettier-ignore
@@ -46,7 +55,7 @@ type ActGrade {
 	affiliatedTo: Opinion!
 }
 
-type CauseGrade {
+type CauseGrade @cacheControl(maxAge: 0) {
 	id: ID! @unique
 	createdAt: DateTime!
 	gradedTo: Company! @relation(name: "CauseGradesOfCompany")

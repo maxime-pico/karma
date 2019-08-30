@@ -37,6 +37,7 @@ mutation {
     }
   ){ id }
 
+
   addCauseGrade2: createCauseGrade(
     data: {
       gradedTo: { connect: { name: "H&M" } }
@@ -223,6 +224,51 @@ mutation {
       gradedBy: { connect: { email: "test2@test.com" } }
       cause: SOCIAL
       grade: -1
+    }
+  ){ id }
+
+  #
+
+
+  createCompanyCategory2: createCompanyCategory(
+    data : {
+      name : "Automobile"
+      companies : { connect: { name: "Tesla" } }
+    }
+  ){ id }
+
+  createCompanyCategory3: createCompanyCategory(
+    data : {
+      name : "Energie"
+      companies : { connect: [{ name: "Total" },{ name: "ENGIE" }] }
+    }
+  ){ id }
+
+  createCompanyCategory4: createCompanyCategory(
+    data : {
+      name : "Mode"
+      companies : { connect: [{ name: "H&M" },{ name: "Zalando" },{ name: "Nike" },{ name: "Quechua" }] }
+    }
+  ){ id }
+  createCompanyCategory5: createCompanyCategory(
+    data : {
+      name : "Papeterie"
+      companies : { connect: [{ name: "Bic" }] }
+    }
+  ){ id }
+
+
+  createCompanyCategory7: createCompanyCategory(
+    data : {
+      name : "Alimentation"
+      companies : { connect: [{ name: "Mc Donalds" }, { name: "Biocoop" }] }
+    }
+  ){ id }
+
+   createCompanyCategory8: createCompanyCategory(
+    data : {
+      name : "Vente en ligne"
+      companies : { connect: [{ name: "Amazon" }] }
     }
   ){ id }
 

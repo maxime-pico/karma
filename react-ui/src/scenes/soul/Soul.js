@@ -29,7 +29,7 @@ const BlurOnModal = styled.div`
 // Preparing query that retireves the list of company grades for the 4 causes as
 // well as the overall karma of the company
 const CAUSE_GRADES_QUERY = gql`
-	query CauseGradesQuery($companyId: ID!) {
+	query CauseGradesQueryMain($companyId: ID!) {
 		companyCauseGrades(companyId: $companyId) {
 			ENVIRONMENT
 			SOCIAL
@@ -47,6 +47,7 @@ class Soul extends React.Component {
 		const cookies = new Cookies() // get access to cookies
 		this.authToken = cookies.get(AUTH_TOKEN) // if user is logged in authToken contains the tok
 		this.userOnboarded = cookies.get('userOnboarded_soul') // if user has been onboarded contains the token
+		this.refetch = null
 	}
 
 	state = {
@@ -64,6 +65,11 @@ class Soul extends React.Component {
 				previousState.stepsEnabled = true
 				return previousState
 			})
+		}
+
+		console.log('Mount')
+		if (this.refetch) {
+			this.refetch()
 		}
 	}
 
@@ -136,11 +142,13 @@ class Soul extends React.Component {
 		return (
 			// first fetch the data
 			<Query query={CAUSE_GRADES_QUERY} variables={{ companyId }}>
-				{({ loading, error, data }) => {
+				{({ loading, error, data, refetch }) => {
 					if (loading) return <div> Loading... </div>
 					if (error) {
 						return <div> Error: {error.message} </div>
 					}
+
+					this.refetch = refetch
 
 					// If data succesfully fetched, then it's split between two consts
 					// one holding all the grades and one holding only the overall karma
@@ -170,6 +178,7 @@ class Soul extends React.Component {
 								type={'global'}
 								causeGrades={causeGrades}
 								pb={0}
+								karmaDescription={'Karma global'}
 							/>
 							<Box pb={120}>
 								<Grid>
@@ -179,7 +188,7 @@ class Soul extends React.Component {
 										Object.keys(causeGrades).map(
 											(identifier, i) =>
 												CAUSE_AND_ACTS[identifier] && (
-													<Col key={i} md={10} mb="42px" xs={12}>
+													<Col key={i} md={10} mb="42px">
 														<CauseCard
 															companyId={companyId}
 															causeKarma={causeGrades[identifier]}

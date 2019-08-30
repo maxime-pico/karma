@@ -195,8 +195,17 @@ const CAUSE_AND_ACTS = {
 	},
 }
 
+const KARMA_LABELS = {
+	vb: { value: -2, slug: 'vb', label: { fr: 'Très Mauvais Karma' } },
+	b: { value: -1, slug: 'b', label: { fr: 'Plutôt Mauvais Karma' } },
+	n: { value: 0, slug: 'n', label: { fr: 'Karma Neutre' } },
+	g: { value: 1, slug: 'g', label: { fr: 'Plutôt Bon Karma' } },
+	vg: { value: 2, slug: 'vg', label: { fr: 'Très bon Karma' } },
+}
+
 module.exports = {
 	APP_SECRET,
 	getUserId,
 	CAUSE_AND_ACTS,
+	KARMA_LABELS,
 }

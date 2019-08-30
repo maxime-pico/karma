@@ -62,6 +62,8 @@ const CauseRow = styled(Row)`
 `
 
 const CauseTitle = styled(Col)`
+	display: flex;
+	align-items: center;
 	@media (max-width: 540px) {
 		text-align: center;
 		margin-bottom: 2rem;
@@ -116,6 +118,11 @@ const CTABand = styled.div`
 	background-color: #545a66;
 	padding: 12rem 4rem;
 
+	h2,
+	h3 {
+		text-align: center;
+	}
+
 	h2 {
 		color: white;
 	}
@@ -129,6 +136,11 @@ const CTABand = styled.div`
 const ExplanationWrapper = styled.section`
 	background-color: white;
 	padding: 11rem 0;
+
+	h3,
+	h3 + p {
+		text-align: center;
+	}
 `
 
 const ExplanationIntro = styled(Row)`
@@ -185,7 +197,7 @@ const Home = () => {
 	return (
 		<HomeWrapper>
 			<Grid>
-				<Row justifyContent="center" pt={'9.6rem'}>
+				<Row justifyContent="center" textAlign="center" pt={'9.6rem'}>
 					<Col xs={10} md={5}>
 						<Logo src={karmalogo} alt="karma panda" />
 						<h1 class="title-size2">
@@ -203,7 +215,7 @@ const Home = () => {
 						</CTAButton>
 					</Col>
 				</Row>
-				<Row justifyContent="center">
+				<Row justifyContent="center" textAlign="center">
 					<Col xs={12} md={8} textAlign="left" px={'0px'}>
 						<TextZone>
 							<p>
@@ -232,7 +244,7 @@ const Home = () => {
 						</TextZone>
 					</Col>
 				</Row>
-				<Row justifyContent={{ md: 'center' }}>
+				<Row justifyContent={{ md: 'center' }} textAlign="center">
 					<h3 class="title-size2">
 						Jugez le Karma des marques qui nous entourent
 					</h3>
@@ -340,7 +352,7 @@ const Home = () => {
 						</CauseRow>
 					</Col>
 				</Row>
-				<Row justifyContent={{ md: 'center' }}>
+				<Row justifyContent={{ md: 'center' }} textAlign="center">
 					<Col md={7} textAlign="right">
 						<CTABlock>
 							<h3 class="title-size4">
