@@ -383,6 +383,7 @@ const Home = () => {
 							<img
 								src={process.env.PUBLIC_URL + `/images/karma-scale.svg`}
 								alt="Echelle de notation"
+                width="100%"
 							/>
 							<p>
 								Nous avons décidé de choisir <br />
