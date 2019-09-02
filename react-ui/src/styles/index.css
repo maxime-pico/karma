@@ -8,11 +8,11 @@ body {
   outline : 0;
 }
 
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* Brand results fade*/
 
 .results-fade-enter {
   opacity: 0;
-
 }
 .results-fade-enter-active {
   opacity: 1;
@@ -26,7 +26,6 @@ body {
   opacity: 0;
   transition: opacity 500ms, transform 300ms;
 }
-
 
 .result-fade-enter {
   opacity: 0;
@@ -120,7 +119,6 @@ body {
   overflow: visible;
 }
 
-
 .karma-pcb input:checked ~ span::before {
   transform: scale(1.25);
   opacity: 1;
@@ -132,7 +130,6 @@ body {
   color: white;
   padding: 0;
 }
-
 
 .karma-pcb span::before {
   transition: opacity 0.5s ease;

@@ -59,16 +59,44 @@ async function upVote(parent, args, context, info) {
   const { companyId } = args
   const userId = getUserId(context)
 
-  const upVoteExists = await context.db.exists.CompanyUpVote({
-    votedBy: {id: userId},
-    votedTo: {id : companyId}
-  })
+  if (userId) {
+    const upVoteExists = await context.db.exists.CompanyUpVote({
+      votedBy: { id: userId },
+      votedTo: { id: companyId }
+    })
 
-  if (upVoteExists) {
-    // UPDATE updateCompanyUpVote
+    if (!upVoteExists) {
+      // CREATE createCompanyUpVote
+      const upVote = await context.db.mutation.createCompanyUpVote({
+        data: {
+          votedBy: { connect: { id: userId } },
+          votedTo: { connect: { id: companyId } }
+        },
+        info
+      })
+      return upVote
+
+    } else {
+      return 'already-voted'
+    }
   } else {
-    // CREATE createCompanyUpVote
+    return 'not-identified'
   }
+}
+
+async function suggestCompany(parent, args, context, info) {
+  // TODO : existence verification
+  const { companyName, companyWebsite } = args
+  const suggestedCompany = await context.db.mutation.createCompany({
+    data: {
+      name: companyName,
+      website: companyWebsite,
+      adminApproved: 1,
+      validated: 0
+    },
+    info
+  })
+  return suggestedCompany
 }
 
 // resolver that gets user id from context and then checks if user did not
@@ -146,7 +174,7 @@ async function setOverallKarma(parent, args, context, info) {
   let globalKarma = 0;
   const avgCauseGrades = {}
   const numberOfCauses = causes.length
-  
+
   const allCauseGrades = await context.db.query.causeGrades(
     {
       where:
@@ -333,5 +361,6 @@ module.exports = {
   gradeAct,
   postOpinion,
   setOverallKarma,
-  upVote
+  upVote,
+  suggestCompany
 }

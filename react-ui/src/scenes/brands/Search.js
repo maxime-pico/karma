@@ -23,6 +23,7 @@ background-color: white;
 padding: 8rem 0 8rem 0;
 `
 
+
 // Search component: displays the list of companies in the database
 class Search extends React.Component {
 
@@ -49,6 +50,7 @@ class Search extends React.Component {
     this.clearFilters = this.clearFilters.bind(this)
     this.renderSearchInput = this.renderSearchInput.bind(this)
     this._suggestBrand = this._suggestBrand.bind(this)
+    this._upVote = this._upVote.bind(this)
 
     this.categories = []
     this.karmas = []
@@ -128,8 +130,6 @@ class Search extends React.Component {
   /* Suggestion */
 
   _suggestBrand() {
-
-    console.log('SUGGEST MODAL')
     if (this.authToken) {
       this.setState(previousState => {
         previousState.suggestModalIsOpen = true
@@ -139,9 +139,29 @@ class Search extends React.Component {
     } else {
       this.setState(previousState => {
         previousState.loginToSuggestModalIsOpen = true
-        window.scrollTo(0, 0)
+        // window.scrollTo(0, 0)
         return previousState
       })
+    }
+  }
+
+  _upVote(mutateFunc) {
+    if (this.authToken) {
+      console.log('UPVOTE !!!')
+      this.setState(previousState => {
+        previousState.loginToSuggestModalIsOpen = false
+        return previousState
+      })
+      mutateFunc()
+
+
+    } else {
+      this.setState(previousState => {
+        previousState.loginToSuggestModalIsOpen = true
+        // window.scrollTo(0, 0)
+        return previousState
+      })
+
     }
   }
 
@@ -206,7 +226,7 @@ class Search extends React.Component {
         <Suggestions>
           <Grid>
             {/* SUGGESTIONS */}
-            <SearchSuggested suggestBrand={this._suggestBrand} />
+            <SearchSuggested upVote={this._upVote} suggestBrand={this._suggestBrand} />
           </Grid>
         </Suggestions>
 

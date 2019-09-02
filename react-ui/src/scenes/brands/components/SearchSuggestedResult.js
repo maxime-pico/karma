@@ -5,10 +5,12 @@ Here is a component called by Search.js that renders the brand "cards" on the
 
 // @flow
 import React from 'react'
+import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { KARMA_LABELS } from '../../../utils'
 import icon_clap from '../../../images/icons/clap.svg'
+import { Mutation } from 'react-apollo'
 
 // <STYLE>
 const ResultCard = styled.div`
@@ -138,9 +140,27 @@ const RoundImage = styled.div`
   display:flex;
   align-items:center;
   justify-content:center;
-`
 
+  img{
+    transition: 0.5s all ease;
+  }
+`
 // </STYLE>
+
+
+
+const COMPANY_UPVOTE = gql(`
+mutation CompanyUpvote(
+  $companyId: ID!
+) {
+  upVote(
+    companyId: $companyId, 
+  ) {
+    id
+  }
+}
+`);
+
 
 // SearchResult component: displays the company card based on the name, and
 // logo provided. Also adds a link to the relevant brand page based on the id
@@ -148,38 +168,58 @@ class SearchResult extends React.Component {
 
   state = {
     karmaSlug: '',
-    karmaTitle: ''
+    karmaTitle: '',
+    active: false
   }
 
   constructor(props) {
     super(props)
-    this.upVote = this.props.upVote.bind(this)
+    this._onClick = this._onClick.bind(this)
+    // this.upVote = this.props.upVote.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
 
   }
 
+  _onClick(mutateFunc) {
+
+    this.setState({ active: true })
+
+    const t = setTimeout(() => {
+      this.setState({ active: false })
+      clearTimeout(t)
+    }, 500)
+
+    //  this.props.upVote(mutateFunc)
+  }
+
   render() {
     return (
-      <ResultCard >
-        <div>
-          <div class="square">
-            <img
-              src={process.env.PUBLIC_URL + '/images/' + this.props.logo}
-              width="80"
-              alt="company"
-            />
-            <ResultHover onClick={this.upVote.bind(this)}>
-              <small>1200 votes</small>
-              <RoundImage><img src={icon_clap} /></RoundImage>
-              Je veux aussi !
-            </ResultHover>
-          </div>
-          <CompanyName>{this.props.name}</CompanyName>
-
-        </div>
-      </ResultCard>
+      <Mutation mutation={COMPANY_UPVOTE} refetchQueries={[`SuggestedCompanyList`]} >
+        {(onMutate) => {
+          const onMutateFunc = () => onMutate({ variables: { companyId: this.props.id } })
+          return (
+            <ResultCard >
+              <div>
+                <div className={this.state.active ? 'square cbutton cbutton--effect-ivana cbutton--click' : 'square cbutton cbutton--effect-ivana'} >
+                  <img
+                    src={process.env.PUBLIC_URL + '/images/' + this.props.logo}
+                    width="80"
+                    alt="company"
+                  />
+                  <ResultHover onClick={onMutateFunc}>
+                    <small>{this.props.nbVotes} votes</small>
+                    <RoundImage><img src={icon_clap} /></RoundImage>
+                    Je veux aussi !
+                  </ResultHover>
+                </div>
+                <CompanyName>{this.props.name}</CompanyName>
+              </div>
+            </ResultCard >
+          )
+        }}
+      </Mutation>
     )
   }
 }

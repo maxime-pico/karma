@@ -10,13 +10,16 @@ import LoaderContainer from '../../../components/loader/styles/LoaderContainer.c
 import BasicLoader from '../../../components/loader/BasicLoader'
 
 const COMPANY_SUGGESTED_LIST = gql(`
-  query CompanyList {
+  query SuggestedCompanyList {
     suggestedCompanies {
       id
       name
       logo
       karma
       validated
+      upVotes {
+        id
+      }
     }
   }
 `);
@@ -50,6 +53,7 @@ const TitleBand = styled.h3`
   font-family: 'Avenir-Black', sans-serif;
 `
 
+
 class SearchSuggested extends React.Component {
 
   constructor(props) {
@@ -57,9 +61,7 @@ class SearchSuggested extends React.Component {
     this.suggestBrand = this.props.suggestBrand.bind(this)
   }
 
-  upVote() {
-    console.log('UPVOTE')
-  }
+  // TODO : count upVotes with the query
 
   render() {
     return (
@@ -96,7 +98,8 @@ class SearchSuggested extends React.Component {
                         logo={company.logo}
                         karma={company.karma}
                         key={'s-' + company.id}
-                        upVote={this.upVote}
+                        upVote={this.props.upVote}
+                        nbVotes={company.upVotes.length}
                       />
 
                     ))}

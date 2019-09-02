@@ -7,6 +7,7 @@ import React from 'react'
 import { Portal } from 'react-portal'
 import { Row, styled } from '@smooth-ui/core-sc'
 import BasicButton from './../../../components//buttons/BasicButton'
+import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { CSSTransition, TransitionGroup, } from 'react-transition-group';
 
@@ -112,6 +113,17 @@ query SuggestCompany(
 }
 `);
 
+const SUGGESTING_MUTATION = gql`
+	mutation SuggestMutation($companyName: String!, $companyWebsite: String!) {
+		suggestCompany(
+      companyName: $companyName, 
+      companyWebsite: $companyWebsite
+    ) {
+			id
+		}
+	}
+`
+
 // Checks if modal should be open, then displays it and its content
 class SuggestBrandModal extends React.Component {
 
@@ -125,14 +137,15 @@ class SuggestBrandModal extends React.Component {
     super(props)
     this._closeModal = this.props.closeModal.bind(this) // get event handler from parent
     this.setState({ isOpen: this.props.isOpen })
+    this.suggestMutation = null
   }
 
   handleChangeForm(target, event) {
-    if(target == 'brand_name') {
-      this.setState({brandName:event.target.value})
+    if (target == 'brand_name') {
+      this.setState({ brandName: event.target.value })
     }
-    if(target == 'brand_website') {
-      this.setState({brandWebsite:event.target.value})
+    if (target == 'brand_website') {
+      this.setState({ brandWebsite: event.target.value })
     }
   }
 
@@ -148,16 +161,14 @@ class SuggestBrandModal extends React.Component {
     )
   }
 
-  suggestBrand() {
-
-  }
-
-  checkExistingBrand() {
-
+  suggestBrand(mutation) {
+    return event => {
+      event.preventDefault()
+      mutation()
+    }
   }
 
   render() {
-    const _closeModal = this._closeModal
     return (
       <TransitionGroup component={null}>
         {this.state.isOpen && (
@@ -166,23 +177,35 @@ class SuggestBrandModal extends React.Component {
             classNames="modal"
           >
             <Portal node={document && document.getElementById('App')}>
-            <Backdrop >
-              <Modal>
-                <Row justifyContent="center" mb={5}>
-                  <Title>Suggérer une nouvelle marque</Title>
-                  <Subtitle>Proposer une nouvelle marque qui doit être évaluée</Subtitle>
-                  <form >
-                    <TextInput onChange={(e) => this.handleChangeForm('brand_name', e)} component={this.renderSearchInput} type="text" name="brand_name" value={this.state.brandName} placeholder="Nom de la marque" />
-                    <TextInput onChange={(e) => this.handleChangeForm('brand_website', e)} component={this.renderSearchInput} type="text" name="brand_website" value={this.state.brandWebsite} placeholder="Adresse du site internet" />
-                    <Buttons>
-                      <span onClick={this._closeModal}>Annuler</span>
-                      <BasicButton type="submit">Ajouter</BasicButton>
-                    </Buttons>
-                    <Legend>Proposition soumise à modération avant ajout dans la liste</Legend>
-                  </form>
-                </Row>
-              </Modal>
-            </Backdrop>
+              <Backdrop >
+                <Modal>
+                  <Mutation
+                    mutation={SUGGESTING_MUTATION}
+                    refetchQueries={[`SuggestedCompanyList`]}
+                    variables={{
+                      companyName: this.state.brandName,
+                      companyWebsite: this.state.brandWebsite
+                    }}
+                    onCompleted={this._closeModal}
+                  >
+                    {SuggestMutation => (
+                      <Row justifyContent="center" mb={5}>
+                        <Title>Suggérer une nouvelle marque</Title>
+                        <Subtitle>Proposer une nouvelle marque qui doit être évaluée</Subtitle>
+                        <form onSubmit={this.suggestBrand(SuggestMutation)}>
+                          <TextInput onChange={(e) => this.handleChangeForm('brand_name', e)} component={this.renderSearchInput} type="text" name="brand_name" value={this.state.brandName} placeholder="Nom de la marque" />
+                          <TextInput onChange={(e) => this.handleChangeForm('brand_website', e)} component={this.renderSearchInput} type="text" name="brand_website" value={this.state.brandWebsite} placeholder="Adresse du site internet" />
+                          <Buttons>
+                            <span onClick={this._closeModal}>Annuler</span>
+                            <BasicButton type="submit">Ajouter</BasicButton>
+                          </Buttons>
+                          <Legend>Proposition soumise à modération avant ajout dans la liste</Legend>
+                        </form>
+                      </Row>
+                    )}
+                  </Mutation>
+                </Modal>
+              </Backdrop>
             </Portal>
           </CSSTransition>
         )}

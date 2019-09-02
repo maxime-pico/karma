@@ -129,6 +129,28 @@ function suggestedCompanies(parent, args, context, info) {
   return companies;
 }
 
+function unapprovedCompanies(parent, args, context, info) {
+  let where = {
+
+    validated: 0,
+    adminApproved: 0
+
+  };
+
+  const companies = context.db.query.companies(
+    {
+      where,
+      skip: args.skip,
+      first: args.first,
+      orderBy: args.orderBy,
+    },
+    info,
+  );
+
+  return companies;
+}
+
+
 // Resolver querying all the companies in the database
 function allCompanyCategories(parent, args, context, info) {
   const where = {}
@@ -358,5 +380,6 @@ module.exports = {
   opinionsFeed,
   opinionsActCount,
   opinionsAndGradesCauseCount,
-  suggestedCompanies
+  suggestedCompanies,
+  unapprovedCompanies
 }

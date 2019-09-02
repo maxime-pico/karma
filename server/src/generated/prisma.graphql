@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Tue Aug 27 2019 17:10:07 GMT+0200 (GMT+02:00)
+# timestamp: Mon Sep 02 2019 18:00:47 GMT+0200 (GMT+02:00)
 
 enum Act {
   CLIMAT_CHANGE
@@ -692,6 +692,7 @@ type Company implements Node {
   createdAt: DateTime!
   name: String!
   logo: String
+  website: String
   actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
   causeGrades(where: CauseGradeWhereInput, orderBy: CauseGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CauseGrade!]
   opinions(where: OpinionWhereInput, orderBy: OpinionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Opinion!]
@@ -963,6 +964,7 @@ type CompanyConnection {
 input CompanyCreateInput {
   name: String!
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1001,6 +1003,7 @@ input CompanyCreateOneWithoutUpVotesInput {
 input CompanyCreateWithoutActGradesInput {
   name: String!
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1013,6 +1016,7 @@ input CompanyCreateWithoutActGradesInput {
 input CompanyCreateWithoutCategoryInput {
   name: String!
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1025,6 +1029,7 @@ input CompanyCreateWithoutCategoryInput {
 input CompanyCreateWithoutCauseGradesInput {
   name: String!
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1037,6 +1042,7 @@ input CompanyCreateWithoutCauseGradesInput {
 input CompanyCreateWithoutOpinionsInput {
   name: String!
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1049,6 +1055,7 @@ input CompanyCreateWithoutOpinionsInput {
 input CompanyCreateWithoutUpVotesInput {
   name: String!
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1076,6 +1083,8 @@ enum CompanyOrderByInput {
   name_DESC
   logo_ASC
   logo_DESC
+  website_ASC
+  website_DESC
   karma_ASC
   karma_DESC
   adminApproved_ASC
@@ -1091,6 +1100,7 @@ type CompanyPreviousValues {
   createdAt: DateTime!
   name: String!
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1136,6 +1146,7 @@ input CompanySubscriptionWhereInput {
 input CompanyUpdateInput {
   name: String
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1149,6 +1160,7 @@ input CompanyUpdateInput {
 input CompanyUpdateManyMutationInput {
   name: String
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1194,6 +1206,7 @@ input CompanyUpdateOneRequiredWithoutUpVotesInput {
 input CompanyUpdateWithoutActGradesDataInput {
   name: String
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1206,6 +1219,7 @@ input CompanyUpdateWithoutActGradesDataInput {
 input CompanyUpdateWithoutCategoryDataInput {
   name: String
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1218,6 +1232,7 @@ input CompanyUpdateWithoutCategoryDataInput {
 input CompanyUpdateWithoutCauseGradesDataInput {
   name: String
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1230,6 +1245,7 @@ input CompanyUpdateWithoutCauseGradesDataInput {
 input CompanyUpdateWithoutOpinionsDataInput {
   name: String
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1242,6 +1258,7 @@ input CompanyUpdateWithoutOpinionsDataInput {
 input CompanyUpdateWithoutUpVotesDataInput {
   name: String
   logo: String
+  website: String
   karma: Float
   adminApproved: Int
   validated: Int
@@ -1287,7 +1304,6 @@ type CompanyUpVote implements Node {
   createdAt: DateTime!
   votedTo: Company!
   votedBy: User!
-  karma: Float
 }
 
 """A connection to a list of items."""
@@ -1301,7 +1317,6 @@ type CompanyUpVoteConnection {
 }
 
 input CompanyUpVoteCreateInput {
-  karma: Float
   votedTo: CompanyCreateOneWithoutUpVotesInput!
   votedBy: UserCreateOneWithoutUpVotesInput!
 }
@@ -1317,12 +1332,10 @@ input CompanyUpVoteCreateManyWithoutVotedToInput {
 }
 
 input CompanyUpVoteCreateWithoutVotedByInput {
-  karma: Float
   votedTo: CompanyCreateOneWithoutUpVotesInput!
 }
 
 input CompanyUpVoteCreateWithoutVotedToInput {
-  karma: Float
   votedBy: UserCreateOneWithoutUpVotesInput!
 }
 
@@ -1340,8 +1353,6 @@ enum CompanyUpVoteOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  karma_ASC
-  karma_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -1349,7 +1360,6 @@ enum CompanyUpVoteOrderByInput {
 type CompanyUpVotePreviousValues {
   id: ID!
   createdAt: DateTime!
-  karma: Float
 }
 
 type CompanyUpVoteSubscriptionPayload {
@@ -1390,13 +1400,8 @@ input CompanyUpVoteSubscriptionWhereInput {
 }
 
 input CompanyUpVoteUpdateInput {
-  karma: Float
   votedTo: CompanyUpdateOneRequiredWithoutUpVotesInput
   votedBy: UserUpdateOneRequiredWithoutUpVotesInput
-}
-
-input CompanyUpVoteUpdateManyMutationInput {
-  karma: Float
 }
 
 input CompanyUpVoteUpdateManyWithoutVotedByInput {
@@ -1418,12 +1423,10 @@ input CompanyUpVoteUpdateManyWithoutVotedToInput {
 }
 
 input CompanyUpVoteUpdateWithoutVotedByDataInput {
-  karma: Float
   votedTo: CompanyUpdateOneRequiredWithoutUpVotesInput
 }
 
 input CompanyUpVoteUpdateWithoutVotedToDataInput {
-  karma: Float
   votedBy: UserUpdateOneRequiredWithoutUpVotesInput
 }
 
@@ -1520,28 +1523,6 @@ input CompanyUpVoteWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
-  karma: Float
-
-  """All values that are not equal to given value."""
-  karma_not: Float
-
-  """All values that are contained in given list."""
-  karma_in: [Float!]
-
-  """All values that are not contained in given list."""
-  karma_not_in: [Float!]
-
-  """All values less than the given value."""
-  karma_lt: Float
-
-  """All values less than or equal the given value."""
-  karma_lte: Float
-
-  """All values greater than the given value."""
-  karma_gt: Float
-
-  """All values greater than or equal the given value."""
-  karma_gte: Float
   votedTo: CompanyWhereInput
   votedBy: UserWhereInput
 }
@@ -1701,6 +1682,46 @@ input CompanyWhereInput {
 
   """All values not ending with the given string."""
   logo_not_ends_with: String
+  website: String
+
+  """All values that are not equal to given value."""
+  website_not: String
+
+  """All values that are contained in given list."""
+  website_in: [String!]
+
+  """All values that are not contained in given list."""
+  website_not_in: [String!]
+
+  """All values less than the given value."""
+  website_lt: String
+
+  """All values less than or equal the given value."""
+  website_lte: String
+
+  """All values greater than the given value."""
+  website_gt: String
+
+  """All values greater than or equal the given value."""
+  website_gte: String
+
+  """All values containing the given string."""
+  website_contains: String
+
+  """All values not containing the given string."""
+  website_not_contains: String
+
+  """All values starting with the given string."""
+  website_starts_with: String
+
+  """All values not starting with the given string."""
+  website_not_starts_with: String
+
+  """All values ending with the given string."""
+  website_ends_with: String
+
+  """All values not ending with the given string."""
+  website_not_ends_with: String
   karma: Float
 
   """All values that are not equal to given value."""
@@ -1827,7 +1848,6 @@ type Mutation {
   upsertActGrade(where: ActGradeWhereUniqueInput!, create: ActGradeCreateInput!, update: ActGradeUpdateInput!): ActGrade!
   upsertCauseGrade(where: CauseGradeWhereUniqueInput!, create: CauseGradeCreateInput!, update: CauseGradeUpdateInput!): CauseGrade!
   updateManyCompanies(data: CompanyUpdateManyMutationInput!, where: CompanyWhereInput): BatchPayload!
-  updateManyCompanyUpVotes(data: CompanyUpVoteUpdateManyMutationInput!, where: CompanyUpVoteWhereInput): BatchPayload!
   updateManyCompanyCategories(data: CompanyCategoryUpdateManyMutationInput!, where: CompanyCategoryWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyOpinions(data: OpinionUpdateManyMutationInput!, where: OpinionWhereInput): BatchPayload!

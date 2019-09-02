@@ -16,6 +16,9 @@ type Query {
   #
   suggestedCompanies: [Company!]!
 
+  #
+  unapprovedCompanies: [Company!]!
+
     # exposes the resolver that gets the list of all companies in the database
 	allCompanyCategories(filter: String, skip: Int, first: Int, orderBy: CompanyCategoryOrderByInput): [CompanyCategory!]!
 
@@ -85,8 +88,13 @@ type Mutation {
   ): Company!
 
   upVote(
-    companyId: ID!
+    companyId: ID
   ): CompanyUpVote
+
+  suggestCompany(
+    companyName: String,
+    companyWebsite: String
+  ): Company
 
   # exposes the resolver that allows a logged in user to grade the act of a
   # company and affiliation to an opinion

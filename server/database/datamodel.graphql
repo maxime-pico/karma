@@ -4,6 +4,7 @@ type Company {
 	createdAt: DateTime!
 	name: String! @unique
   logo: String @default(value: "questionmark.png")
+  website: String
 	actGrades: [ActGrade!]! @relation(name: "ActGradesOfCompany" onDelete: CASCADE)
 	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesOfCompany" onDelete: CASCADE)
 	opinions: [Opinion!]! @relation(name: "OpinionsOfCompany" onDelete: CASCADE)
@@ -19,7 +20,6 @@ type CompanyUpVote {
 	createdAt: DateTime!
 	votedTo: Company! @relation(name: "CompanyUpVotesOfCompany")
 	votedBy: User! @relation(name: "CompanyUpVotesByUser")
-  karma: Float
 }
 
 type CompanyCategory {
