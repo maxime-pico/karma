@@ -1,6 +1,5 @@
 import React from 'react'
 import { Query, Mutation } from 'react-apollo'
-import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import CausesJudgingInterfaceButtons from './CausesJudgingInterfaceButtons'
 import { CAUSE_AND_ACTS } from '../../../../services/constants.js'
@@ -209,7 +208,7 @@ class CausesJudgingInterface extends React.Component {
                 }}
               >
                 {GradingMutation => (
-                    <Mutation
+                  <Mutation
                     mutation={OVERALL_MUTATION}
                     refetchQueries={[
                       `CauseGradesQuery`,
@@ -226,23 +225,23 @@ class CausesJudgingInterface extends React.Component {
                       companyId: companyId,
                     }}
                   >
-                     {OverallMutation => (
-                  <CausesJudgingInterfaceButtons
-                    cause={cause}
-                    userGrades={userGrades}
-                    brandName={name}
-                    gradingMutation={GradingMutation}
-                    overallMutation={OverallMutation}
-                    _blurBackground={this._blurBackground}
-                    _adjacentCause={this._adjacentCause}
-                    _stopGrading={this._stopGrading}
-                    _updateGrade={this._updateGrade}
-                    _setGrade={this._setGrade}
-                  />
-                  )}
-               
-                </Mutation>
-                 )}
+                    {OverallMutation => (
+                      <CausesJudgingInterfaceButtons
+                        cause={cause}
+                        userGrades={userGrades}
+                        brandName={name}
+                        gradingMutation={GradingMutation}
+                        overallMutation={OverallMutation}
+                        _blurBackground={this._blurBackground}
+                        _adjacentCause={this._adjacentCause}
+                        _stopGrading={this._stopGrading}
+                        _updateGrade={this._updateGrade}
+                        _setGrade={this._setGrade}
+                      />
+                    )}
+
+                  </Mutation>
+                )}
               </Mutation>
               <Row mt="6px" mb="42px">
                 <Col color="#A9B4CC" fontSize="12px">

@@ -161,6 +161,15 @@ class SuggestBrandModal extends React.Component {
     )
   }
 
+  _onCompletedSuggestion() {
+    this._closeModal()
+    this.setState({ brandName: '' })
+    this.setState({ brandWebsite: '' })
+
+    // TODO : DISPLAY CONFIRMATION MESSAGE
+    // TODO : DISPLAY ERROR MESSAGE
+  }
+
   suggestBrand(mutation) {
     return event => {
       event.preventDefault()
@@ -186,7 +195,7 @@ class SuggestBrandModal extends React.Component {
                       companyName: this.state.brandName,
                       companyWebsite: this.state.brandWebsite
                     }}
-                    onCompleted={this._closeModal}
+                    onCompleted={this._onCompletedSuggestion.bind(this)}
                   >
                     {SuggestMutation => (
                       <Row justifyContent="center" mb={5}>
