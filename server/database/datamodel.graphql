@@ -1,63 +1,69 @@
 # prettier-ignore
 type Company {
-	id: ID! @unique
-	createdAt: DateTime!
+	id: ID! @id
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 	name: String! @unique
   logo: String @default(value: "questionmark.png")
 	actGrades: [ActGrade!]! @relation(name: "ActGradesOfCompany" onDelete: CASCADE)
-	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesOfCompany" onDelete: CASCADE)
-	opinions: [Opinion!]! @relation(name: "OpinionsOfCompany" onDelete: CASCADE)
+	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesOfCompany" onDelete: CASCADE  link: TABLE)
+	opinions: [Opinion!]! @relation(name: "OpinionsOfCompany" onDelete: CASCADE  link: TABLE)
   category: [CompanyCategory!]! @relation(name: "CategoriesOfCompany") #@relation(name: "CategoryOfCompany" onDelete: CASCADE)
   karma: Float
 }
 
 type CompanyCategory {
-	id: ID! @unique
-	createdAt: DateTime!
+	id: ID! @id
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 	name: String! @unique
   companies: [Company!]!  @relation(name: "CategoriesOfCompany") #
 }
 
 # prettier-ignore
 type User {
-	id: ID! @unique
-	createdAt: DateTime!
+	id: ID! @id
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 	name: String @default(value: "Panda")
 	email: String! @unique
 	password: String!
 	picture: String @default(value: "pandahead.png")
 	status: Status @default(value: AWAKEN)
 	opinions: [Opinion!]! @relation(name: "OpinionsByUser" onDelete: CASCADE)
-	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesByUser" onDelete: CASCADE)
-	actGrades: [ActGrade!]! @relation(name: "ActGradesByUser" onDelete: CASCADE)
+	causeGrades: [CauseGrade!]! @relation(name: "CauseGradesByUser" onDelete: CASCADE  link: TABLE)
+	actGrades: [ActGrade!]! @relation(name: "ActGradesByUser" onDelete: CASCADE  link: TABLE)
 }
 
 type Opinion {
-	id: ID! @unique
-	createdAt: DateTime!
+	id: ID! @id
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 	regardingWho: Company! @relation(name: "OpinionsOfCompany")
 	regardingWhat: Act!
 	title: String!
 	text: String!
-	sources: [String!]!
-	tags: [String!]!
-	writtenBy: User! @relation(name: "OpinionsByUser")
+	sources: [String!]! @scalarList(strategy: RELATION)
+	tags: [String!]! @scalarList(strategy: RELATION)
+	writtenBy: User! @relation(name: "OpinionsByUser" link: TABLE)
 	affiliations: [ActGrade!]!
 }
 
 type ActGrade {
-	id: ID! @unique
-	createdAt: DateTime!
-	gradedTo: Company! @relation(name: "ActGradesOfCompany")
+	id: ID! @id
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
+	gradedTo: Company! @relation(name: "ActGradesOfCompany" link: TABLE)
 	gradedBy: User! @relation(name: "ActGradesByUser")
 	act: Act!
 	grade: Float!
-	affiliatedTo: Opinion!
+	affiliatedTo: Opinion! @relation(link: TABLE)
 }
 
 type CauseGrade @cacheControl(maxAge: 0) {
-	id: ID! @unique
-	createdAt: DateTime!
+	id: ID! @id
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 	gradedTo: Company! @relation(name: "CauseGradesOfCompany")
 	gradedBy: User! @relation(name: "CauseGradesByUser")
 	cause: Cause!

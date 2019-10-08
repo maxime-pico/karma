@@ -7,6 +7,7 @@ const Count = styled.div`
 	color: white;
 	font-size: 0.7em;
 	line-height: 1.2em;
+	text-align: center;
 	@media (max-width: 540px) {
 		font-size: 1em;
 	}

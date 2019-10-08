@@ -22,6 +22,7 @@ const CauseCardBorder = styled(Col)`
 const Count = styled.div`
 	font-size: 0.7em;
 	color: #a9b4cc;
+	text-align: center;
 	@media (max-width: 540px) {
 		font-size: 0.9em;
 	}
@@ -47,7 +48,7 @@ const MoreButton = styled.button`
 // Preparing the queries for the 4 possible causes. These queries retrieve the
 // grades for each act inside. Only one query will be sent in the end
 const ACT_GRADES_QUERIES = {
-  ENVIRONMENT: gql`
+	ENVIRONMENT: gql`
 		query EnvironmentGradesQuery($companyId: ID!) {
 			companyActGrades(companyId: $companyId) {
 				CLIMAT_CHANGE
@@ -57,7 +58,7 @@ const ACT_GRADES_QUERIES = {
 			}
 		}
 	`,
-  ETHICS: gql`
+	ETHICS: gql`
 		query EthicsGradesQuery($companyId: ID!) {
 			companyActGrades(companyId: $companyId) {
 				POLITICAL_RESPONSIBILITY
@@ -68,7 +69,7 @@ const ACT_GRADES_QUERIES = {
 			}
 		}
 	`,
-  FISCAL: gql`
+	FISCAL: gql`
 		query FiscalGradesQuery($companyId: ID!) {
 			companyActGrades(companyId: $companyId) {
 				SHAREHOLDER_REMUNERATION
@@ -78,7 +79,7 @@ const ACT_GRADES_QUERIES = {
 			}
 		}
 	`,
-  SOCIAL: gql`
+	SOCIAL: gql`
 		query SocialGradesQuery($companyId: ID!) {
 			companyActGrades(companyId: $companyId) {
 				EMPLOYMENT_CONDITIONS
@@ -103,70 +104,70 @@ const OPINIONS_COUNT_QUERY = gql`
 
 // Declare types of expected props
 type Props = {
-  companyId: string,
-  causeKarma: number,
-  identifier: string,
-  tutorial: boolean,
+	companyId: string,
+	causeKarma: number,
+	identifier: string,
+	tutorial: boolean,
 }
 
 const CauseCard = (props: Props) => {
-  const { companyId, causeKarma, identifier, tutorial } = props
-  return (
-    <Row mt="126px" justifyContent="center">
-      <CauseCardBorder xs={12} md={10} py={3} pt={3} pb={0}>
-        <div className={tutorial ? 'cause' : null}></div>
-        <CauseCardTitle
-          companyId={companyId}
-          identifier={identifier}
-          causeKarma={causeKarma}
-        />
-        <Query query={ACT_GRADES_QUERIES[identifier]} variables={{ companyId }}>
-          {({ loading, error, data }) => {
-            if (loading) return <div> Loading... </div>
-            if (error) return <div> Error </div>
+	const { companyId, causeKarma, identifier, tutorial } = props
+	return (
+		<Row mt="126px" justifyContent="center">
+			<CauseCardBorder xs={12} md={10} py={3} pt={3} pb={0}>
+				<div className={tutorial ? 'cause' : null}></div>
+				<CauseCardTitle
+					companyId={companyId}
+					identifier={identifier}
+					causeKarma={causeKarma}
+				/>
+				<Query query={ACT_GRADES_QUERIES[identifier]} variables={{ companyId }}>
+					{({ loading, error, data }) => {
+						if (loading) return <div> Loading... </div>
+						if (error) return <div> Error </div>
 
-            // if fetch successful, then data is an object containing the object
-            // companyActGrades with each grade per act for this cause
-            return <CauseCardActList actGradesObject={data.companyActGrades} />
-          }}
-        </Query>
-        <Row justifyContent="center" mt={3}>
-          <Col md={3}>
-            <Query
-              query={OPINIONS_COUNT_QUERY}
-              variables={{ companyId, identifier }}
-            >
-              {({ loading, error, data }) => {
-                if (loading) return <div> Loading... </div>
-                if (error) return <div> Error {console.log(error)}</div>
+						// if fetch successful, then data is an object containing the object
+						// companyActGrades with each grade per act for this cause
+						return <CauseCardActList actGradesObject={data.companyActGrades} />
+					}}
+				</Query>
+				<Row justifyContent="center" mt={3}>
+					<Col md={3}>
+						<Query
+							query={OPINIONS_COUNT_QUERY}
+							variables={{ companyId, identifier }}
+						>
+							{({ loading, error, data }) => {
+								if (loading) return <div> Loading... </div>
+								if (error) return <div> Error {console.log(error)}</div>
 
-                // if successful, then data is split into the two counts and
-                // displayed directly inside this component
-                const opinionsCountInt =
-                  data.opinionsAndGradesCauseCount.opinionsCount
-                const gradesCountInt =
-                  data.opinionsAndGradesCauseCount.gradesCount
-                return (
-                  <Count>
-                    {gradesCountInt} notes basées sur
+								// if successful, then data is split into the two counts and
+								// displayed directly inside this component
+								const opinionsCountInt =
+									data.opinionsAndGradesCauseCount.opinionsCount
+								const gradesCountInt =
+									data.opinionsAndGradesCauseCount.gradesCount
+								return (
+									<Count>
+										{gradesCountInt} notes basées sur
 										{' ' + opinionsCountInt} opinion
 										{opinionsCountInt > 1 && 's'}
-                  </Count>
-                )
-              }}
-            </Query>
-          </Col>
-        </Row>
-        <Row justifyContent="center" textAlign="center">
-          <Col md={4}>
-            <Link to={`/company/${companyId}/cause/${identifier}`}>
-              <MoreButton type="button">En savoir plus</MoreButton>
-            </Link>
-          </Col>
-        </Row>
-      </CauseCardBorder>
-    </Row>
-  )
+									</Count>
+								)
+							}}
+						</Query>
+					</Col>
+				</Row>
+				<Row justifyContent="center" textAlign="center">
+					<Col md={4}>
+						<Link to={`/company/${companyId}/cause/${identifier}`}>
+							<MoreButton type="button">En savoir plus</MoreButton>
+						</Link>
+					</Col>
+				</Row>
+			</CauseCardBorder>
+		</Row>
+	)
 }
 
 export default CauseCard

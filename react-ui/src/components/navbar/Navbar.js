@@ -41,6 +41,10 @@ const NavbarLink = styled(Link)`
 	}
 `
 
+const UserBubbleContainer = styled.div`
+  align-self: center;
+`
+
 const NavbarLinkContainer = styled.div`
 	display: flex;
 	justify-content: flex-end;
@@ -137,7 +141,7 @@ class Navbar extends React.Component {
 							</NavbarLink>
 							<NavbarLink to="/help">aide</NavbarLink>
 							<NavbarLink to="/about">à propos</NavbarLink>
-							<div className="d-none d-sm-block">
+							<UserBubbleContainer className="d-none d-sm-block">
 								{authToken ? (
 									<UserBubble />
 								) : (
@@ -145,7 +149,7 @@ class Navbar extends React.Component {
 										connexion
 									</NavbarLink>
 								)}
-							</div>
+							</UserBubbleContainer>
 						</NavbarLinkContainer>
 					</Col>
 				</NavbarBox>

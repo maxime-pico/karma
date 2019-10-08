@@ -188,7 +188,7 @@ class Soul extends React.Component {
 										Object.keys(causeGrades).map(
 											(identifier, i) =>
 												CAUSE_AND_ACTS[identifier] && (
-													<Col key={i} md={10} mb="42px">
+													<Col key={i} xs={12} md={10} mb="42px">
 														<CauseCard
 															companyId={companyId}
 															causeKarma={causeGrades[identifier]}

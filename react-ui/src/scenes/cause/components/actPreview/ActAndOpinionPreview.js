@@ -142,7 +142,7 @@ const ActAndOpinionPreview = props => {
 									/>
 									<Link to={`${location.pathname}act/${act}`}>
 										<ReadMore className={tutorial && 'more'}>
-											Voir les sources
+											Voir toutes les opinions
 										</ReadMore>
 									</Link>
 								</div>

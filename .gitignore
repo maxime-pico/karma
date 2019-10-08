@@ -8,3 +8,5 @@ react-ui/now.json
 react-ui/build/
 react-ui/node_modules/
 server/node_modules/
+.DS_Store
+react-ui/.DS_Store

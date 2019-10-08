@@ -200,7 +200,7 @@ const Home = () => {
 				<Row justifyContent="center" textAlign="center" pt={'9.6rem'}>
 					<Col xs={10} md={5}>
 						<Logo src={karmalogo} alt="karma panda" />
-						<h1 class="title-size2">
+						<h1 className="title-size2">
 							Faites appliquer la loi du Karma
 							<br /> aux marques qui nous entourent
 						</h1>

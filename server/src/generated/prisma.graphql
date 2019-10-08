@@ -1,5 +1,5 @@
-# source: https://karma-panda.herokuapp.com/karma-panda-server/dev
-# timestamp: Tue Aug 27 2019 15:24:11 GMT+0200 (Central European Summer Time)
+# source: http://localhost:4466
+# timestamp: Sun Oct 06 2019 14:01:55 GMT+0200 (Central European Summer Time)
 
 enum Act {
   CLIMAT_CHANGE
@@ -25,11 +25,12 @@ enum Act {
 type ActGrade implements Node {
   id: ID!
   createdAt: DateTime!
-  gradedTo(where: CompanyWhereInput): Company!
-  gradedBy(where: UserWhereInput): User!
+  updatedAt: DateTime!
+  gradedTo: Company!
+  gradedBy: User!
   act: Act!
   grade: Float!
-  affiliatedTo(where: OpinionWhereInput): Opinion!
+  affiliatedTo: Opinion!
 }
 
 """A connection to a list of items."""
@@ -43,6 +44,7 @@ type ActGradeConnection {
 }
 
 input ActGradeCreateInput {
+  id: ID
   act: Act!
   grade: Float!
   gradedTo: CompanyCreateOneWithoutActGradesInput!
@@ -66,6 +68,7 @@ input ActGradeCreateManyWithoutGradedToInput {
 }
 
 input ActGradeCreateWithoutAffiliatedToInput {
+  id: ID
   act: Act!
   grade: Float!
   gradedTo: CompanyCreateOneWithoutActGradesInput!
@@ -73,6 +76,7 @@ input ActGradeCreateWithoutAffiliatedToInput {
 }
 
 input ActGradeCreateWithoutGradedByInput {
+  id: ID
   act: Act!
   grade: Float!
   gradedTo: CompanyCreateOneWithoutActGradesInput!
@@ -80,6 +84,7 @@ input ActGradeCreateWithoutGradedByInput {
 }
 
 input ActGradeCreateWithoutGradedToInput {
+  id: ID
   act: Act!
   grade: Float!
   gradedBy: UserCreateOneWithoutActGradesInput!
@@ -100,19 +105,147 @@ enum ActGradeOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   act_ASC
   act_DESC
   grade_ASC
   grade_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type ActGradePreviousValues {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   act: Act!
   grade: Float!
+}
+
+input ActGradeScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ActGradeScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ActGradeScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ActGradeScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  act: Act
+
+  """All values that are not equal to given value."""
+  act_not: Act
+
+  """All values that are contained in given list."""
+  act_in: [Act!]
+
+  """All values that are not contained in given list."""
+  act_not_in: [Act!]
+  grade: Float
+
+  """All values that are not equal to given value."""
+  grade_not: Float
+
+  """All values that are contained in given list."""
+  grade_in: [Float!]
+
+  """All values that are not contained in given list."""
+  grade_not_in: [Float!]
+
+  """All values less than the given value."""
+  grade_lt: Float
+
+  """All values less than or equal the given value."""
+  grade_lte: Float
+
+  """All values greater than the given value."""
+  grade_gt: Float
+
+  """All values greater than or equal the given value."""
+  grade_gte: Float
 }
 
 type ActGradeSubscriptionPayload {
@@ -157,57 +290,81 @@ input ActGradeSubscriptionWhereInput {
 input ActGradeUpdateInput {
   act: Act
   grade: Float
-  gradedTo: CompanyUpdateOneWithoutActGradesInput
-  gradedBy: UserUpdateOneWithoutActGradesInput
-  affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
+  gradedTo: CompanyUpdateOneRequiredWithoutActGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutActGradesInput
+  affiliatedTo: OpinionUpdateOneRequiredWithoutAffiliationsInput
+}
+
+input ActGradeUpdateManyDataInput {
+  act: Act
+  grade: Float
+}
+
+input ActGradeUpdateManyMutationInput {
+  act: Act
+  grade: Float
 }
 
 input ActGradeUpdateManyWithoutAffiliatedToInput {
   create: [ActGradeCreateWithoutAffiliatedToInput!]
   connect: [ActGradeWhereUniqueInput!]
+  set: [ActGradeWhereUniqueInput!]
   disconnect: [ActGradeWhereUniqueInput!]
   delete: [ActGradeWhereUniqueInput!]
   update: [ActGradeUpdateWithWhereUniqueWithoutAffiliatedToInput!]
+  updateMany: [ActGradeUpdateManyWithWhereNestedInput!]
+  deleteMany: [ActGradeScalarWhereInput!]
   upsert: [ActGradeUpsertWithWhereUniqueWithoutAffiliatedToInput!]
 }
 
 input ActGradeUpdateManyWithoutGradedByInput {
   create: [ActGradeCreateWithoutGradedByInput!]
   connect: [ActGradeWhereUniqueInput!]
+  set: [ActGradeWhereUniqueInput!]
   disconnect: [ActGradeWhereUniqueInput!]
   delete: [ActGradeWhereUniqueInput!]
   update: [ActGradeUpdateWithWhereUniqueWithoutGradedByInput!]
+  updateMany: [ActGradeUpdateManyWithWhereNestedInput!]
+  deleteMany: [ActGradeScalarWhereInput!]
   upsert: [ActGradeUpsertWithWhereUniqueWithoutGradedByInput!]
 }
 
 input ActGradeUpdateManyWithoutGradedToInput {
   create: [ActGradeCreateWithoutGradedToInput!]
   connect: [ActGradeWhereUniqueInput!]
+  set: [ActGradeWhereUniqueInput!]
   disconnect: [ActGradeWhereUniqueInput!]
   delete: [ActGradeWhereUniqueInput!]
   update: [ActGradeUpdateWithWhereUniqueWithoutGradedToInput!]
+  updateMany: [ActGradeUpdateManyWithWhereNestedInput!]
+  deleteMany: [ActGradeScalarWhereInput!]
   upsert: [ActGradeUpsertWithWhereUniqueWithoutGradedToInput!]
+}
+
+input ActGradeUpdateManyWithWhereNestedInput {
+  where: ActGradeScalarWhereInput!
+  data: ActGradeUpdateManyDataInput!
 }
 
 input ActGradeUpdateWithoutAffiliatedToDataInput {
   act: Act
   grade: Float
-  gradedTo: CompanyUpdateOneWithoutActGradesInput
-  gradedBy: UserUpdateOneWithoutActGradesInput
+  gradedTo: CompanyUpdateOneRequiredWithoutActGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutActGradesInput
 }
 
 input ActGradeUpdateWithoutGradedByDataInput {
   act: Act
   grade: Float
-  gradedTo: CompanyUpdateOneWithoutActGradesInput
-  affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
+  gradedTo: CompanyUpdateOneRequiredWithoutActGradesInput
+  affiliatedTo: OpinionUpdateOneRequiredWithoutAffiliationsInput
 }
 
 input ActGradeUpdateWithoutGradedToDataInput {
   act: Act
   grade: Float
-  gradedBy: UserUpdateOneWithoutActGradesInput
-  affiliatedTo: OpinionUpdateOneWithoutAffiliationsInput
+  gradedBy: UserUpdateOneRequiredWithoutActGradesInput
+  affiliatedTo: OpinionUpdateOneRequiredWithoutAffiliationsInput
 }
 
 input ActGradeUpdateWithWhereUniqueWithoutAffiliatedToInput {
@@ -314,6 +471,28 @@ input ActGradeWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   act: Act
 
   """All values that are not equal to given value."""
@@ -394,8 +573,9 @@ enum Cause {
 type CauseGrade implements Node {
   id: ID!
   createdAt: DateTime!
-  gradedTo(where: CompanyWhereInput): Company!
-  gradedBy(where: UserWhereInput): User!
+  updatedAt: DateTime!
+  gradedTo: Company!
+  gradedBy: User!
   cause: Cause!
   grade: Float!
 }
@@ -411,6 +591,7 @@ type CauseGradeConnection {
 }
 
 input CauseGradeCreateInput {
+  id: ID
   cause: Cause!
   grade: Float!
   gradedTo: CompanyCreateOneWithoutCauseGradesInput!
@@ -428,12 +609,14 @@ input CauseGradeCreateManyWithoutGradedToInput {
 }
 
 input CauseGradeCreateWithoutGradedByInput {
+  id: ID
   cause: Cause!
   grade: Float!
   gradedTo: CompanyCreateOneWithoutCauseGradesInput!
 }
 
 input CauseGradeCreateWithoutGradedToInput {
+  id: ID
   cause: Cause!
   grade: Float!
   gradedBy: UserCreateOneWithoutCauseGradesInput!
@@ -453,19 +636,147 @@ enum CauseGradeOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   cause_ASC
   cause_DESC
   grade_ASC
   grade_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type CauseGradePreviousValues {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   cause: Cause!
   grade: Float!
+}
+
+input CauseGradeScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CauseGradeScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CauseGradeScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CauseGradeScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  cause: Cause
+
+  """All values that are not equal to given value."""
+  cause_not: Cause
+
+  """All values that are contained in given list."""
+  cause_in: [Cause!]
+
+  """All values that are not contained in given list."""
+  cause_not_in: [Cause!]
+  grade: Float
+
+  """All values that are not equal to given value."""
+  grade_not: Float
+
+  """All values that are contained in given list."""
+  grade_in: [Float!]
+
+  """All values that are not contained in given list."""
+  grade_not_in: [Float!]
+
+  """All values less than the given value."""
+  grade_lt: Float
+
+  """All values less than or equal the given value."""
+  grade_lte: Float
+
+  """All values greater than the given value."""
+  grade_gt: Float
+
+  """All values greater than or equal the given value."""
+  grade_gte: Float
 }
 
 type CauseGradeSubscriptionPayload {
@@ -510,38 +821,59 @@ input CauseGradeSubscriptionWhereInput {
 input CauseGradeUpdateInput {
   cause: Cause
   grade: Float
-  gradedTo: CompanyUpdateOneWithoutCauseGradesInput
-  gradedBy: UserUpdateOneWithoutCauseGradesInput
+  gradedTo: CompanyUpdateOneRequiredWithoutCauseGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutCauseGradesInput
+}
+
+input CauseGradeUpdateManyDataInput {
+  cause: Cause
+  grade: Float
+}
+
+input CauseGradeUpdateManyMutationInput {
+  cause: Cause
+  grade: Float
 }
 
 input CauseGradeUpdateManyWithoutGradedByInput {
   create: [CauseGradeCreateWithoutGradedByInput!]
   connect: [CauseGradeWhereUniqueInput!]
+  set: [CauseGradeWhereUniqueInput!]
   disconnect: [CauseGradeWhereUniqueInput!]
   delete: [CauseGradeWhereUniqueInput!]
   update: [CauseGradeUpdateWithWhereUniqueWithoutGradedByInput!]
+  updateMany: [CauseGradeUpdateManyWithWhereNestedInput!]
+  deleteMany: [CauseGradeScalarWhereInput!]
   upsert: [CauseGradeUpsertWithWhereUniqueWithoutGradedByInput!]
 }
 
 input CauseGradeUpdateManyWithoutGradedToInput {
   create: [CauseGradeCreateWithoutGradedToInput!]
   connect: [CauseGradeWhereUniqueInput!]
+  set: [CauseGradeWhereUniqueInput!]
   disconnect: [CauseGradeWhereUniqueInput!]
   delete: [CauseGradeWhereUniqueInput!]
   update: [CauseGradeUpdateWithWhereUniqueWithoutGradedToInput!]
+  updateMany: [CauseGradeUpdateManyWithWhereNestedInput!]
+  deleteMany: [CauseGradeScalarWhereInput!]
   upsert: [CauseGradeUpsertWithWhereUniqueWithoutGradedToInput!]
+}
+
+input CauseGradeUpdateManyWithWhereNestedInput {
+  where: CauseGradeScalarWhereInput!
+  data: CauseGradeUpdateManyDataInput!
 }
 
 input CauseGradeUpdateWithoutGradedByDataInput {
   cause: Cause
   grade: Float
-  gradedTo: CompanyUpdateOneWithoutCauseGradesInput
+  gradedTo: CompanyUpdateOneRequiredWithoutCauseGradesInput
 }
 
 input CauseGradeUpdateWithoutGradedToDataInput {
   cause: Cause
   grade: Float
-  gradedBy: UserUpdateOneWithoutCauseGradesInput
+  gradedBy: UserUpdateOneRequiredWithoutCauseGradesInput
 }
 
 input CauseGradeUpdateWithWhereUniqueWithoutGradedByInput {
@@ -637,6 +969,28 @@ input CauseGradeWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   cause: Cause
 
   """All values that are not equal to given value."""
@@ -680,6 +1034,7 @@ input CauseGradeWhereUniqueInput {
 type Company implements Node {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   logo: String
   actGrades(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
@@ -692,6 +1047,7 @@ type Company implements Node {
 type CompanyCategory implements Node {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company!]
 }
@@ -707,6 +1063,7 @@ type CompanyCategoryConnection {
 }
 
 input CompanyCategoryCreateInput {
+  id: ID
   name: String!
   companies: CompanyCreateManyWithoutCategoryInput
 }
@@ -717,6 +1074,7 @@ input CompanyCategoryCreateManyWithoutCompaniesInput {
 }
 
 input CompanyCategoryCreateWithoutCompaniesInput {
+  id: ID
   name: String!
 }
 
@@ -734,16 +1092,152 @@ enum CompanyCategoryOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  name_ASC
-  name_DESC
   updatedAt_ASC
   updatedAt_DESC
+  name_ASC
+  name_DESC
 }
 
 type CompanyCategoryPreviousValues {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   name: String!
+}
+
+input CompanyCategoryScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompanyCategoryScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompanyCategoryScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompanyCategoryScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
 }
 
 type CompanyCategorySubscriptionPayload {
@@ -790,13 +1284,29 @@ input CompanyCategoryUpdateInput {
   companies: CompanyUpdateManyWithoutCategoryInput
 }
 
+input CompanyCategoryUpdateManyDataInput {
+  name: String
+}
+
+input CompanyCategoryUpdateManyMutationInput {
+  name: String
+}
+
 input CompanyCategoryUpdateManyWithoutCompaniesInput {
   create: [CompanyCategoryCreateWithoutCompaniesInput!]
   connect: [CompanyCategoryWhereUniqueInput!]
+  set: [CompanyCategoryWhereUniqueInput!]
   disconnect: [CompanyCategoryWhereUniqueInput!]
   delete: [CompanyCategoryWhereUniqueInput!]
   update: [CompanyCategoryUpdateWithWhereUniqueWithoutCompaniesInput!]
+  updateMany: [CompanyCategoryUpdateManyWithWhereNestedInput!]
+  deleteMany: [CompanyCategoryScalarWhereInput!]
   upsert: [CompanyCategoryUpsertWithWhereUniqueWithoutCompaniesInput!]
+}
+
+input CompanyCategoryUpdateManyWithWhereNestedInput {
+  where: CompanyCategoryScalarWhereInput!
+  data: CompanyCategoryUpdateManyDataInput!
 }
 
 input CompanyCategoryUpdateWithoutCompaniesDataInput {
@@ -885,6 +1395,28 @@ input CompanyCategoryWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   name: String
 
   """All values that are not equal to given value."""
@@ -946,6 +1478,7 @@ type CompanyConnection {
 }
 
 input CompanyCreateInput {
+  id: ID
   name: String!
   logo: String
   karma: Float
@@ -976,6 +1509,7 @@ input CompanyCreateOneWithoutOpinionsInput {
 }
 
 input CompanyCreateWithoutActGradesInput {
+  id: ID
   name: String!
   logo: String
   karma: Float
@@ -985,6 +1519,7 @@ input CompanyCreateWithoutActGradesInput {
 }
 
 input CompanyCreateWithoutCategoryInput {
+  id: ID
   name: String!
   logo: String
   karma: Float
@@ -994,6 +1529,7 @@ input CompanyCreateWithoutCategoryInput {
 }
 
 input CompanyCreateWithoutCauseGradesInput {
+  id: ID
   name: String!
   logo: String
   karma: Float
@@ -1003,6 +1539,7 @@ input CompanyCreateWithoutCauseGradesInput {
 }
 
 input CompanyCreateWithoutOpinionsInput {
+  id: ID
   name: String!
   logo: String
   karma: Float
@@ -1025,22 +1562,220 @@ enum CompanyOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   name_ASC
   name_DESC
   logo_ASC
   logo_DESC
   karma_ASC
   karma_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type CompanyPreviousValues {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   logo: String
   karma: Float
+}
+
+input CompanyScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompanyScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompanyScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompanyScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  logo: String
+
+  """All values that are not equal to given value."""
+  logo_not: String
+
+  """All values that are contained in given list."""
+  logo_in: [String!]
+
+  """All values that are not contained in given list."""
+  logo_not_in: [String!]
+
+  """All values less than the given value."""
+  logo_lt: String
+
+  """All values less than or equal the given value."""
+  logo_lte: String
+
+  """All values greater than the given value."""
+  logo_gt: String
+
+  """All values greater than or equal the given value."""
+  logo_gte: String
+
+  """All values containing the given string."""
+  logo_contains: String
+
+  """All values not containing the given string."""
+  logo_not_contains: String
+
+  """All values starting with the given string."""
+  logo_starts_with: String
+
+  """All values not starting with the given string."""
+  logo_not_starts_with: String
+
+  """All values ending with the given string."""
+  logo_ends_with: String
+
+  """All values not ending with the given string."""
+  logo_not_ends_with: String
+  karma: Float
+
+  """All values that are not equal to given value."""
+  karma_not: Float
+
+  """All values that are contained in given list."""
+  karma_in: [Float!]
+
+  """All values that are not contained in given list."""
+  karma_not_in: [Float!]
+
+  """All values less than the given value."""
+  karma_lt: Float
+
+  """All values less than or equal the given value."""
+  karma_lte: Float
+
+  """All values greater than the given value."""
+  karma_gt: Float
+
+  """All values greater than or equal the given value."""
+  karma_gte: Float
 }
 
 type CompanySubscriptionPayload {
@@ -1092,35 +1827,52 @@ input CompanyUpdateInput {
   category: CompanyCategoryUpdateManyWithoutCompaniesInput
 }
 
+input CompanyUpdateManyDataInput {
+  name: String
+  logo: String
+  karma: Float
+}
+
+input CompanyUpdateManyMutationInput {
+  name: String
+  logo: String
+  karma: Float
+}
+
 input CompanyUpdateManyWithoutCategoryInput {
   create: [CompanyCreateWithoutCategoryInput!]
   connect: [CompanyWhereUniqueInput!]
+  set: [CompanyWhereUniqueInput!]
   disconnect: [CompanyWhereUniqueInput!]
   delete: [CompanyWhereUniqueInput!]
   update: [CompanyUpdateWithWhereUniqueWithoutCategoryInput!]
+  updateMany: [CompanyUpdateManyWithWhereNestedInput!]
+  deleteMany: [CompanyScalarWhereInput!]
   upsert: [CompanyUpsertWithWhereUniqueWithoutCategoryInput!]
 }
 
-input CompanyUpdateOneWithoutActGradesInput {
+input CompanyUpdateManyWithWhereNestedInput {
+  where: CompanyScalarWhereInput!
+  data: CompanyUpdateManyDataInput!
+}
+
+input CompanyUpdateOneRequiredWithoutActGradesInput {
   create: CompanyCreateWithoutActGradesInput
   connect: CompanyWhereUniqueInput
-  delete: Boolean
   update: CompanyUpdateWithoutActGradesDataInput
   upsert: CompanyUpsertWithoutActGradesInput
 }
 
-input CompanyUpdateOneWithoutCauseGradesInput {
+input CompanyUpdateOneRequiredWithoutCauseGradesInput {
   create: CompanyCreateWithoutCauseGradesInput
   connect: CompanyWhereUniqueInput
-  delete: Boolean
   update: CompanyUpdateWithoutCauseGradesDataInput
   upsert: CompanyUpsertWithoutCauseGradesInput
 }
 
-input CompanyUpdateOneWithoutOpinionsInput {
+input CompanyUpdateOneRequiredWithoutOpinionsInput {
   create: CompanyCreateWithoutOpinionsInput
   connect: CompanyWhereUniqueInput
-  delete: Boolean
   update: CompanyUpdateWithoutOpinionsDataInput
   upsert: CompanyUpsertWithoutOpinionsInput
 }
@@ -1258,6 +2010,28 @@ input CompanyWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   name: String
 
   """All values that are not equal to given value."""
@@ -1412,12 +2186,12 @@ type Mutation {
   upsertOpinion(where: OpinionWhereUniqueInput!, create: OpinionCreateInput!, update: OpinionUpdateInput!): Opinion!
   upsertActGrade(where: ActGradeWhereUniqueInput!, create: ActGradeCreateInput!, update: ActGradeUpdateInput!): ActGrade!
   upsertCauseGrade(where: CauseGradeWhereUniqueInput!, create: CauseGradeCreateInput!, update: CauseGradeUpdateInput!): CauseGrade!
-  updateManyCompanies(data: CompanyUpdateInput!, where: CompanyWhereInput): BatchPayload!
-  updateManyCompanyCategories(data: CompanyCategoryUpdateInput!, where: CompanyCategoryWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyOpinions(data: OpinionUpdateInput!, where: OpinionWhereInput): BatchPayload!
-  updateManyActGrades(data: ActGradeUpdateInput!, where: ActGradeWhereInput): BatchPayload!
-  updateManyCauseGrades(data: CauseGradeUpdateInput!, where: CauseGradeWhereInput): BatchPayload!
+  updateManyCompanies(data: CompanyUpdateManyMutationInput!, where: CompanyWhereInput): BatchPayload!
+  updateManyCompanyCategories(data: CompanyCategoryUpdateManyMutationInput!, where: CompanyCategoryWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyOpinions(data: OpinionUpdateManyMutationInput!, where: OpinionWhereInput): BatchPayload!
+  updateManyActGrades(data: ActGradeUpdateManyMutationInput!, where: ActGradeWhereInput): BatchPayload!
+  updateManyCauseGrades(data: CauseGradeUpdateManyMutationInput!, where: CauseGradeWhereInput): BatchPayload!
   deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
   deleteManyCompanyCategories(where: CompanyCategoryWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
@@ -1441,13 +2215,14 @@ interface Node {
 type Opinion implements Node {
   id: ID!
   createdAt: DateTime!
-  regardingWho(where: CompanyWhereInput): Company!
+  updatedAt: DateTime!
+  regardingWho: Company!
   regardingWhat: Act!
   title: String!
   text: String!
   sources: [String!]!
   tags: [String!]!
-  writtenBy(where: UserWhereInput): User!
+  writtenBy: User!
   affiliations(where: ActGradeWhereInput, orderBy: ActGradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActGrade!]
 }
 
@@ -1462,6 +2237,7 @@ type OpinionConnection {
 }
 
 input OpinionCreateInput {
+  id: ID
   regardingWhat: Act!
   title: String!
   text: String!
@@ -1496,6 +2272,7 @@ input OpinionCreatetagsInput {
 }
 
 input OpinionCreateWithoutAffiliationsInput {
+  id: ID
   regardingWhat: Act!
   title: String!
   text: String!
@@ -1506,6 +2283,7 @@ input OpinionCreateWithoutAffiliationsInput {
 }
 
 input OpinionCreateWithoutRegardingWhoInput {
+  id: ID
   regardingWhat: Act!
   title: String!
   text: String!
@@ -1516,6 +2294,7 @@ input OpinionCreateWithoutRegardingWhoInput {
 }
 
 input OpinionCreateWithoutWrittenByInput {
+  id: ID
   regardingWhat: Act!
   title: String!
   text: String!
@@ -1539,24 +2318,210 @@ enum OpinionOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   regardingWhat_ASC
   regardingWhat_DESC
   title_ASC
   title_DESC
   text_ASC
   text_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type OpinionPreviousValues {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   regardingWhat: Act!
   title: String!
   text: String!
   sources: [String!]!
   tags: [String!]!
+}
+
+input OpinionScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OpinionScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OpinionScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OpinionScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  regardingWhat: Act
+
+  """All values that are not equal to given value."""
+  regardingWhat_not: Act
+
+  """All values that are contained in given list."""
+  regardingWhat_in: [Act!]
+
+  """All values that are not contained in given list."""
+  regardingWhat_not_in: [Act!]
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
 }
 
 type OpinionSubscriptionPayload {
@@ -1604,33 +2569,59 @@ input OpinionUpdateInput {
   text: String
   sources: OpinionUpdatesourcesInput
   tags: OpinionUpdatetagsInput
-  regardingWho: CompanyUpdateOneWithoutOpinionsInput
-  writtenBy: UserUpdateOneWithoutOpinionsInput
+  regardingWho: CompanyUpdateOneRequiredWithoutOpinionsInput
+  writtenBy: UserUpdateOneRequiredWithoutOpinionsInput
   affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
+}
+
+input OpinionUpdateManyDataInput {
+  regardingWhat: Act
+  title: String
+  text: String
+  sources: OpinionUpdatesourcesInput
+  tags: OpinionUpdatetagsInput
+}
+
+input OpinionUpdateManyMutationInput {
+  regardingWhat: Act
+  title: String
+  text: String
+  sources: OpinionUpdatesourcesInput
+  tags: OpinionUpdatetagsInput
 }
 
 input OpinionUpdateManyWithoutRegardingWhoInput {
   create: [OpinionCreateWithoutRegardingWhoInput!]
   connect: [OpinionWhereUniqueInput!]
+  set: [OpinionWhereUniqueInput!]
   disconnect: [OpinionWhereUniqueInput!]
   delete: [OpinionWhereUniqueInput!]
   update: [OpinionUpdateWithWhereUniqueWithoutRegardingWhoInput!]
+  updateMany: [OpinionUpdateManyWithWhereNestedInput!]
+  deleteMany: [OpinionScalarWhereInput!]
   upsert: [OpinionUpsertWithWhereUniqueWithoutRegardingWhoInput!]
 }
 
 input OpinionUpdateManyWithoutWrittenByInput {
   create: [OpinionCreateWithoutWrittenByInput!]
   connect: [OpinionWhereUniqueInput!]
+  set: [OpinionWhereUniqueInput!]
   disconnect: [OpinionWhereUniqueInput!]
   delete: [OpinionWhereUniqueInput!]
   update: [OpinionUpdateWithWhereUniqueWithoutWrittenByInput!]
+  updateMany: [OpinionUpdateManyWithWhereNestedInput!]
+  deleteMany: [OpinionScalarWhereInput!]
   upsert: [OpinionUpsertWithWhereUniqueWithoutWrittenByInput!]
 }
 
-input OpinionUpdateOneWithoutAffiliationsInput {
+input OpinionUpdateManyWithWhereNestedInput {
+  where: OpinionScalarWhereInput!
+  data: OpinionUpdateManyDataInput!
+}
+
+input OpinionUpdateOneRequiredWithoutAffiliationsInput {
   create: OpinionCreateWithoutAffiliationsInput
   connect: OpinionWhereUniqueInput
-  delete: Boolean
   update: OpinionUpdateWithoutAffiliationsDataInput
   upsert: OpinionUpsertWithoutAffiliationsInput
 }
@@ -1649,8 +2640,8 @@ input OpinionUpdateWithoutAffiliationsDataInput {
   text: String
   sources: OpinionUpdatesourcesInput
   tags: OpinionUpdatetagsInput
-  regardingWho: CompanyUpdateOneWithoutOpinionsInput
-  writtenBy: UserUpdateOneWithoutOpinionsInput
+  regardingWho: CompanyUpdateOneRequiredWithoutOpinionsInput
+  writtenBy: UserUpdateOneRequiredWithoutOpinionsInput
 }
 
 input OpinionUpdateWithoutRegardingWhoDataInput {
@@ -1659,7 +2650,7 @@ input OpinionUpdateWithoutRegardingWhoDataInput {
   text: String
   sources: OpinionUpdatesourcesInput
   tags: OpinionUpdatetagsInput
-  writtenBy: UserUpdateOneWithoutOpinionsInput
+  writtenBy: UserUpdateOneRequiredWithoutOpinionsInput
   affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
 }
 
@@ -1669,7 +2660,7 @@ input OpinionUpdateWithoutWrittenByDataInput {
   text: String
   sources: OpinionUpdatesourcesInput
   tags: OpinionUpdatetagsInput
-  regardingWho: CompanyUpdateOneWithoutOpinionsInput
+  regardingWho: CompanyUpdateOneRequiredWithoutOpinionsInput
   affiliations: ActGradeUpdateManyWithoutAffiliatedToInput
 }
 
@@ -1771,6 +2762,28 @@ input OpinionWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   regardingWhat: Act
 
   """All values that are not equal to given value."""
@@ -1933,6 +2946,7 @@ type Subscription {
 type User implements Node {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   name: String
   email: String!
   password: String!
@@ -1954,6 +2968,7 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
   name: String
   email: String!
   password: String!
@@ -1980,6 +2995,7 @@ input UserCreateOneWithoutOpinionsInput {
 }
 
 input UserCreateWithoutActGradesInput {
+  id: ID
   name: String
   email: String!
   password: String!
@@ -1990,6 +3006,7 @@ input UserCreateWithoutActGradesInput {
 }
 
 input UserCreateWithoutCauseGradesInput {
+  id: ID
   name: String
   email: String!
   password: String!
@@ -2000,6 +3017,7 @@ input UserCreateWithoutCauseGradesInput {
 }
 
 input UserCreateWithoutOpinionsInput {
+  id: ID
   name: String
   email: String!
   password: String!
@@ -2023,6 +3041,8 @@ enum UserOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   name_ASC
   name_DESC
   email_ASC
@@ -2033,13 +3053,12 @@ enum UserOrderByInput {
   picture_DESC
   status_ASC
   status_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   name: String
   email: String!
   password: String!
@@ -2097,26 +3116,31 @@ input UserUpdateInput {
   actGrades: ActGradeUpdateManyWithoutGradedByInput
 }
 
-input UserUpdateOneWithoutActGradesInput {
+input UserUpdateManyMutationInput {
+  name: String
+  email: String
+  password: String
+  picture: String
+  status: Status
+}
+
+input UserUpdateOneRequiredWithoutActGradesInput {
   create: UserCreateWithoutActGradesInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutActGradesDataInput
   upsert: UserUpsertWithoutActGradesInput
 }
 
-input UserUpdateOneWithoutCauseGradesInput {
+input UserUpdateOneRequiredWithoutCauseGradesInput {
   create: UserCreateWithoutCauseGradesInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutCauseGradesDataInput
   upsert: UserUpsertWithoutCauseGradesInput
 }
 
-input UserUpdateOneWithoutOpinionsInput {
+input UserUpdateOneRequiredWithoutOpinionsInput {
   create: UserCreateWithoutOpinionsInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutOpinionsDataInput
   upsert: UserUpsertWithoutOpinionsInput
 }
@@ -2237,6 +3261,28 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   name: String
 
   """All values that are not equal to given value."""

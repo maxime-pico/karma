@@ -1,9 +1,9 @@
+require('dotenv').config()
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const AuthPayload = require('./resolvers/AuthPayload')
-require('dotenv').config()
 
 const resolvers = {
 	Query,
@@ -24,7 +24,7 @@ const server = new GraphQLServer({
 		db: new Prisma({
 			typeDefs: `src/generated/${process.env.PRISMA_SCHEMA_FILENAME}.graphql`,
 			endpoint: process.env.DATABASE_ENDPOINT,
-			secret: process.env.PRISMA_MANAGEMENT_API_SECRET,
+			secret: "development-secret",
 			debug: true,
 		}),
 	}),
