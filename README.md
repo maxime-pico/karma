@@ -242,6 +242,8 @@ Run the following command to update the prisma database.
 prisma deploy -e .env.prod
 ```
 
+If the docker container requires an update, please refer to the steps described here in this issue [https://github.com/prisma/prisma-cloud-feedback/issues/202](https://github.com/prisma/prisma-cloud-feedback/issues/202)
+
 ## Built With
 
 - Create React App (includes many awesome things)
