@@ -25,7 +25,7 @@ const ACT_GRADES_QUERIES = {
 	ENVIRONMENT: gql`
 		query EnvironmentGradesQuery($companyId: ID!) {
 			companyActGrades(companyId: $companyId) {
-				CLIMAT_CHANGE
+				CLIMATE_CHANGE
 				ECOSYSTEM_PRESERVATION
 				RESOURCE_PRESERVATION
 				ANIMAL_CONDITION
@@ -69,7 +69,6 @@ const OPINION_FEED_QUERY = gql`
 	query OpinionFeedQuery($companyId: ID!, $act: Act!) {
 		opinionsFeed(companyId: $companyId, act: $act) {
 			id
-			createdAt
 			title
 			text
 			regardingWhat

@@ -7,10 +7,16 @@ const KARMA_LABELS = {
 }
 
 const BRANDS_SORTING_LABELS = [
-	{ name: { fr: 'Ordre alphabétique (A > Z)' }, value: 'name_ASC' },
-	{ name: { fr: 'Ordre alphabétique (Z > A)' }, value: 'name_DESC' },
-	{ name: { fr: 'Karma (plus mauvais au meilleur)' }, value: 'karma_ASC' },
-	{ name: { fr: 'Karma (meilleur au plus mauvais)' }, value: 'karma_DESC' },
+	{ name: { fr: 'Ordre alphabétique (A > Z)' }, value: '{"name":"asc"}' },
+	{ name: { fr: 'Ordre alphabétique (Z > A)' }, value: '{"name":"desc"}' },
+	{
+		name: { fr: 'Karma (plus mauvais au meilleur)' },
+		value: '{"karma":"asc"}',
+	},
+	{
+		name: { fr: 'Karma (meilleur au plus mauvais)' },
+		value: '{"karma":"desc"}',
+	},
 ]
 
 const BRANDS_RESULTS_MESSAGES = {

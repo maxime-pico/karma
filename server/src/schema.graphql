@@ -1,109 +1,98 @@
 # import Company, Opinion, CauseGrade, ActGrade, Act, Cause, Status from "./generated/prisma.graphql"
 
-# prettier-ignore
 type Query {
-  # exposes the resolver that gets the userId from a token
-  getUserInfoFromContext: User
+	# exposes the resolver that gets the userId from a token
+	getUserInfoFromContext: User
 
-  # exposes the resolver that gets a company from its id
-  company(
-    companyId: ID!
-  ): Company
+	# exposes the resolver that gets a company from its id
+	company(companyId: ID!): Company
 
-  # exposes the resolver that gets the list of all companies in the database
-	allCompanies(karmas: String, categories: String, filter: String, skip: Int, first: Int, orderBy: CompanyOrderByInput): [Company!]!
+	# exposes the resolver that gets the list of all companies in the database
+	allCompanies(
+		karmas: String
+		categories: String
+		filter: String
+		skip: Int
+		first: Int
+		orderBy: CompanyOrderByInput
+	): [Company!]!
 
-    # exposes the resolver that gets the list of all companies in the database
-	allCompanyCategories(filter: String, skip: Int, first: Int, orderBy: CompanyCategoryOrderByInput): [CompanyCategory!]!
+	# exposes the resolver that gets the list of all companies in the database
+	allCompanyCategories(
+		filter: String
+		skip: Int
+		first: Int
+		orderBy: CompanyCategoryOrderByInput
+	): [CompanyCategory!]!
 
-  # exposes the resolver that gets an object with the avg grades per cause for
-  # a specific company
-	companyCauseGrades(
-    companyId: ID!
-  ): AvgCauseGrades
+	# exposes the resolver that gets an object with the avg grades per cause for
+	# a specific company
+	companyCauseGrades(companyId: ID!): AvgCauseGrades
 
-  # exposes the resolver that gets an object with the avg grades per act for
-  # a specific company
-	companyActGrades(
-    companyId: ID!
-  ): AvgActGrades
+	# exposes the resolver that gets an object with the avg grades per act for
+	# a specific company
+	companyActGrades(companyId: ID!): AvgActGrades
 
-  # exposes the resolver that gets the information needed to display the User bubble
-  userBubbleQuery(
-    userId: ID!
-  ): User
+	# exposes the resolver that gets the information needed to display the User bubble
+	userBubbleQuery(userId: ID!): User
 
-  # exposes the resolver that gets the basic information about a specific company
-  companyOverview(
-    companyId: ID!
-  ): CompanyOverview
+	# exposes the resolver that gets the basic information about a specific company
+	companyOverview(companyId: ID!): CompanyOverview
 
-  # exposes the resolver that gets a specific set of opinions about a specific company
-  opinionsFeed(
-    companyId: ID!
-    skip: Int
-    first: Int
-    act: Act
-  ): [OpinionPreview!]!
+	# exposes the resolver that gets a specific set of opinions about a specific company
+	opinionsFeed(
+		companyId: ID!
+		skip: Int
+		first: Int
+		act: Act
+	): [OpinionPreview!]!
 
-  # exposes the resolver that counts the number of opinions for a specific act
-  # of a specific company
-  opinionsActCount(
-    companyId: ID!
-    act: Act!
-  ): ActCount!
-  
-  # exposes the resolver that counts the number of opinions for a specific cause
-  # of a specific company
-  opinionsAndGradesCauseCount(
-    companyId: ID!
-    cause: Cause!
-  ): CauseCount!
+	# exposes the resolver that counts the number of opinions for a specific act
+	# of a specific company
+	opinionsActCount(companyId: ID!, act: Act!): ActCount!
+
+	# exposes the resolver that counts the number of opinions for a specific cause
+	# of a specific company
+	opinionsAndGradesCauseCount(companyId: ID!, cause: Cause!): CauseCount!
 }
 
-# prettier-ignore
 type Mutation {
 	# exposes the resolver that signs up a new user from email and password
-  # (+ optionally name) returns an authetification token
-  signup(email: String!, password: String!, name: String): AuthPayload
+	# (+ optionally name) returns an authetification token
+	signup(email: String!, password: String!, name: String): AuthPayload
 
-  # exposes the resolver that logs in a new user from email and password returns
-  # an authentification token
+	# exposes the resolver that logs in a new user from email and password returns
+	# an authentification token
 	login(email: String!, password: String!): AuthPayload
 
-  # exposes the resolver that allows a logged in user to grade the cause of a company
-	gradeCauses(
-    companyId: ID!,
-    userGrades: [Int!]!,
-  ): [CauseGrade!]!
+	# exposes the resolver that allows a logged in user to grade the cause of a company
+	gradeCauses(companyId: ID!, userGrades: [Int!]!): [CauseGrade!]!
 
-  setOverallKarma(
-    companyId: ID!,
-  ): Company!
+	setOverallKarma(companyId: ID!): Company!
 
-  # exposes the resolver that allows a logged in user to grade the act of a
-  # company and affiliation to an opinion
+	# exposes the resolver that allows a logged in user to grade the act of a
+	# company and affiliation to an opinion
 	gradeAct(
-    companyId: ID!,
-    act: Act!,
-    grade: Int!,
-    opinionId: ID,
-    opinionSources: [String],
-    opinionTags: [String],
-    opinionText: String,
-    opinionTitle: String,
-    newOpinion: Boolean!,
-  ): ActGrade
+		companyId: ID!
+		act: Act!
+		grade: Int!
+		opinionId: ID
+		opinionSources: [String]
+		opinionTags: [String]
+		opinionText: String
+		opinionTitle: String
+		newOpinion: Boolean!
+	): ActGrade
 
-  # exposes the resolver that allows a logged in user to post a new opinion
+	# exposes the resolver that allows a logged in user to post a new opinion
 	postOpinion(
-    companyId: ID!,
-    act: Act!,
-    title: String!,
-    text: String!,
-    sources: [String!]!,
-    tags: [String!]!
-  ): Opinion
+		companyId: ID!
+		act: Act!
+		title: String!
+		text: String!
+		sources: [String!]!
+		tags: [String!]!
+	): Opinion
 }
 
 # authentification token type
@@ -135,7 +124,7 @@ type AvgCauseGrades {
 
 # defines the return type of companyActrades
 type AvgActGrades {
-	CLIMAT_CHANGE: Float
+	CLIMATE_CHANGE: Float
 	ECOSYSTEM_PRESERVATION: Float
 	RESOURCE_PRESERVATION: Float
 	ANIMAL_CONDITION: Float
@@ -167,7 +156,7 @@ type CompanyOverview {
 # defines the return type of opinionsFeed
 type OpinionPreview {
 	id: ID!
-	createdAt: DateTime
+	#createdAt: DateTime
 	title: String
 	text: String
 	regardingWhat: Act
@@ -175,6 +164,10 @@ type OpinionPreview {
 	sources: [String!]!
 	writtenBy: User
 	affiliationsCount: Int
+}
+
+input OpinionPreviewOrderByInput {
+	createdAt: Sort
 }
 
 type ActCount {
@@ -187,11 +180,117 @@ type CauseCount {
 	gradesCount: Int
 }
 
-enum CompanyOrderByInput {
-	name_ASC
-	name_DESC
-	createdAt_ASC
-	createdAt_DESC
-  karma_ASC
-  karma_DESC
+input CompanyOrderByInput {
+	name: Sort
+	createdAt: Sort
+	karma: Sort
+}
+
+input CompanyCategoryOrderByInput {
+	name: Sort
+	companies: Sort
+	createdAt: Sort
+}
+
+type Company {
+	id: ID!
+	name: String!
+	logo: String
+	actGrades: [ActGrade!]!
+	causeGrades: [CauseGrade!]!
+	opinions: [Opinion!]!
+	category: [CompanyCategory!]!
+	karma: Float
+}
+
+type CompanyCategory {
+	id: ID!
+	name: String!
+	companies: [Company!]!
+}
+
+# prettier-ignore
+type User {
+	id: ID!
+	name: String
+	email: String!
+	picture: String
+	status: Status
+	opinions: [Opinion!]!
+	causeGrades: [CauseGrade!]!
+	actGrades: [ActGrade!]!
+}
+
+type Opinion {
+	id: ID!
+	#createdAt: DateTime
+	regardingWho: Company!
+	regardingWhat: Act!
+	title: String!
+	text: String!
+	sources: [String!]!
+	tags: [String!]!
+	writtenBy: User!
+	affiliations: [ActGrade!]!
+}
+
+input OpinionOrderByInput {
+	createdAt: Sort
+}
+
+type ActGrade {
+	id: ID!
+	gradedTo: Company!
+	gradedBy: User!
+	act: Act!
+	grade: Float!
+	affiliatedTo: Opinion!
+}
+
+type CauseGrade {
+	id: ID!
+	gradedTo: Company!
+	gradedBy: User!
+	cause: Cause!
+	grade: Float!
+}
+
+enum Act {
+	CLIMATE_CHANGE
+	ECOSYSTEM_PRESERVATION
+	RESOURCE_PRESERVATION
+	ANIMAL_CONDITION
+	POLITICAL_RESPONSIBILITY
+	MARKET_INFLUENCE
+	POPULATION_RESPECT
+	CONSUMER_RESPECT
+	QUESTIONABLE_INDUSTRIES
+	SUPPLIER_REGULATION
+	SHAREHOLDER_REMUNERATION
+	TAXATION_LEVEL
+	EXECUTIVE_COMPENSATION
+	EMPLOYEE_EQUITY
+	EMPLOYMENT_CONDITIONS
+	EMPLOYEE_DISCRIMINATIONS
+	WORKING_CONDITIONS
+	MANAGING_CONDITIONS
+}
+
+enum Cause {
+	ENVIRONMENT
+	ETHICS
+	FISCAL
+	SOCIAL
+}
+
+enum Status {
+	ASLEEP
+	AWAKEN
+	SACRED
+	SAINT
+}
+
+enum Sort {
+	asc
+	desc
 }

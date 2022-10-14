@@ -67,7 +67,6 @@ class Soul extends React.Component {
 			})
 		}
 
-		console.log('Mount')
 		if (this.refetch) {
 			this.refetch()
 		}

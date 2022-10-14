@@ -8,21 +8,26 @@
 	},
 	"main": "index.js",
 	"scripts": {
-		"start": "node src/index.js",
+    "start": "node src/index.js",
 		"dev": "npm-run-all --parallel start playground",
 		"playground": "graphql playground",
 		"prisma": "prisma"
 	},
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
 	"keywords": [],
 	"author": "Green-Dirt",
 	"license": "ISC",
 	"dependencies": {
+		"@prisma/client": "^4.4.0",
+		"apollo-server": "^3.10.3",
 		"bcryptjs": "^2.4.3",
 		"dotenv": "^6.0.0",
-		"graphql": "14.4.2",
-		"graphql-yoga": "1.18.0",
-		"jsonwebtoken": "^8.3.0",
-		"prisma": "^1.18.1",
-		"prisma-binding": "^2.1.4"
+		"graphql": "^15.8.0",
+		"jsonwebtoken": "^8.3.0"
+	},
+	"devDependencies": {
+		"prisma": "^4.4.0"
 	}
 }

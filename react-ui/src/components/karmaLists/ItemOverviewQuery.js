@@ -18,7 +18,7 @@ const ACT_GRADES_QUERIES = {
 	ENVIRONMENT: gql`
 		query EnvironmentGradesQuery($companyId: ID!) {
 			companyActGrades(companyId: $companyId) {
-				CLIMAT_CHANGE
+				CLIMATE_CHANGE
 				ECOSYSTEM_PRESERVATION
 				RESOURCE_PRESERVATION
 				ANIMAL_CONDITION

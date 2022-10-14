@@ -42,7 +42,7 @@ const NavbarLink = styled(Link)`
 `
 
 const UserBubbleContainer = styled.div`
-  align-self: center;
+	align-self: center;
 `
 
 const NavbarLinkContainer = styled.div`

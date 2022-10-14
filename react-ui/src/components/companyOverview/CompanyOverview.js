@@ -15,7 +15,7 @@ import styled from 'styled-components'
 const Logo = styled(Row)`
 	display: block;
 	@media (max-width: 540px) {
-		display: ${props => props.displayLogo};
+		display: ${props => props.logo};
 	}
 `
 const RoundWindow = styled.div`
@@ -24,13 +24,13 @@ const RoundWindow = styled.div`
 	border-radius: ${props => props.size}px;
 	overflow: hidden;
 	background-color: white;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	img {
-    width: ${props => props.size - 40}px;
+		width: ${props => props.size - 40}px;
 	}
 `
 const Push = styled.span`
@@ -77,10 +77,7 @@ const CompanyOverview = (props: Props) => {
 
 				return (
 					<Link to={`/company/${companyId}`}>
-						<Logo
-							alignItems="center"
-							displayLogo={displayLogo ? 'initial' : 'none'}
-						>
+						<Logo alignItems="center" logo={displayLogo ? 'initial' : 'none'}>
 							<RoundWindow size={140}>
 								<Push />
 								<img

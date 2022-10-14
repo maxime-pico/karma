@@ -79,7 +79,6 @@ const ActJudgingInterfaceFormSubmit = ({
 	act,
 }) => {
 	const _submit = async GradingMutation => {
-		console.log(GradingMutation)
 		if (opinionId) {
 			await GradingMutation()
 			window.location.reload()

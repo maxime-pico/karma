@@ -1,0 +1,123 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id          String            @id @default(cuid())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @default(now())
+  name        String            @unique
+  logo        String?           @default("questionmark.png")
+  actGrades   ActGrade[]        @relation("ActGradesOfCompany")
+  causeGrades CauseGrade[]      @relation("CauseGradesOfCompany")
+  opinions    Opinion[]         @relation("OpinionsOfCompany")
+  category    CompanyCategory[]
+  karma       Float?
+}
+
+model CompanyCategory {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  name      String    @unique
+  companies Company[]
+}
+
+model User {
+  id          String       @id @default(cuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+  name        String?      @default("Panda")
+  email       String       @unique
+  password    String
+  picture     String?      @default("pandahead.png")
+  status      Status       @default(AWAKEN)
+  opinions    Opinion[]    @relation("OpinionsOfUser")
+  causeGrades CauseGrade[] @relation("CauseGradesOfUser")
+  actGrades   ActGrade[]   @relation("ActGradesOfUser")
+}
+
+model Opinion {
+  id            String     @id @default(cuid())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now())
+  regardingWho  Company    @relation("OpinionsOfCompany", fields: [companyId], references: [id], onDelete: Cascade)
+  companyId     String
+  regardingWhat Act
+  title         String
+  text          String
+  sources       String[]
+  tags          String[]
+  writtenBy     User       @relation("OpinionsOfUser", fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  affiliations  ActGrade[] @relation("AffiliatedToOpinion")
+}
+
+model ActGrade {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+  gradedTo     Company  @relation("ActGradesOfCompany", fields: [companyId], references: [id], onDelete: Cascade)
+  companyId    String
+  gradedBy     User     @relation("ActGradesOfUser", fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  act          Act
+  grade        Float
+  affiliatedTo Opinion  @relation("AffiliatedToOpinion", fields: [opinionId], references: [id], onDelete: Cascade)
+  opinionId    String
+}
+
+model CauseGrade {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  gradedTo  Company  @relation("CauseGradesOfCompany", fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+  gradedBy  User     @relation("CauseGradesOfUser", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  cause     Cause
+  grade     Float
+}
+
+enum Act {
+  CLIMATE_CHANGE
+  ECOSYSTEM_PRESERVATION
+  RESOURCE_PRESERVATION
+  ANIMAL_CONDITION
+  POLITICAL_RESPONSIBILITY
+  MARKET_INFLUENCE
+  POPULATION_RESPECT
+  CONSUMER_RESPECT
+  QUESTIONABLE_INDUSTRIES
+  SUPPLIER_REGULATION
+  SHAREHOLDER_REMUNERATION
+  TAXATION_LEVEL
+  EXECUTIVE_COMPENSATION
+  EMPLOYEE_EQUITY
+  EMPLOYMENT_CONDITIONS
+  EMPLOYEE_DISCRIMINATIONS
+  WORKING_CONDITIONS
+  MANAGING_CONDITIONS
+}
+
+enum Cause {
+  ENVIRONMENT
+  ETHICS
+  FISCAL
+  SOCIAL
+}
+
+enum Status {
+  ASLEEP
+  AWAKEN
+  SACRED
+  SAINT
+}

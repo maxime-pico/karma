@@ -38,19 +38,6 @@ const TextZone = styled.div`
 		font-size: 18px;
 	}
 `
-const TextZoneTitle = styled.div`
-	color: #545a66;
-	font-size: 40px;
-	font-family: Avenir;
-	font-weight: 900;
-	margin-bottom: 24px;
-	@media (max-width: 540px) {
-		font-size: 25px;
-	}
-	padding: 8rem 9rem;
-	margin: 10rem 0 11rem 0;
-	border-radius: 11.2rem;
-`
 
 const CauseRow = styled(Row)`
 	background-color: white;
@@ -395,7 +382,7 @@ const Home = () => {
 							<img
 								src={process.env.PUBLIC_URL + `/images/karma-scale.svg`}
 								alt="Echelle de notation"
-                width="100%"
+								width="100%"
 							/>
 							<p>
 								Nous avons décidé de choisir <br />

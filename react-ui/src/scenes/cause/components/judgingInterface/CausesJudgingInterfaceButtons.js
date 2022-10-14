@@ -26,7 +26,6 @@ class CausesJudgingInterfaceButtons extends React.Component {
 	constructor(props) {
 		super(props)
 		this._adjacentCause = this.props._adjacentCause
-		this._stopGrading = this.props._stopGrading
 		this._updateGrade = this.props._updateGrade
 		this._setGrade = this.props._setGrade
 		this._blurBackground = this.props._blurBackground
@@ -61,9 +60,8 @@ class CausesJudgingInterfaceButtons extends React.Component {
 			_adjacentCause,
 			_updateGrade,
 			_setGrade,
-			_stopGrading,
-      gradingMutation,
-      overallMutation,
+			gradingMutation,
+			overallMutation,
 			cause,
 			userGrades,
 			brandName,
@@ -116,9 +114,8 @@ class CausesJudgingInterfaceButtons extends React.Component {
 					userGrades={userGrades}
 					brandName={brandName}
 					_closeGradesModal={this._closeGradesModal}
-					_stopGrading={_stopGrading}
-          gradingMutation={gradingMutation}
-          overallMutation={overallMutation}
+					gradingMutation={gradingMutation}
+					overallMutation={overallMutation}
 				/>
 			</Row>
 		)

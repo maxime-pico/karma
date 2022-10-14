@@ -3,15 +3,21 @@ const { getUserId, CAUSE_AND_ACTS, KARMA_LABELS } = require('../utils')
 // Resolver querying the user info from token
 function getUserInfoFromContext(parent, args, context, info) {
 	const userId = getUserId(context)
-	return context.db.query.user(
-		{ where: { id: userId } },
-		`{ id name email picture status }`,
-	)
+	return context.prisma.user.findUnique({
+		where: { id: userId },
+		select: {
+			id: true,
+			name: true,
+			email: true,
+			picture: true,
+			status: true,
+		},
+	})
 }
 
 // Resolver querying all the companies in the database
 function company(parent, args, context, info) {
-	return context.db.query.company(
+	return context.prisma.company.findUnique(
 		{
 			where: { id: args.companyId },
 		},
@@ -20,13 +26,15 @@ function company(parent, args, context, info) {
 }
 
 // Resolver querying all the companies in the database
-function allCompanies(parent, args, context, info) {
+async function allCompanies(parent, args, context, info) {
 	const conditions = { or: [], and: [] }
 
 	// WHERE - filter
 	if (typeof args.filter !== 'undefined') {
 		if (args.filter.length) {
-			conditions.and.push({ name_contains: args.filter })
+			conditions.and.push({
+				name: { contains: args.filter, mode: 'insensitive' },
+			})
 		}
 	}
 
@@ -34,8 +42,8 @@ function allCompanies(parent, args, context, info) {
 	if (typeof args.categories !== 'undefined') {
 		const cats = args.categories.split(',')
 		if (cats.length) {
-			cats.forEach(cat => {
-				if (cat.length) conditions.or.push({ category_some: { id: cat } })
+			cats.forEach((cat) => {
+				if (cat.length) conditions.or.push({ category: { some: { id: cat } } })
 			})
 		}
 	}
@@ -44,7 +52,7 @@ function allCompanies(parent, args, context, info) {
 	if (typeof args.karmas !== 'undefined') {
 		const karmas = args.karmas.split(',')
 		if (karmas.length) {
-			karmas.forEach(karma => {
+			karmas.forEach((karma) => {
 				if (karma.length) {
 					if (parseFloat(KARMA_LABELS[karma].value) * -1 > 0) {
 						// negative
@@ -52,16 +60,24 @@ function allCompanies(parent, args, context, info) {
 						if (karmas.length > 1) {
 							conditions.and.push({
 								OR: [
-									{ karma_lt: parseFloat(KARMA_LABELS[karma].value) + 0.5 },
-									{ karma_gte: parseFloat(KARMA_LABELS[karma].value) - 0.5 },
+									{
+										karma: {
+											lt: parseFloat(KARMA_LABELS[karma].value) + 0.5,
+										},
+									},
+									{
+										karma: {
+											gte: parseFloat(KARMA_LABELS[karma].value) - 0.5,
+										},
+									},
 								],
 							})
 						} else {
 							conditions.and.push({
-								karma_lt: parseFloat(KARMA_LABELS[karma].value) + 0.5,
+								karma: { lt: parseFloat(KARMA_LABELS[karma].value) + 0.5 },
 							})
 							conditions.and.push({
-								karma_gte: parseFloat(KARMA_LABELS[karma].value) - 0.5,
+								karma: { gte: parseFloat(KARMA_LABELS[karma].value) - 0.5 },
 							})
 						}
 					} else {
@@ -69,16 +85,24 @@ function allCompanies(parent, args, context, info) {
 						if (karmas.length > 1) {
 							conditions.and.push({
 								OR: [
-									{ karma_lte: parseFloat(KARMA_LABELS[karma].value) + 0.5 },
-									{ karma_gt: parseFloat(KARMA_LABELS[karma].value) - 0.5 },
+									{
+										karma: {
+											lte: parseFloat(KARMA_LABELS[karma].value) + 0.5,
+										},
+									},
+									{
+										karma: {
+											gt: parseFloat(KARMA_LABELS[karma].value) - 0.5,
+										},
+									},
 								],
 							})
 						} else {
 							conditions.and.push({
-								karma_lte: parseFloat(KARMA_LABELS[karma].value) + 0.5,
+								karma: { lte: parseFloat(KARMA_LABELS[karma].value) + 0.5 },
 							})
 							conditions.and.push({
-								karma_gt: parseFloat(KARMA_LABELS[karma].value) - 0.5,
+								karma: { gt: parseFloat(KARMA_LABELS[karma].value) - 0.5 },
 							})
 						}
 					}
@@ -96,7 +120,7 @@ function allCompanies(parent, args, context, info) {
 		if (conditions.and.length) where = { AND: conditions.and }
 	}
 
-	const companies = context.db.query.companies(
+	const companies = context.prisma.company.findMany(
 		{
 			where,
 			skip: args.skip,
@@ -113,7 +137,7 @@ function allCompanies(parent, args, context, info) {
 function allCompanyCategories(parent, args, context, info) {
 	const where = {}
 
-	const companyCategories = context.db.query.companyCategories(
+	const companyCategories = context.prisma.companyCategory.findMany(
 		{
 			where,
 			skip: args.skip,
@@ -129,21 +153,21 @@ function allCompanyCategories(parent, args, context, info) {
 // resolver that gets the cause grades of a specific companyand averages them per cause
 // prettier-ignore
 async function companyCauseGrades(parent, args, context, info) {
-
+  
   // test if company exists
-  const companyExists = await context.db.exists.Company({
-    id: args.companyId
+  const companyExists = await context.prisma.company.count({
+    where: {id: args.companyId}
   })
-
+  
   if (!companyExists) {
     throw new Error('This company does not exist')
   }
-
+  
   // get all the cause grades of a specific company
-  const causeGrades = await context.db.query.causeGrades(
+  const causeGrades = await context.prisma.causeGrade.findMany(
     {
       where:
-        { gradedTo: { id: args.companyId } }
+        { gradedTo: {is: { id: args.companyId }} }
     },
     ` { cause grade } `,
   )
@@ -190,12 +214,17 @@ async function companyCauseGrades(parent, args, context, info) {
 // prettier-ignore
 async function companyActGrades(parent, args, context, info) {
   // get all the cause grades of a specific company
-  const actGrades = await context.db.query.actGrades(
+
+  const actGrades = await context.prisma.actGrade.findMany(
     {
-      where:
-        { gradedTo: { id: args.companyId } }
-    },
-    ` { act grade } `,
+      where: {
+        gradedTo: { id: args.companyId }
+      },
+      select: {
+        act: true,
+        grade: true,
+      }
+    }
   )
 
   const avgActGrades = {}
@@ -213,24 +242,27 @@ async function companyActGrades(parent, args, context, info) {
   })
 
   const acts = Object.keys(avgActGrades)
-
+  
   // average the grades
   acts.forEach(act => {
     const avgActGrade = avgActGrades[act] / numberOfGradesPerAct[act]
     avgActGrades[act] = Math.round(avgActGrade * 10) / 10
   })
 
+
   return avgActGrades
 }
 
 // resolver that gets the needed info for a specific user to display its bubble
 function userBubbleQuery(parent, args, context, info) {
-	const userBubbleInfo = context.db.query.user(
-		{
-			where: { id: args.userId },
+	const userBubbleInfo = context.prisma.user.findUnique({
+		where: { id: args.userId },
+		select: {
+			name: true,
+			picture: true,
+			status: true,
 		},
-		` { name picture status } `,
-	)
+	})
 	if (!userBubbleInfo) {
 		throw new Error('User does not exist')
 	}
@@ -241,12 +273,29 @@ function userBubbleQuery(parent, args, context, info) {
 async function companyOverview(parent, args, context, info) {
 	// get the info from a company query. Unfortunately at the moment of coding
 	// prisma doesn't allow to query the count on a return field right away
-	const companyOverviewInfo = await context.db.query.company(
-		{
-			where: { id: args.companyId },
+
+	const companyOverviewInfo = await context.prisma.company.findUnique({
+		where: { id: args.companyId },
+		select: {
+			name: true,
+			logo: true,
+			opinions: {
+				select: {
+					id: true,
+				},
+			},
+			actGrades: {
+				select: {
+					id: true,
+				},
+			},
+			causeGrades: {
+				select: {
+					id: true,
+				},
+			},
 		},
-		` { name logo opinions{ id } actGrades{ id } causeGrades{ id } } `,
-	)
+	})
 
 	// test existence
 	if (!companyOverviewInfo) {
@@ -267,13 +316,31 @@ async function companyOverview(parent, args, context, info) {
 // prettier-ignore
 async function opinionsFeed(parent, args, context, info) {
   const { companyId, first, skip, act } = args // destructure input arguments
-
-  const opinionsPreview = await context.db.query.opinions({
-    first: first,
+  const opinionsPreview = await context.prisma.opinion.findMany({
     skip: skip,
-    where: { regardingWho: { id: companyId }, regardingWhat: act }
+    take: first,
+    where: { regardingWho: { is: { id: companyId } }, regardingWhat: act },
+    select: {
+      id: true,
+      title: true,
+      text: true,
+      regardingWhat: true,
+      tags: true,
+      sources: true,
+      writtenBy: {
+        select: {
+          name: true,
+          picture: true,
+        }
+      },
+      affiliations: {
+        select: {
+          id: true
+        }
+      }
+    },
+    orderBy: {createdAt: 'desc'}
   },
-    ` { id createdAt title text regardingWhat tags sources writtenBy{ name picture } affiliations{ id } } `
   )
 
   // if one or more opinions are returned then manipulate them to add the count
@@ -292,7 +359,7 @@ async function opinionsFeed(parent, args, context, info) {
 async function opinionsActCount(parent, args, context, info) {
 	const { companyId, act } = args // destructure arguments
 
-	const opinions = await context.db.query.opinions(
+	const opinions = await context.prisma.opinion.findMany(
 		{
 			where: { regardingWho: { id: companyId }, regardingWhat: act },
 		},
@@ -307,18 +374,27 @@ async function opinionsActCount(parent, args, context, info) {
 async function opinionsAndGradesCauseCount(parent, args, context, info) {
 	const { companyId, cause } = args // destructure arguments
 
-	const opinions = await context.db.query.opinions(
-		{
-			where: {
-				regardingWho: { id: companyId },
-				regardingWhat_in: CAUSE_AND_ACTS[cause].acts,
+	const orFilters = CAUSE_AND_ACTS[cause].acts.map((act) => ({
+		regardingWhat: act,
+	}))
+	const opinions = await context.prisma.opinion.findMany({
+		where: {
+			OR: orFilters,
+			AND: [{ regardingWho: { id: companyId } }],
+		},
+		select: {
+			id: true,
+			affiliations: {
+				select: {
+					id: true,
+				},
 			},
 		},
-		` { id affiliations { id } } `,
-	)
+	})
+
 	if (opinions) {
 		var gradesCount = 0
-		opinions.forEach(opinion => {
+		opinions.forEach((opinion) => {
 			gradesCount += opinion.affiliations.length
 		})
 		return { opinionsCount: opinions.length, gradesCount: gradesCount }

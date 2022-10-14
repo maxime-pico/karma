@@ -3,7 +3,7 @@ export const CAUSE_AND_ACTS = {
 	ENVIRONMENT: {
 		fr: 'Cause Environnementale',
 		acts: [
-			'CLIMAT_CHANGE',
+			'CLIMATE_CHANGE',
 			'ECOSYSTEM_PRESERVATION',
 			'RESOURCE_PRESERVATION',
 			'ANIMAL_CONDITION',
@@ -13,7 +13,7 @@ export const CAUSE_AND_ACTS = {
 				"Afin d'évaluer la Cause Environnementale, on veillera à prendre en compte l'ensemble des notes et opinions des actes sous-jacents dans une proportion reflétant les activités et les responsabilités de l'entreprise.",
 		},
 	},
-	CLIMAT_CHANGE: {
+	CLIMATE_CHANGE: {
 		fr: 'Implication dans le changement climatique',
 		description: {
 			fr: [

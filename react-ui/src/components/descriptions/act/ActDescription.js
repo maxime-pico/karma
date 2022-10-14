@@ -44,7 +44,7 @@ type Props = {
 const ActDescription = (props: Props) => {
 	const { act, color, justifyContent } = props
 	return (
-		<DescriptionRow justifyCont={justifyContent} mt={2}>
+		<DescriptionRow justifyContent={justifyContent} mt={2}>
 			<Col xs={10} textAlign="left" color={color}>
 				<ItemHeaderDescription>
 					Ce sur quoi la marque est jugée :

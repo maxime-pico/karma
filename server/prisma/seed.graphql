@@ -12,13 +12,13 @@ mutation {
               password: "test"
             }
           }
-          act: CLIMAT_CHANGE
+          act: CLIMATE_CHANGE
           grade: -1
           affiliatedTo: {
             create: {
               writtenBy: { connect: { email: "test@test.com" } }
               regardingWho: { connect: { name: "H&M" } }
-              regardingWhat: CLIMAT_CHANGE
+              regardingWhat: CLIMATE_CHANGE
               title: "H&M leader du fast fashion"
               text: "Les moins : 10% des gaz à effet de serre pour l'industrie textile, pratique du fast fashion, la plupart des fournisseurs en asie. Les plus : reduction des emissions de CO2 de 350000t/an en 2013 à 65000t/an en 2017, objectifs officiels et ambitieux sur le sujet"
               sources: { set: ["https://www.forbes.com/sites/jamesconca/2015/12/03/making-climate-change-fashionable-the-garment-industry-takes-on-global-warming/#4f68c4ad79e4", "https://about.hm.com/content/dam/hmgroup/groupsite/documents/masterlanguage/CSR/reports/2017%20Sustainability%20report/HM_group_SustainabilityReport_2017_FullReport.pdf"]}

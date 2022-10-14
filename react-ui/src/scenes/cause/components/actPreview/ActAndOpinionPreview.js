@@ -62,7 +62,6 @@ const OPINION_FEED_QUERY = gql`
 	query OpinionFeedQuery($companyId: ID!, $act: Act!, $first: Int) {
 		opinionsFeed(companyId: $companyId, act: $act, first: $first) {
 			id
-			createdAt
 			title
 			text
 			regardingWhat
