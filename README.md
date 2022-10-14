@@ -60,7 +60,7 @@ Wait until the cloning is over (this might take some time) and `cd` to the clone
 From the karma directory, install the dependencies needed for the frontend part of the project (this might take some time as well):
 
 ```
-cd react-ui/
+cd frontend/
 npm i
 ```
 
@@ -133,7 +133,7 @@ prisma deploy -e .env
 Go to the root directory of the frontend directory and start the frontend server:
 
 ```
-cd ../react-ui/
+cd ../frontend/
 npm start
 ```
 
@@ -165,10 +165,10 @@ Give an example
 
 ### Front-end
 
-Move to the react-ui folder
+Move to the frontend folder
 
 ```
-cd react-ui
+cd frontend
 ```
 
 Add the .env file with production values to the directory. Also add the now.json file.

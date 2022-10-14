@@ -3,10 +3,10 @@ server/.env
 server/.env.prod
 server/now.json
 server/database/.env
-react-ui/.env
-react-ui/now.json
-react-ui/build/
-react-ui/node_modules/
+frontend/.env
+frontend/now.json
+frontend/build/
+frontend/node_modules/
 server/node_modules/
 .DS_Store
-react-ui/.DS_Store
+frontend/.DS_Store
