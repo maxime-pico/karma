@@ -286,4 +286,3 @@ This project is licensed under the GNU AGPL v3.0 License - see the [LICENSE](LIC
 ## Acknowledgments
 
 - Thanks to Billie Thompson - aka [PurpleBooth](https://github.com/PurpleBooth) for her [README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-  test change
