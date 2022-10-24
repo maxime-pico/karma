@@ -6,6 +6,9 @@
 		"type": "git",
 		"url": "git://github.com/Green-Dirt/karma.git"
 	},
+  "engines": {
+    "node": "16.x"
+  },
 	"main": "index.js",
 	"scripts": {
     "start": "node src/index.js",
